@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Form No 1"
+            android:text="Patient Notification"
             android:fontFamily="@font/nunitosans_bold_2"
             android:layout_gravity="center_vertical"
             android:gravity="center"
@@ -34,18 +34,25 @@
             android:textSize="@dimen/_20sdp"/>
     </LinearLayout>
     <TextView
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="* are mandatory fields"
+        android:textColor="@color/black"/>
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enrollment"
         android:textColor="@color/black"
         android:fontFamily="@font/nunitosans_bold_2"
         android:textSize="@dimen/_16sdp"
+        android:visibility="gone"
         android:gravity="center"
         android:layout_marginTop="@dimen/_10sdp"/>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_10sdp">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -54,8 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:text="Enrollment Date"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Date of Enrollment*"
                 android:fontFamily="@font/nunitosans_semibold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
@@ -237,7 +244,7 @@
                 android:background="@drawable/back_two"
                 android:elevation="@dimen/_4sdp"
                 android:fontFamily="@font/nunitosans_regular_2"
-                android:hint="01-01-2022"
+                android:hint="--"
                 android:textColorHint="@color/grey"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
@@ -250,7 +257,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Enrollment Id"
+                android:text="Nikshaya ID*"
                 android:fontFamily="@font/nunitosans_semibold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
@@ -276,7 +283,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Patient Name"
+                android:text="Patient Name*"
                 android:fontFamily="@font/nunitosans_semibold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
@@ -297,12 +304,36 @@
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="Upload Notification Form*"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <ImageView
+                android:id="@+id/addpatientfrontimg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:radius="@dimen/_8sdp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/photo" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Age"
+                android:text="Age*"
                 android:fontFamily="@font/nunitosans_semibold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
@@ -329,7 +360,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Gender"
+                android:text="Gender*"
                 android:fontFamily="@font/nunitosans_semibold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
@@ -353,6 +384,63 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:text="Primary Phone Number*"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/f1_primaryphonenumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:elevation="@dimen/_4sdp"
+                    android:fontFamily="@font/nunitosans_regular_2"
+                    android:textStyle="bold"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textColorHint="@color/grey"
+                    android:background="@drawable/back_two"
+                    android:hint="--"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+            </ScrollView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="Upload Bank Account"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <ImageView
+                android:id="@+id/addpatientBankimg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:radius="@dimen/_8sdp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/photo" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:text="Weight (in Kg)"
                 android:fontFamily="@font/nunitosans_semibold"
                 android:textColor="@color/black"
@@ -371,6 +459,7 @@
                 android:background="@drawable/back_two"
                 android:inputType="numberDecimal"
                 android:hint="--"
+                android:text=""
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
@@ -392,6 +481,7 @@
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:elevation="@dimen/_4sdp"
+                android:text=""
                 android:fontFamily="@font/nunitosans_regular_2"
                 android:textStyle="bold"
                 android:textColorHint="@color/grey"
@@ -422,6 +512,7 @@
                 android:elevation="@dimen/_4sdp"
                 android:fontFamily="@font/nunitosans_regular_2"
                 android:hint="--"
+                android:text=""
                 android:textColorHint="@color/grey"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
@@ -450,6 +541,7 @@
                 android:textStyle="bold"
                 android:background="@drawable/back_two"
                 android:hint="--"
+                android:text=""
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
@@ -473,6 +565,7 @@
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:fontFamily="@font/nunitosans_regular_2"
                 android:textStyle="bold"
+                android:text=""
                 android:textColorHint="@color/grey"
                 android:background="@drawable/back_two"
                 android:hint="--"
@@ -550,6 +643,7 @@
                 android:elevation="@dimen/_4sdp"
                 android:fontFamily="@font/nunitosans_regular_2"
                 android:textStyle="bold"
+                android:inputType="number"
                 android:textColorHint="@color/grey"
                 android:background="@drawable/back_two"
                 android:hint="--"
@@ -571,16 +665,17 @@
                 android:id="@+id/f1_residentialstate"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:elevation="@dimen/_4sdp"
-                android:textStyle="bold"
                 android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
                 android:hint="--"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -629,34 +724,7 @@
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Primary Phone Number"
-                android:fontFamily="@font/nunitosans_semibold"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
 
-            <EditText
-                android:id="@+id/f1_primaryphonenumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:elevation="@dimen/_4sdp"
-                android:fontFamily="@font/nunitosans_regular_2"
-                android:textStyle="bold"
-                android:inputType="number"
-                android:maxLength="10"
-                android:textColorHint="@color/grey"
-                android:background="@drawable/back_two"
-                android:hint="--"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_12sdp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -666,25 +734,30 @@
                 android:fontFamily="@font/nunitosans_semibold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
-
-            <EditText
-                android:id="@+id/f1_secondaryphonenumber"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:elevation="@dimen/_4sdp"
-                android:fontFamily="@font/nunitosans_regular_2"
-                android:textStyle="bold"
-                android:inputType="number"
-                android:background="@drawable/back_two"
-                android:hint="--"
-                android:textColorHint="@color/grey"
-                android:maxLength="10"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_12sdp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/f1_secondaryphonenumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:elevation="@dimen/_4sdp"
+                    android:fontFamily="@font/nunitosans_regular_2"
+                    android:textStyle="bold"
+                    android:inputType="number"
+                    android:background="@drawable/back_two"
+                    android:hint="--"
+                    android:textColorHint="@color/grey"
+                    android:maxLength="10"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+            </ScrollView>
+
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/bt_proceedone"
                 android:layout_width="match_parent"

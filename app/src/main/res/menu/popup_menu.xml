@@ -6,6 +6,7 @@
 
     <item
         android:id="@+id/add_hf"
+        android:visible="false"
         android:title="Add Health facility" />
 
 

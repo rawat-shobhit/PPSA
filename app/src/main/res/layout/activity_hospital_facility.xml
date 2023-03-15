@@ -7,88 +7,158 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".HospitalFacility">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#2ea8df">
-        <ImageView
-            android:id="@+id/backbtn"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/ic_arrow_back"
-            android:padding="@dimen/_5sdp"
-
-            android:layout_margin="@dimen/_5sdp"
-            app:tint="@color/white"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Doctors"
-            android:fontFamily="@font/nunitosans_bold_2"
-            android:layout_gravity="center_vertical"
-            android:gravity="center"
-            android:layout_marginEnd="@dimen/_40sdp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_20sdp"/>
-    </LinearLayout>
-    <androidx.core.widget.NestedScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_10sdp">
-
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:id="@+id/docLay"
-               android:orientation="vertical">
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:orientation="horizontal"
-                   android:layout_marginVertical="@dimen/_10sdp"
-                   android:layout_marginHorizontal="@dimen/_12sdp">
-                   <TextView
-                       android:layout_width="0dp"
-                       android:layout_weight="1"
-                       android:layout_height="wrap_content"
-                       android:text="Doctors Descriptions"
-                       android:fontFamily="@font/nunitosans_semibold"
-                       android:layout_gravity="center"
-                       android:textColor="@color/black"
-                       android:textSize="@dimen/_14sdp" />
-                   <TextView
-                       android:id="@+id/addDoc"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="ADD"
-                       android:fontFamily="@font/nunitosans_semibold"
-                       android:textColor="@color/black"
-                       android:layout_gravity="center_vertical"
-                       android:gravity="center"
-                       android:layout_marginEnd="@dimen/_10sdp"
-                       android:drawableEnd="@drawable/ic_add"
-                       android:textSize="@dimen/_14sdp"/>
-               </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#2ea8df">
 
-               <androidx.recyclerview.widget.RecyclerView
-                   android:id="@+id/hf_recycleview"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                   android:layout_marginHorizontal="@dimen/_12sdp"/>
+                <ImageView
+                    android:id="@+id/backbtn"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp"
+
+                    android:src="@drawable/ic_arrow_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/hfName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:gravity="center"
+                    android:text="List of practioners"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_16ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/addDoc"
+                    app:layout_constraintStart_toEndOf="@+id/backbtn"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/addDoc"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/ic_add"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/white" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/_50sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                >
+                <EditText
+                    android:id="@+id/search"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:background="@drawable/back_two"
+                    android:fontFamily="@font/nunitosans_regular_2"
+                    android:hint="Search"
+                    android:paddingHorizontal="@dimen/_12sdp"
+                    android:textColor="@color/black" />
+            </androidx.cardview.widget.CardView>
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10sdp">
 
 
-           </LinearLayout>
-           </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-    </androidx.core.widget.NestedScrollView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/docLay"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            android:layout_marginVertical="@dimen/_10sdp"
+                            android:layout_marginHorizontal="@dimen/_12sdp">
+                            <TextView
+                                android:id="@+id/hfNames"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="Doctors Descriptions"
+                                android:fontFamily="@font/nunitosans_semibold"
+                                android:layout_gravity="center"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_14sdp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ADD"
+                                android:fontFamily="@font/nunitosans_semibold"
+                                android:textColor="@color/black"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:drawableEnd="@drawable/ic_add"
+                                android:textSize="@dimen/_14sdp"/>
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/hf_recycleview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_12sdp"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/nextbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginVertical="@dimen/_20sdp"
+            android:layout_marginBottom="172dp"
+            android:background="@drawable/back_btn"
+            android:backgroundTint="#2ea8df"
+            android:fontFamily="@font/nunitosans_semibold"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/_30sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            android:text="NEXT"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="visible" />
+    </RelativeLayout>
 
 
 
