@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SampleList">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#2ea8df">
+        <ImageView
+            android:id="@+id/backbtn"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/ic_arrow_back"
+            android:padding="@dimen/_5sdp"
+            android:layout_margin="@dimen/_5sdp"
+            app:tint="@color/white"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="History of Samples"
+            android:fontFamily="@font/nunitosans_bold_2"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/_40sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_12sdp">
+        <TextView
+            android:id="@+id/pat_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Sample collection"
+            android:fontFamily="@font/nunitosans_semibold"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp" />
+        <TextView
+            android:id="@+id/addSpecimenBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADD"
+
+            android:fontFamily="@font/nunitosans_semibold"
+            android:textColor="@color/black"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:drawableEnd="@drawable/ic_add"
+            android:textSize="@dimen/_14sdp"/>
+        <ImageView
+            android:id="@+id/homeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_cardview"
+            android:padding="@dimen/_4sdp"
+            android:src="@drawable/ic_baseline_home_24"/>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:id="@+id/sample_recycler"/>
+</LinearLayout>

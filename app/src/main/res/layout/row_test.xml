@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_10sdp"
+    android:orientation="vertical"
+    android:background="@drawable/back_cardview"
+    android:layout_marginVertical="@dimen/_5sdp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/_5sdp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:fontFamily="@font/nunitosans_semibold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"/>
+        <TextView
+            android:id="@+id/ts_date"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:fontFamily="@font/nunitosans_regular_2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/_5sdp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Diagnostic Test"
+            android:fontFamily="@font/nunitosans_semibold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"/>
+        <TextView
+            android:id="@+id/ts_diagnostic"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:fontFamily="@font/nunitosans_regular_2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/_5sdp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="DST Test"
+            android:textColor="@color/black"
+            android:fontFamily="@font/nunitosans_semibold"
+            android:textSize="@dimen/_12sdp"/>
+        <TextView
+            android:id="@+id/ts_dsttest"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:fontFamily="@font/nunitosans_regular_2"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Date DST Test"
+            android:fontFamily="@font/nunitosans_semibold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"/>
+        <TextView
+            android:id="@+id/ts_dateDsttest"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:fontFamily="@font/nunitosans_regular_2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ProviderEngagement">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#2ea8df">
+        <ImageView
+            android:id="@+id/backbtn"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/ic_arrow_back"
+            android:padding="@dimen/_5sdp"
+
+            android:layout_margin="@dimen/_5sdp"
+            app:tint="@color/white"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Provider Engagement"
+            android:fontFamily="@font/nunitosans_semibold"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/_40sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp"/>
+    </LinearLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@color/grey"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_11sdp"
+                android:elevation="@dimen/_12sdp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="39dp"
+                    android:background="@color/white"
+                    android:src="@drawable/hospital"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingVertical="@dimen/_7sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/hospitalNameTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Hospital name"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@color/grey"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_11sdp"
+                android:elevation="@dimen/_12sdp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="39dp"
+                    android:background="@color/white"
+                    android:src="@drawable/location"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingVertical="@dimen/_7sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/locationHospital"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Hospital location"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@color/grey"
+                android:orientation="horizontal"
+                android:visibility="gone"
+
+                android:layout_marginHorizontal="@dimen/_11sdp"
+                android:elevation="@dimen/_12sdp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="39dp"
+                    android:background="@color/white"
+                    android:src="@drawable/doctor"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingVertical="@dimen/_7sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/docname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Doctor name"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@color/grey"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_11sdp"
+                android:elevation="@dimen/_12sdp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="39dp"
+                    android:background="@color/white"
+                    android:src="@drawable/doctor"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingVertical="@dimen/_7sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/hospitalTYpe"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Hospital type"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@color/grey"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_11sdp"
+                android:elevation="@dimen/_12sdp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="39dp"
+                    android:background="@color/white"
+                    android:src="@drawable/calendar"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingVertical="@dimen/_7sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/currentdate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Current date"
+                        android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/visitdays"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Days"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Health Facility Visit"
+                android:textSize="@dimen/_18sdp"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/_12sdp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:paddingVertical="@dimen/_6sdp"
+                android:background="#EAEAEA"
+
+                android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/hospital" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/_17sdp"
+                    android:text="Name:"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:textSize="@dimen/_12sdp"/>
+                <TextView
+                    android:id="@+id/hospitalName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:paddingVertical="@dimen/_6sdp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/location" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:text="Address:"
+                    android:layout_marginStart="@dimen/_17sdp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:textSize="@dimen/_12sdp"/>
+                <TextView
+                    android:id="@+id/hospitalAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#EAEAEA"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:paddingVertical="@dimen/_6sdp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/clinic" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Type:"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/_17sdp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:textSize="@dimen/_12sdp"/>
+                <TextView
+                    android:id="@+id/hospitalType"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:paddingVertical="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_12sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/calendar" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/_17sdp"
+                    android:text="Date and Time: "
+                    android:textSize="@dimen/_12sdp"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:text=" "
+                    android:textSize="@dimen/_12sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:paddingVertical="@dimen/_6sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:src="@drawable/doctorvisit" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_17sdp"
+                    android:text="Last Visit: "
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/lstvisit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text=" "
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:textSize="@dimen/_12sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:text="* are mandatory fields"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Purpose of visit*"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+      <!--      <com.anurag.multiselectionspinner.MultiSpinner
+                android:id="@+id/purpose_of_visit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:elevation="@dimen/_4sdp"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:background="@drawable/back_two"
+                android:hint="&#45;&#45;"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />-->
+            <TextView
+                android:id="@+id/purpose_of_visit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:elevation="@dimen/_4sdp"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:background="@drawable/back_two"
+                android:hint="-Select-"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/bt_proceedone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:gravity="center"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="@dimen/_8sdp"
+                android:paddingVertical="@dimen/_8sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:background="#2ea8df"
+                    android:gravity="center"
+                    android:padding="@dimen/_12sdp"
+                    android:textAllCaps="true"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:text="Previous Visits to this facility"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:textColor="@color/black"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#2ea8df"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_12sdp"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:text="Date and time"
+                    android:fontFamily="@font/nunitosans_bold_2"/>
+                <View
+                    android:layout_width="@dimen/_1sdp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textColor="@color/white"
+                    android:text="Purpose of visits"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:fontFamily="@font/nunitosans_bold_2"/>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:id="@+id/prevVisits"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginHorizontal="@dimen/_20sdp"
+    android:layout_marginVertical="@dimen/_13sdp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cont"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:visibility="gone"
+            android:padding="@dimen/_5sdp"
+            android:background="@android:color/transparent">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_20sdp"
+                android:gravity="end"
+                android:layout_marginVertical="@dimen/_3sdp"
+                android:id="@+id/radioButton"
+                android:visibility="invisible"
+                android:buttonTint="@color/white"
+                android:layout_gravity="end">
+
+            </RadioButton>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/contone"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:src="@drawable/hospital" />
+            <!--        <View
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_height="match_parent"
+                        android:background="#9CC6D8"/>-->
+            <TextView
+                android:id="@+id/hospitalName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:text="Hospital name"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="#DFDFDE"
+            android:id="@+id/conttwo"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:src="@drawable/location" />
+            <!--        <View
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_height="match_parent"
+                        android:background="#9CC6D8"/>-->
+            <TextView
+                android:id="@+id/locationn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:text="Hospital name"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white"
+            android:id="@+id/contthree"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:src="@drawable/doctor" />
+            <!--        <View
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_height="match_parent"
+                        android:background="#9CC6D8"/>-->
+            <TextView
+                android:id="@+id/doctorname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:text="Hospital name"
+                android:textColor="@color/black" />
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/contfr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="#DFDFDE"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/himg"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:src="@drawable/hsign" />
+            <!--        <View
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_height="match_parent"
+                        android:background="#9CC6D8"/>-->
+            <TextView
+                android:id="@+id/hospitaltype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_toRightOf="@+id/himg"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:text="Hospital name"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/bagimg"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_alignRight="@+id/hospitaltype"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="-230dp"
+                android:visibility="invisible"
+                android:src="@drawable/bag" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@color/grey"
+            android:id="@+id/contfv"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:elevation="@dimen/_12sdp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="39dp"
+                android:background="@color/white"
+                android:src="@drawable/doctor"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingVertical="@dimen/_7sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/hospitalTYpe"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_marginStart="@dimen/_38sdp"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:text="Hospital type"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:id="@+id/contsixx"
+            android:elevation="@dimen/_12sdp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="39dp"
+                android:visibility="gone"
+                android:src="@drawable/calendar"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last visit as on"
+                android:gravity="center"
+                android:layout_gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/_7sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/currentdate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:text="Current date"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/visitdays"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:visibility="gone"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:text="Days"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/laytable"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginVertical="@dimen/_7sdp"
+                android:layout_weight="2"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:text="Hospital details"
+                android:textColor="@color/black" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@color/grey"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_11sdp"
+                android:elevation="@dimen/_12sdp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="39dp"
+                    android:background="@color/white"
+                    android:src="@drawable/hospital"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingVertical="@dimen/_7sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/hospitalNameTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Hospital name"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@color/grey"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_11sdp"
+                android:elevation="@dimen/_12sdp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="39dp"
+                    android:background="@color/white"
+                    android:src="@drawable/location"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingVertical="@dimen/_7sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/locationHospital"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Hospital location"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@color/grey"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_11sdp"
+                android:elevation="@dimen/_12sdp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="39dp"
+                    android:background="@color/white"
+                    android:src="@drawable/doctor"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingVertical="@dimen/_7sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/docname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Doctor name"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RadioButton
+            android:id="@+id/radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+</LinearLayout>

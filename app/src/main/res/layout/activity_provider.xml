@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ProviderActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/providerangagementbtn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:elevation="@dimen/_5sdp"
+
+                app:cardCornerRadius="@dimen/_20sdp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/back_cardview">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:src="@drawable/ic_support"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seeking Support Visit"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/_18sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/reportdeliverybtn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:elevation="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                app:cardCornerRadius="@dimen/_20sdp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/back_cardview">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:src="@drawable/ic_twoperson"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Referrals of presumptive"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/_16sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/usermainbtn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:elevation="@dimen/_5sdp"
+                app:cardCornerRadius="@dimen/_20sdp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/back_cardview">
+
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Hospital"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textSize="@dimen/_16sdp"
+
+                        android:gravity="center"/>
+                    <TextView
+                        android:id="@+id/dateandtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Name and Address"
+                        android:fontFamily="@font/nunitosans_semibold"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/_16sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/samplecollection"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:elevation="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                app:cardCornerRadius="@dimen/_20sdp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/back_cardview">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:src="@drawable/ic_not"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sample Collections"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/_16sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="@dimen/_14sdp"
+    android:fontFamily="@font/nunitosans_regular_2"
+    android:gravity="center"
+    android:textColor="@color/black"
+    android:layout_marginVertical="@dimen/_10sdp"
+    android:id="@+id/type"/>
+    <TextView
+        android:id="@+id/nextbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_12sdp"
+        android:textColor="@color/white"
+        android:text="SUBMIT"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:fontFamily="@font/nunitosans_semibold"
+        android:layout_gravity="center"
+        android:paddingVertical="@dimen/_10sdp"
+        android:paddingHorizontal="@dimen/_30sdp"
+        android:background="@drawable/back_btn"
+        android:backgroundTint="#2ea8df"/>
+
+</LinearLayout>

@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FdcReceived">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#2ea8df"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/backbtn"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/_40sdp"
+            android:fontFamily="@font/nunitosans_bold_2"
+            android:gravity="center"
+            android:text="FDC Received"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_10sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_11sdp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="39dp"
+                    android:background="@color/white"
+                    android:src="@drawable/hospital"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/_7sdp">
+
+                    <TextView
+                        android:id="@+id/hospitalName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Hospital name"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_11sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@color/grey"
+                android:elevation="@dimen/_12sdp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="39dp"
+                    android:src="@drawable/doctor"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#DFDFDE"
+                    android:orientation="horizontal"
+                    android:paddingVertical="@dimen/_7sdp">
+
+                    <TextView
+                        android:id="@+id/docname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Hospital name"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/_105sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Date Dispensation"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/dateofdispensationtv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/back_two"
+                    android:elevation="@dimen/_4sdp"
+                    android:fontFamily="@font/nunitosans_regular_2"
+                    android:hint="--"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_30sdp"
+                >
+                <TextView
+                    android:layout_width="@dimen/_105sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_14sdp"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="MEDICINE"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+                <Spinner
+                    android:id="@+id/fdc2et"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/back_two"
+                    android:elevation="@dimen/_4sdp"
+                    android:hint="--"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+                <!--   <EditText
+                       android:id="@+id/fdc2et"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:digits="0123456789"
+                       android:layout_marginHorizontal="@dimen/_12sdp"
+                       android:layout_marginTop="@dimen/_5sdp"
+                       android:background="@drawable/back_two"
+                       android:elevation="@dimen/_4sdp"
+                       android:fontFamily="@font/nunitosans_regular_2"
+                       android:hint="Enter FDC2"
+                       android:inputType="number"
+                       android:maxLength="11"
+                       android:textColorHint="@color/grey"
+                       android:paddingHorizontal="@dimen/_10sdp"
+                       android:paddingVertical="@dimen/_12sdp"
+                       android:textColor="@color/black"
+                       android:textSize="@dimen/_12sdp"
+                       android:textStyle="bold" />-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_30sdp">
+                <TextView
+                    android:layout_width="@dimen/_105sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_14sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="UOM"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/fdc3et"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/back_two"
+                    android:elevation="@dimen/_4sdp"
+                    android:hint="--"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+                <!--       <EditText
+                           android:id="@+id/fdc3et"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_marginHorizontal="@dimen/_12sdp"
+                           android:layout_marginTop="@dimen/_5sdp"
+                           android:digits="0123456789"
+                           android:background="@drawable/back_two"
+                           android:elevation="@dimen/_4sdp"
+                           android:fontFamily="@font/nunitosans_regular_2"
+                           android:hint="Enter FDC3"
+                           android:inputType="number"
+                           android:maxLength="11"
+                           android:textColorHint="@color/grey"
+                           android:paddingHorizontal="@dimen/_10sdp"
+                           android:paddingVertical="@dimen/_12sdp"
+                           android:textColor="@color/black"
+                           android:textSize="@dimen/_12sdp"
+                           android:textStyle="bold" />-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_30sdp">
+                <TextView
+                    android:layout_width="@dimen/_105sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_14sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Quantity"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+
+                <EditText
+                    android:id="@+id/fdc4et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/back_two"
+                    android:digits="0123456789"
+                    android:elevation="@dimen/_4sdp"
+                    android:fontFamily="@font/nunitosans_regular_2"
+                    android:hint="Enter Quantity"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:textColorHint="@color/grey"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_30sdp">
+                <TextView
+                    android:layout_width="@dimen/_105sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_14sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Ethambutol"
+                    android:visibility="gone"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+
+
+                <EditText
+                    android:id="@+id/ethambutolet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/back_two"
+                    android:elevation="@dimen/_4sdp"
+                    android:digits="0123456789"
+                    android:visibility="gone"
+                    android:fontFamily="@font/nunitosans_regular_2"
+                    android:hint="Enter Ethambutol"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:textColorHint="@color/grey"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:paddingVertical="@dimen/_12sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/submitbtnc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginVertical="@dimen/_20sdp"
+                android:background="@drawable/back_btn"
+                android:backgroundTint="#2ea8df"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_30sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:text="SUBMIT"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="Previous FDC Received"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:background="#2ea8df"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:padding="@dimen/_12sdp"
+                        android:text="Date"
+                        android:textColor="@color/white" />
+
+                    <View
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Total Drugs"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/previoussamplecollectionsrecyclerC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

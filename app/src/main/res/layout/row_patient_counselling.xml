@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:id="@+id/transfer_show2"
+    android:orientation="vertical"
+    android:background="@drawable/back_cardview"
+    android:layout_marginBottom="@dimen/_5sdp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:padding="@dimen/_5sdp"
+        android:id="@+id/transfer_show"
+        android:background="@drawable/back_four">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:gravity="end"
+            android:layout_marginVertical="@dimen/_3sdp"
+            android:id="@+id/radioButton"
+            android:buttonTint="@color/white"
+            android:layout_gravity="end">
+
+        </CheckBox>
+
+
+    </LinearLayout>
+  <!--  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/_5sdp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Patient Name"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+            <TextView
+                android:id="@+id/qualification_one"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="&#45;&#45;"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:layout_marginBottom="@dimen/_5sdp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Phone Number"
+                android:textColor="@color/black"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:textSize="@dimen/_12sdp"/>
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="&#45;&#45;"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Address"
+
+                android:fontFamily="@font/nunitosans_semibold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="&#45;&#45;"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Age"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+            <TextView
+                android:id="@+id/nikid"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="&#45;&#45;"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Doctor name"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+            <TextView
+                android:id="@+id/docname"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="&#45;&#45;"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Nikshay ID"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+            <TextView
+                android:id="@+id/docid"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="&#45;&#45;"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Hospital name"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+            <TextView
+                android:id="@+id/hosname"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="&#45;&#45;"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Last follow up"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+            <TextView
+                android:id="@+id/lfup"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="&#45;&#45;"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_12sdp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="39dp"
+                android:background="@color/white"
+                android:src="@drawable/user"
+                android:visibility="invisible"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/docIdt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:text="Customer name"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="39dp"
+                android:background="@color/white"
+                android:src="@drawable/user"
+                android:visibility="invisible"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/regid"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:text="Customer name"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="39dp"
+                android:background="@color/white"
+                android:src="@drawable/user"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/customerName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:text="Customer name"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="39dp"
+                android:background="@color/white"
+                android:src="@drawable/people"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/agetxt"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:background="@color/white"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:text="45"
+                    android:textSize="@dimen/_11sdp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="27dp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:background="@color/white"
+                    android:src="@drawable/sex"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/typeCl"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:background="@color/white"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:text="Female"
+                    android:textSize="@dimen/_11sdp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="27dp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:background="@color/white"
+                    android:src="@drawable/calendar"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/datetxt"
+                    android:layout_width="105dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:background="@color/white"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:text="2022-12-10"
+                    android:textSize="@dimen/_11sdp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="39dp"
+                android:background="@color/white"
+                android:src="@drawable/doctor"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/doctorname"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_weight="2"
+                    android:textSize="@dimen/_11sdp"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:text="Customer name"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_6sdp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="39dp"
+                android:background="@color/white"
+                android:src="@drawable/hospital"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:paddingVertical="@dimen/_5sdp"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/hospitalnamett"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_weight="2"
+                    android:textSize="@dimen/_11sdp"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:text="Customer name"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_6sdp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="39dp"
+                android:background="@color/white"
+                android:src="@drawable/doctorvisit"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:paddingVertical="@dimen/_5sdp"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/lastvisit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_weight="2"
+                    android:textSize="@dimen/_11sdp"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:text="Last visit"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    app:cardCornerRadius="@dimen/_12sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_24sdp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/_14sdp"
+            android:text="Enter Quantity"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+
+        <EditText
+            android:id="@+id/aqd_qty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_12sdp"
+            android:background="@drawable/back_two"
+            android:backgroundTint="@color/white"
+            android:elevation="@dimen/_5sdp"
+            android:hint="Enter Quantity"
+            android:inputType="number"
+            android:padding="@dimen/_12sdp"
+            android:paddingHorizontal="@dimen/_10sdp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/aqd_close"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_18sdp"
+                android:background="@drawable/back_btn"
+                android:backgroundTint="#2ea8df"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_32sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="Close"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:id="@+id/aqd_submit"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_18sdp"
+                android:background="@drawable/back_btn"
+                android:backgroundTint="#2ea8df"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_32sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="Submit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

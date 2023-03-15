@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:id="@+id/rp_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="@dimen/_4sdp">
+
+                <TextView
+                    android:id="@+id/rsp_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:textColor="@color/purple_700"
+                    android:textSize="@dimen/_12sdp" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/rsp_remove"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:padding="@dimen/_8sdp"
+                android:src="@android:drawable/ic_delete"
+                app:tint="@color/purple_700" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/nunitosans_regular_2"
+                    android:text="UOM"
+                    android:textSize="@dimen/_10sdp" />
+
+                <Spinner
+                    android:id="@+id/anc_dis_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:paddingHorizontal="@dimen/_12sdp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/back_two"
+                    android:textColorHint="#B8B8B8"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:paddingVertical="@dimen/_4sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/nunitosans_regular_2"
+                    android:text="Quantity"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:weightSum="4">
+                    <TextView
+                        android:id="@+id/rsp_minus"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#2ea8df"
+                        android:elevation="@dimen/_3sdp"
+                        android:fontFamily="@font/nunitosans_black"
+                        android:gravity="center"
+                        android:padding="@dimen/_6sdp"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <TextView
+                        android:id="@+id/rsp_quantity"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/back_two"
+                        android:fontFamily="@font/nunitosans_regular_2"
+                        android:inputType="number"
+                        android:layout_marginHorizontal="@dimen/_3sdp"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:paddingVertical="@dimen/_6sdp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <TextView
+                        android:id="@+id/rsp_add"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#2ea8df"
+                        android:elevation="@dimen/_3sdp"
+                        android:fontFamily="@font/nunitosans_black"
+                        android:gravity="center"
+                        android:padding="@dimen/_6sdp"
+                        android:text="+"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp" />
+                </LinearLayout>
+
+            </LinearLayout>
+           <!-- <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/nunitosans_regular_2"
+                    android:text="Price"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/rsp_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:textColor="@color/purple_700"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:fontFamily="@font/nunitosans_regular_2"
+                    android:text="Available"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/rsp_available"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:fontFamily="@font/nunitosans_bold_2"
+                    android:gravity="center"
+                    android:textColor="@color/purple_700"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>-->
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="#e3e3e3e3" />
+
+
+
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_12sdp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:text="Total price"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp" />
+
+            <TextView
+                android:id="@+id/rsp_total_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:gravity="end"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:paddingVertical="@dimen/_6sdp"
+                android:textColor="@color/purple_700"
+                android:textSize="@dimen/_10sdp" />
+        </LinearLayout>-->
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

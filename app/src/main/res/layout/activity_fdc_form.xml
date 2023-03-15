@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F3F3F3"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#2ea8df"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/backbtn"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/_40sdp"
+            android:fontFamily="@font/nunitosans_bold_2"
+            android:gravity="center"
+            android:text="FDC Opening Stock"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp" />
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+
+            <!--        <TextView-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginHorizontal="@dimen/_6sdp"-->
+            <!--            android:layout_marginTop="@dimen/_5sdp"-->
+            <!--            android:textColor="@color/black"-->
+            <!--            android:text="Address"-->
+            <!--            android:textStyle="bold"-->
+            <!--            android:fontFamily="@font/proxima_nova_regular"/>-->
+
+
+            <LinearLayout
+                android:id="@+id/hospitalLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:paddingHorizontal="@dimen/_11sdp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="39dp"
+                    android:background="@color/white"
+                    android:src="@drawable/hospital"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingVertical="@dimen/_7sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/hospitalName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Hospital name"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/doc_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@color/grey"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/_11sdp"
+                android:elevation="@dimen/_12sdp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="39dp"
+                    android:src="@drawable/doctor"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#DFDFDE"
+                    android:paddingVertical="@dimen/_7sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/docname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Hospital name"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/patientLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:paddingHorizontal="@dimen/_11sdp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="39dp"
+                    android:background="@color/white"
+                    android:src="@drawable/user"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingVertical="@dimen/_7sdp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/patientName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Patient name"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:text="* are mandatory fields"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:id="@+id/date_label"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="Date of dispensaton*"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/f1_testreport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
+                android:visibility="gone"
+                android:elevation="@dimen/_4sdp"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:hint="--"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/weightbands_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Weight bands*"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <LinearLayout
+                android:id="@+id/weightbands"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:elevation="@dimen/_2sdp"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_24sdp"
+                android:background="@drawable/back_three">
+
+                <Spinner
+                    android:id="@+id/anc_dis_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:paddingHorizontal="@dimen/_12sdp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/back_two"
+                    android:textColorHint="#B8B8B8"
+                    android:textSize="@dimen/_12sdp" />
+
+            </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/no_select_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_6sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:elevation="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/_24sdp"
+                    android:paddingVertical="@dimen/_8sdp"
+                    android:text="Select product*"
+                    android:textColor="#2ea8df"
+                    android:textSize="@dimen/_12sdp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/no_select_rv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="@dimen/_12sdp" />
+            <TextView
+                android:id="@+id/daysLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="No. of days*"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <LinearLayout
+                android:id="@+id/daysLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:elevation="@dimen/_2sdp"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_24sdp"
+                android:background="@drawable/back_three">
+
+                <EditText
+                    android:id="@+id/day_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:paddingHorizontal="@dimen/_12sdp"
+                    android:textColor="@color/black"
+                    android:hint="--"
+                    android:inputType="number"
+                    android:background="@drawable/back_two"
+                    android:textColorHint="#B8B8B8"
+                    android:textSize="@dimen/_12sdp" />
+
+            </LinearLayout>
+            <Button
+                android:id="@+id/no_create_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="@dimen/_12sdp"
+                android:background="@drawable/back_btn"
+                android:paddingHorizontal="@dimen/_24sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="Place An Order"
+                android:textSize="@dimen/_10sdp"
+                app:backgroundTint="#2ea8df" />
+            <LinearLayout
+                android:id="@+id/layout"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#B3E6FD"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/date_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_12sdp"
+                    android:layout_weight="1"
+                    android:text="Date"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/nunitosans_bold_2"/>
+                <View
+                    android:layout_width="@dimen/_1sdp"
+                    android:layout_height="match_parent"
+                    android:background="#9CC6D8"/>
+                <TextView
+                    android:id="@+id/purpose"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Total drug"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:fontFamily="@font/nunitosans_bold_2"/>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/prev_drug"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+<!--    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_12sdp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_weight="1"
+            android:text="Grand Total"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/no_grand_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp" />
+
+    </LinearLayout>-->
+</LinearLayout>

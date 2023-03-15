@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingHorizontal="@dimen/_3sdp"
+    android:paddingVertical="@dimen/_10sdp"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_marginVertical="@dimen/_5sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:padding="@dimen/_5sdp"
+        android:background="@drawable/back_four">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:gravity="end"
+            android:layout_marginVertical="@dimen/_3sdp"
+            android:id="@+id/radioButton"
+            android:buttonTint="@color/white"
+            android:layout_gravity="end">
+
+        </RadioButton>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_hospital"
+        android:padding="@dimen/_5sdp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/_5sdp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                app:cardCornerRadius="250dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/white">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="@dimen/_59sdp"
+                    android:layout_height="@dimen/_59sdp"
+                    app:cardCornerRadius="250dp"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/delivery"
+                        android:scaleType="centerInside"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.cardview.widget.CardView>
+
+           <!-- <ImageView
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:src="@drawable/delivery"
+
+                />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Medicine Name"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"/>
+
+                <TextView
+                    android:id="@+id/medName"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Medicine Name"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13sdp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_marginBottom="@dimen/_5sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:fontFamily="@font/nunitosans_semibold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13sdp"/>
+                    <TextView
+                        android:id="@+id/meddesc"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="random description"
+                        android:fontFamily="@font/nunitosans_regular_2"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+          <!--  <TextView
+                android:id="@+id/doctor_name"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="&#45;&#45;"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>-->
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
