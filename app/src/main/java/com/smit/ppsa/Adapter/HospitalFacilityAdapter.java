@@ -3,6 +3,7 @@ package com.smit.ppsa.Adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -76,13 +78,17 @@ public class HospitalFacilityAdapter extends RecyclerView.Adapter<HospitalFacili
         holder.qualificationtwo.setText(nList.get(position).getQual());
         holder.conatactno.setText(nList.get(position).getMob());
 
-         int difference = (int) getDateDiff(new SimpleDateFormat("yyyy/MM/dd"), nList.get(position).getlst_vst().toString(), getDateTime());
-        //System.out.println("dateDifference: " + difference);
-         Log.d("dateDifference",difference+" done");
-//
-//        if(difference<=30){
-//           //   holder.borderLayout.setBackgroundTintMode(ContextCompat.getColorStateList(context, R.color.red));
-//        }
+        try{
+            int difference = (int) getDateDiff(new SimpleDateFormat("yyyy/MM/dd"), nList.get(position).getlst_vst().toString(), getDateTime());
+            Log.d("dateDifference",difference+" done");
+
+            if(difference<=30){
+                Toast.makeText(context, "hello", Toast.LENGTH_SHORT).show();
+                holder.borderLayout.setBackgroundTintList(context.getResources().getColorStateList(R.color.teal_700));
+
+            }
+        }catch (Exception e){}
+
 
         holder.lastvisit.setText(nList.get(position).getlst_vst());
 //

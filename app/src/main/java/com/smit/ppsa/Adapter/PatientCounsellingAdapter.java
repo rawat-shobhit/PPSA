@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,10 +55,11 @@ public class PatientCounsellingAdapter extends RecyclerView.Adapter<PatientCouns
         if (type.equals("counsel")) {
             holder.actualHospitalname.setVisibility(View.VISIBLE);
             holder.nikshayId.setVisibility(View.VISIBLE);
-            holder.patientAge.setVisibility(View.VISIBLE);
-            holder.patientType.setVisibility(View.VISIBLE);
+//            holder.patientAge.setVisibility(View.VISIBLE);
+//            holder.patientType.setVisibility(View.VISIBLE);
             holder.doctorName.setVisibility(View.VISIBLE);
             holder.date.setVisibility(View.VISIBLE);
+
         }
 
         if (registerParentData.get(position).isChecked()) {
@@ -160,6 +162,7 @@ public class PatientCounsellingAdapter extends RecyclerView.Adapter<PatientCouns
         LinearLayout transferShow, transferShow2;
         CheckBox radioButton;
         TextView lastvisit;
+        ImageView sexImage,ageImage;
 
         public Mholder(@NonNull View itemView) {
             super(itemView);
@@ -176,6 +179,9 @@ public class PatientCounsellingAdapter extends RecyclerView.Adapter<PatientCouns
             patientAge = itemView.findViewById(R.id.agetxt);
             patientType = itemView.findViewById(R.id.typeCl);
             lastvisit = itemView.findViewById(R.id.lastvisit);
+
+
+            sexImage=itemView.findViewById(R.id.sexImage);
 
             radioButton = itemView.findViewById(R.id.radioButton);
         }

@@ -204,6 +204,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
             LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver2, new IntentFilter("patient"));
             TextView title = findViewById(R.id.title);
             title.setText("Report collection");
+
             initViews();
             hl_addbtn.setVisibility(View.INVISIBLE);
             backBtn.setOnClickListener(this);

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -75,8 +76,13 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
         }else if (type.equals("reportdelivery")){
             holder.actualHospitalname.setVisibility(View.VISIBLE);
             holder.nikshayId.setVisibility(View.VISIBLE);
-            holder.patientAge.setVisibility(View.VISIBLE);
-            holder.patientType.setVisibility(View.VISIBLE);
+
+                holder.patientAge.setVisibility(View.GONE);
+                holder.patientType.setVisibility(View.GONE);
+                holder.patientImage.setVisibility(View.GONE);
+                holder.sexImage.setVisibility(View.GONE);
+
+
             holder.doctorName.setVisibility(View.VISIBLE);
             holder.date.setVisibility(View.VISIBLE);
             holder.date.setText(registerParentData.get(position).getdSpecmCol());
@@ -216,6 +222,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
         CheckBox radioButton;
         RadioButton radioButtonOne;
         LinearLayout transferShow2,transferShow;
+        ImageView sexImage,patientImage;
 
         public Mholder(@NonNull View itemView) {
             super(itemView);
@@ -223,6 +230,9 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
             actualHospitalname = itemView.findViewById(R.id.hospitalnamett);
             transferShow = itemView.findViewById(R.id.transfer_show);
             transferShow2 = itemView.findViewById(R.id.transfer_show2);
+
+
+            sexImage=itemView.findViewById(R.id.sexImage);
 
          //   phone = itemView.findViewById(R.id.phone);
            // address = itemView.findViewById(R.id.address);
@@ -233,6 +243,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
             date = itemView.findViewById(R.id.datetxt);
             patientAge = itemView.findViewById(R.id.agetxt);
             patientType = itemView.findViewById(R.id.typeCl);
+            patientImage=itemView.findViewById(R.id.people_img);
         }
     }
     public void updateList(ArrayList<RegisterParentData> list) {

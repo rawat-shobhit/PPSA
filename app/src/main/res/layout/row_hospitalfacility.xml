@@ -6,9 +6,9 @@
     android:layout_height="wrap_content"
     android:paddingHorizontal="@dimen/_3sdp"
     android:paddingVertical="@dimen/_10sdp"
-    android:orientation="vertical"
-
     android:background="@drawable/border_green"
+    android:orientation="vertical"
+    android:padding="@dimen/_3sdp"
     android:backgroundTint="@color/white"
     android:layout_marginVertical="@dimen/_5sdp">
 
