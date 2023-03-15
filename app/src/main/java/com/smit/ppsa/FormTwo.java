@@ -210,14 +210,13 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
             backBtn.setOnClickListener(this);
             nextbtn.setOnClickListener(this);
             filterTitle.setText("TU");
+            filterspinner.setVisibility(View.GONE);
+            filterTitle.setVisibility(View.GONE);
             filterspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     if (i == 0) {
                         tuId = "0";
-                        Toast.makeText(FormTwo.this, "offer", Toast.LENGTH_SHORT).show();
-
-                        NetworkCalls.getTUPatient(FormTwo.this, tuId);
 
                     } else {
                         //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
@@ -230,7 +229,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                             setHospitalRecycler();
                         }*/
 
-                        NetworkCalls.getTUPatient(FormTwo.this, tuId);
+                      //  NetworkCalls.getTUPatient(FormTwo.this, tuId);
 
 
                     }
@@ -1063,13 +1062,24 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                 Log.d("mijop", "onReceive: " + tu.size());
                 Log.d("mijop", "onReceive: " + tu.toString());
 
+                String tus = "";
+
+               //w=n_tu_id<<EQUALTO>>2<<OR>>n_tu_id<<EQUALTO>>3<<OR>>n_tu_id<<EQUALTO>>4
                 for (int a = 0; a < tu.size(); a++) {
 
                     if (!tuStrings.contains(tu.get(a).getcTuName())) {
                         tuStrings.add(tu.get(a).getcTuName());
+                        if(a<tu.size()-1){
+                            tus = tus+"n_tu_id<<EQUALTO>>"+tu.get(a).getN_tu_id() +"<<OR>>" ;
+                        }else{
+                            tus=tus+"n_tu_id<<EQUALTO>>"+tu.get(a).getN_tu_id();
+                        }
                     }
 
+                    NetworkCalls.getTUPatient(FormTwo.this,tus);
+
                 }
+               // BaseUtils.showToast(FormTwo.this,tus);
 
                 //setSpinnerAdapter(EnrollmentFaciltyTBU,tuStrings);
                 if (!getIntent().hasExtra("counsel")) {
