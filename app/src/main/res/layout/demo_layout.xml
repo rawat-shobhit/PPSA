@@ -25,7 +25,7 @@
         android:fontFamily="@font/nunitosans_semibold"
         android:layout_marginHorizontal="@dimen/_30sdp"
         android:gravity="center"
-        android:text="Do you want to dispense to hospital or individual?"
+        android:text="Do you want to dispense to hospital or patient?"
         android:textColor="@color/black"
         android:textSize="@dimen/_12sdp" />
 
@@ -50,7 +50,7 @@
             android:fontFamily="@font/nunitosans_semibold"
             android:gravity="center"
             android:paddingVertical="@dimen/_10sdp"
-            android:text="Individual"
+            android:text="Patient"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
 

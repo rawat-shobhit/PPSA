@@ -115,7 +115,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
     FormSixViewModel mViewModel;
     FdcDispensationToHfViewModel fdcDispensationToHfViewModel;
     FdcDispensationToPatientViewModel fdcDispensationToPatientViewModel;
-
+    TextView title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +124,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
         mViewModel = new ViewModelProvider(this).get(FormSixViewModel.class);
         fdcDispensationToHfViewModel = new ViewModelProvider(this).get(FdcDispensationToHfViewModel.class);
         fdcDispensationToPatientViewModel = new ViewModelProvider(this).get(FdcDispensationToPatientViewModel.class);
+        title = findViewById(R.id.title);
 
         dataBase = AppDataBase.getDatabase(this);
 
@@ -202,7 +203,6 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
         if (getIntent().hasExtra("report_col")) {
             LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter(""));
             LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver2, new IntentFilter("patient"));
-            TextView title = findViewById(R.id.title);
             title.setText("Report collection");
 
             initViews();
@@ -650,7 +650,14 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                 } else if (filterspinner.getSelectedItemPosition() == 0) {
                     BaseUtils.showToast(FormTwo.this, "Please select filter to view list");
                 } else {
-                    getCounselPatList();
+                    try{
+                        getCounselPatList();
+                        BaseUtils.showToast(FormTwo.this, tuCounsell.getSelectedItemPosition()+"");
+                    }catch(Exception e){
+
+                    }
+
+
                 }
             }
 
@@ -1286,12 +1293,22 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
 
     private void setPatientAdapter() {
         parentData = BaseUtils.getTuPatient(this);
-        docAdapter = new PatientAdapter(
-                parentData,
-                FormTwo.this,
-                "reportdelivery");
-        patientrecycler.setLayoutManager(new LinearLayoutManager(this));
-        patientrecycler.setAdapter(docAdapter);
+        if(title.getText()=="Report collection"){
+            docAdapter = new PatientAdapter(
+                    parentData,
+                    FormTwo.this,
+                    "reportdelivery");
+            patientrecycler.setLayoutManager(new LinearLayoutManager(this));
+            patientrecycler.setAdapter(docAdapter);
+        }else{
+            docAdapter = new PatientAdapter(
+                    parentData,
+                    FormTwo.this,
+                    "Patient");
+            patientrecycler.setLayoutManager(new LinearLayoutManager(this));
+            patientrecycler.setAdapter(docAdapter);
+        }
+
     }
 
     private void setHospitalRecycler(List<RegisterParentData> roomDoctorsLists) {

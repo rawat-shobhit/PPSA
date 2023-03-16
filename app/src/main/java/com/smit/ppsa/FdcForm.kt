@@ -125,7 +125,7 @@ class FdcForm : AppCompatActivity() {
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private lateinit var hospitalName: TextView
     private lateinit var doctorName: TextView
-    private lateinit var no_select_order: CardView
+    private lateinit var no_select_order: Button
     private lateinit var selectedMedRecyclerView: RecyclerView
     private var sDialog: AlertDialog? = null
     private var progressDialog: GlobalProgressDialog? = null
@@ -421,6 +421,7 @@ class FdcForm : AppCompatActivity() {
                             Log.d("kiuij", "onResponse: " + roomUOM.id)
                             dataBase!!.customerDao().getUOMFromServer(roomUOM)
                         }
+
                         getRoomUOM()
                     }
                 }
@@ -503,6 +504,7 @@ class FdcForm : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {}
         })
         adapter = ProductListAdapter(parentDataMedicines.toMutableList(), sDialog!!)
+        Log.d("Medicines List",parentDataMedicines.toString())
         val manager = LinearLayoutManager(applicationContext)
         list.layoutManager = manager
         list.setHasFixedSize(true)

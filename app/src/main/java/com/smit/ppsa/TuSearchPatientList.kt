@@ -28,6 +28,7 @@ class TuSearchPatientList : AppCompatActivity() {
     private lateinit var tuSpinner: Spinner
     private lateinit var searchText: EditText
     private lateinit var searchBtn: TextView
+    private lateinit var tvTu: EditText
     private lateinit var patientRecyclerView: RecyclerView
     private lateinit var backBtn: ImageView
     var tuStrings: MutableList<String> = ArrayList()
@@ -42,10 +43,11 @@ class TuSearchPatientList : AppCompatActivity() {
     }
     private fun init(){
 
-        NetworkCalls.getTU(this)
+        //NetworkCalls.getTU(this)
 
         tuSpinner = findViewById(R.id.filterCounsell)
         backBtn = findViewById(R.id.backbtn)
+        tvTu = findViewById(R.id.tvTU)
         searchText = findViewById(R.id.search)
         searchBtn = findViewById(R.id.searchbtn)
         patientRecyclerView = findViewById(R.id.f2_patientrecycler)
@@ -70,11 +72,13 @@ class TuSearchPatientList : AppCompatActivity() {
 
             return
         }
+
+        var tuString = tvTu.text.toString().trim()
         val name = searchText.text.toString().trim()
         val url = if (getIntent().hasExtra("upload")){
-            "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll&w=n_tu_id<<EQUALTO>>"+tu[tuSpinner.selectedItemPosition-1].n_tu_id+"<<AND>><<SBRK>>c_pat_nam<<SLIKE>>"+name+"<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>"+name+"<<ELIKE>><<OR>>c_mob<<SLIKE>>"+name+"<<ELIKE>><<EBRK>>"
+            "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll&w=n_tu_id<<EQUALTO>>"+tuString+"<<AND>><<SBRK>>c_pat_nam<<SLIKE>>"+name+"<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>"+name+"<<ELIKE>><<OR>>c_mob<<SLIKE>>"+name+"<<ELIKE>><<EBRK>>"
         }else{
-            "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll&w=n_tu_id<<EQUALTO>>"+tu[tuSpinner.selectedItemPosition-1].n_tu_id+"<<AND>>trans_out<<ISNULL>>"+"<<AND>><<SBRK>>c_pat_nam<<SLIKE>>"+name+"<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>"+name+"<<ELIKE>><<OR>>c_mob<<SLIKE>>"+name+"<<ELIKE>><<EBRK>>"
+            "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll&w=n_tu_id<<EQUALTO>>"+tuString+"<<AND>>trans_out<<ISNULL>>"+"<<AND>><<SBRK>>c_pat_nam<<SLIKE>>"+name+"<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>"+name+"<<ELIKE>><<OR>>c_mob<<SLIKE>>"+name+"<<ELIKE>><<EBRK>>"
         }
 
         ApiClient.getClient().getTUPatient(url).enqueue(object: Callback<RegisterParentResponse>{

@@ -99,8 +99,13 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
 
         } else {
             holder.date.setText(parentData.getdRegDat());
-            holder.ddayLeft.setVisibility(View.GONE);
-            Toast.makeText(context, "this2", Toast.LENGTH_SHORT).show();
+         //   holder.ddayLeft.setVisibility(View.GONE);
+         //  Toast.makeText(context, "this2", Toast.LENGTH_SHORT).show();
+
+        }
+
+        if(context instanceof LpaPatient){
+            holder.hospitalName.setText(parentData.getcPatNam() +"("+ parentData.getC_mob()+")");
 
         }
 

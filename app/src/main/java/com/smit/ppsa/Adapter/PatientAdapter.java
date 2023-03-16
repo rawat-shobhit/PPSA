@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.smit.ppsa.BaseUtils;
 import com.smit.ppsa.R;
 import com.smit.ppsa.Response.RegisterParentData;
 
@@ -73,13 +75,17 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
             holder.patientType.setVisibility(View.VISIBLE);
             holder.doctorName.setVisibility(View.VISIBLE);
             holder.date.setVisibility(View.VISIBLE);
+            holder.date.setText(registerParentData.get(position).getdRegDat());
+
+        }else if(type=="Patient"){
+
         }else if (type.equals("reportdelivery")){
             holder.actualHospitalname.setVisibility(View.VISIBLE);
             holder.nikshayId.setVisibility(View.VISIBLE);
 
-                holder.patientAge.setVisibility(View.GONE);
-                holder.patientType.setVisibility(View.GONE);
-                holder.patientImage.setVisibility(View.GONE);
+            holder.patientAge.setVisibility(View.GONE);
+            holder.patientType.setVisibility(View.GONE);
+            holder.patientImage.setVisibility(View.GONE);
                 holder.sexImage.setVisibility(View.GONE);
 
 
@@ -133,6 +139,15 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
             holder.hospitalName.setText(registerParentData.get(position).getcPatNam()+ " ("+registerParentData.get(position).getC_mob()+") " );
 
         }
+        holder.hospitalName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+registerParentData.get(position).getC_mob()));
+              context.startActivity(intent);
+            }
+        });
+
         if (registerParentData.get(position).getTrans_out()!=null){
             if (!registerParentData.get(position).getTrans_out().equals("")){
                 holder.transferShow.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.red)));

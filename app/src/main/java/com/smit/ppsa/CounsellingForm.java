@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -103,6 +104,15 @@ public class CounsellingForm extends AppCompatActivity {
         doctorName.setText(getIntent().getStringExtra("doc_name"));
         patientName.setText(getIntent().getStringExtra("patient_name") + "  " + "(" + getIntent().getStringExtra("patient_phone") + ")");
         hospitalName.setText(getIntent().getStringExtra("hospitalName"));
+
+        hospitalName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+getIntent().getStringExtra("patient_phone")));
+                startActivity(intent);
+            }
+        });
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -291,6 +291,7 @@ public class FormSix extends AppCompatActivity {
         reportdeliverySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
                 if (i == 0) {
                     nrpt_del = "";
                     Log.d("dded", "onItemSelected: " + ntst_rpt);
@@ -1003,7 +1004,7 @@ public class FormSix extends AppCompatActivity {
                 }
                 setSpinnerAdapter(reportdeliverySpinner, stringnames);
             }
-
+            reportdeliverySpinner.setSelection(2);
 
         });
 

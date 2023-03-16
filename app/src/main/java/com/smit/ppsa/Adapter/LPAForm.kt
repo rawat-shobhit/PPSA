@@ -106,10 +106,11 @@ class LPAForm : AppCompatActivity() {
         bt_proceedone.setOnClickListener {
             if (lpaDate.text.isEmpty()){
                 BaseUtils.showToast(this,"Please select date of sample for LPA")
-            }else if(lpaResult.selectedItemPosition==0){
-                BaseUtils.showToast(this,"Please select LPA test result")
-            }else if(frontselectedImageUri==null){
-                BaseUtils.showToast(this,"Please select test report page image for upload")
+//            }
+//            else if(lpaResult.selectedItemPosition==0){
+//                BaseUtils.showToast(this,"Please select LPA test result")
+//            }else if(frontselectedImageUri==null){
+//                BaseUtils.showToast(this,"Please select test report page image for upload")
             }else{
                 postLpaResult()
             }
@@ -445,16 +446,18 @@ class LPAForm : AppCompatActivity() {
         val n_smpl_col_id = RequestBody.create("text/plain".toMediaTypeOrNull(),patient.getN_smpl_col_id())
         val n_rpt_col_id = RequestBody.create("text/plain".toMediaTypeOrNull(),patient.getN_rpt_col_id())
         val d_lpa = RequestBody.create("text/plain".toMediaTypeOrNull(),lpaDate.text.toString())
-        val c_pla_img = RequestBody.create("text/plain".toMediaTypeOrNull(),Imagee().getEncodedImage(frontselectedImageUri!!,this))
+    //    val c_pla_img = RequestBody.create("text/plain".toMediaTypeOrNull(),Imagee().getEncodedImage(frontselectedImageUri!!,this))
         val n_lat = RequestBody.create("text/plain".toMediaTypeOrNull(),lat)
         val n_lng = RequestBody.create("text/plain".toMediaTypeOrNull(),lng)
         val n_sanc_id = RequestBody.create("text/plain".toMediaTypeOrNull(),BaseUtils.getUserInfo(this).n_staff_sanc)
         val n_user_id = RequestBody.create("text/plain".toMediaTypeOrNull(),BaseUtils.getUserInfo(this).getId())
-        val n_lpa_rslt = RequestBody.create("text/plain".toMediaTypeOrNull(),
-            parentDataLpaSampleResult!![lpaResult.getSelectedItemPosition() -1].id)
+//        val n_lpa_rslt = RequestBody.create("text/plain".toMediaTypeOrNull(),
+//            parentDataLpaSampleResult!![lpaResult.getSelectedItemPosition() -1].id)
 
         ApiClient.getClient().postLpaResult(n_st_id, n_dis_id, n_tu_id, n_hf_id, n_doc_id, n_enroll_id, n_smpl_col_id, n_rpt_col_id,
-            d_lpa, n_lpa_rslt, c_pla_img, n_lat, n_lng, n_sanc_id, n_user_id).enqueue(object: Callback<AddDocResponse>{
+            d_lpa,
+           // n_lpa_rslt, c_pla_img,
+            n_lat, n_lng, n_sanc_id, n_user_id).enqueue(object: Callback<AddDocResponse>{
             override fun onResponse(
                 call: Call<AddDocResponse>,
                 response: Response<AddDocResponse>

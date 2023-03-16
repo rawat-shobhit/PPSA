@@ -330,6 +330,13 @@ public class RegisterParentData implements Serializable {
         this.cPatNam = cPatNam;
     }
 
+    public String getcPatMob() {
+        return c_mob;
+    }
+
+    public void setcPatMob(String cPatNam) {
+        this.c_mob = c_mob;
+    }
     public String getnAge() {
         return nAge;
     }

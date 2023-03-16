@@ -227,8 +227,9 @@
 
             </LinearLayout>
             <androidx.cardview.widget.CardView
-                android:id="@+id/no_select_order"
+                android:id="@+id/no_gselect_order"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_6sdp"
                 android:layout_marginHorizontal="@dimen/_12sdp"
@@ -246,6 +247,19 @@
 
             </androidx.cardview.widget.CardView>
 
+            <Button
+                android:id="@+id/no_select_order"
+                android:layout_gravity="center"
+                android:background="@drawable/back_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_6sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:paddingVertical="@dimen/_8sdp"
+                android:text="Select product*"
+                android:textSize="@dimen/_10sdp"
+                app:backgroundTint="#2ea8df" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/no_select_rv"
                 android:layout_width="match_parent"
@@ -256,10 +270,10 @@
                 android:id="@+id/daysLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginHorizontal="@dimen/_2sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="No. of days*"
+                android:visibility="gone"
+                android:text="Dosage Period*"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 

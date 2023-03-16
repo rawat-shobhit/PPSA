@@ -344,6 +344,7 @@
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_5sdp"
+                        android:visibility="gone"
                         android:background="@drawable/back_two"
                         android:elevation="@dimen/_4sdp"
                         android:hint="--"
@@ -352,6 +353,20 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
+
+
+                    <EditText
+                        android:id="@+id/tvTU"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginHorizontal="@dimen/_10ssp"
+                        android:background="@drawable/back_two"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:fontFamily="@font/nunitosans_regular_2"
+                        android:hint="Enter TU Name"
+                        android:paddingHorizontal="@dimen/_12sdp"
+                        android:textColor="@color/black" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
