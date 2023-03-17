@@ -23,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_20sdp"
             android:gravity="end"
+            android:checked="true"
             android:layout_marginVertical="@dimen/_3sdp"
             android:id="@+id/radioButton"
             android:visibility="gone"

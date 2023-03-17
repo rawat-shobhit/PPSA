@@ -275,6 +275,7 @@
                     android:background="@drawable/back_two"
                     android:digits="0123456789"
                     android:elevation="@dimen/_4sdp"
+
                     android:fontFamily="@font/nunitosans_regular_2"
                     android:hint="Enter Quantity"
                     android:inputType="number"

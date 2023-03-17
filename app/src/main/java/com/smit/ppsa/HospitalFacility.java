@@ -90,6 +90,9 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
     private List<RoomDoctorsList> selectedroomDoctorsLists = new ArrayList<>();
     List<DoctorModel> doctorModels = new ArrayList<>();
 
+
+
+
     private String type="";
     private EditText search;
     private boolean checked;
@@ -126,6 +129,7 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
                 }
 
             });*/
+
             NetworkCalls.addSample(
                     this,
                     BaseUtils.getAddSamplen_st_idd(this),
@@ -185,7 +189,13 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
 
         }
 
+        try {
+            Objects.requireNonNull(doctorsRecycler.findViewHolderForAdapterPosition(0)).itemView.performClick();
+
+        }catch (Exception e){}
+
         if (BaseUtils.getSubmitFdcDispensationPaForm(this).equals("false")) {
+
        /*     LiveData<List<RoomFdcDispensationPatient>> roomFdcDispensationPatient = dataBase.customerDao().fetchFdcDispensationPatientData();
             roomFdcDispensationPatient.observe(this, roomFdcDispensationPatients -> {
 
@@ -306,6 +316,8 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
             }
         });
 
+
+
         if (getIntent().hasExtra("issued")) {
             nextbtn.setOnClickListener(view -> {
                 if (checked) {
@@ -347,8 +359,10 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
                     if (selectedroomDoctorsLists.size() > 0) {
                         BaseUtils.showToast(HospitalFacility.this,"3");
 
-                        if (BaseUtils.getSection(HospitalFacility.this).equals("hospital") || BaseUtils.getSection(HospitalFacility.this).equals("hospitald")) {
 
+                        Log.d("insideIfCondition","checking outside if condition  ");
+                        if (BaseUtils.getSection(HospitalFacility.this).equals("hospital") || BaseUtils.getSection(HospitalFacility.this).equals("hospitald")) {
+                            Log.d("insideIfCondition","checking ");
                             BaseUtils.savedSelectedDoctors(HospitalFacility.this, selectedroomDoctorsLists);
                             // Log.d("jko", "onClick: " + nList.get(position).getIdd());
                             startActivity(new Intent(HospitalFacility.this, FormTwo.class)
@@ -592,6 +606,76 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
         Log.d("ijij", "setHospitalRecycler: " + BaseUtils.getSection(HospitalFacility.this));
         docAdapter = new HospitalFacilityAdapter(roomDoctorsLists, HospitalFacility.this, BaseUtils.getSection(HospitalFacility.this), providerEngagementViewModel);
         doctorsRecycler.setAdapter(docAdapter);
+
+
+        Log.d("size of list ",roomDoctorsLists.size()+" ");
+
+        if(roomDoctorsLists.size()>=0){
+
+
+
+
+            Log.d("size of list ",roomDoctorsLists.size()+" ");
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    if (getIntent().hasExtra("issued")) {
+
+                        BaseUtils.showToast(HospitalFacility.this, "1");
+                        if (getIntent().getStringExtra("issued").equals("patient")) {
+                            Intent intent = new Intent(HospitalFacility.this, FormTwo.class);
+                            intent.putExtra("tu_id", getIntent().getStringExtra("tu_" +
+                                    "id"));
+                            intent.putExtra("hf_id", getIntent().getStringExtra("hf_id"));
+                            intent.putExtra("hospitalName", hospitalName);
+
+                            intent.putExtra("docName", docName);
+                            intent.putExtra("doc_id", doc_id);
+                            intent.putExtra("issued", "patient");
+                            startActivity(intent);
+                            //   intent.putExtra("docid", hospitalLists.get(position).get());
+                        } else {
+                            BaseUtils.showToast(HospitalFacility.this, "2");
+
+                            Intent intent = new Intent(HospitalFacility.this, FdcForm.class);
+                            intent.putExtra("tu_id", getIntent().getStringExtra("tu_id"));
+                            intent.putExtra("hf_id", getIntent().getStringExtra("hf_id"));
+                            intent.putExtra("hospitalName", hospitalName);
+                            intent.putExtra("docName", docName);
+                            intent.putExtra("doc_id", doc_id);
+                            intent.putExtra("issued", "hospital");
+                            startActivity(intent);
+                            //   intent.putExtra("docid", hospitalLists.get(position).get());
+                        }
+
+                        finish();
+                    }
+                    else{
+                        doctorsRecycler.findViewHolderForAdapterPosition(0).itemView.performClick();
+
+                        BaseUtils.savedSelectedDoctors(HospitalFacility.this, selectedroomDoctorsLists);
+                        // Log.d("jko", "onClick: " + nList.get(position).getIdd());
+                        startActivity(new Intent(HospitalFacility.this, FormTwo.class)
+                                .putExtra("doc_id", doc_id)
+                                .putExtra("counsel", "")
+                                .putExtra("hospitaltypeName", hospitaltypeName)
+                                .putExtra("hf_type_id", getIntent().getStringExtra("hf_type_id"))
+                                .putExtra("section", getIntent().getStringExtra("section"))
+                                .putExtra("hospitalName", hospitalName)
+                                .putExtra("hf_id", hf_id));
+
+                        finish();
+
+                    }
+
+                }
+            }, 0);
+
+        }
+
 
     }
 

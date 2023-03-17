@@ -305,6 +305,7 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/nunitosans_semibold"
                         android:text="TU"
+
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp" />
 

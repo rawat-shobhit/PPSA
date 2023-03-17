@@ -377,6 +377,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (BaseUtils.getSubmitFdcDispensationPaForm(this).equals("false")) {
+
        /*     LiveData<List<RoomFdcDispensationPatient>> roomFdcDispensationPatient = dataBase.customerDao().fetchFdcDispensationPatientData();
             roomFdcDispensationPatient.observe(this, roomFdcDispensationPatients -> {
 

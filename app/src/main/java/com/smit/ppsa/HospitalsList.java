@@ -1150,6 +1150,8 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
 
         }*/
+
+
     private void setHospitalRecycler() {
         hospitalLists = BaseUtils.getHospital(HospitalsList.this);
         if (!hospitalLists.isEmpty()) {
