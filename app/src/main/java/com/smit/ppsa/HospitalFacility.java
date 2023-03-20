@@ -610,10 +610,8 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
 
         Log.d("size of list ",roomDoctorsLists.size()+" ");
 
-        if(roomDoctorsLists.size()>=0){
-
-
-
+        /*
+         if(roomDoctorsLists.size()>=0){
 
             Log.d("size of list ",roomDoctorsLists.size()+" ");
 
@@ -675,6 +673,8 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
             }, 0);
 
         }
+         */
+
 
 
     }
