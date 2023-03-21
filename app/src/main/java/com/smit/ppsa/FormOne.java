@@ -47,6 +47,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.smit.ppsa.Response.FormOneResponse;
+import com.smit.ppsa.Response.MedicineResponse.MedicineResponse;
+import com.smit.ppsa.Response.RoomMedicines;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.ByteArrayOutputStream;
@@ -627,52 +629,90 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
     private void sendForm() {
 
-        String noti="";
-        String bank="";
 
-        if (notificationImageUri!=null){
-            noti = new Imagee().getEncodedImage(notificationImageUri,this);
-        }
-        if (bankImageUri!=null){
-            bank = new Imagee().getEncodedImage(bankImageUri,this);
-        }
+        validMobile(PrimaryPhoneNumber.getText().toString());
 
-        NetworkCalls.sendForm(
-                FormOne.this,
-                BaseUtils.getUserOtherInfo(this).getnStId(),
-                BaseUtils.getUserOtherInfo(this).getnDisId(),
-                BaseUtils.getUserOtherInfo(this).getnTuId(),
-                getIntent().getStringExtra("hf_id"),
-                getIntent().getStringExtra("doc_id"),
-                EnrollmentDate.getText().toString(),
-                EnrolmentId.getText().toString(),
-                PatientName.getText().toString(),
-                Age.getText().toString(),
-                genders.get(Gender.getSelectedItemPosition() - 1).getId(),
-                Weight.getText().toString(),
-                Height.getText().toString(),
-                Address.getText().toString(),
-                Taluka.getText().toString(),
-                Town.getText().toString(),
-                Ward.getText().toString(),
-                Landmark.getText().toString(),
-                Pincode.getText().toString(),
-                st_id_res,
-                dis_id_res,
-                tu_id_res,
-                PrimaryPhoneNumber.getText().toString(),
-                SecondaryPhoneNumber.getText().toString(),
-                lat,lng,
-                BaseUtils.getUserInfo(this).getId(),
-                type,
-                true,
-               noti,
-               bank,
-                BaseUtils.getUserInfo(this).getN_staff_sanc()
-
-        );
 
     }
+
+    private void validMobile(String mob) {
+        //progressDialog.showProgressBar();
+        if (!BaseUtils.isNetworkAvailable(FormOne.this)) {
+            Toast.makeText(FormOne.this, "Please Check your internet  Connectivity", Toast.LENGTH_SHORT).show();
+            //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
+            return;
+        }
+        BaseUtils.putPatientName(FormOne.this, getIntent().getStringExtra("patient_name"));
+
+        //  Log.d("dkl9", "getPatientdd: " + getIntent().getStringExtra("hf_id"));
+        Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(FormOne.this).getnUserLevel());
+
+        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enrol&w=n_tu_id<<GT>>0<<AND>><<SBRK>>c_mob<<SLIKE>>"+mob+"<<ELIKE>><<OR>>c_mob_2<<SLIKE>>"+mob+"<<ELIKE>><<EBRK>>";
+        ApiClient.getClient().getMedicine(url).enqueue(new Callback<MedicineResponse>() {
+            @Override
+            public void onResponse(Call<MedicineResponse> call, Response<MedicineResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().getStatus().equals("false")) {
+                        //  parentDataTestReportResults = response.body().getUser_data();
+                        String noti="";
+                        String bank="";
+
+                        if (notificationImageUri!=null){
+                            noti = new Imagee().getEncodedImage(notificationImageUri,FormOne.this);
+                        }
+                        if (bankImageUri!=null){
+                            bank = new Imagee().getEncodedImage(bankImageUri,FormOne.this);
+                        }
+
+                        NetworkCalls.sendForm(
+                                FormOne.this,
+                                BaseUtils.getUserOtherInfo(FormOne.this).getnStId(),
+                                BaseUtils.getUserOtherInfo(FormOne.this).getnDisId(),
+                                BaseUtils.getUserOtherInfo(FormOne.this).getnTuId(),
+                                getIntent().getStringExtra("hf_id"),
+                                getIntent().getStringExtra("doc_id"),
+                                EnrollmentDate.getText().toString(),
+                                EnrolmentId.getText().toString(),
+                                PatientName.getText().toString(),
+                                Age.getText().toString(),
+                                genders.get(Gender.getSelectedItemPosition() - 1).getId(),
+                                Weight.getText().toString(),
+                                Height.getText().toString(),
+                                Address.getText().toString(),
+                                Taluka.getText().toString(),
+                                Town.getText().toString(),
+                                Ward.getText().toString(),
+                                Landmark.getText().toString(),
+                                Pincode.getText().toString(),
+                                st_id_res,
+                                dis_id_res,
+                                tu_id_res,
+                                PrimaryPhoneNumber.getText().toString(),
+                                SecondaryPhoneNumber.getText().toString(),
+                                lat,lng,
+                                BaseUtils.getUserInfo(FormOne.this).getId(),
+                                type,
+                                true,
+                                noti,
+                                bank,
+                                BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc()
+
+                        );
+                    }else{
+                        BaseUtils.showToast(FormOne.this,"Patient Already Registered with Programme");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MedicineResponse> call, Throwable t) {
+            }
+        });
+
+
+    }
+
+
 
     private void getLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&

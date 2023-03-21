@@ -273,6 +273,7 @@
                 android:textStyle="bold"
                 android:background="@drawable/back_two"
                 android:hint="--"
+                android:inputType="number"
                 android:textColorHint="@color/grey"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"

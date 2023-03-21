@@ -60,7 +60,7 @@ public class HospitalFacilityAdapter extends RecyclerView.Adapter<HospitalFacili
         holder.radioButtonOne.setClickable(false);
         holder.radioButtonOne.setFocusable(false);
 
-        nList.get(0).setChecked(true);
+      //  nList.get(0).setChecked(true);
 
         if (type.equals("provider")) {
             holder.radioButton.setVisibility(View.VISIBLE);
