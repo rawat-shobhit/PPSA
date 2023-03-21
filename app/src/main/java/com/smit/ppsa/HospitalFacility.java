@@ -611,6 +611,7 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
         Log.d("size of list ",roomDoctorsLists.size()+" ");
 
         /*
+
          if(roomDoctorsLists.size()>=0){
 
             Log.d("size of list ",roomDoctorsLists.size()+" ");
@@ -673,8 +674,49 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
             }, 0);
 
         }
+
          */
 
+        if (BaseUtils.getSection(HospitalFacility.this).equals("sample")) {
+
+            if(roomDoctorsLists.size()>=0){
+
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run(){
+                        doctorsRecycler.findViewHolderForAdapterPosition(0).itemView.performClick();
+
+                        Log.d("checkingShobhit","checking");
+
+                        if(BaseUtils.getSection(HospitalFacility.this).equals("sample")){
+
+                            BaseUtils.savedSelectedDoctors(HospitalFacility.this, selectedroomDoctorsLists);
+
+
+                            startActivity(new Intent(HospitalFacility.this, FormTwo.class)
+                                    .putExtra("hf_type_id", getIntent().getStringExtra("hf_type_id"))
+                                    .putExtra("section", "sample")
+                                    .putExtra("type", "sample")
+                                    //.putExtra("sample", "sample")
+
+                                    .putExtra("doc_id", doc_id)
+                                    .putExtra("sample", "")
+                                    .putExtra("hospitalName", hospitalName)
+                                    .putExtra("hospitallocation", hospitallocation)
+                                    .putExtra("hospitaltypeName", getIntent().getStringExtra("hospitaltypeName"))
+                                    .putExtra("docName", docName)
+                                    .putExtra("lastvisit", getIntent().getStringExtra("lastvisit"))
+                                    .putExtra("hf_id", hf_id)
+                            );
+                        }
+                    }
+                }, 100);
+
+            }
+
+        }
 
 
     }

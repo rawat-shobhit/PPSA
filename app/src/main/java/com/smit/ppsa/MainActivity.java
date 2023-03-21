@@ -685,10 +685,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         if (getIntent().hasExtra("backpress")) {
-           /* startActivity(
+            /* startActivity(
                     new Intent(HospitalsList.this, MainActivity.class).putExtra("backpress", "").setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             );*/
+
             finishAffinity();
         } else {
             finishAffinity();

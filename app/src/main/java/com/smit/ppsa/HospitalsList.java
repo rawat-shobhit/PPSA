@@ -1059,7 +1059,10 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                 //setSpinnerAdapter(EnrollmentFaciltyTBU,tuStrings);
                 setSpinnerAdapter(ResidentialTU, tuStrings);
                 ResidentialTU.setSelection(1);
-                setHospitalRecycler();
+                try {
+                    setHospitalRecycler();
+                }catch (Exception e){};
+
 
             }
         }
@@ -1183,7 +1186,11 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
         if (getIntent().hasExtra("fdc")) {
             fdcHospitalsAdapter = new FdcHospitalsAdapter(hospitalLists, HospitalsList.this, "fdc", hfID, dataBase);
         }else if (getIntent().hasExtra("provider")){
-            fdcHospitalsAdapter = new FdcHospitalsAdapter(hospitalLists, HospitalsList.this, "provider", hfID, dataBase);
+
+            try {
+                fdcHospitalsAdapter = new FdcHospitalsAdapter(hospitalLists, HospitalsList.this, "provider", hfID, dataBase);
+            }catch (Exception e){};
+
 
         }else {
             fdcHospitalsAdapter = new FdcHospitalsAdapter(hospitalLists, HospitalsList.this, "koko", hfID, dataBase);
