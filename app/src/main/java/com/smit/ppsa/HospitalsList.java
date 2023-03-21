@@ -23,6 +23,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -66,6 +68,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
     private ImageView backbtn, addbtn;
     private TextView nextbtn;
     private EditText search;
+    private CheckBox checkboxNonVisit;
     private Thread thread = new Thread("name");
     //    private TextView hospitalNameTt, hospitalNameLocation, doctorNameTv, hospitalTypeTitle,
 //            currentDate, hospitalNameTv, hospitalAddress, hospitalType, lastVisit, date;
@@ -607,6 +610,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
         hospitalRecycler = findViewById(R.id.hospitalRecycler);
         ResidentialTU = findViewById(R.id.f1_residentialTu);
         nextbtn = findViewById(R.id.nextbtn);
+        checkboxNonVisit = findViewById(R.id.checkboxNonVisit);
         //nextbtn.setEnabled(false);
 
         /*hospitalNameTt = findViewById(R.id.hospitalNameTitle);
@@ -622,6 +626,17 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
         SimpleDateFormat curFormater = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa");
         currentDate.setText(curFormater.format(currentTime));*/
         //hospitalType = findViewById(R.id.hospitalType);
+
+        checkboxNonVisit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+               // BaseUtils.showToast(HospitalsList.this, String.valueOf(b));
+                filter(search.getText().toString().trim());
+                 //   filter(search.getText().toString().trim(),b);
+
+            }
+        });
 
         setClickListners();
         nextbtn.setOnClickListener(view -> {
@@ -851,7 +866,13 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                 if (value.contains(text.toLowerCase())) {
                     Log.d("TAG", "filter: " + d);
                     temp.add(d);
+                    if(checkboxNonVisit.isChecked()){
+                        if (d.getLst_visit()!="" && d.getLst_visit()!=null){
+                            temp.remove(d);
+                        }
+                    }
                 }
+
             }
             if (fdcHospitalsAdapter != null) {
                 fdcHospitalsAdapter.updateList(temp);

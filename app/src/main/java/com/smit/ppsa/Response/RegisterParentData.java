@@ -175,6 +175,39 @@ public class RegisterParentData implements Serializable {
     @SerializedName("c_tst_rpt_img")
     @Expose
     private String c_tst_rpt_img;
+
+    @SerializedName("c_udst_img")
+    @Expose
+    private String c_udst_img;
+
+    @SerializedName("c_diab_img")
+    @Expose
+    private String c_diab_img;
+    @SerializedName("c_hiv_img")
+    @Expose
+    private String c_hiv_img;
+
+    public void setC_aadh_img(String c_aadh_img) {
+        this.c_aadh_img = c_aadh_img;
+    }
+
+    public String getC_udst_img() {
+        return c_udst_img;
+    }
+
+    public void setC_udst_img(String c_udst_img) {
+        this.c_udst_img = c_udst_img;
+    }
+
+    public String getC_diab_img() {
+        return c_diab_img;
+    }
+
+    public void setC_diab_img(String c_diab_img) {
+        this.c_diab_img = c_diab_img;
+    }
+
+
     @SerializedName("d_lst_dispn")
     @Expose
     private String d_lst_dispn;
@@ -337,6 +370,7 @@ public class RegisterParentData implements Serializable {
     public void setcPatMob(String cPatNam) {
         this.c_mob = c_mob;
     }
+
     public String getnAge() {
         return nAge;
     }
@@ -503,5 +537,13 @@ public class RegisterParentData implements Serializable {
 
     public String getSputmSampl() {
         return sputmSampl;
+    }
+
+    public String getC_hiv_img() {
+        return c_hiv_img;
+    }
+
+    public void setC_hiv_img(String c_hiv_img) {
+        this.c_hiv_img = c_hiv_img;
     }
 }

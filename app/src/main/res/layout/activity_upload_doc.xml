@@ -138,6 +138,75 @@
                 android:radius="@dimen/_8sdp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/photo" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="UDST Report Copy"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <ImageView
+                android:id="@+id/udst_report"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:radius="@dimen/_8sdp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/photo" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="Diabetes Report Copy"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <ImageView
+                android:id="@+id/diabetes_report"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:radius="@dimen/_8sdp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/photo" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="HIV Report Copy"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <ImageView
+                android:id="@+id/hiv_report"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:radius="@dimen/_8sdp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/photo" />
             <androidx.cardview.widget.CardView
                 android:id="@+id/bt_proceedone"
                 android:layout_width="match_parent"
