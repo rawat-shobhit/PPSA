@@ -17,6 +17,7 @@ import com.smit.ppsa.Response.DoctorsResponse;
 import com.smit.ppsa.Response.FilterResponse;
 import com.smit.ppsa.Response.FormOneResponse;
 import com.smit.ppsa.Response.GetTestResponse;
+import com.smit.ppsa.Response.HospitalModel;
 import com.smit.ppsa.Response.HospitalResponse;
 import com.smit.ppsa.Response.MedicineResponse.MedicineResponse;
 import com.smit.ppsa.Response.PrevVisitsCounselling.PreviousVisitsResponse;
@@ -467,6 +468,10 @@ public class ApiClient {
 
         @GET()
         Call<MedicineResponse> getMedicine(@Url String url);
+
+
+        @GET()
+        Call<HospitalResponse> getHospitalDetail(@Url String url);
 
         @GET()
         Call<TestreportResponse> getFdcOpeningStockData(@Url String url);

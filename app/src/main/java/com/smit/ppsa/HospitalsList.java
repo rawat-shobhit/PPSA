@@ -69,6 +69,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
     private TextView nextbtn;
     private EditText search;
     private CheckBox checkboxNonVisit;
+    private boolean isFirstTymOnThisPage=true;
     private Thread thread = new Thread("name");
     //    private TextView hospitalNameTt, hospitalNameLocation, doctorNameTv, hospitalTypeTitle,
 //            currentDate, hospitalNameTv, hospitalAddress, hospitalType, lastVisit, date;
@@ -1252,7 +1253,11 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
     public void onResume() {
         super.onResume();
         // put your code here...
-        NetworkCalls.getHospitalData(this, tuId, false);
+        if(isFirstTymOnThisPage){
+            isFirstTymOnThisPage = false;
+        }else{
+            NetworkCalls.getHospitalData(this, tuId, false);
+        }
         //nextbtn.setEnabled(false);
     }
 

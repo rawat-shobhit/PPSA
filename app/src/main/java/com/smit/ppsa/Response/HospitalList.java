@@ -123,6 +123,18 @@ public class HospitalList implements Serializable {
     @SerializedName("oth_staff_id")
     @Expose
     private String othStaffId;
+
+    public String getN_pp_idenr() {
+        return n_pp_idenr;
+    }
+
+    public void setN_pp_idenr(String n_pp_idenr) {
+        this.n_pp_idenr = n_pp_idenr;
+    }
+
+    @SerializedName("n_pp_idenr")
+    @Expose
+    private String n_pp_idenr;
     @SerializedName("n_hf_typ_id")
     @Expose
     private String nHfTypId;

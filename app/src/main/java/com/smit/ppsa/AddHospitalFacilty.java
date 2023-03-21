@@ -27,10 +27,16 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.smit.ppsa.Adapter.SpinAdapter;
 import com.smit.ppsa.Dao.AppDataBase;
+import com.smit.ppsa.Network.ApiClient;
 import com.smit.ppsa.Network.NetworkCalls;
+import com.smit.ppsa.Response.HospitalList;
+import com.smit.ppsa.Response.HospitalModel;
+import com.smit.ppsa.Response.HospitalResponse;
+import com.smit.ppsa.Response.MedicineResponse.MedicineResponse;
 import com.smit.ppsa.Response.QualificationList;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -43,7 +49,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AddHospitalFacilty extends AppCompatActivity implements View.OnClickListener{
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class AddHospitalFacilty extends AppCompatActivity implements View.OnClickListener {
     private FusedLocationProviderClient mFusedLocationClient;
     private AppDataBase dataBase;
     private ImageView backBtn;
@@ -52,10 +62,14 @@ public class AddHospitalFacilty extends AppCompatActivity implements View.OnClic
     private static List<QualificationList> hfTypeLIsts = new ArrayList<>();
     private static List<QualificationList> scopeLists = new ArrayList<>();
     private static List<QualificationList> benefeciaryList = new ArrayList<>();
-    private String hfTypeId="",scopeID="",benID="";
+    private String hfTypeId = "", scopeID = "", benID = "";
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
-    private String wayLatitude = "0",wayLongitude = "0";
+    private String wayLatitude = "0", wayLongitude = "0";
+    String[] arraySpinner = new String[]{
+            "Select", "Yes", "No"
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,9 +108,10 @@ public class AddHospitalFacilty extends AppCompatActivity implements View.OnClic
             }
         });
     }
+
     private void init() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-getLocation();
+        getLocation();
         dataBase = AppDataBase.getDatabase(this);
         hf_code = findViewById(R.id.hf_code);
         hf_name = findViewById(R.id.hf_name);
@@ -120,9 +135,8 @@ getLocation();
         NetworkCalls.getHFType(this);
         NetworkCalls.getScope(this);
         NetworkCalls.getBenefeciary(this);
-        String[] arraySpinner = new String[] {
-                "Select","Yes","No"
-        };
+
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -137,16 +151,16 @@ getLocation();
 
                         // It returns the clicked item.
 
-                        if (position!=5){
+                        if (position != 5) {
                             other.setText("");
                             other.setEnabled(false);
-                        }else{
+                        } else {
                             other.setEnabled(true);
                         }
                         QualificationList clickedItem = (QualificationList)
                                 parent.getItemAtPosition(position);
                         hfTypeId = clickedItem.getId();
-                        Log.d("mkoi", "onItemSelected: "+hfTypeId);
+                        Log.d("mkoi", "onItemSelected: " + hfTypeId);
                     }
 
                     @Override
@@ -198,31 +212,31 @@ getLocation();
         }
     }
 
-    private boolean emptyText(EditText editText){
+    private boolean emptyText(EditText editText) {
         return editText.getText().toString().isEmpty();
     }
 
-    private boolean allFill(){
-        if (emptyText(hf_code)){
-            BaseUtils.showToast(this,"Enter HF code");
+    private boolean allFill() {
+        if (emptyText(hf_code)) {
+            BaseUtils.showToast(this, "Enter HF code");
             return false;
-        }else if (emptyText(hf_name)){
-            BaseUtils.showToast(this,"Enter HF name");
+        } else if (emptyText(hf_name)) {
+            BaseUtils.showToast(this, "Enter HF name");
             return false;
-        }else if (hf_type_spinner.getSelectedItemPosition()==0){
-            BaseUtils.showToast(this,"Select HF type");
+        } else if (hf_type_spinner.getSelectedItemPosition() == 0) {
+            BaseUtils.showToast(this, "Select HF type");
             return false;
-        }else if (hf_type_spinner.getSelectedItemPosition()==5&&emptyText(other)){
-            BaseUtils.showToast(this,"Enter HF type in others");
+        } else if (hf_type_spinner.getSelectedItemPosition() == 5 && emptyText(other)) {
+            BaseUtils.showToast(this, "Enter HF type in others");
             return false;
-        }else if(emptyText(address)){
-            BaseUtils.showToast(this,"Enter address");
+        } else if (emptyText(address)) {
+            BaseUtils.showToast(this, "Enter address");
             return false;
-        }else if(emptyText(contact_name)){
-            BaseUtils.showToast(this,"Enter contact person name");
+        } else if (emptyText(contact_name)) {
+            BaseUtils.showToast(this, "Enter contact person name");
             return false;
-        }else if (emptyText(contact_number)){
-            BaseUtils.showToast(this,"Enter mobile number");
+        } else if (emptyText(contact_number)) {
+            BaseUtils.showToast(this, "Enter mobile number");
             return false;
         }
 
@@ -235,6 +249,8 @@ getLocation();
 
                 qualificationLists);
         spinner.setAdapter(adapter);
+        fillDetailForEdit();
+
     }
 
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -243,6 +259,7 @@ getLocation();
             if (intent.hasExtra("localhfTypeData")) {
                 hfTypeLIsts = BaseUtils.gethfType(context);
                 setspinnerAdapter(hf_type_spinner, hfTypeLIsts);
+
             } else if (intent.hasExtra("notifyhfTypeAdapter")) {
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
@@ -275,6 +292,7 @@ getLocation();
                 }, 1000);
 
             }
+
         }
     };
 
@@ -288,12 +306,12 @@ getLocation();
 
     private void addHospital() {
         String pp = "";
-        if (pp_spinner.getSelectedItemPosition()>0){
+        if (pp_spinner.getSelectedItemPosition() > 0) {
             pp = pp_spinner.getSelectedItem().toString();
         }
-        BaseUtils.putHospitalnStId(this,    BaseUtils.getUserOtherInfo(this).getnStId());
-        BaseUtils.putHospitalnDisId(this,    BaseUtils.getUserOtherInfo(this).getnDisId());
-        BaseUtils.putHospitalnTUId(this,    getIntent().getStringExtra("tu_id"));
+        BaseUtils.putHospitalnStId(this, BaseUtils.getUserOtherInfo(this).getnStId());
+        BaseUtils.putHospitalnDisId(this, BaseUtils.getUserOtherInfo(this).getnDisId());
+        BaseUtils.putHospitalnTUId(this, getIntent().getStringExtra("tu_id"));
 
         NetworkCalls.addHospital(
                 AddHospitalFacilty.this,
@@ -311,12 +329,13 @@ getLocation();
                 pp,
                 tc_name.getText().toString(),
                 tc_number.getText().toString(),
-                benID,"0",
+                benID, "0",
                 BaseUtils.getUserInfo(this).getId(),
                 wayLatitude,
-                wayLongitude,true
-                );
+                wayLongitude, true
+        );
     }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -351,10 +370,75 @@ getLocation();
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         // put your code here...
+    }
+
+    private void fillDetailForEdit() {
+        //progressDialog.showProgressBar();
+        if (!BaseUtils.isNetworkAvailable(AddHospitalFacilty.this)) {
+            Toast.makeText(AddHospitalFacilty.this, "Please Check your internet  Connectivity", Toast.LENGTH_SHORT).show();
+            //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
+            return;
+        }
+        BaseUtils.putPatientName(AddHospitalFacilty.this, getIntent().getStringExtra("patient_name"));
+
+        //  Log.d("dkl9", "getPatientdd: " + getIntent().getStringExtra("hf_id"));
+        Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(AddHospitalFacilty.this).getnUserLevel());
+//https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=id<<EQUALTO>>1632
+        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=id<<EQUALTO>>1632";
+        ApiClient.getClient().getHospitalDetail(url).enqueue(new Callback<HospitalResponse>() {
+            @Override
+            public void onResponse(Call<HospitalResponse> call, Response<HospitalResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().getStatus().equals("true")) {
+                        //  parentDataTestReportResults = response.body().getUser_data();
+
+                        HospitalList model = response.body().getUserData().get(0);
+
+                        hf_code.setText(model.getnHfCd());
+                        hf_name.setText(model.getcHfNam());
+                        other.setText(model.getOthNam());
+                        address.setText(model.getcHfAddr());
+                        email.setText(model.getcCpEmail());
+                        tc_name.setText(model.getcTuName());
+                        contact_number.setText(model.getcCpMob());
+                        contact_name.setText(model.getcContPer());
+
+
+                        for (int i = 0; i < arraySpinner.length; i++) {
+
+                            if (arraySpinner[i].toLowerCase().equals(model.getN_pp_idenr().toLowerCase())) {
+
+                                pp_spinner.setSelection(i);
+                                break;
+                            }
+                        }
+
+
+                        for (int i = 0; i < hfTypeLIsts.size(); i++) {
+
+                            Log.d("checking loop ", hfTypeLIsts.get(i).getId().toString() + "  " + model.getnHfTypId().toLowerCase());
+                            if (hfTypeLIsts.get(i).getId().toString().toLowerCase().equals(model.getnHfTypId().toLowerCase())) {
+
+                                hf_type_spinner.setSelection(i + 1);
+                                break;
+                            }
+                        }
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HospitalResponse> call, Throwable t) {
+            }
+        });
+
 
     }
+
 
 }
