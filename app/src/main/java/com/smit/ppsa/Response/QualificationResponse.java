@@ -3,6 +3,7 @@ package com.smit.ppsa.Response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class QualificationResponse {
@@ -14,7 +15,7 @@ public class QualificationResponse {
     private String message;
     @SerializedName("user_data")
     @Expose
-    private List<QualificationList> userData = null;
+    private ArrayList<QualificationList> userData = null;
 
     public boolean getStatus() {
         return status;
@@ -32,11 +33,11 @@ public class QualificationResponse {
         this.message = message;
     }
 
-    public List<QualificationList> getUserData() {
+    public ArrayList<QualificationList> getUserData() {
         return userData;
     }
 
-    public void setUserData(List<QualificationList> userData) {
+    public void setUserData(ArrayList<QualificationList> userData) {
         this.userData = userData;
     }
 
