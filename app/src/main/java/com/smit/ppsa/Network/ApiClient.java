@@ -20,10 +20,12 @@ import com.smit.ppsa.Response.GetTestResponse;
 import com.smit.ppsa.Response.HospitalModel;
 import com.smit.ppsa.Response.HospitalResponse;
 import com.smit.ppsa.Response.MedicineResponse.MedicineResponse;
+import com.smit.ppsa.Response.PatientResponse;
 import com.smit.ppsa.Response.PrevVisitsCounselling.PreviousVisitsResponse;
 import com.smit.ppsa.Response.PrevVisitsResponse;
 import com.smit.ppsa.Response.PreviousSamplesCollection.PreviousSamplesCollection;
 import com.smit.ppsa.Response.QualificationResponse;
+import com.smit.ppsa.Response.RegisterParentData;
 import com.smit.ppsa.Response.RegisterParentResponse;
 import com.smit.ppsa.Response.SampleResponse;
 import com.smit.ppsa.Response.UserInfoResponse;
@@ -220,6 +222,29 @@ public class ApiClient {
                                          @Part("n_user_id") RequestBody n_user_id,
                                          @Part("lat") RequestBody lat,
                                          @Part("lng") RequestBody lng);
+        //id<<EQUALTO>>142
+        @Multipart
+        @POST("https://nikshayppsa.hlfppt.org/_api-v1_/_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_hf&w=")
+        Call<AddDocResponse> updateHospital(@Part("n_st_id") RequestBody n_st_id,
+                                            @Part("n_dis_id") RequestBody n_dis_id,
+                                            @Part("n_tu_id") RequestBody n_tu_id,
+                                            @Part("n_hf_cd") RequestBody n_hf_cd,
+                                            @Part("c_hf_nam") RequestBody c_hf_nam,
+                                            @Part("n_hf_typ_id") RequestBody n_hf_typ_id,
+                                            @Part("c_hf_addr") RequestBody c_hf_addr,
+                                            @Part("c_cont_per") RequestBody c_cont_per,
+                                            @Part("c_cp_mob") RequestBody c_cp_mob,
+                                            @Part("c_cp_email") RequestBody c_cp_email,
+                                            @Part("n_sc_id") RequestBody n_sc_id,
+                                            @Part("n_pp_idenr") RequestBody n_pp_idenr,
+                                            @Part("c_tc_nam") RequestBody c_tc_nam,
+                                            @Part("c_tc_mob") RequestBody c_tc_mob,
+                                            @Part("n_bf_id") RequestBody n_bf_id,
+                                            @Part("n_pay_status") RequestBody n_pay_status,
+                                            @Part("n_user_id") RequestBody n_user_id,
+                                            @Part("lat") RequestBody lat,
+                                            @Part("lng") RequestBody lng,
+                                            @Query("w") String hospitalId);
 
         @Multipart
         @POST("_data_agentUSS.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_link")
@@ -232,7 +257,7 @@ public class ApiClient {
                                           @Part("n_st_id") RequestBody n_st_id,
                                           @Part("n_dis_id") RequestBody n_dis_id,
                                           @Part("n_tu_id") RequestBody n_tu_id
-                                          );
+        );
 
         @Multipart
         @POST("_data_agentUSS.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_couns")
@@ -309,7 +334,7 @@ public class ApiClient {
                                             @Part("n_user_id") RequestBody n_user_id,
                                             @Part("n_sanc_id") RequestBody sanc_id,
                                             @Part("n_lat") RequestBody lat,
-                                            @Part("n_lng")RequestBody lng);
+                                            @Part("n_lng") RequestBody lng);
 
         @GET("_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_m_state&w=id<<GT>>0")
         Call<FormOneResponse> getFormState();
@@ -356,6 +381,7 @@ public class ApiClient {
                                          @Part("c_not_img") RequestBody c_not_img,
                                          @Part("n_sac_id") RequestBody n_sac_id,
                                          @Part("n_user_id") RequestBody n_user_id);
+
         @Multipart
         @POST("_enroll_INagent.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll")
         Call<AddDocResponse> postFormOne(@Part("n_st_id") RequestBody n_st_id,
@@ -435,9 +461,9 @@ public class ApiClient {
         Call<JsonObject> reason(@Part("d_diag_dt") RequestBody d_diag_dt,
                                 @Part("n_cfrm") RequestBody n_cfrm,
 
-                                             @Query("t") String n_enroll_id,
+                                @Query("t") String n_enroll_id,
 
-                                             @Query("w") String n_user_id);
+                                @Query("w") String n_user_id);
 
 //        @GET("_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll&w=n_hf_id<<EQUALTO>>32<<AND>>n_user_id<<EQUALTO>>18")
 //        Call<>
@@ -474,6 +500,9 @@ public class ApiClient {
         Call<HospitalResponse> getHospitalDetail(@Url String url);
 
         @GET()
+        Call<PatientResponse> getPateintDetail(@Url String url);
+
+        @GET()
         Call<TestreportResponse> getFdcOpeningStockData(@Url String url);
 
         @GET()
@@ -481,6 +510,7 @@ public class ApiClient {
 
         @GET()
         Call<PythologyLabResponse> getPythologyLabs(@Url String url);
+
         @GET()
         Call<LabTypeResponse> getPythologyLabTypes(@Url String url);
 
@@ -706,7 +736,7 @@ public class ApiClient {
                 @Part("n_st_id") RequestBody n_st_id,
                 @Part("n_dis_id") RequestBody n_dis_id,
                 @Part("n_tu_id") RequestBody n_tu_id,
-                @Part("n_hf_id") RequestBody n_hf_id    ,
+                @Part("n_hf_id") RequestBody n_hf_id,
                 @Part("n_doc_id") RequestBody n_doc_id,
                 @Part("n_enroll_id") RequestBody n_enroll_id,
                 @Part("n_smpl_col_id") RequestBody n_smpl_col_id,
@@ -720,6 +750,7 @@ public class ApiClient {
                 @Part("n_user_id") RequestBody n_user_id
 
         );
+
         @Multipart
         @POST("_pat_docs.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs")
         Call<AddDocResponse> uploadDocumentIfNoResult(
@@ -735,6 +766,7 @@ public class ApiClient {
                 @Part("n_sanc_id") RequestBody n_sanc_id,
                 @Part("n_user_id") RequestBody n_user_id
         );
+
         @Multipart
         @POST()
         Call<AddDocResponse> uploadDocumentIfResult(
@@ -756,6 +788,7 @@ public class ApiClient {
                 @Part("n_lng") RequestBody n_lng
 
         );
+
         @Multipart
         @POST("_data_agentUSS.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_user_loc")
         Call<AddDocResponse> postLoc(

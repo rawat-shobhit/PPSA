@@ -411,9 +411,7 @@ public class AddHospitalFacilty extends AppCompatActivity implements View.OnClic
 
 
                         for (int i = 0; i < arraySpinner.length; i++) {
-
                             if (arraySpinner[i].equalsIgnoreCase(model.getN_pp_idenr())) {
-
                                 pp_spinner.setSelection(i);
                                 break;
                             }

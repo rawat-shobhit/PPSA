@@ -47,7 +47,11 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.smit.ppsa.Response.FormOneResponse;
+import com.smit.ppsa.Response.HospitalList;
+import com.smit.ppsa.Response.HospitalResponse;
 import com.smit.ppsa.Response.MedicineResponse.MedicineResponse;
+import com.smit.ppsa.Response.PatientResponse;
+import com.smit.ppsa.Response.RegisterParentData;
 import com.smit.ppsa.Response.RoomMedicines;
 import com.yalantis.ucrop.UCrop;
 
@@ -80,11 +84,11 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     String lat = "0", lng = "0";
     private AppDataBase dataBase;
     private String[] st_id;
-    private String st_id_res="";
+    private String st_id_res = "";
     private String[] dis_id;
-    private String dis_id_res="";
+    private String dis_id_res = "";
     private String[] tu_id;
-    private String tu_id_res="", type = "normal";
+    private String tu_id_res = "", type = "normal";
     private String gender;
     private ImageView patientNotificationImg, patientBankImg;
     private String imageType = "front";
@@ -115,6 +119,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             type = getIntent().getStringExtra("type");
         }
     }
+
     public static void verifyStoragePermissions(Activity activity) {
         // Check if we have write permission
         int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -190,6 +195,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         setUpCalender();
         NetworkCalls.getGender(this);
         NetworkCalls.getState(this);
+
 //        NetworkCalls.getTU(this);
 //        NetworkCalls.getDistrict(this);
 
@@ -206,7 +212,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     st_id_res = "";
                 } else {
                     st_id_res = state.get(i - 1).getId();
-                    getDistrict(FormOne.this,st_id_res);
+                    getDistrict(FormOne.this, st_id_res);
                 }
             }
 
@@ -238,7 +244,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     dis_id_res = "";
                 } else {
                     dis_id_res = district.get(i - 1).getId();
-                    getTU(FormOne.this,st_id_res,dis_id_res);
+                    getTU(FormOne.this, st_id_res, dis_id_res);
                 }
             }
 
@@ -264,6 +270,83 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         });
         setOnclick();
     }
+
+    private void fillDetailForEdit() {
+        //progressDialog.showProgressBar();
+        if (!BaseUtils.isNetworkAvailable(FormOne.this)) {
+            Toast.makeText(FormOne.this, "Please Check your internet  Connectivity", Toast.LENGTH_SHORT).show();
+            //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
+            return;
+        }
+        // https://nikshayppsa.hlfppt.org/_api-v1_/
+        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll&w=id<<EQUALTO>>15" ;
+        ApiClient.getClient().getPateintDetail(url).enqueue(new Callback<PatientResponse>() {
+            @Override
+            public void onResponse(Call<PatientResponse> call, Response<PatientResponse> response) {
+                if (response.isSuccessful()) {
+
+                    //  parentDataTestReportResults = response.body().getUser_data();
+                    RegisterParentData model = response.body().getUserData().get(0);
+
+                    //HospitalList model = response.body().getUserData().get(0);
+
+                    BaseUtils.showToast(FormOne.this, model.getcTyp());
+
+                    String gen = model.getcTyp();
+
+                    EnrollmentDate.setText(model.getdRegDat());
+                    EnrolmentId.setText(model.getnNkshId());
+                    PatientName.setText(model.getcPatNam());
+                    Age.setText(model.getnAge());
+                    PrimaryPhoneNumber.setText(model.getC_mob());
+                    Weight.setText(model.getnWght());
+                    Address.setText(model.getcAdd());
+                    Height.setText(model.getnHght());
+                    Taluka.setText(model.getcTaluka());
+                    Town.setText(model.getcTown());
+                    Ward.setText(model.getcWard());
+                    Landmark.setText(model.getcLndMrk());
+                    Pincode.setText(model.getnPin());
+                    SecondaryPhoneNumber.setText(model.getC_mob_2());
+
+                    for (int i = 0; i < genderStrings.size(); i++) {
+
+                        Log.d("genderSelection",genderStrings.get(i).toString()+" "+ model.getcTyp().toLowerCase());
+
+
+                        if (genderStrings.get(i).toLowerCase().equals(gen.toLowerCase())) {
+                            Gender.setSelection(i);
+
+                          //  break;F
+                        }else{
+                            Log.d("genderSelection else",genderStrings.get(i).toString()+" "+ gen.toLowerCase());
+                        }
+                    }
+
+//
+//                        for (int i = 0; i < hfTypeLIsts.size(); i++) {
+//
+//                            Log.d("checking loop ", hfTypeLIsts.get(i).getId().toString() + "  " + model.getnHfTypId().toLowerCase());
+//                            if (hfTypeLIsts.get(i).getId().toString().toLowerCase().equals(model.getnHfTypId().toLowerCase())) {
+//
+//                                hf_type_spinner.setSelection(i + 1);
+//                                break;
+//                            }
+//                        }
+
+
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<PatientResponse> call, Throwable t) {
+            }
+        });
+
+
+    }
+
     // function to let's the user to choose image from camera or gallery
     private void chooseImage(Context context) {
         final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit"}; // create a menuOption Array
@@ -358,8 +441,8 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         } else if (emptyText(PatientName)) {
             BaseUtils.showToast(this, "Enter patient name");
             return false;
-        }else if(notificationImageUri==null){
-            BaseUtils.showToast(this,"Select notification form image");
+        } else if (notificationImageUri == null) {
+            BaseUtils.showToast(this, "Select notification form image");
             return false;
         } else if (emptyText(Age)) {
             BaseUtils.showToast(this, "Enter age");
@@ -511,6 +594,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             }
         }
     }
+
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
@@ -531,6 +615,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         uCrop.withOptions(getUcropOptions());
         uCrop.start(FormOne.this);
     }
+
     private UCrop.Options getUcropOptions() {
         UCrop.Options options = new UCrop.Options();
         options.setCompressionQuality(70);
@@ -551,6 +636,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         return options;
 
     }
+
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -579,7 +665,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
             if (intent.hasExtra("localDistrict")) {
                 district = BaseUtils.getDistrict(FormOne.this);
-                if (distri.size()>0){
+                if (distri.size() > 0) {
                     distri.clear();
                 }
 
@@ -591,7 +677,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             }
             if (intent.hasExtra("localTU")) {
                 tu = BaseUtils.getTU(FormOne.this);
-                if (tuStrings.size()>0){
+                if (tuStrings.size() > 0) {
                     tuStrings.clear();
                 }
                 for (int a = 0; a < tu.size(); a++) {
@@ -614,6 +700,8 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                 }
                 setSpinnerAdapter(ResidentialState, stateStrings);
             }
+
+
         }
     };
 
@@ -623,6 +711,13 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         CustomSpinnerAdapter spinnerAdapter = new CustomSpinnerAdapter(FormOne.this, values);
         spinner.setAdapter(spinnerAdapter);
 
+        if (genderStrings.isEmpty()) {
+
+        } else {
+            if (getIntent().hasExtra("pateintId")) {
+                fillDetailForEdit();
+            }
+        }
 
     }
 
@@ -647,21 +742,21 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         //  Log.d("dkl9", "getPatientdd: " + getIntent().getStringExtra("hf_id"));
         Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(FormOne.this).getnUserLevel());
 
-        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enrol&w=n_tu_id<<GT>>0<<AND>><<SBRK>>c_mob<<SLIKE>>"+mob+"<<ELIKE>><<OR>>c_mob_2<<SLIKE>>"+mob+"<<ELIKE>><<EBRK>>";
+        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enrol&w=n_tu_id<<GT>>0<<AND>><<SBRK>>c_mob<<SLIKE>>" + mob + "<<ELIKE>><<OR>>c_mob_2<<SLIKE>>" + mob + "<<ELIKE>><<EBRK>>";
         ApiClient.getClient().getMedicine(url).enqueue(new Callback<MedicineResponse>() {
             @Override
             public void onResponse(Call<MedicineResponse> call, Response<MedicineResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body().getStatus().equals("false")) {
                         //  parentDataTestReportResults = response.body().getUser_data();
-                        String noti="";
-                        String bank="";
+                        String noti = "";
+                        String bank = "";
 
-                        if (notificationImageUri!=null){
-                            noti = new Imagee().getEncodedImage(notificationImageUri,FormOne.this);
+                        if (notificationImageUri != null) {
+                            noti = new Imagee().getEncodedImage(notificationImageUri, FormOne.this);
                         }
-                        if (bankImageUri!=null){
-                            bank = new Imagee().getEncodedImage(bankImageUri,FormOne.this);
+                        if (bankImageUri != null) {
+                            bank = new Imagee().getEncodedImage(bankImageUri, FormOne.this);
                         }
 
                         NetworkCalls.sendForm(
@@ -689,7 +784,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                                 tu_id_res,
                                 PrimaryPhoneNumber.getText().toString(),
                                 SecondaryPhoneNumber.getText().toString(),
-                                lat,lng,
+                                lat, lng,
                                 BaseUtils.getUserInfo(FormOne.this).getId(),
                                 type,
                                 true,
@@ -698,8 +793,8 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                                 BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc()
 
                         );
-                    }else{
-                        BaseUtils.showToast(FormOne.this,"Patient Already Registered with Programme");
+                    } else {
+                        BaseUtils.showToast(FormOne.this, "Patient Already Registered with Programme");
                     }
                 }
             }
@@ -711,7 +806,6 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
 
     }
-
 
 
     private void getLocation() {
@@ -810,12 +904,12 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (broadcastReceiver != null){
+        if (broadcastReceiver != null) {
             LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
         }
     }
 
-    public static void getDistrict(Context context,String state_id) {
+    public static void getDistrict(Context context, String state_id) {
 
         if (!BaseUtils.isNetworkAvailable(context)) {
             BaseUtils.showToast(context, "Please Check your internet  Connectivity");
@@ -823,7 +917,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
             return;
         }
-        String url = "https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_dist&w=n_st_id<<EQUALTO>>"+state_id;
+        String url = "https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_dist&w=n_st_id<<EQUALTO>>" + state_id;
         ApiClient.getClient().getDistrictFromState(url).enqueue(new Callback<FormOneResponse>() {
             @Override
             public void onResponse(Call<FormOneResponse> call, Response<FormOneResponse> response) {
@@ -848,7 +942,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         });
     }
 
-    public static void getTU(Context context,String st_id,String dis_id) {
+    public static void getTU(Context context, String st_id, String dis_id) {
 
         if (!BaseUtils.isNetworkAvailable(context)) {
             BaseUtils.showToast(context, "Please Check your internet  Connectivity");
@@ -860,7 +954,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         Log.d("ihsi", "getTU: W  " + BaseUtils.getUserInfo(context).getnAccessRights());
         Log.d("ihsi", "getTU: sanc  " + BaseUtils.getUserInfo(context).getN_staff_sanc());
 
-        String url = "https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_tu&w=n_st_id<<EQUALTO>>"+st_id+"<<AND>>n_dis_id<<EQUALTO>>"+dis_id;
+        String url = "https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_tu&w=n_st_id<<EQUALTO>>" + st_id + "<<AND>>n_dis_id<<EQUALTO>>" + dis_id;
         //String url = "_sptu_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_tu&w=" + BaseUtils.getUserInfo(context).getnAccessRights() + "&sanc=" + BaseUtils.getUserOtherInfo(context).getN_staff_sanc();
         Log.d("ihsi", "getTU: sanc  " + url);
         List<FormOneData> TuList = new ArrayList<>();

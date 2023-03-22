@@ -88,7 +88,7 @@ public class NetworkCalls {
     private static List<QualificationList> hfTypeLIsts = new ArrayList<>();
     private static List<QualificationList> scopeLists = new ArrayList<>();
     private static List<QualificationList> benefeciaryList = new ArrayList<>();
-    private static List<RegisterParentData> registerParentData= new ArrayList<>();
+    private static List<RegisterParentData> registerParentData = new ArrayList<>();
     private static AppDataBase dataBase;
 
     public static void getUserData(LogIn context, String phoneNumber, String password, LoginViewModel viewModel, Boolean call) {
@@ -111,8 +111,8 @@ public class NetworkCalls {
                         allUser = response.body().getUserData().get(0);
                         BaseUtils.saveUserInfo(context, allUser);
 
-                      //  BaseUtils.showToast(context,allUser.getN_staff_sanc());
-                        Log.d("userInfo",allUser.toString());
+                        //  BaseUtils.showToast(context,allUser.getN_staff_sanc());
+                        Log.d("userInfo", allUser.toString());
                         BaseUtils.putUsername(context, phoneNumber);
                         // BaseUtils.putUserLogIn(context, true, phoneNumber);
                         if (password.equals("pass@123")) {
@@ -137,7 +137,7 @@ public class NetworkCalls {
 
                         }
 
-                    }else{
+                    } else {
                         BaseUtils.showToast(context, "user not found");
                     }
                 } else {
@@ -272,7 +272,7 @@ public class NetworkCalls {
         });
     }
 
-    public static void getUserOtherData(Context context, String id,String tu) {
+    public static void getUserOtherData(Context context, String id, String tu) {
 
         apiInterface = ApiClient.getClient();
         progressDialog = new GlobalProgressDialog(context);
@@ -281,7 +281,7 @@ public class NetworkCalls {
             BaseUtils.showToast(context, "Please Check your internet  Connectivity");
             return;
         }
-        apiInterface.getUsersInfo("oth_staff_id=" + id+"<<AND>>n_tu_id<<EQUALTO>>"+tu).enqueue(new Callback<UserInfoResponse>() {
+        apiInterface.getUsersInfo("oth_staff_id=" + id + "<<AND>>n_tu_id<<EQUALTO>>" + tu).enqueue(new Callback<UserInfoResponse>() {
             @Override
             public void onResponse(Call<UserInfoResponse> call, @NotNull Response<UserInfoResponse> response) {
                 if (response.isSuccessful()) {
@@ -493,10 +493,10 @@ public class NetworkCalls {
             //  dataBase.customerDao().insertAddSample(roomAddSample);
             return;
         }
-        RequestBody d_diag_dt  = RequestBody.create(date, MediaType.parse("text/plain"));
-        RequestBody n_cfrm  = RequestBody.create(confirm,MediaType.parse("text/plain"));
+        RequestBody d_diag_dt = RequestBody.create(date, MediaType.parse("text/plain"));
+        RequestBody n_cfrm = RequestBody.create(confirm, MediaType.parse("text/plain"));
 
-        ApiClient.getClient().reason(d_diag_dt,n_cfrm, n_enroll_idd,"id<<EQUALTO>>"+n_user_idd).enqueue(new Callback<JsonObject>() {
+        ApiClient.getClient().reason(d_diag_dt, n_cfrm, n_enroll_idd, "id<<EQUALTO>>" + n_user_idd).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
@@ -629,7 +629,7 @@ public class NetworkCalls {
 //        progressDialog = new GlobalProgressDialog(context);
 //        progressDialog.showProgressBar();
         if (!BaseUtils.isNetworkAvailable(context)) {
-           // progressDialog.hideProgressBar();
+            // progressDialog.hideProgressBar();
             BaseUtils.showToast(context, "Please Check your internet  Connectivity");
             LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
 
@@ -652,37 +652,37 @@ public class NetworkCalls {
                     if (response.body().getStatus().equals("true")) {
                         hospitalLists = response.body().getUserData();
                         Log.d("lpossapo", "onResponse: " + hospitalLists.size());
-                        Log.d("Hospitals Data",hospitalLists.toString());
+                        Log.d("Hospitals Data", hospitalLists.toString());
                         BaseUtils.putSelectedTu(context, TuId);
                         BaseUtils.saveHospitalList(context, hospitalLists);
                         LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("notifyAdapter", ""));
-
-                      //  hideProgress(progressDialog);
+//                        progressDialog.hideProgressBar();
+//                        hideProgress(progressDialog);
 
 
                     } else {
                         BaseUtils.saveHospitalList(context, hospitalLists);
                         Log.d("lpossapo", "error: " + response.body().getStatus() + response.body().getMessage());
                         LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
-                       // progressDialog.hideProgressBar();
+                        // progressDialog.hideProgressBar();
                     }
                 } else {
                     Log.d("lpossapo", "error: " + response.errorBody().toString());
                     LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
-                  //  progressDialog.hideProgressBar();
+                    //  progressDialog.hideProgressBar();
                 }
 
             }
 
             @Override
             public void onFailure(Call<HospitalResponse> call, @NotNull Throwable t) {
-              //  progressDialog.hideProgressBar();
+                //  progressDialog.hideProgressBar();
                 LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
             }
         });
     }
 
-    public static void getTUPatient(Context context, String TuId){
+    public static void getTUPatient(Context context, String TuId) {
         apiInterface = ApiClient.getClient();
 //        progressDialog = new GlobalProgressDialog(context);
 //        progressDialog.showProgressBar();
@@ -693,7 +693,7 @@ public class NetworkCalls {
 
             return;
         }
-       // w=n_tu_id<<EQUALTO>>2<<OR>>n_tu_id<<EQUALTO>>3<<OR>>n_tu_id<<EQUALTO>>4
+        // w=n_tu_id<<EQUALTO>>2<<OR>>n_tu_id<<EQUALTO>>3<<OR>>n_tu_id<<EQUALTO>>4
         String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_smplcol_indv_lst&w=" + TuId;
         //String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=5&sanc=34&tu_id=235";
 
@@ -701,7 +701,7 @@ public class NetworkCalls {
             @Override
             public void onResponse(Call<RegisterParentResponse> call, @NotNull Response<RegisterParentResponse> response) {
                 if (response.isSuccessful()) {
-               //     progressDialog.hideProgressBar();
+                    //     progressDialog.hideProgressBar();
 
                     assert response.body() != null;
                     BaseUtils.putAddHospitalForm(context, "true");
@@ -712,7 +712,7 @@ public class NetworkCalls {
                         BaseUtils.saveTuPatientList(context, registerParentData);
                         LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("notifyAdapter", ""));
 
-                    //    hideProgress(progressDialog);
+                        //    hideProgress(progressDialog);
 
 
                     } else {
@@ -734,7 +734,7 @@ public class NetworkCalls {
 
             @Override
             public void onFailure(Call<RegisterParentResponse> call, @NotNull Throwable t) {
-              //  progressDialog.hideProgressBar();
+                //  progressDialog.hideProgressBar();
                 LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
             }
         });
@@ -1091,6 +1091,79 @@ public class NetworkCalls {
         });
     }
 
+
+    public static void updateHospital(
+            Context context,
+            String stIDd,
+            String disIDd,
+            String n_tu_idd,
+            String n_hf_cdd,
+            String c_hf_namm,
+            String n_hf_typ_idd,
+            String c_hf_addrr,
+            String c_cont_perr,
+            String c_cp_mobb,
+            String c_cp_emaill,
+            String n_sc_idd,
+            String n_pp_idenrr,
+            String c_tc_namm,
+            String c_tc_mobb,
+            String n_bf_idd,
+            String n_pay_statuss,
+            String n_user_idd,
+            String latt,
+            String lngg,
+            Boolean navigate,
+            String hospitalId
+    ) {
+        dataBase = AppDataBase.getDatabase(context);
+        BaseUtils.putAddHospitalForm(context, "false");
+
+
+        RequestBody stID = RequestBody.create(stIDd, MediaType.parse("text/plain"));
+        RequestBody disID = RequestBody.create(disIDd, MediaType.parse("text/plain"));
+        RequestBody n_tu_id = RequestBody.create(n_tu_idd, MediaType.parse("text/plain"));
+        RequestBody n_hf_cd = RequestBody.create(n_hf_cdd, MediaType.parse("text/plain"));
+        RequestBody c_hf_nam = RequestBody.create(c_hf_namm, MediaType.parse("text/plain"));
+        RequestBody n_hf_typ_id = RequestBody.create(n_hf_typ_idd, MediaType.parse("text/plain"));
+        RequestBody c_hf_addr = RequestBody.create(c_hf_addrr, MediaType.parse("text/plain"));
+        RequestBody c_cont_per = RequestBody.create(c_cont_perr, MediaType.parse("text/plain"));
+        RequestBody c_cp_mob = RequestBody.create(c_cp_mobb, MediaType.parse("text/plain"));
+        RequestBody c_cp_email = RequestBody.create(c_cp_emaill, MediaType.parse("text/plain"));
+        RequestBody n_sc_id = RequestBody.create(n_sc_idd, MediaType.parse("text/plain"));
+        RequestBody n_pp_idenr = RequestBody.create(n_pp_idenrr, MediaType.parse("text/plain"));
+        RequestBody c_tc_nam = RequestBody.create(c_tc_namm, MediaType.parse("text/plain"));
+        RequestBody c_tc_mob = RequestBody.create(c_tc_mobb, MediaType.parse("text/plain"));
+        RequestBody n_bf_id = RequestBody.create(n_bf_idd, MediaType.parse("text/plain"));
+        RequestBody n_pay_status = RequestBody.create(n_pay_statuss, MediaType.parse("text/plain"));
+        RequestBody n_user_id = RequestBody.create(n_user_idd, MediaType.parse("text/plain"));
+        RequestBody lat = RequestBody.create(latt, MediaType.parse("text/plain"));
+        RequestBody lng = RequestBody.create(lngg, MediaType.parse("text/plain"));
+
+
+        ApiClient.getClient().updateHospital(stID, disID, n_tu_id, n_hf_cd, c_hf_nam, n_hf_typ_id, c_hf_addr, c_cont_per, c_cp_mob, c_cp_email,
+                n_sc_id, n_pp_idenr, c_tc_nam, c_tc_mob, n_bf_id, n_pay_status, n_user_id, lat, lng, "id<<EQUALTO>>" + hospitalId).enqueue(new Callback<AddDocResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AddDocResponse> call, @NonNull Response<AddDocResponse> response) {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    if (response.body().isStatus()) {
+                        BaseUtils.showToast(context, "Hospital update successful");
+                        Log.d("yuygfu", "onResponse: " + BaseUtils.getUserInfo(context).getnUserLevel());
+                        hospitalSync(((Activity) context), response.body().getUserData(), false, n_tu_idd, navigate);
+                    }
+                } else {
+                    BaseUtils.putAddHospitalForm(context, "false");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AddDocResponse> call, @NonNull Throwable t) {
+                BaseUtils.putAddHospitalForm(context, "false");
+            }
+        });
+    }
+
     public static void getBenefeciary(Context context) {
 
         if (!BaseUtils.isNetworkAvailable(context)) {
@@ -1136,7 +1209,7 @@ public class NetworkCalls {
         RequestBody n_tu_id = RequestBody.create(BaseUtils.getUserOtherInfo(context).getnTuId(), MediaType.parse("text/plain"));
 
 
-        ApiClient.getClient().hospitalSync(n_hf_id, n_pm_id, n_pc_id, n_sfta_id, n_staff_id, n_user_id,n_st_id,n_dis_id,n_tu_id).enqueue(new Callback<AddDocResponse>() {
+        ApiClient.getClient().hospitalSync(n_hf_id, n_pm_id, n_pc_id, n_sfta_id, n_staff_id, n_user_id, n_st_id, n_dis_id, n_tu_id).enqueue(new Callback<AddDocResponse>() {
             @Override
             public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
                 if (response.isSuccessful()) {
@@ -1535,7 +1608,7 @@ public class NetworkCalls {
                 n_lngg,
                 n_user_idd, notification_image, bank_image, n_sac_idd);
         if (!BaseUtils.isNetworkAvailable(context)) {
-           // BaseUtils.putSubmitFormOne(context, "false");
+            // BaseUtils.putSubmitFormOne(context, "false");
             BaseUtils.putSubmitFormOne(context, "true");
             BaseUtils.showToast(context, "No internet, saved in local");
 
@@ -1580,7 +1653,7 @@ public class NetworkCalls {
         RequestBody n_sac_id = RequestBody.create(n_sac_idd, MediaType.parse("text/plain"));
         RequestBody n_user_id = RequestBody.create(n_user_idd, MediaType.parse("text/plain"));
         ApiClient apiClient = null;
-        if (bank_image.equals("")){
+        if (bank_image.equals("")) {
             ApiClient.getClient().postFormOne(n_st_id, n_dis_id
                     , n_tu_id, n_hf_id
                     , n_doc_id, d_reg_dat
@@ -1629,7 +1702,7 @@ public class NetworkCalls {
 
                 }
             });
-        }else{
+        } else {
             ApiClient.getClient().postFormOne(n_st_id, n_dis_id
                     , n_tu_id, n_hf_id
                     , n_doc_id, d_reg_dat
@@ -1679,7 +1752,6 @@ public class NetworkCalls {
                 }
             });
         }
-
 
 
     }
@@ -1800,7 +1872,7 @@ public class NetworkCalls {
             //dataBase.customerDao().insertPostProvider(roomPostProvider);
             // BaseUtils.putSubmitProviderForm(context, "false");
             if (navigate) {
-               // Toast.makeText(context, "Data will be submitted when back online", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(context, "Data will be submitted when back online", Toast.LENGTH_SHORT).show();
                 //  Log.d("mkijklj", "onResponse: " + n_visit_name);
                 /*if (n_visit_name.equals("Notification Collection")) {
                     NotificationFagment fragment = new NotificationFagment();
@@ -1815,7 +1887,7 @@ public class NetworkCalls {
                 }*/
                 //  ((Activity) context).finish();
             } else {
-               // Toast.makeText(context, "Data will be submitted when back online", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(context, "Data will be submitted when back online", Toast.LENGTH_SHORT).show();
                 //return;
             }
             return;
@@ -1841,7 +1913,7 @@ public class NetworkCalls {
             public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body().isStatus()) {
-                      //  BaseUtils.showToast(context, "Submitted");
+                        //  BaseUtils.showToast(context, "Submitted");
                         //    dataBase.customerDao().deletePostProvider(roomPostProvider);
                         BaseUtils.putSubmitProviderForm(context, "true");
                         BaseUtils.putSelectedGlobalHfIdProvider(context, BaseUtils.getGlobalHfIdProvider(context));
@@ -1860,14 +1932,14 @@ public class NetworkCalls {
                             }*/
                         }
                     } else {
-                    //    BaseUtils.putSubmitProviderForm(context, "false");
+                        //    BaseUtils.putSubmitProviderForm(context, "false");
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<AddDocResponse> call, Throwable t) {
-               // BaseUtils.putSubmitProviderForm(context, "false");
+                // BaseUtils.putSubmitProviderForm(context, "false");
             }
         });
     }
@@ -1952,14 +2024,14 @@ public class NetworkCalls {
                             }*//*
                         }*/
                     } else {
-                       // BaseUtils.putSubmitProviderForm(context, "false");
+                        // BaseUtils.putSubmitProviderForm(context, "false");
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<AddDocResponse> call, Throwable t) {
-             //   BaseUtils.putSubmitProviderForm(context, "false");
+                //   BaseUtils.putSubmitProviderForm(context, "false");
             }
         });
     }
@@ -2050,7 +2122,7 @@ public class NetworkCalls {
                             }
                         }
                     } else {
-                       // BaseUtils.putSubmitProviderForm(context, "false");
+                        // BaseUtils.putSubmitProviderForm(context, "false");
                     }
                 }
             }
@@ -2069,7 +2141,7 @@ public class NetworkCalls {
             LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localPythologylabsample", ""));
             return;
         }
-        String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=5&sanc="+BaseUtils.getUserInfo(context).getN_staff_sanc()+"&tu_id=" + BaseUtils.getGlobalTuid(context) + "&hf=" + BaseUtils.getGlobalnHfTypeid(context) +"&labt="+type;
+        String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=5&sanc=" + BaseUtils.getUserInfo(context).getN_staff_sanc() + "&tu_id=" + BaseUtils.getGlobalTuid(context) + "&hf=" + BaseUtils.getGlobalnHfTypeid(context) + "&labt=" + type;
 
         ApiClient.getClient().getPythologyLabs(url).enqueue(new Callback<PythologyLabResponse>() {
             @Override
