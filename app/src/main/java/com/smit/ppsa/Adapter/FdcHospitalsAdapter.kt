@@ -1,30 +1,25 @@
 package com.smit.ppsa.Adapter
 
-import com.smit.ppsa.Response.HospitalList
-import com.smit.ppsa.Dao.AppDataBase
-import androidx.recyclerview.widget.RecyclerView
-import android.view.ViewGroup
-import android.view.LayoutInflater
-import com.smit.ppsa.R
 import android.annotation.SuppressLint
 import android.content.Context
-import com.smit.ppsa.BaseUtils
 import android.content.Intent
 import android.graphics.Color
 import android.os.Handler
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
-import com.smit.ppsa.FdcForm
-import com.smit.ppsa.FdcDispensationToHf
+import androidx.core.content.ContextCompat.startActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.smit.ppsa.Response.PrevVisitsData
-import kotlin.Throws
-import com.smit.ppsa.Network.ApiClient
-import com.smit.ppsa.Response.PrevVisitsResponse
-import com.smit.ppsa.Adapter.HospitalDiffUtil
-import androidx.recyclerview.widget.DiffUtil.DiffResult
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.smit.ppsa.*
+import com.smit.ppsa.Dao.AppDataBase
+import com.smit.ppsa.Network.ApiClient
+import com.smit.ppsa.Response.HospitalList
+import com.smit.ppsa.Response.PrevVisitsData
+import com.smit.ppsa.Response.PrevVisitsResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -85,7 +80,12 @@ class FdcHospitalsAdapter(
         }*/
 
 
-
+        holder.editIcon.setOnClickListener {
+            val intent = Intent(context, AddHospitalFacilty::class.java)
+            intent.putExtra("tu_id", hospitalLists[position].getnTuId())
+            intent.putExtra("doctorId", hospitalLists[position].getnHfId())
+            context.startActivity(intent)
+        }
 
         if (hospitalLists[position].isChecked) {
             Log.d("selectionCheck", position.toString() + "")
@@ -435,6 +435,7 @@ class FdcHospitalsAdapter(
         var contfr: RelativeLayout
         var bagImg: ImageView
         var radioButton: RadioButton
+        var editIcon:ImageView
 
         init {
             hospitalName = itemView.findViewById(R.id.hospitalName)
@@ -449,6 +450,7 @@ class FdcHospitalsAdapter(
             contthree = itemView.findViewById(R.id.contthree)
             contfr = itemView.findViewById(R.id.contfr)
             contfv = itemView.findViewById(R.id.contfv)
+            editIcon = itemView.findViewById(R.id.editIcon)
             contsix = itemView.findViewById(R.id.contsixx)
             hospitalNameTt = itemView.findViewById(R.id.hospitalNameTitle)
             hospitalNameLocation = itemView.findViewById(R.id.locationHospital)

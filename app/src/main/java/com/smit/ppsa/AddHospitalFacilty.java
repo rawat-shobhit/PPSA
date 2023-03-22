@@ -249,7 +249,10 @@ public class AddHospitalFacilty extends AppCompatActivity implements View.OnClic
 
                 qualificationLists);
         spinner.setAdapter(adapter);
-        fillDetailForEdit();
+
+        if (getIntent().hasExtra("doctorId")) {
+            fillDetailForEdit();
+        }
 
     }
 
@@ -387,7 +390,7 @@ public class AddHospitalFacilty extends AppCompatActivity implements View.OnClic
         //  Log.d("dkl9", "getPatientdd: " + getIntent().getStringExtra("hf_id"));
         Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(AddHospitalFacilty.this).getnUserLevel());
 //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=id<<EQUALTO>>1632
-        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=id<<EQUALTO>>1632";
+        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=id<<EQUALTO>>"+ getIntent().getStringExtra("doctorId");
         ApiClient.getClient().getHospitalDetail(url).enqueue(new Callback<HospitalResponse>() {
             @Override
             public void onResponse(Call<HospitalResponse> call, Response<HospitalResponse> response) {
@@ -409,7 +412,7 @@ public class AddHospitalFacilty extends AppCompatActivity implements View.OnClic
 
                         for (int i = 0; i < arraySpinner.length; i++) {
 
-                            if (arraySpinner[i].toLowerCase().equals(model.getN_pp_idenr().toLowerCase())) {
+                            if (arraySpinner[i].equalsIgnoreCase(model.getN_pp_idenr())) {
 
                                 pp_spinner.setSelection(i);
                                 break;

@@ -652,6 +652,7 @@ public class NetworkCalls {
                     if (response.body().getStatus().equals("true")) {
                         hospitalLists = response.body().getUserData();
                         Log.d("lpossapo", "onResponse: " + hospitalLists.size());
+                        Log.d("Hospitals Data",hospitalLists.toString());
                         BaseUtils.putSelectedTu(context, TuId);
                         BaseUtils.saveHospitalList(context, hospitalLists);
                         LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("notifyAdapter", ""));
