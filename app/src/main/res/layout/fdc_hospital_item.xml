@@ -55,9 +55,18 @@
                 android:layout_marginStart="@dimen/_32sdp"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:fontFamily="@font/nunitosans_bold_2"
+                android:layout_weight="1"
                 android:paddingHorizontal="@dimen/_5sdp"
                 android:text="Hospital name"
                 android:textColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/editIcon"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:tint="@color/black" />
 
 
 
