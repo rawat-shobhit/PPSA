@@ -36,6 +36,15 @@
             android:layout_marginRight="@dimen/_2sdp"
             android:textSize="@dimen/_11sdp"
             />
+
+        <ImageView
+            android:id="@+id/ivImageView"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:layout_marginVertical="@dimen/_2sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/_5sdp"/>
         <CheckBox
             android:id="@+id/radioButton"
             android:layout_width="wrap_content"
