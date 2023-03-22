@@ -309,13 +309,12 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
                     for (int i = 0; i < genderStrings.size(); i++) {
 
-                        Log.d("genderSelection",genderStrings.get(i).toString()+" "+ model.getcTyp().toLowerCase());
+                        Log.d("genderSelection",genderStrings.get(i).toString()+" "+ model.getcTyp());
 
 
-                        if (genderStrings.get(i).toLowerCase().equals(model.getcTyp().toLowerCase())) {
-                            Gender.setSelection(i);
-
-                          //  break;
+                        if (genderStrings.get(i).equals(model.getcTyp())) {
+                            Gender.setSelection(i+1);
+                            break;
                         }else{
                             Log.d("genderSelection",genderStrings.get(i).toString()+" "+ model.getcTyp().toLowerCase());
                         }

@@ -1,22 +1,25 @@
 package com.smit.ppsa.Adapter
-import com.smit.ppsa.Response.RoomDoctorsList
-import android.app.Activity
-import com.smit.ppsa.ProviderEngagementViewModel
-import androidx.recyclerview.widget.RecyclerView
-import com.smit.ppsa.Adapter.HospitalFacilityAdapter.NotificationHolder
-import android.view.ViewGroup
-import android.view.LayoutInflater
-import com.smit.ppsa.R
 import android.annotation.SuppressLint
-import com.smit.ppsa.Adapter.HospitalFacilityAdapter
-import com.smit.ppsa.BaseUtils
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.smit.ppsa.AddHospitalFacilty
-import java.lang.Exception
+import androidx.recyclerview.widget.RecyclerView
+import com.smit.ppsa.Adapter.HospitalFacilityAdapter.NotificationHolder
+import com.smit.ppsa.BaseUtils
+import com.smit.ppsa.Network.ApiClient
+import com.smit.ppsa.ProviderEngagementViewModel
+import com.smit.ppsa.R
+import com.smit.ppsa.Response.*
+import com.smit.ppsa.databinding.DialogAdddoctorBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -38,6 +41,10 @@ class HospitalFacilityAdapter(
 
     @SuppressLint("RecyclerView")
     override fun onBindViewHolder(holder: NotificationHolder, position: Int) {
+
+        var qual = "select"
+        val qualID = arrayOfNulls<String>(1)
+
         holder.radioButton.isClickable = false
         holder.radioButton.isFocusable = false
         holder.radioButtonOne.isClickable = false
@@ -56,13 +63,83 @@ class HospitalFacilityAdapter(
         }
 
 
+
+
         holder.editDoctor.setOnClickListener {
 //            val intent = Intent(context, AddHospitalFacilty::class.java)
 //            intent.putExtra("tu_id", hospitalLists[position].getnTuId())
 //            intent.putExtra("doctorId", hospitalLists[position].getnHfId())
 //            context.startActivity(intent)
 
+//            val li = LayoutInflater.from(context)
+//            val dialogView = li.inflate(R.layout.dialog_adddoctor, null)
+//            val sDialog = AlertDialog.Builder(context).setView(dialogView).setCancelable(true).create()
 
+            Log.d("male","MALE Male Female FEMALE ")
+
+
+                val view= LayoutInflater.from(context).inflate(R.layout.dialog_adddoctor,null)
+            val builder= AlertDialog.Builder(context,R.style.dialog_transparent_style).setView(view)
+            val dialogBinding= DialogAdddoctorBinding.bind(view)
+
+            val mAlertDialog = builder.show()
+            val id=nList[position].hf_id.toString();
+
+
+            dialogBinding.adCancelbtn.setOnClickListener(){
+                mAlertDialog.dismiss();
+            }
+
+
+
+            dialogBinding.adQualificationOne.setOnItemSelectedListener(
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View, position: Int, id: Long
+                    ) {
+
+                        // It returns the clicked item.
+                        val clickedItem = parent.getItemAtPosition(position) as QualificationList
+                        qual = clickedItem.getcQualf()
+//                        qualID.get(0) = clickedItem.id
+//                        getQual(qualID.get(0))
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                })
+
+
+
+
+
+            //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=id<<EQUALTO>>1632
+            val url ="_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_doc&w=id<<EQUALTO>>"+id;
+            ApiClient.getClient().getDoctorDetails(url)
+                .enqueue(object : Callback<DoctorsResponse> {
+                    override fun onResponse(
+                        call: Call<DoctorsResponse>,
+                        response: Response<DoctorsResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                                Log.d("apiResponce",response.body()!!.userData.get(0).getcQual().toString());
+
+                            dialogBinding.adCancelbtn.setOnClickListener(){
+                                Toast.makeText(context, "checking toast", Toast.LENGTH_SHORT).show()
+                            }
+
+                            dialogBinding.namepracticingdoctor.setText(response.body()!!.userData.get(0).getcDocNam())
+                            dialogBinding.regnumpracticingdoctor.setText(response.body()!!.userData.get(0).regNo)
+
+                            dialogBinding.adContact.setText(response.body()!!.userData.get(0).getcMob());
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<DoctorsResponse>, t: Throwable) {
+                        Log.d("apiResponceAtHospital",t.toString())
+                    }
+                })
 
 
         }
@@ -233,6 +310,28 @@ class HospitalFacilityAdapter(
     fun updateList(list: ArrayList<RoomDoctorsList>) {
         nList = list
         notifyDataSetChanged()
+    }
+
+    private fun getQual(quelId: String) {
+        if (!BaseUtils.isNetworkAvailable(context)) {
+                  return
+        }
+        val url ="_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_doc_spec_qual&w=n_spec<<EQUALTO>>"+quelId
+        ApiClient.getClient().getQualification(url)
+            .enqueue(object : Callback<QualificationResponse> {
+                override fun onResponse(
+                    call: Call<QualificationResponse>,
+                    response: Response<QualificationResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        if (response.body()!!.status) {
+
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<QualificationResponse>, t: Throwable) {}
+            })
     }
 
     companion object {

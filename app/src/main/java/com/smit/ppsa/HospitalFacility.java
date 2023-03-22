@@ -746,6 +746,9 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
         return editText.getText().toString().isEmpty();
     }
 
+
+
+
     private void addDocDialog() {
         LayoutInflater li = LayoutInflater.from(HospitalFacility.this);
         View dialogView = li.inflate(R.layout.dialog_adddoctor, null);
@@ -881,6 +884,9 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
         //bookingMsg.setText(response.body().getMessage());
 
     }
+
+
+
 
     private void setSpinnerAdapter(Spinner spinner, List<String> values) {
 

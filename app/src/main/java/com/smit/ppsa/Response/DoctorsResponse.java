@@ -10,9 +10,12 @@ public class DoctorsResponse {
     @SerializedName("status")
     @Expose
     private boolean status;
+
     @SerializedName("message")
     @Expose
     private String message;
+
+
     @SerializedName("user_data")
     @Expose
     private List<DoctorsList> userData = null;

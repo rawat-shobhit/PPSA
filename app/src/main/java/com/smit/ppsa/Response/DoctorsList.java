@@ -28,6 +28,25 @@ public class DoctorsList {
     @Expose
     private String id;
 
+    @SerializedName("reg_no")@Expose
+    private String regNo;
+
+    public Integer getIds() {
+        return ids;
+    }
+
+    public void setIds(Integer ids) {
+        this.ids = ids;
+    }
+
+    public String getRegNo() {
+        return regNo;
+    }
+
+    public void setRegNo(String regNo) {
+        this.regNo = regNo;
+    }
+
     public String getLst_vst() {
         return lst_vst;
     }

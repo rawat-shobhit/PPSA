@@ -161,6 +161,8 @@ public class ApiClient {
         @POST("_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_doc")
         Call<DoctorsResponse> getDoctorsList(@Field("w") String id);
 
+
+
         /* @FormUrlEncoded
          @POST("_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&")
          Call<HospitalResponse> getHospitalList(@Field("w") String id);*/
@@ -498,6 +500,9 @@ public class ApiClient {
 
         @GET()
         Call<HospitalResponse> getHospitalDetail(@Url String url);
+
+        @GET()
+        Call<DoctorsResponse> getDoctorDetails(@Url String url);
 
         @GET()
         Call<PatientResponse> getPateintDetail(@Url String url);
