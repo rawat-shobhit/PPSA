@@ -123,6 +123,8 @@ class FdcHospitalsAdapter(
             holder.radioButton.isChecked = false
         }
 
+
+
         holder.hospitalName.text = hospitalLists[position].getcHfNam()
         holder.location.text =
             hospitalLists[position].getcDisNam() + "," + hospitalLists[position].getcTuName()

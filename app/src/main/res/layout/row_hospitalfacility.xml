@@ -24,7 +24,7 @@
         <ImageView
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
-            android:id="@+id/ivEditIcon"
+            android:id="@+id/ivEditIcon1"
             android:layout_marginTop="@dimen/_1sdp"
             android:src="@drawable/ic_baseline_edit_24"
             android:layout_marginEnd="@dimen/_10sdp"/>

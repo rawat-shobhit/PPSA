@@ -16,6 +16,15 @@
         android:padding="@dimen/_5sdp"
         android:id="@+id/transfer_show"
         android:background="@drawable/back_four">
+
+        <ImageView
+            android:id="@+id/ivImageView"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:layout_marginVertical="@dimen/_2sdp"
+            android:layout_gravity="center_vertical"/>
+
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_20sdp"
