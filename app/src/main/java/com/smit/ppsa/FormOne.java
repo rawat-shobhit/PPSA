@@ -37,6 +37,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.smit.ppsa.Adapter.CustomSpinnerAdapter;
 import com.smit.ppsa.Dao.AppDataBase;
 import com.smit.ppsa.Network.ApiClient;
@@ -290,7 +291,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
                     //HospitalList model = response.body().getUserData().get(0);
 
-                    BaseUtils.showToast(FormOne.this, model.getcTyp());
+                  //  BaseUtils.showToast(FormOne.this, model.getcTyp());
 
                     EnrollmentDate.setText(model.getdRegDat());
                     EnrolmentId.setText(model.getnNkshId());
@@ -307,6 +308,10 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     Pincode.setText(model.getnPin());
                     SecondaryPhoneNumber.setText(model.getC_mob_2());
 
+                    Glide.with(getBaseContext()).load(model.getNotf_img()).into(patientNotificationImg);
+                    Glide.with(getBaseContext()).load(model.getBnk_img()).into(patientBankImg);
+
+
                     for (int i = 0; i < genderStrings.size(); i++) {
 
                         Log.d("genderSelection",genderStrings.get(i).toString()+" "+ model.getcTyp());
@@ -317,6 +322,30 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                             break;
                         }else{
                             Log.d("genderSelection",genderStrings.get(i).toString()+" "+ model.getcTyp().toLowerCase());
+                        }
+                    }
+
+                    for (int i = 0; i < stateStrings.size(); i++) {
+                        if (state.get(i).getId().equals(model.getnStId())) {
+                            ResidentialState.setSelection(i+1);
+                            break;
+                        }else{
+                        }
+                    }
+
+                    for(int i = 0;i<distri.size();i++){
+                        if (district.get(i).getId().equals(model.getnDisId())) {
+                            ResidentialDistrict.setSelection(i+1);
+                            break;
+                        }else{
+                        }
+                    }
+
+                    for(int i = 0;i<tuStrings.size();i++){
+                        if (tu.get(i).getId().equals(model.getnTuId())) {
+                            ResidentialTU.setSelection(i+1);
+                            break;
+                        }else{
                         }
                     }
 
@@ -414,10 +443,16 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_proceedone:
-                if (isValidate()) {
-                    sendForm();
+
+                if(getIntent().hasExtra("pateintId")){
+
+                }else{
+                    if (isValidate()) {
+                        sendForm();
+                    }
+                    break;
                 }
-                break;
+
             case R.id.backbtn:
                 super.onBackPressed();
                 break;
@@ -438,7 +473,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         } else if (emptyText(PatientName)) {
             BaseUtils.showToast(this, "Enter patient name");
             return false;
-        } else if (notificationImageUri == null) {
+        } else if (notificationImageUri == null ) {
             BaseUtils.showToast(this, "Select notification form image");
             return false;
         } else if (emptyText(Age)) {

@@ -1544,6 +1544,98 @@ public class NetworkCalls {
         });
     }
 
+    ////n_nksh_id	varchar(20)
+//c_pat_nam	varchar(200)
+//n_age	int(11)
+//n_sex	int(11)	1-Male | 2-Female | 3-TG
+//n_wght	int(11)
+//n_hght	int(11)
+//c_add	varchar(250)
+//c_taluka	varchar(100)
+//c_town	varchar(100)
+//c_ward	varchar(100)
+//c_lnd_mrk	varchar(150)
+//n_pin	double
+//n_st_id_res	int(11)
+//n_dis_id_res	int(11)
+//n_tu_id_res	varchar(200)
+//c_mob	varchar(10)
+//c_mob_2	varchar(10)
+//c_not_img	varchar(50)
+//c_bnk_img	varchar(50)
+//d_diag_dt	date
+    private static void updateNotification(Context context, String d_reg_datt, String n_nksh_idd,
+                                           String c_pat_namm, String n_agee,
+                                           String n_sexx, String n_wghtt,
+                                           String n_hghtt,
+                                           String c_addd,
+                                           String c_talukaa,
+                                           String c_townn,
+                                           String c_wardd, String c_lnd_mrkk,
+                                           String n_pinn,
+                                           String n_st_id_ress, String n_dis_id_ress,
+                                           String n_tu_id_ress, String c_mobbb,
+                                           String c_mob_22, String c_not_imgg,
+                                           String c_bnk_imgg, String d_diag_dtt, String pateintId) {
+        RequestBody d_reg_dat = RequestBody.create(d_reg_datt, MediaType.parse("text/plain"));
+        RequestBody n_nksh_id = RequestBody.create(n_nksh_idd, MediaType.parse("text/plain"));
+        RequestBody c_pat_nam = RequestBody.create(c_pat_namm, MediaType.parse("text/plain"));
+        RequestBody n_age = RequestBody.create(n_agee, MediaType.parse("text/plain"));
+        RequestBody n_sex = RequestBody.create(n_sexx, MediaType.parse("text/plain"));
+        RequestBody n_wght = RequestBody.create(n_wghtt, MediaType.parse("text/plain"));
+        RequestBody n_hght = RequestBody.create(n_hghtt, MediaType.parse("text/plain"));
+        RequestBody c_add = RequestBody.create(c_addd, MediaType.parse("text/plain"));
+        RequestBody c_taluka = RequestBody.create(c_talukaa, MediaType.parse("text/plain"));
+        RequestBody c_town = RequestBody.create(c_townn, MediaType.parse("text/plain"));
+        RequestBody c_ward = RequestBody.create(c_wardd, MediaType.parse("text/plain"));
+        RequestBody c_lnd_mrk = RequestBody.create(c_lnd_mrkk, MediaType.parse("text/plain"));
+        RequestBody n_pin = RequestBody.create(n_pinn, MediaType.parse("text/plain"));
+        RequestBody n_st_id_res = RequestBody.create(n_st_id_ress, MediaType.parse("text/plain"));
+        RequestBody n_dis_id_res = RequestBody.create(n_dis_id_ress, MediaType.parse("text/plain"));
+        RequestBody n_tu_id_res = RequestBody.create(n_tu_id_ress, MediaType.parse("text/plain"));
+        RequestBody c_mob = RequestBody.create(c_mobbb, MediaType.parse("text/plain"));
+        RequestBody c_mob_2 = RequestBody.create(c_mob_22, MediaType.parse("text/plain"));
+        RequestBody c_not_img = RequestBody.create(c_not_imgg, MediaType.parse("text/plain"));
+        RequestBody c_bnk_img = RequestBody.create(c_bnk_imgg, MediaType.parse("text/plain"));
+        RequestBody d_diag_dt = RequestBody.create(d_diag_dtt, MediaType.parse("text/plain"));
+
+        if (c_bnk_img.equals("")) {
+            ApiClient.getClient().updateFormOne(d_reg_dat, n_nksh_id,
+                    c_pat_nam, n_age,
+                    n_sex, n_wght,
+                    n_hght,
+                    c_add,
+                    c_taluka,
+                    c_town,
+                    c_ward, c_lnd_mrk,
+                    n_pin,
+                    n_st_id_res, n_dis_id_res,
+                    n_tu_id_res, c_mob,
+                    c_mob_2, c_not_img,
+                    c_bnk_img, d_diag_dt, pateintId).enqueue(new Callback<AddDocResponse>() {
+                @Override
+                public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
+                    if (response.isSuccessful()) {
+
+
+                        ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+
+
+                    } else {
+                        // BaseUtils.putSubmitFormOne(context, "false");
+                        BaseUtils.putSubmitFormOne(context, "true");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AddDocResponse> call, Throwable t) {
+
+                }
+            });
+
+
+        }
+    }
 
     public static void sendForm(
             Context context,

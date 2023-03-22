@@ -72,7 +72,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BaseUtils.showToast(context, registerParentData.get(position).getId());
+              //  BaseUtils.showToast(context, registerParentData.get(position).getId());
                 Intent intent = new Intent(context, FormOne.class);
                 intent.putExtra("pateintId", registerParentData.get(position).getId());
                 context.startActivity(intent);

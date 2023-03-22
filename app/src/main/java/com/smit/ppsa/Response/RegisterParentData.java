@@ -16,6 +16,31 @@ public class RegisterParentData implements Serializable {
     @SerializedName("n_nksh_id")
     @Expose
     private String nNkshId;
+
+    @SerializedName("notf_img")
+    @Expose
+    private String notf_img;
+
+    public String getNotf_img() {
+        return notf_img;
+    }
+
+    public void setNotf_img(String notf_img) {
+        this.notf_img = notf_img;
+    }
+
+    public String getBnk_img() {
+        return bnk_img;
+    }
+
+    public void setBnk_img(String bnk_img) {
+        this.bnk_img = bnk_img;
+    }
+
+    @SerializedName("bnk_img")
+    @Expose
+    private String bnk_img;
+
     @SerializedName("c_pat_nam")
     @Expose
     private String cPatNam;

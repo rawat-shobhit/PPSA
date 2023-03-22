@@ -162,7 +162,6 @@ public class ApiClient {
         Call<DoctorsResponse> getDoctorsList(@Field("w") String id);
 
 
-
         /* @FormUrlEncoded
          @POST("_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&")
          Call<HospitalResponse> getHospitalList(@Field("w") String id);*/
@@ -224,6 +223,7 @@ public class ApiClient {
                                          @Part("n_user_id") RequestBody n_user_id,
                                          @Part("lat") RequestBody lat,
                                          @Part("lng") RequestBody lng);
+
         //id<<EQUALTO>>142
         @Multipart
         @POST("https://nikshayppsa.hlfppt.org/_api-v1_/_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_hf&w=")
@@ -414,6 +414,52 @@ public class ApiClient {
                                          @Part("c_not_img") RequestBody c_not_img,
                                          @Part("n_sac_id") RequestBody n_sac_id,
                                          @Part("n_user_id") RequestBody n_user_id);
+
+        //d_reg_dat	date
+//n_nksh_id	varchar(20)
+//c_pat_nam	varchar(200)
+//n_age	int(11)
+//n_sex	int(11)	1-Male | 2-Female | 3-TG
+//n_wght	int(11)
+//n_hght	int(11)
+//c_add	varchar(250)
+//c_taluka	varchar(100)
+//c_town	varchar(100)
+//c_ward	varchar(100)
+//c_lnd_mrk	varchar(150)
+//n_pin	double
+//n_st_id_res	int(11)
+//n_dis_id_res	int(11)
+//n_tu_id_res	varchar(200)
+//c_mob	varchar(10)
+//c_mob_2	varchar(10)
+//c_not_img	varchar(50)
+//c_bnk_img	varchar(50)
+//d_diag_dt	date
+        @Multipart
+        @POST("_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll")
+        Call<AddDocResponse> updateFormOne(@Part("d_reg_dat") RequestBody d_reg_dat,
+                                           @Part("n_nksh_id") RequestBody n_nksh_id,
+                                           @Part("c_pat_nam") RequestBody c_pat_nam,
+                                           @Part("n_age") RequestBody n_age,
+                                           @Part("n_sex") RequestBody n_sex,
+                                           @Part("n_wght") RequestBody n_wght,
+                                           @Part("n_hght") RequestBody n_hght,
+                                           @Part("c_add") RequestBody c_add,
+                                           @Part("c_taluka") RequestBody c_taluka,
+                                           @Part("c_town") RequestBody c_town,
+                                           @Part("c_ward") RequestBody c_ward,
+                                           @Part("c_lnd_mrk") RequestBody c_lnd_mrk,
+                                           @Part("n_pin") RequestBody n_pin,
+                                           @Part("n_st_id_res") RequestBody n_st_id_res,
+                                           @Part("n_dis_id_res") RequestBody n_dis_id_res,
+                                           @Part("n_tu_id_res") RequestBody n_tu_id_res,
+                                           @Part("c_mob") RequestBody c_mob,
+                                           @Part("c_mob_2") RequestBody c_mob_2,
+                                           @Part("c_not_img") RequestBody c_not_img,
+                                           @Part("c_bnk_img") RequestBody c_bnk_img,
+                                           @Part("d_diag_dt") RequestBody d_diag_dt,
+                                           @Query("w") String patientId);
 
         @GET("_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_m_f2_reason&w=id<<GT>>0")
         Call<FormOneResponse> getTesting();
