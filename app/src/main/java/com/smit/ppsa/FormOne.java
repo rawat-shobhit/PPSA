@@ -279,7 +279,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             return;
         }
         // https://nikshayppsa.hlfppt.org/_api-v1_/
-        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll&w=id<<EQUALTO>>15" ;
+        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll&w=id<<EQUALTO>>" + getIntent().getStringExtra("pateintId");
         ApiClient.getClient().getPateintDetail(url).enqueue(new Callback<PatientResponse>() {
             @Override
             public void onResponse(Call<PatientResponse> call, Response<PatientResponse> response) {
@@ -291,8 +291,6 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     //HospitalList model = response.body().getUserData().get(0);
 
                     BaseUtils.showToast(FormOne.this, model.getcTyp());
-
-                    String gen = model.getcTyp();
 
                     EnrollmentDate.setText(model.getdRegDat());
                     EnrolmentId.setText(model.getnNkshId());
@@ -314,12 +312,12 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                         Log.d("genderSelection",genderStrings.get(i).toString()+" "+ model.getcTyp().toLowerCase());
 
 
-                        if (genderStrings.get(i).toLowerCase().equals(gen.toLowerCase())) {
+                        if (genderStrings.get(i).toLowerCase().equals(model.getcTyp().toLowerCase())) {
                             Gender.setSelection(i);
 
-                          //  break;F
+                          //  break;
                         }else{
-                            Log.d("genderSelection else",genderStrings.get(i).toString()+" "+ gen.toLowerCase());
+                            Log.d("genderSelection",genderStrings.get(i).toString()+" "+ model.getcTyp().toLowerCase());
                         }
                     }
 
