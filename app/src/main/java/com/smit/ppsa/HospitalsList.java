@@ -335,6 +335,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
             );
 
         }
+
         if (BaseUtils.getAddDocFormFormStatus(this).equals("false")) {
             LayoutInflater li = LayoutInflater.from(this);
             View dialogView = li.inflate(R.layout.dialog_adddoctor, null);

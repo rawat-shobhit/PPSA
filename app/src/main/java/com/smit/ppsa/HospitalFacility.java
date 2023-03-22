@@ -158,7 +158,7 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
         if (BaseUtils.getSubmitCounsellingFormStatus(this).equals("false")) {
          /*   LiveData<List<RoomCounsellingData>> roomCounsellingData = dataBase.customerDao().fetchCounsellingFormData();
             roomCounsellingData.observe(this, roomCounsellingData1 -> {
-
+  dsfdsdf
                 if (roomCounsellingData1.size() != 0) {
                     for (int a = 0; a < roomCounsellingData1.size(); a++) {
                         Log.d("lplpl", "onCreate: "+ roomCounsellingData1.get(a).getD_Counn());
@@ -677,7 +677,8 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
 
          */
 
-        if (BaseUtils.getSection(HospitalFacility.this).equals("sample")) {
+        /*
+          if (BaseUtils.getSection(HospitalFacility.this).equals("sample")) {
 
             if(roomDoctorsLists.size()>=0){
 
@@ -717,6 +718,8 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
             }
 
         }
+         */
+
 
 
     }

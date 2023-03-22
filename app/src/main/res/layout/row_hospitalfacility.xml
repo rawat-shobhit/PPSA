@@ -17,10 +17,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="end"
+        android:layout_gravity="center_vertical"
         android:padding="@dimen/_5sdp"
         android:background="@drawable/back_four">
+
+        <ImageView
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:id="@+id/ivEditIcon"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:src="@drawable/ic_baseline_edit_24"
+            android:layout_marginEnd="@dimen/_10sdp"/>
+
         <CheckBox
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:gravity="end"
             android:checked="true"

@@ -110,6 +110,8 @@ public class HospitalFacilityAdapter extends RecyclerView.Adapter<HospitalFacili
             @Override
             public void onClick(View view) {
 
+                Log.d("type",type);
+
                 if (nList.get(position).isChecked()) {
                     nList.get(position).setChecked(false);
                     viewModel.removeList(nList.get(position));
@@ -151,14 +153,18 @@ public class HospitalFacilityAdapter extends RecyclerView.Adapter<HospitalFacili
                     BaseUtils.showToast(context,"2");
 
                     Log.d("jko", "onClick: " + nList.get(position).getIdd());
+
                     /*  context.startActivity(new Intent(context, *//*FormOne*//*ProviderEngagement.class)
                             .putExtra("doc_id", nList.get(position).getIdd()).putExtra("provider", "")
                             .putExtra("hospitalName", context.getIntent().getStringExtra("hospitalName"))
                             .putExtra("hospitallocation", context.getIntent().getStringExtra("hospitallocation"))
                             .putExtra("hospitaltypeName", context.getIntent().getStringExtra("hospitaltypeName"))
                             .putExtra("docName", nList.get(position).getDocname())
+
+
                             .putExtra("hf_id", nList.get(position).getHf_id())
                     );*/
+
                     Log.d("dmkidjio", "onReceive: " + context.getIntent().getStringExtra("lastvisit"));
 
 
