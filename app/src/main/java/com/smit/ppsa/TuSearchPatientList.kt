@@ -30,6 +30,7 @@ class TuSearchPatientList : AppCompatActivity() {
     private lateinit var searchBtn: TextView
     private lateinit var tvTu: EditText
     private lateinit var filtertt: TextView
+    private lateinit var visiit:LinearLayout
     private lateinit var checkboxNonVisit: CheckBox
     private lateinit var patientRecyclerView: RecyclerView
     private lateinit var backBtn: ImageView
@@ -51,11 +52,11 @@ class TuSearchPatientList : AppCompatActivity() {
 
     private fun init() {
 
-
         tuSpinner = findViewById(R.id.filterCounsell)
         checkboxNonVisit = findViewById(R.id.checkboxNonVisit)
         backBtn = findViewById(R.id.backbtn)
         tvTu = findViewById(R.id.tvTU)
+        visiit = findViewById(R.id.visiit)
         searchText = findViewById(R.id.search)
         filtertt = findViewById(R.id.filtertt)
         searchBtn = findViewById(R.id.searchbtn)
@@ -63,6 +64,7 @@ class TuSearchPatientList : AppCompatActivity() {
         if (getIntent().hasExtra("upload")) {
             tvTu.visibility = View.GONE
             filtertt.visibility = View.GONE
+            visiit.visibility = View.VISIBLE
         }
         NetworkCalls.getTU(this)
 
