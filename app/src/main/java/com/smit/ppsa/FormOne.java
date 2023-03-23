@@ -42,6 +42,7 @@ import com.smit.ppsa.Adapter.CustomSpinnerAdapter;
 import com.smit.ppsa.Dao.AppDataBase;
 import com.smit.ppsa.Network.ApiClient;
 import com.smit.ppsa.Network.NetworkCalls;
+import com.smit.ppsa.Response.AddDocResponse;
 import com.smit.ppsa.Response.FormOneData;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -56,15 +57,21 @@ import com.smit.ppsa.Response.RegisterParentData;
 import com.smit.ppsa.Response.RoomMedicines;
 import com.yalantis.ucrop.UCrop;
 
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -94,7 +101,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private ImageView patientNotificationImg, patientBankImg;
     private String imageType = "front";
     private TextView EnrollmentDate;
-    private EditText EnrollHealthFacilitySector, EnrollmentFaciltyPHI, EnrollmentFaciltyHFcode, UserIDEnrollment, EnrolmentId, PatientName, Age, Weight, Height, Address,
+    private EditText tuString, EnrollHealthFacilitySector, EnrollmentFaciltyPHI, EnrollmentFaciltyHFcode, UserIDEnrollment, EnrolmentId, PatientName, Age, Weight, Height, Address,
             Taluka, Town, Ward, Landmark, Pincode, PrimaryPhoneNumber, SecondaryPhoneNumber;
     private Spinner EnrollmentFaciltyState, EnrollmentFaciltyDistrict, EnrollmentFaciltyTBU, Gender, ResidentialState, ResidentialDistrict, ResidentialTU;
     Uri notificationImageUri = null;
@@ -144,7 +151,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         EnrollmentDate = findViewById(R.id.f1_enrollment);
         patientNotificationImg = findViewById(R.id.addpatientfrontimg);
         patientBankImg = findViewById(R.id.addpatientBankimg);
-
+        tuString = findViewById(R.id.tuString);
         EnrolmentId = findViewById(R.id.f1_enrollID);
         PatientName = findViewById(R.id.f1_patientName);
         Age = findViewById(R.id.f1_age);
@@ -286,68 +293,73 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             public void onResponse(Call<PatientResponse> call, Response<PatientResponse> response) {
                 if (response.isSuccessful()) {
 
+                    try {
+                        RegisterParentData model = response.body().getUserData().get(0);
+
+                        //HospitalList model = response.body().getUserData().get(0);
+
+                        //  BaseUtils.showToast(FormOne.this, model.getcTyp());
+
+                        EnrollmentDate.setText(model.getdRegDat());
+                        EnrolmentId.setText(model.getnNkshId());
+                        PatientName.setText(model.getcPatNam());
+                        Age.setText(model.getnAge());
+                        PrimaryPhoneNumber.setText(model.getC_mob());
+                        Weight.setText(model.getnWght());
+                        Address.setText(model.getcAdd());
+                        Height.setText(model.getnHght());
+                        Taluka.setText(model.getcTaluka());
+                        Town.setText(model.getcTown());
+                        Ward.setText(model.getcWard());
+                        Landmark.setText(model.getcLndMrk());
+                        Pincode.setText(model.getnPin());
+                        SecondaryPhoneNumber.setText(model.getC_mob_2());
+
+                        Glide.with(getBaseContext()).load(model.getNotf_img()).into(patientNotificationImg);
+                        Glide.with(getBaseContext()).load(model.getBnk_img()).into(patientBankImg);
+
+
+                        for (int i = 0; i < genderStrings.size(); i++) {
+
+                            Log.d("genderSelection", genderStrings.get(i).toString() + " " + model.getcTyp());
+
+
+                            if (genders.get(i).getC_val().equals(model.getcTyp())) {
+                                Gender.setSelection(i + 1);
+                                break;
+                            } else {
+                                Log.d("genderSelection", genderStrings.get(i).toString() + " " + model.getcTyp().toLowerCase());
+                            }
+                        }
+
+                        for (int i = 0; i < stateStrings.size(); i++) {
+                            if (state.get(i).getId().equals(model.getnStId())) {
+                                ResidentialState.setSelection(i + 1);
+                                break;
+                            } else {
+                            }
+                        }
+
+                        for (int i = 0; i < distri.size(); i++) {
+                            if (district.get(i).getId().equals(model.getnDisId())) {
+                                ResidentialDistrict.setSelection(i + 1);
+                                break;
+                            } else {
+                            }
+                        }
+
+                        for (int i = 0; i < tuStrings.size(); i++) {
+                            if (tu.get(i).getId().equals(model.getnTuId())) {
+                                ResidentialTU.setSelection(i + 1);
+                                break;
+                            } else {
+                            }
+                        }
+
+                    } catch (Exception e) {
+
+                    }
                     //  parentDataTestReportResults = response.body().getUser_data();
-                    RegisterParentData model = response.body().getUserData().get(0);
-
-                    //HospitalList model = response.body().getUserData().get(0);
-
-                  //  BaseUtils.showToast(FormOne.this, model.getcTyp());
-
-                    EnrollmentDate.setText(model.getdRegDat());
-                    EnrolmentId.setText(model.getnNkshId());
-                    PatientName.setText(model.getcPatNam());
-                    Age.setText(model.getnAge());
-                    PrimaryPhoneNumber.setText(model.getC_mob());
-                    Weight.setText(model.getnWght());
-                    Address.setText(model.getcAdd());
-                    Height.setText(model.getnHght());
-                    Taluka.setText(model.getcTaluka());
-                    Town.setText(model.getcTown());
-                    Ward.setText(model.getcWard());
-                    Landmark.setText(model.getcLndMrk());
-                    Pincode.setText(model.getnPin());
-                    SecondaryPhoneNumber.setText(model.getC_mob_2());
-
-                    Glide.with(getBaseContext()).load(model.getNotf_img()).into(patientNotificationImg);
-                    Glide.with(getBaseContext()).load(model.getBnk_img()).into(patientBankImg);
-
-
-                    for (int i = 0; i < genderStrings.size(); i++) {
-
-                        Log.d("genderSelection",genderStrings.get(i).toString()+" "+ model.getcTyp());
-
-
-                        if (genderStrings.get(i).equals(model.getcTyp())) {
-                            Gender.setSelection(i+1);
-                            break;
-                        }else{
-                            Log.d("genderSelection",genderStrings.get(i).toString()+" "+ model.getcTyp().toLowerCase());
-                        }
-                    }
-
-                    for (int i = 0; i < stateStrings.size(); i++) {
-                        if (state.get(i).getId().equals(model.getnStId())) {
-                            ResidentialState.setSelection(i+1);
-                            break;
-                        }else{
-                        }
-                    }
-
-                    for(int i = 0;i<distri.size();i++){
-                        if (district.get(i).getId().equals(model.getnDisId())) {
-                            ResidentialDistrict.setSelection(i+1);
-                            break;
-                        }else{
-                        }
-                    }
-
-                    for(int i = 0;i<tuStrings.size();i++){
-                        if (tu.get(i).getId().equals(model.getnTuId())) {
-                            ResidentialTU.setSelection(i+1);
-                            break;
-                        }else{
-                        }
-                    }
 
 //
 //                        for (int i = 0; i < hfTypeLIsts.size(); i++) {
@@ -444,9 +456,9 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.bt_proceedone:
 
-                if(getIntent().hasExtra("pateintId")){
+                if (getIntent().hasExtra("pateintId")) {
 
-                }else{
+                } else {
                     if (isValidate()) {
                         sendForm();
                     }
@@ -473,7 +485,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         } else if (emptyText(PatientName)) {
             BaseUtils.showToast(this, "Enter patient name");
             return false;
-        } else if (notificationImageUri == null ) {
+        } else if (notificationImageUri == null) {
             BaseUtils.showToast(this, "Select notification form image");
             return false;
         } else if (emptyText(Age)) {
@@ -747,7 +759,9 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
         } else {
             if (getIntent().hasExtra("pateintId")) {
+                ResidentialTU.setVisibility(View.VISIBLE);
                 fillDetailForEdit();
+
             }
         }
 
@@ -757,7 +771,71 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private void sendForm() {
 
 
-        validMobile(PrimaryPhoneNumber.getText().toString());
+        if (getIntent().hasExtra("pateintId")) {
+            String url = "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll&w=id<<EQUALTO>>" + getIntent().getStringExtra("pateintId");
+            String noti = "";
+            String bank = "";
+
+            if (notificationImageUri != null) {
+                noti = new Imagee().getEncodedImage(notificationImageUri, FormOne.this);
+            }
+            if (bankImageUri != null) {
+                bank = new Imagee().getEncodedImage(bankImageUri, FormOne.this);
+            }
+            RequestBody d_reg_dat = RequestBody.create("d_reg_dat", MediaType.parse("text/plain"));
+            RequestBody n_nksh_id = RequestBody.create("n_nksh_id", MediaType.parse("text/plain"));
+            RequestBody c_pat_nam = RequestBody.create("c_pat_nam", MediaType.parse("text/plain"));
+            RequestBody n_age = RequestBody.create("n_age", MediaType.parse("text/plain"));
+            RequestBody n_sex = RequestBody.create("n_sex", MediaType.parse("text/plain"));
+            RequestBody n_wght = RequestBody.create("n_wght", MediaType.parse("text/plain"));
+            RequestBody n_hght = RequestBody.create("n_hght", MediaType.parse("text/plain"));
+            RequestBody c_add = RequestBody.create("c_add", MediaType.parse("text/plain"));
+            RequestBody c_taluka = RequestBody.create("c_taluka", MediaType.parse("text/plain"));
+            RequestBody c_town = RequestBody.create("c_town", MediaType.parse("text/plain"));
+            RequestBody c_ward = RequestBody.create("c_ward", MediaType.parse("text/plain"));
+            RequestBody c_lnd_mrk = RequestBody.create("c_lnd_mrk", MediaType.parse("text/plain"));
+            RequestBody n_pin = RequestBody.create("n_pin", MediaType.parse("text/plain"));
+            RequestBody n_st_id_res = RequestBody.create("n_st_id_res", MediaType.parse("text/plain"));
+            RequestBody n_dis_id_res = RequestBody.create("n_dis_id_res", MediaType.parse("text/plain"));
+            RequestBody n_tu_id_res = RequestBody.create("n_tu_id_res", MediaType.parse("text/plain"));
+            RequestBody c_mob = RequestBody.create("c_mob", MediaType.parse("text/plain"));
+            RequestBody c_mob_2 = RequestBody.create("c_mob_2", MediaType.parse("text/plain"));
+            RequestBody c_not_img = RequestBody.create("c_not_img", MediaType.parse("text/plain"));
+            RequestBody c_bnk_img = RequestBody.create("c_bnk_img", MediaType.parse("text/plain"));
+            RequestBody d_diag_dt = RequestBody.create("d_diag_dt", MediaType.parse("text/plain"));
+            ApiClient.getClient().updateHospital(url, d_reg_dat, n_nksh_id,
+                    c_pat_nam, n_age,
+                    n_sex, n_wght,
+                    n_hght,
+                    c_add,
+                    c_taluka,
+                    c_town,
+                    c_ward, c_lnd_mrk,
+                    n_pin,
+                    n_st_id_res, n_dis_id_res,
+                    n_tu_id_res, c_mob,
+                    c_mob_2, c_not_img,
+                    c_bnk_img, d_diag_dt).enqueue(new Callback<AddDocResponse>() {
+                @Override
+                public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
+                    if (response.isSuccessful()) {
+                        //  parentDataTestReportResults = response.body().getUser_data();
+
+                        startActivity(new Intent(FormOne.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<AddDocResponse> call, Throwable t) {
+                }
+            });
+
+
+        } else {
+            validMobile(PrimaryPhoneNumber.getText().toString());
+
+        }
 
 
     }
@@ -813,7 +891,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                                 Pincode.getText().toString(),
                                 st_id_res,
                                 dis_id_res,
-                                tu_id_res,
+                                tuString.getText().toString(),
                                 PrimaryPhoneNumber.getText().toString(),
                                 SecondaryPhoneNumber.getText().toString(),
                                 lat, lng,
@@ -903,6 +981,16 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
+    private void setCurrentDate() throws ParseException {
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String formattedDate = df.format(c);
+        EnrollmentDate.setText(formattedDate);
+
+    }
+
     private void setUpCalender() {
         final Calendar myCalendar = Calendar.getInstance();
 
@@ -915,20 +1003,30 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                 String myFormat = "yyyy-MM-dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 EnrollmentDate.setText(sdf.format(myCalendar.getTime()));
+                try {
+                    setCurrentDate();
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
             }
         };
         EnrollmentDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog m_date = new DatePickerDialog(FormOne.this, R.style.calender_theme, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH));
-
-
-                m_date.show();
-                m_date.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
-                m_date.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
-                m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
+                try {
+                    setCurrentDate();
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+//                DatePickerDialog m_date = new DatePickerDialog(FormOne.this, R.style.calender_theme, date, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH));
+//
+//
+//                m_date.show();
+//                m_date.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
+//                m_date.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
+//                m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
             }
         });
     }

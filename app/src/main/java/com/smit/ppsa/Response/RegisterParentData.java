@@ -1,6 +1,5 @@
 package com.smit.ppsa.Response;
 
-import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -21,6 +20,26 @@ public class RegisterParentData implements Serializable {
     @Expose
     private String notf_img;
 
+    public String getAadhar_img() {
+        return aadhar_img;
+    }
+
+    public void setAadhar_img(String aadhar_img) {
+        this.aadhar_img = aadhar_img;
+    }
+
+    public void setC_bnk_img(String c_bnk_img) {
+        this.c_bnk_img = c_bnk_img;
+    }
+
+    @SerializedName("aadhar_img")
+    @Expose
+    private String aadhar_img;
+
+    @SerializedName("bnk_img")
+    @Expose
+    private String bnk_img;
+
     public String getNotf_img() {
         return notf_img;
     }
@@ -37,9 +56,7 @@ public class RegisterParentData implements Serializable {
         this.bnk_img = bnk_img;
     }
 
-    @SerializedName("bnk_img")
-    @Expose
-    private String bnk_img;
+
 
     @SerializedName("c_pat_nam")
     @Expose

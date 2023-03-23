@@ -41,9 +41,9 @@
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_gravity="center"
-            android:visibility="invisible"
             android:layout_marginEnd="@dimen/_10sdp"
             android:src="@drawable/ic_addbtn"
+            android:visibility="invisible"
             app:tint="@color/white" />
 
     </LinearLayout>
@@ -297,6 +297,7 @@
                             android:textStyle="bold" />
 
                     </LinearLayout>
+
                     <TextView
                         android:id="@+id/counselTuTitle"
                         android:layout_width="match_parent"
@@ -305,14 +306,13 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/nunitosans_semibold"
                         android:text="TU"
-                        android:visibility="gone"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_12sdp" />
+                        android:textSize="@dimen/_12sdp"
+                        android:visibility="gone" />
 
 
                     <Spinner
                         android:id="@+id/tuCounsell"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginHorizontal="@dimen/_10sdp"
@@ -324,7 +324,8 @@
                         android:paddingVertical="@dimen/_12sdp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/filtertt"
@@ -344,7 +345,6 @@
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:visibility="gone"
                         android:background="@drawable/back_two"
                         android:elevation="@dimen/_4sdp"
                         android:hint="--"
@@ -352,7 +352,8 @@
                         android:paddingVertical="@dimen/_12sdp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
 
                     <EditText
@@ -360,8 +361,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginHorizontal="@dimen/_10ssp"
-                        android:background="@drawable/back_two"
                         android:layout_marginTop="@dimen/_3sdp"
+                        android:background="@drawable/back_two"
                         android:fontFamily="@font/nunitosans_regular_2"
                         android:hint="Enter TU Name"
                         android:paddingHorizontal="@dimen/_12sdp"
@@ -370,15 +371,16 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="3"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
                         <androidx.cardview.widget.CardView
                             android:layout_width="0dp"
-                            android:layout_weight="2"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/_12sdp"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:layout_marginBottom="@dimen/_12sdp"
+                            android:layout_weight="2"
                             app:cardCornerRadius="@dimen/_50sdp">
 
                             <EditText
@@ -391,14 +393,16 @@
                                 android:paddingHorizontal="@dimen/_12sdp"
                                 android:textColor="@color/black" />
                         </androidx.cardview.widget.CardView>
+
+
                         <TextView
                             android:id="@+id/searchbtn"
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="@dimen/_12sdp"
+                            android:layout_weight="1"
                             android:background="@drawable/back_btn"
                             android:backgroundTint="#2ea8df"
                             android:fontFamily="@font/nunitosans_semibold"
@@ -411,6 +415,23 @@
                     </LinearLayout>
 
 
+                    <LinearLayout
+                        android:id="@+id/visiit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <CheckBox
+                            android:id="@+id/checkboxNonVisit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Show Pending notification,bank,Aadhar Patients " />
+                    </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/f2_patientrecycler"
@@ -979,7 +1000,6 @@
 
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>
-
 
 
     </RelativeLayout>

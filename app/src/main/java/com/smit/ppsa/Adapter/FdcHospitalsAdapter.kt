@@ -98,8 +98,7 @@ class FdcHospitalsAdapter(
             holder.contfv.setBackgroundColor(Color.parseColor("#E0FFFF"))
             holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
             holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
-        }
-        else if(newhospitalLists[position].isChecked){
+        } else if (newhospitalLists[position].isChecked) {
             Log.d("selectionCheckNew", position.toString() + "")
             holder.radioButton.isChecked = true
             holder.container.setBackgroundColor(Color.parseColor("#E0FFFF"))
@@ -110,8 +109,7 @@ class FdcHospitalsAdapter(
             holder.contfv.setBackgroundColor(Color.parseColor("#E0FFFF"))
             holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
             holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
-        }
-        else {
+        } else {
             Log.d("elseStatement", position.toString() + "")
             holder.container.setBackgroundColor(Color.WHITE)
             holder.contone.setBackgroundColor(Color.WHITE)
@@ -165,6 +163,11 @@ class FdcHospitalsAdapter(
                     }
                 }
             }
+        } else if (type == "koko") {
+            holder.contthree.visibility = View.GONE
+            holder.contfr.visibility = View.GONE
+            holder.contsix.visibility = View.GONE
+
         }
         holder.hospitalNameTt.text = hospitalLists[position].getcHfNam()
         holder.hospitalNameLocation.text =
@@ -225,6 +228,7 @@ class FdcHospitalsAdapter(
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                BaseUtils.showToast(context,"1")
                 val intent = Intent(context, FdcForm::class.java)
                 // Intent intent = new Intent(context, MedicineListActivity.class);
                 intent.action = "Selected"
@@ -266,7 +270,6 @@ class FdcHospitalsAdapter(
                     notifyItemChanged(prevPos)
                     prevPos = position
              */
-
 
 
             /*    if (hospitalLists.get(position).isChecked()) {
@@ -328,14 +331,14 @@ class FdcHospitalsAdapter(
                 Log.d("mkoi", "onClick: " + hospitalLists[position].getcHfTyp())
                 Log.d("mkoi", "onClick: " + hospitalLists[position].getnTuId())
 
-                if (pos==-1) {
-                    Log.d("if_condition",pos.toString()+"  "+position.toString());
+                if (pos == -1) {
+                    Log.d("if_condition", pos.toString() + "  " + position.toString());
                     newhospitalLists[position].isChecked = true
                     pos = position
                     notifyItemChanged(pos)
-                }else {
-                    Log.d("else_condition",pos.toString()+"  "+position.toString());
-                   updateAdapter(position)
+                } else {
+                    Log.d("else_condition", pos.toString() + "  " + position.toString());
+                    updateAdapter(position)
 
                 }
 
@@ -356,6 +359,7 @@ class FdcHospitalsAdapter(
 //                    pos = position
  */
                 if (type == "fdc") {
+
                     val intent = Intent(context, FdcDispensationToHf::class.java)
                     intent.action = "Selected"
                     intent.putExtra("checked", true)
@@ -376,6 +380,7 @@ class FdcHospitalsAdapter(
                     LocalBroadcastManager.getInstance(holder.itemView.context).sendBroadcast(intent)
                     notifyItemChanged(position)
                 } else {
+
                     // hospitalLists.get(position).setChecked(true);
                     val intent = Intent()
                     Handler().post {
@@ -437,7 +442,7 @@ class FdcHospitalsAdapter(
         var contfr: RelativeLayout
         var bagImg: ImageView
         var radioButton: RadioButton
-        var editIcon:ImageView
+        var editIcon: ImageView
 
         init {
             hospitalName = itemView.findViewById(R.id.hospitalName)
@@ -599,8 +604,8 @@ class FdcHospitalsAdapter(
         })
     }
 
-    fun updateAdapter(posPrev:Int){
-        newhospitalLists[pos].isChecked =false
+    fun updateAdapter(posPrev: Int) {
+        newhospitalLists[pos].isChecked = false
         notifyItemChanged(pos)
         newhospitalLists[posPrev].isChecked = true
         pos = posPrev

@@ -357,12 +357,13 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
                     Log.d("jmuih", "onClick: " + BaseUtils.getSection(HospitalFacility.this));
 
                     if (selectedroomDoctorsLists.size() > 0) {
-                        BaseUtils.showToast(HospitalFacility.this,"3");
 
 
                         Log.d("insideIfCondition","checking outside if condition  ");
                         if (BaseUtils.getSection(HospitalFacility.this).equals("hospital") || BaseUtils.getSection(HospitalFacility.this).equals("hospitald")) {
                             Log.d("insideIfCondition","checking ");
+                            BaseUtils.showToast(HospitalFacility.this,"3");
+
                             BaseUtils.savedSelectedDoctors(HospitalFacility.this, selectedroomDoctorsLists);
                             // Log.d("jko", "onClick: " + nList.get(position).getIdd());
                             startActivity(new Intent(HospitalFacility.this, FormTwo.class)
@@ -376,6 +377,7 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
 
                             //  context.finish();
                         } else if (BaseUtils.getSection(HospitalFacility.this).equals("provider")) {
+                            BaseUtils.showToast(HospitalFacility.this,"4");
 
                             BaseUtils.savedSelectedDoctors(HospitalFacility.this, selectedroomDoctorsLists);
 
@@ -390,6 +392,8 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
                                     .putExtra("hf_id", hf_id)
                             );
                         } else if (BaseUtils.getSection(HospitalFacility.this).equals("sample")) {
+
+                            BaseUtils.showToast(HospitalFacility.this,"5");
 
                             BaseUtils.savedSelectedDoctors(HospitalFacility.this, selectedroomDoctorsLists);
 
@@ -410,6 +414,8 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
                                     .putExtra("hf_id", hf_id)
                             );
                         } else if (BaseUtils.getSection(HospitalFacility.this).equals("addpat")) {
+
+                            BaseUtils.showToast(HospitalFacility.this,"6");
 
                             BaseUtils.savedSelectedDoctors(HospitalFacility.this, selectedroomDoctorsLists);
 

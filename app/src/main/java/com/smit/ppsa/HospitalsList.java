@@ -27,6 +27,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -69,7 +70,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
     private TextView nextbtn;
     private EditText search;
     private CheckBox checkboxNonVisit;
-    private boolean isFirstTymOnThisPage=true;
+    private boolean isFirstTymOnThisPage = true;
     private Thread thread = new Thread("name");
     //    private TextView hospitalNameTt, hospitalNameLocation, doctorNameTv, hospitalTypeTitle,
 //            currentDate, hospitalNameTv, hospitalAddress, hospitalType, lastVisit, date;
@@ -613,6 +614,11 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
         ResidentialTU = findViewById(R.id.f1_residentialTu);
         nextbtn = findViewById(R.id.nextbtn);
         checkboxNonVisit = findViewById(R.id.checkboxNonVisit);
+        LinearLayout visiit = findViewById(R.id.visiit);
+
+        if (getIntent().hasExtra("sample")) {
+            visiit.setVisibility(View.GONE);
+        }
         //nextbtn.setEnabled(false);
 
         /*hospitalNameTt = findViewById(R.id.hospitalNameTitle);
@@ -633,9 +639,9 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-               // BaseUtils.showToast(HospitalsList.this, String.valueOf(b));
+                // BaseUtils.showToast(HospitalsList.this, String.valueOf(b));
                 filter(search.getText().toString().trim());
-                 //   filter(search.getText().toString().trim(),b);
+                //   filter(search.getText().toString().trim(),b);
 
             }
         });
@@ -654,7 +660,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                     Intent intent = new Intent(HospitalsList.this, HospitalFacility.class);
                     intent.putExtra("tu_id", tuId);
                     intent.putExtra("hf_id", hfID);
-                    intent.putExtra("issued","patient");
+                    intent.putExtra("issued", "patient");
                     intent.putExtra("hospitalName", hospitalName);
                     intent.putExtra("docName", doctorName);
                     //   intent.putExtra("docid", hospitalLists.get(position).get());
@@ -666,7 +672,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                     intent.putExtra("tu_id", tuId);
                     intent.putExtra("hf_id", hfID);
                     intent.putExtra("hospitalName", hospitalName);
-                    intent.putExtra("issued","hospital");
+                    intent.putExtra("issued", "hospital");
                     intent.putExtra("docName", doctorName);
                     //   intent.putExtra("docid", hospitalLists.get(position).get());
                     startActivity(intent);
@@ -737,14 +743,14 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                     //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
                     Log.d("mosojdo", "onItemSelected: " + tu.size());
 
-                    try{
-                        tuId = tu.get(/*i - 1*/i-1).getN_tu_id();//selecting the second value in list first value is null
+                    try {
+                        tuId = tu.get(/*i - 1*/i - 1).getN_tu_id();//selecting the second value in list first value is null
 
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
                     Log.d("mosojdo", "onItemSelected: " + tuId);
-                    if (BaseUtils.haveAccess(HospitalsList.this)){
+                    if (BaseUtils.haveAccess(HospitalsList.this)) {
                         if (getIntent().hasExtra("counsel")) {
                             addbtn.setVisibility(View.GONE);
                         } else {
@@ -755,7 +761,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 //                    if (tuId.equals(BaseUtils.getSelectedTu(HospitalsList.this))) {
 //                        setHospitalRecycler();
 //                    }
-                    NetworkCalls.getUserOtherData(HospitalsList.this,BaseUtils.getUserInfo(HospitalsList.this).getN_staff_sanc(),tuId);
+                    NetworkCalls.getUserOtherData(HospitalsList.this, BaseUtils.getUserInfo(HospitalsList.this).getN_staff_sanc(), tuId);
                     NetworkCalls.getHospitalData(HospitalsList.this, tuId, false);
                 }
 
@@ -868,8 +874,8 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                 if (value.contains(text.toLowerCase())) {
                     Log.d("TAG", "filter: " + d);
                     temp.add(d);
-                    if(checkboxNonVisit.isChecked()){
-                        if (d.getLst_visit()!="" && d.getLst_visit()!=null){
+                    if (checkboxNonVisit.isChecked()) {
+                        if (d.getLst_visit() != "" && d.getLst_visit() != null) {
                             temp.remove(d);
                         }
                     }
@@ -981,14 +987,26 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                         } else if (getIntent().hasExtra("sample")) {
                             BaseUtils.putSection(HospitalsList.this, "sample");
 
-                            startActivity(new Intent(HospitalsList.this, HospitalFacility.class)
-                                            .putExtra("hospitalName", hospitalName)
-                                            .putExtra("hf_id", hfID)
-                                            .putExtra("hospitaltypeName", hospitaltypeName)
-                                            .putExtra("hf_type_id", hf_type_id)
-                                            .putExtra("section", "sample")
-                                    /*.putExtra("type", "sample")
-                                    .putExtra("sample", "sample")*/);
+                            startActivity(new Intent(HospitalsList.this, FormTwo.class)
+                                    .putExtra("hf_type_id",hf_type_id)
+                                    .putExtra("section", "sample")
+                                    .putExtra("type", "sample")
+                                    //.putExtra("sample", "sample")
+
+                                    .putExtra("sample", "")
+                                    .putExtra("hospitalName", hospitalName)
+                                    .putExtra("hospitallocation", hospitallocation)
+                                    .putExtra("hospitaltypeName",hospitaltypeName)
+                                    .putExtra("hf_id", hfID)
+                            );
+//                            startActivity(new Intent(HospitalsList.this, HospitalFacility.class)
+//                                            .putExtra("hospitalName", hospitalName)
+//                                            .putExtra("hf_id", hfID)
+//                                            .putExtra("hospitaltypeName", hospitaltypeName)
+//                                            .putExtra("hf_type_id", hf_type_id)
+//                                            .putExtra("section", "sample")
+//                                    /*.putExtra("type", "sample")
+//                                    .putExtra("sample", "sample")*/);
                         } else if (getIntent().hasExtra("reportdelivery")) {
                             startActivity(new Intent(HospitalsList.this, FormTwo.class)
                                     .putExtra("hospitalName", hospitalName)
@@ -1053,9 +1071,9 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                 Log.d("mijop", "onReceive: " + tu.toString());
                 for (int a = 0; a < tu.size(); a++) {
 
-                        if (!tuStrings.contains(tu.get(a).getcTuName())) {
-                            tuStrings.add(tu.get(a).getcTuName());
-                        }
+                    if (!tuStrings.contains(tu.get(a).getcTuName())) {
+                        tuStrings.add(tu.get(a).getcTuName());
+                    }
 
                 }
                 //setSpinnerAdapter(EnrollmentFaciltyTBU,tuStrings);
@@ -1063,7 +1081,9 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                 ResidentialTU.setSelection(1);
                 try {
                     setHospitalRecycler();
-                }catch (Exception e){};
+                } catch (Exception e) {
+                }
+                ;
 
 
             }
@@ -1134,15 +1154,17 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
         spinner.setAdapter(spinnerAdapter);
 
     }
-    private int getIndex(Spinner spinner, String myString){
-        for (int i=0;i<spinner.getCount();i++){
-            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+
+    private int getIndex(Spinner spinner, String myString) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)) {
                 return i;
             }
         }
 
         return 0;
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -1187,14 +1209,16 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
         if (getIntent().hasExtra("fdc")) {
             fdcHospitalsAdapter = new FdcHospitalsAdapter(hospitalLists, HospitalsList.this, "fdc", hfID, dataBase);
-        }else if (getIntent().hasExtra("provider")){
+        } else if (getIntent().hasExtra("provider")) {
 
             try {
                 fdcHospitalsAdapter = new FdcHospitalsAdapter(hospitalLists, HospitalsList.this, "provider", hfID, dataBase);
-            }catch (Exception e){};
+            } catch (Exception e) {
+            }
+            ;
 
 
-        }else {
+        } else {
             fdcHospitalsAdapter = new FdcHospitalsAdapter(hospitalLists, HospitalsList.this, "koko", hfID, dataBase);
 
         }
@@ -1254,9 +1278,9 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
     public void onResume() {
         super.onResume();
         // put your code here...
-        if(isFirstTymOnThisPage){
+        if (isFirstTymOnThisPage) {
             isFirstTymOnThisPage = false;
-        }else{
+        } else {
             NetworkCalls.getHospitalData(this, tuId, false);
         }
         //nextbtn.setEnabled(false);

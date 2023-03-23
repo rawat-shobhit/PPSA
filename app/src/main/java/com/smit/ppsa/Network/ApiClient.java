@@ -40,6 +40,8 @@ import com.smit.ppsa.Response.userpassword.UserPasswordResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONObject;
+
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
@@ -221,29 +223,7 @@ public class ApiClient {
                                          @Part("lat") RequestBody lat,
                                          @Part("lng") RequestBody lng);
 
-        //id<<EQUALTO>>142
-        @Multipart
-        @POST("https://nikshayppsa.hlfppt.org/_api-v1_/_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_hf&w=")
-        Call<AddDocResponse> updateHospital(@Part("n_st_id") RequestBody n_st_id,
-                                            @Part("n_dis_id") RequestBody n_dis_id,
-                                            @Part("n_tu_id") RequestBody n_tu_id,
-                                            @Part("n_hf_cd") RequestBody n_hf_cd,
-                                            @Part("c_hf_nam") RequestBody c_hf_nam,
-                                            @Part("n_hf_typ_id") RequestBody n_hf_typ_id,
-                                            @Part("c_hf_addr") RequestBody c_hf_addr,
-                                            @Part("c_cont_per") RequestBody c_cont_per,
-                                            @Part("c_cp_mob") RequestBody c_cp_mob,
-                                            @Part("c_cp_email") RequestBody c_cp_email,
-                                            @Part("n_sc_id") RequestBody n_sc_id,
-                                            @Part("n_pp_idenr") RequestBody n_pp_idenr,
-                                            @Part("c_tc_nam") RequestBody c_tc_nam,
-                                            @Part("c_tc_mob") RequestBody c_tc_mob,
-                                            @Part("n_bf_id") RequestBody n_bf_id,
-                                            @Part("n_pay_status") RequestBody n_pay_status,
-                                            @Part("n_user_id") RequestBody n_user_id,
-                                            @Part("lat") RequestBody lat,
-                                            @Part("lng") RequestBody lng,
-                                            @Query("w") String hospitalId);
+
 
 
      // @POST("https://nikshayppsa.hlfppt.org/_api-v1_/_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_hf&w=")
@@ -557,6 +537,28 @@ public class ApiClient {
 
         @GET()
         Call<HospitalResponse> getHospitalDetail(@Url String url);
+
+        Call<AddDocResponse> updateHospital(@Url String url, @Part("d_reg_dat") RequestBody d_reg_dat,
+                                        @Part("n_nksh_id") RequestBody n_nksh_id,
+                                        @Part("c_pat_nam") RequestBody c_pat_nam,
+                                        @Part("n_age") RequestBody n_age,
+                                        @Part("n_sex") RequestBody n_sex,
+                                        @Part("n_wght") RequestBody n_wght,
+                                        @Part("n_hght") RequestBody n_hght,
+                                        @Part("c_add") RequestBody c_add,
+                                        @Part("c_taluka") RequestBody c_taluka,
+                                        @Part("c_town") RequestBody c_town,
+                                        @Part("c_ward") RequestBody c_ward,
+                                        @Part("c_lnd_mrk") RequestBody c_lnd_mrk,
+                                        @Part("n_pin") RequestBody n_pin,
+                                        @Part("n_st_id_res") RequestBody n_st_id_res,
+                                        @Part("n_dis_id_res") RequestBody n_dis_id_res,
+                                        @Part("n_tu_id_res") RequestBody n_tu_id_res,
+                                        @Part("c_mob") RequestBody c_mob,
+                                        @Part("c_mob_2") RequestBody c_mob_2,
+                                        @Part("c_not_img") RequestBody c_not_img,
+                                        @Part("c_bnk_img") RequestBody c_bnk_img,
+                                        @Part("d_diag_dt") RequestBody d_diag_dt);
 
         @GET()
         Call<DoctorsResponse> getDoctorDetails(@Url String url);

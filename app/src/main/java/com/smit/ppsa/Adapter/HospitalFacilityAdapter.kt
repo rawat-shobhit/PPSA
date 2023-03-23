@@ -319,7 +319,6 @@ class HospitalFacilityAdapter(
                 } else {
                     nList[prevPos].isChecked = false
                 }
-                BaseUtils.showToast(context, "1")
                 prevPos = position
                 Log.d("jko", "onClick: " + nList[position].idd)
                 val intent = Intent()
@@ -340,7 +339,6 @@ class HospitalFacilityAdapter(
                 notifyDataSetChanged()
                 //  context.finish();
             } else if (type == "provider") {
-                BaseUtils.showToast(context, "2")
                 Log.d("jko", "onClick: " + nList[position].idd)
 
                 /*  context.startActivity(new Intent(context, */ /*FormOne*/ /*ProviderEngagement.class)
@@ -382,7 +380,6 @@ class HospitalFacilityAdapter(
                 } else {
                     nList[prevPos].isChecked = false
                 }
-                BaseUtils.showToast(context, "3")
                 prevPos = position
                 val intent = Intent()
                 intent.action = "doctors"

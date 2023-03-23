@@ -116,6 +116,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
     FdcDispensationToHfViewModel fdcDispensationToHfViewModel;
     FdcDispensationToPatientViewModel fdcDispensationToPatientViewModel;
     TextView title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -223,14 +224,14 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                         //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
                         Log.d("mosojdo", "onItemSelected: " + tu.size());
 
-                        tuId = tu.get(/*i - 1*/i-1).getN_tu_id();//selecting the second value in list first value is null
+                        tuId = tu.get(/*i - 1*/i - 1).getN_tu_id();//selecting the second value in list first value is null
                         Log.d("mosojdo", "onItemSelected: " + tuId);
 
                         /*if (tuId.equals(BaseUtils.getSelectedTu(HospitalsList.this))) {
                             setHospitalRecycler();
                         }*/
 
-                      //  NetworkCalls.getTUPatient(FormTwo.this, tuId);
+                        //  NetworkCalls.getTUPatient(FormTwo.this, tuId);
 
 
                     }
@@ -651,10 +652,10 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                 } else if (filterspinner.getSelectedItemPosition() == 0) {
                     BaseUtils.showToast(FormTwo.this, "Please select filter to view list");
                 } else {
-                    try{
+                    try {
                         getCounselPatList();
-                        BaseUtils.showToast(FormTwo.this, tuCounsell.getSelectedItemPosition()+"");
-                    }catch(Exception e){
+                        BaseUtils.showToast(FormTwo.this, tuCounsell.getSelectedItemPosition() + "");
+                    } catch (Exception e) {
 
                     }
 
@@ -725,7 +726,8 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
             return;
         }
 
-        String url = "_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=" + parentDataFilters.get(filterspinner.getSelectedItemPosition()-1).getId() + "&n_tu=" + tu.get(/*i - 1*/tuCounsell.getSelectedItemPosition()-1).getN_tu_id();
+        String url = "_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=" + parentDataFilters.get(filterspinner.getSelectedItemPosition() - 1).getId() + "&n_tu=" + tu.get(/*i - 1*/tuCounsell.getSelectedItemPosition() - 1).getN_tu_id();
+        Log.d("URL", url);
         ApiClient.getClient().getTUPatient(url).enqueue(new Callback<RegisterParentResponse>() {
             @Override
             public void onResponse(Call<RegisterParentResponse> call, Response<RegisterParentResponse> response) {
@@ -1072,37 +1074,35 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
 
                 String tus = "";
 
-               //w=n_tu_id<<EQUALTO>>2<<OR>>n_tu_id<<EQUALTO>>3<<OR>>n_tu_id<<EQUALTO>>4
+                //w=n_tu_id<<EQUALTO>>2<<OR>>n_tu_id<<EQUALTO>>3<<OR>>n_tu_id<<EQUALTO>>4
                 for (int a = 0; a < tu.size(); a++) {
 
                     if (!tuStrings.contains(tu.get(a).getcTuName())) {
                         tuStrings.add(tu.get(a).getcTuName());
-                        if(a<tu.size()-1){
-                            tus = tus+"n_tu_id<<EQUALTO>>"+tu.get(a).getN_tu_id() +"<<OR>>" ;
-                        }else{
-                            tus=tus+"n_tu_id<<EQUALTO>>"+tu.get(a).getN_tu_id();
+                        if (a < tu.size() - 1) {
+                            tus = tus + "n_tu_id<<EQUALTO>>" + tu.get(a).getN_tu_id() + "<<OR>>";
+                        } else {
+                            tus = tus + "n_tu_id<<EQUALTO>>" + tu.get(a).getN_tu_id();
                         }
                     }
 
-                    NetworkCalls.getTUPatient(FormTwo.this,tus);
+                    NetworkCalls.getTUPatient(FormTwo.this, tus);
 
                 }
-               // BaseUtils.showToast(FormTwo.this,tus);
+                // BaseUtils.showToast(FormTwo.this,tus);
 
                 //setSpinnerAdapter(EnrollmentFaciltyTBU,tuStrings);
                 if (!getIntent().hasExtra("counsel")) {
                     setSpinnerAdapter(filterspinner, tuStrings);
-                    if(getIntent().hasExtra("report_col")){
+                    if (getIntent().hasExtra("report_col")) {
 
-                    }else{
+                    } else {
                         filterspinner.setSelection(1);
                     }
 
                 }
                 setSpinnerAdapter(tuCounsell, tuStrings);
                 tuCounsell.setSelection(1);
-
-
 
 
             } else if (intent.hasExtra("notifyAdapter")) {
@@ -1294,14 +1294,14 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
 
     private void setPatientAdapter() {
         parentData = BaseUtils.getTuPatient(this);
-        if(title.getText()=="Report collection"){
+        if (title.getText() == "Report collection") {
             docAdapter = new PatientAdapter(
                     parentData,
                     FormTwo.this,
                     "reportdelivery");
             patientrecycler.setLayoutManager(new LinearLayoutManager(this));
             patientrecycler.setAdapter(docAdapter);
-        }else{
+        } else {
             docAdapter = new PatientAdapter(
                     parentData,
                     FormTwo.this,

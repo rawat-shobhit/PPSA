@@ -375,7 +375,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
                 android:fontFamily="@font/nunitosans_semibold"
-                android:text="Diagnostic Test* "
+                android:text=" Name of Diagnostic Test* "
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"/>
 

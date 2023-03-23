@@ -1137,77 +1137,77 @@ c_doc_nam  varchar(200)       n_qual_id	    int(11)	   n_spec_id    int(11)    c
 
 
 
-    public static void updateHospital(
-            Context context,
-            String stIDd,
-            String disIDd,
-            String n_tu_idd,
-            String n_hf_cdd,
-            String c_hf_namm,
-            String n_hf_typ_idd,
-            String c_hf_addrr,
-            String c_cont_perr,
-            String c_cp_mobb,
-            String c_cp_emaill,
-            String n_sc_idd,
-            String n_pp_idenrr,
-            String c_tc_namm,
-            String c_tc_mobb,
-            String n_bf_idd,
-            String n_pay_statuss,
-            String n_user_idd,
-            String latt,
-            String lngg,
-            Boolean navigate,
-            String hospitalId
-    ) {
-        dataBase = AppDataBase.getDatabase(context);
-        BaseUtils.putAddHospitalForm(context, "false");
-
-
-        RequestBody stID = RequestBody.create(stIDd, MediaType.parse("text/plain"));
-        RequestBody disID = RequestBody.create(disIDd, MediaType.parse("text/plain"));
-        RequestBody n_tu_id = RequestBody.create(n_tu_idd, MediaType.parse("text/plain"));
-        RequestBody n_hf_cd = RequestBody.create(n_hf_cdd, MediaType.parse("text/plain"));
-        RequestBody c_hf_nam = RequestBody.create(c_hf_namm, MediaType.parse("text/plain"));
-        RequestBody n_hf_typ_id = RequestBody.create(n_hf_typ_idd, MediaType.parse("text/plain"));
-        RequestBody c_hf_addr = RequestBody.create(c_hf_addrr, MediaType.parse("text/plain"));
-        RequestBody c_cont_per = RequestBody.create(c_cont_perr, MediaType.parse("text/plain"));
-        RequestBody c_cp_mob = RequestBody.create(c_cp_mobb, MediaType.parse("text/plain"));
-        RequestBody c_cp_email = RequestBody.create(c_cp_emaill, MediaType.parse("text/plain"));
-        RequestBody n_sc_id = RequestBody.create(n_sc_idd, MediaType.parse("text/plain"));
-        RequestBody n_pp_idenr = RequestBody.create(n_pp_idenrr, MediaType.parse("text/plain"));
-        RequestBody c_tc_nam = RequestBody.create(c_tc_namm, MediaType.parse("text/plain"));
-        RequestBody c_tc_mob = RequestBody.create(c_tc_mobb, MediaType.parse("text/plain"));
-        RequestBody n_bf_id = RequestBody.create(n_bf_idd, MediaType.parse("text/plain"));
-        RequestBody n_pay_status = RequestBody.create(n_pay_statuss, MediaType.parse("text/plain"));
-        RequestBody n_user_id = RequestBody.create(n_user_idd, MediaType.parse("text/plain"));
-        RequestBody lat = RequestBody.create(latt, MediaType.parse("text/plain"));
-        RequestBody lng = RequestBody.create(lngg, MediaType.parse("text/plain"));
-
-
-        ApiClient.getClient().updateHospital(stID, disID, n_tu_id, n_hf_cd, c_hf_nam, n_hf_typ_id, c_hf_addr, c_cont_per, c_cp_mob, c_cp_email,
-                n_sc_id, n_pp_idenr, c_tc_nam, c_tc_mob, n_bf_id, n_pay_status, n_user_id, lat, lng, "id<<EQUALTO>>" + hospitalId).enqueue(new Callback<AddDocResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<AddDocResponse> call, @NonNull Response<AddDocResponse> response) {
-                if (response.isSuccessful()) {
-                    assert response.body() != null;
-                    if (response.body().isStatus()) {
-                        BaseUtils.showToast(context, "Hospital update successful");
-                        Log.d("yuygfu", "onResponse: " + BaseUtils.getUserInfo(context).getnUserLevel());
-                        hospitalSync(((Activity) context), response.body().getUserData(), false, n_tu_idd, navigate);
-                    }
-                } else {
-                    BaseUtils.putAddHospitalForm(context, "false");
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<AddDocResponse> call, @NonNull Throwable t) {
-                BaseUtils.putAddHospitalForm(context, "false");
-            }
-        });
-    }
+//    public static void updateHospital(
+//            Context context,
+//            String stIDd,
+//            String disIDd,
+//            String n_tu_idd,
+//            String n_hf_cdd,
+//            String c_hf_namm,
+//            String n_hf_typ_idd,
+//            String c_hf_addrr,
+//            String c_cont_perr,
+//            String c_cp_mobb,
+//            String c_cp_emaill,
+//            String n_sc_idd,
+//            String n_pp_idenrr,
+//            String c_tc_namm,
+//            String c_tc_mobb,
+//            String n_bf_idd,
+//            String n_pay_statuss,
+//            String n_user_idd,
+//            String latt,
+//            String lngg,
+//            Boolean navigate,
+//            String hospitalId
+//    ) {
+//        dataBase = AppDataBase.getDatabase(context);
+//        BaseUtils.putAddHospitalForm(context, "false");
+//
+//
+//        RequestBody stID = RequestBody.create(stIDd, MediaType.parse("text/plain"));
+//        RequestBody disID = RequestBody.create(disIDd, MediaType.parse("text/plain"));
+//        RequestBody n_tu_id = RequestBody.create(n_tu_idd, MediaType.parse("text/plain"));
+//        RequestBody n_hf_cd = RequestBody.create(n_hf_cdd, MediaType.parse("text/plain"));
+//        RequestBody c_hf_nam = RequestBody.create(c_hf_namm, MediaType.parse("text/plain"));
+//        RequestBody n_hf_typ_id = RequestBody.create(n_hf_typ_idd, MediaType.parse("text/plain"));
+//        RequestBody c_hf_addr = RequestBody.create(c_hf_addrr, MediaType.parse("text/plain"));
+//        RequestBody c_cont_per = RequestBody.create(c_cont_perr, MediaType.parse("text/plain"));
+//        RequestBody c_cp_mob = RequestBody.create(c_cp_mobb, MediaType.parse("text/plain"));
+//        RequestBody c_cp_email = RequestBody.create(c_cp_emaill, MediaType.parse("text/plain"));
+//        RequestBody n_sc_id = RequestBody.create(n_sc_idd, MediaType.parse("text/plain"));
+//        RequestBody n_pp_idenr = RequestBody.create(n_pp_idenrr, MediaType.parse("text/plain"));
+//        RequestBody c_tc_nam = RequestBody.create(c_tc_namm, MediaType.parse("text/plain"));
+//        RequestBody c_tc_mob = RequestBody.create(c_tc_mobb, MediaType.parse("text/plain"));
+//        RequestBody n_bf_id = RequestBody.create(n_bf_idd, MediaType.parse("text/plain"));
+//        RequestBody n_pay_status = RequestBody.create(n_pay_statuss, MediaType.parse("text/plain"));
+//        RequestBody n_user_id = RequestBody.create(n_user_idd, MediaType.parse("text/plain"));
+//        RequestBody lat = RequestBody.create(latt, MediaType.parse("text/plain"));
+//        RequestBody lng = RequestBody.create(lngg, MediaType.parse("text/plain"));
+//
+//
+//        ApiClient.getClient().updateHospital(stID, disID, n_tu_id, n_hf_cd, c_hf_nam, n_hf_typ_id, c_hf_addr, c_cont_per, c_cp_mob, c_cp_email,
+//                n_sc_id, n_pp_idenr, c_tc_nam, c_tc_mob, n_bf_id, n_pay_status, n_user_id, lat, lng,).enqueue(new Callback<AddDocResponse>() {
+//            @Override
+//            public void onResponse(@NonNull Call<AddDocResponse> call, @NonNull Response<AddDocResponse> response) {
+//                if (response.isSuccessful()) {
+//                    assert response.body() != null;
+//                    if (response.body().isStatus()) {
+//                        BaseUtils.showToast(context, "Hospital update successful");
+//                        Log.d("yuygfu", "onResponse: " + BaseUtils.getUserInfo(context).getnUserLevel());
+//                        hospitalSync(((Activity) context), response.body().getUserData(), false, n_tu_idd, navigate);
+//                    }
+//                } else {
+//                    BaseUtils.putAddHospitalForm(context, "false");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<AddDocResponse> call, @NonNull Throwable t) {
+//                BaseUtils.putAddHospitalForm(context, "false");
+//            }
+//        });
+//    }
 
     public static void getBenefeciary(Context context) {
 
