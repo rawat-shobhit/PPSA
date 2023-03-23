@@ -156,6 +156,7 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
         }
 
         if (BaseUtils.getSubmitCounsellingFormStatus(this).equals("false")) {
+
          /*   LiveData<List<RoomCounsellingData>> roomCounsellingData = dataBase.customerDao().fetchCounsellingFormData();
             roomCounsellingData.observe(this, roomCounsellingData1 -> {
   dsfdsdf
@@ -169,6 +170,7 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
 
             });
 */
+
             NetworkCalls.submitCounselling(
                     this,
                     BaseUtils.getCounsellingFormuser_idd(this),
@@ -422,7 +424,7 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
 
                             startActivity(new Intent(HospitalFacility.this, FormOne.class)
                                     .putExtra("doc_id", doc_id)
-                                    .putExtra("type",type)
+                                    .putExtra("type","sample")
                                     .putExtra("hf_id", hf_id));
 
                             finish();
@@ -430,7 +432,6 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
                     } else {
                         BaseUtils.showToast(HospitalFacility.this, "select doctor");
                     }
-
 
                 }
             });

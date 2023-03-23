@@ -127,6 +127,9 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
         fdcDispensationToPatientViewModel = new ViewModelProvider(this).get(FdcDispensationToPatientViewModel.class);
         title = findViewById(R.id.title);
 
+    //    Toast.makeText(this, "checking 1231", Toast.LENGTH_SHORT).show();
+
+
         dataBase = AppDataBase.getDatabase(this);
 
         /*    if (BaseUtils.getSubmitLabReportStatus(this).equals("false")) {
