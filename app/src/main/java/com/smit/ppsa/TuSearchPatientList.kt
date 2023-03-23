@@ -112,12 +112,12 @@ class TuSearchPatientList : AppCompatActivity() {
             for (d in registerParentDataList!!) {
                 temp.add(d)
                 if (checkboxNonVisit.isChecked) {
-                    if (d.aadhar_img != "0" || d.notf_img != "0" || d.bnk_img != "") {
+                    if (d.aadhar_img != "0" || d.notf_img != "0" || d.bnk_img != "0") {
                         temp.remove(d)
                     }
                 }
             }
-            if (registerParentDataList != null) {
+            if (temp != null) {
                 fdcHospitalsAdapter!!.updateList(temp)
             }
         }
