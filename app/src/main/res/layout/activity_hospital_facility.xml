@@ -38,13 +38,14 @@
 
                 <TextView
                     android:id="@+id/hfName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunitosans_bold_2"
                     android:gravity="center"
+
                     android:text="List of practioners"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_16ssp"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/addDoc"
                     app:layout_constraintStart_toEndOf="@+id/backbtn"

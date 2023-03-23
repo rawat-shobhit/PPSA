@@ -1091,6 +1091,51 @@ public class NetworkCalls {
         });
     }
 
+/*
+c_doc_nam  varchar(200)       n_qual_id	    int(11)	   n_spec_id    int(11)    c_mob	 varchar(12) c_regno	    varchar(50)
+ */
+    public static void editDoctor(
+            Context context,
+            String c_doc_namm,
+            String n_qual_idd,
+            String n_spec_idd,
+            String c_mobb,
+            String c_regnoo,
+            String hospitalId
+    ){
+        String url="_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_hf_doc&w=id<<EQUALTO>>"+hospitalId;
+        RequestBody c_doc_nam = RequestBody.create(c_doc_namm  , MediaType.parse("text/plain"));
+        RequestBody n_qual_id = RequestBody.create(n_qual_idd, MediaType.parse("text/plain"));
+        RequestBody n_spec_id = RequestBody.create(n_spec_idd, MediaType.parse("text/plain"));
+        RequestBody c_mob = RequestBody.create(c_mobb, MediaType.parse("text/plain"));
+        RequestBody c_regno = RequestBody.create(c_regnoo, MediaType.parse("text/plain"));
+
+
+        ApiClient.getClient().editDoctorApi(c_doc_nam, n_qual_id, n_spec_id, c_mob, c_regno, url ).enqueue(new Callback<AddDocResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AddDocResponse> call, @NonNull Response<AddDocResponse> response) {
+                if (response.isSuccessful()) {
+
+
+                        BaseUtils.showToast(context, "doctor update successful");
+                        Log.d("doctorAdded", "onResponse: " + response);
+
+                } else {
+                    BaseUtils.putAddHospitalForm(context, "false");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AddDocResponse> call, @NonNull Throwable t) {
+                BaseUtils.putAddHospitalForm(context, "false");
+            }
+        });
+
+
+    }
+
+
+
 
     public static void updateHospital(
             Context context,

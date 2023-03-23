@@ -3,7 +3,6 @@ package com.smit.ppsa.Network;
 import android.annotation.SuppressLint;
 
 import com.google.gson.JsonObject;
-import com.smit.ppsa.R;
 import com.smit.ppsa.Response.AddDocResponse;
 import com.smit.ppsa.Response.AllUserResponse;
 import com.smit.ppsa.Response.AttendeceResponse;
@@ -17,7 +16,6 @@ import com.smit.ppsa.Response.DoctorsResponse;
 import com.smit.ppsa.Response.FilterResponse;
 import com.smit.ppsa.Response.FormOneResponse;
 import com.smit.ppsa.Response.GetTestResponse;
-import com.smit.ppsa.Response.HospitalModel;
 import com.smit.ppsa.Response.HospitalResponse;
 import com.smit.ppsa.Response.MedicineResponse.MedicineResponse;
 import com.smit.ppsa.Response.PatientResponse;
@@ -25,7 +23,6 @@ import com.smit.ppsa.Response.PrevVisitsCounselling.PreviousVisitsResponse;
 import com.smit.ppsa.Response.PrevVisitsResponse;
 import com.smit.ppsa.Response.PreviousSamplesCollection.PreviousSamplesCollection;
 import com.smit.ppsa.Response.QualificationResponse;
-import com.smit.ppsa.Response.RegisterParentData;
 import com.smit.ppsa.Response.RegisterParentResponse;
 import com.smit.ppsa.Response.SampleResponse;
 import com.smit.ppsa.Response.UserInfoResponse;
@@ -247,6 +244,20 @@ public class ApiClient {
                                             @Part("lat") RequestBody lat,
                                             @Part("lng") RequestBody lng,
                                             @Query("w") String hospitalId);
+
+
+     // @POST("https://nikshayppsa.hlfppt.org/_api-v1_/_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_hf&w=")
+        @Multipart   //id<<EQUALTO>>142
+        @POST()
+        Call<AddDocResponse> editDoctorApi(@Part("n_st_id") RequestBody c_doc_nam,
+                                           @Part("n_dis_id") RequestBody n_qual_id,
+                                           @Part("n_tu_id") RequestBody n_spec_id,
+                                           @Part("n_hf_cd") RequestBody c_mob,
+                                           @Part("c_hf_nam") RequestBody c_regno,
+                                           @Url String url );
+
+        // https://nikshayppsa.hlfppt.org/_api-v1_/_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_hf_doc&w=
+
 
         @Multipart
         @POST("_data_agentUSS.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_link")
