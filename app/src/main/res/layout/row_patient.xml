@@ -28,6 +28,19 @@
             android:textSize="@dimen/_11sdp" />
 
         <TextView
+            android:id="@+id/tvFromFDC"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_weight="2"
+            android:fontFamily="@font/nunitosans_bold_2"
+            android:text=" "
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11sdp" />
+
+
+        <TextView
             android:id="@+id/ddayLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

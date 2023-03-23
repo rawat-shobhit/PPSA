@@ -130,7 +130,8 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
 
         /*    if (BaseUtils.getSubmitLabReportStatus(this).equals("false")) {
          *//*LiveData<List<RoomFormSixData>> formSix = dataBase.customerDao().fetchFormSix();
-            formSix.observe(this, formSixData -> {
+            formSix.observe(this, formSixData ->
+            {
 
                 if (formSixData.size() != 0) {
                     for (int a = 0; a < formSixData.size(); a++) {

@@ -144,6 +144,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
         //holder.patientType.setText(registerParentData.get(position).getcTyp());
         // holder.address.setText(registerParentData.get(position).getcAdd());
         holder.nikshayId.setText(registerParentData.get(position).getnNkshId());
+      //  holder.tvFromFDC.setText();
         //  holder.phone.setText(registerParentData.get(position).getC_mob());
         if (registerParentData.get(position).getC_mob() == null || registerParentData.get(position).getC_mob().equals("")) {
             holder.hospitalName.setText(registerParentData.get(position).getcPatNam());
@@ -247,7 +248,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
 
     public class Mholder extends RecyclerView.ViewHolder {
         TextView hospitalName,/*phone*//*address,*/
-                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName;
+                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName,tvFromFDC;
         CheckBox radioButton;
         RadioButton radioButtonOne;
         LinearLayout transferShow2, transferShow;
@@ -266,6 +267,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
             //   phone = itemView.findViewById(R.id.phone);
             // address = itemView.findViewById(R.id.address);
             nikshayId = itemView.findViewById(R.id.regid);
+            tvFromFDC=itemView.findViewById(R.id.tvFromFDC);
             doctorName = itemView.findViewById(R.id.doctorname);
             radioButton = itemView.findViewById(R.id.radioButton);
             radioButtonOne = itemView.findViewById(R.id.radioButtonOne);
