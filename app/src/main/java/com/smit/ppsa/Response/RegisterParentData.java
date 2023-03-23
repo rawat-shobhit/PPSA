@@ -20,6 +20,7 @@ public class RegisterParentData implements Serializable {
     @Expose
     private String notf_img;
 
+
     public String getAadhar_img() {
         return aadhar_img;
     }
@@ -228,6 +229,44 @@ public class RegisterParentData implements Serializable {
     @SerializedName("c_hiv_img")
     @Expose
     private String c_hiv_img;
+
+
+//    @SerializedName("c_udst_img")
+//    @Expose
+//    private String udstImg="";
+//
+//    public String getUdstImg() {
+//        return udstImg;
+//    }
+//
+//    public void setUdstImg(String udstImg) {
+//        this.udstImg = udstImg;
+//    }
+//
+//    @SerializedName("bnk_img")
+//    @Expose
+//    private String bankImage="";
+//
+//
+//
+//    public String getBankImage() {
+//        return bankImage;
+//    }
+//
+//    public void setBankImage(String bankImage) {
+//        this.bankImage = bankImage;
+//    }
+
+
+    @SerializedName("onfdc")
+    @Expose String onfdc;
+
+    public String getOnfdc() {
+        return onfdc;
+    }
+    public void setOnfdc(String onfdc) {
+        this.onfdc = onfdc;
+    }
 
     public void setC_aadh_img(String c_aadh_img) {
         this.c_aadh_img = c_aadh_img;

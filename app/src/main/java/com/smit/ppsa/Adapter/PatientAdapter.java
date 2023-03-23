@@ -144,7 +144,40 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
         //holder.patientType.setText(registerParentData.get(position).getcTyp());
         // holder.address.setText(registerParentData.get(position).getcAdd());
         holder.nikshayId.setText(registerParentData.get(position).getnNkshId());
-      //  holder.tvFromFDC.setText();
+
+
+//
+//
+//
+        try{
+            if(registerParentData.get(position).getC_udst_img().toString().equals("0"))
+            {
+                holder.linearLayout.setVisibility(View.VISIBLE);
+                holder.usdcHeading.setVisibility(View.VISIBLE);
+                holder.tvUdstImg.setText("N");
+            }else
+            {
+
+                holder.usdcHeading.setVisibility(View.VISIBLE);
+                holder.tvUdstImg.setText("Y");
+            }
+        }catch (Exception e){}
+
+        try{
+            if(registerParentData.get(position).getBnk_img().toString().equals("0"))
+            {
+                holder.linearLayout.setVisibility(View.VISIBLE);
+                holder.bankHeading.setVisibility(View.VISIBLE);
+                holder.tvBankImg.setText("Y");
+            }else
+            {
+                holder.bankHeading.setVisibility(View.VISIBLE);
+                holder.tvBankImg.setText("N");
+            }
+        }catch (Exception e){}
+
+
+        holder.tvFromFDC.setText(registerParentData.get(position).getOnfdc());
         //  holder.phone.setText(registerParentData.get(position).getC_mob());
         if (registerParentData.get(position).getC_mob() == null || registerParentData.get(position).getC_mob().equals("")) {
             holder.hospitalName.setText(registerParentData.get(position).getcPatNam());
@@ -248,11 +281,12 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
 
     public class Mholder extends RecyclerView.ViewHolder {
         TextView hospitalName,/*phone*//*address,*/
-                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName,tvFromFDC;
+                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName,tvFromFDC,tvBankImg,tvUdstImg, bankHeading,usdcHeading;
         CheckBox radioButton;
         RadioButton radioButtonOne;
-        LinearLayout transferShow2, transferShow;
+        LinearLayout transferShow2, transferShow,linearLayout;
         ImageView sexImage, patientImage, editIcon;
+
 
         public Mholder(@NonNull View itemView) {
             super(itemView);
@@ -260,6 +294,14 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
             actualHospitalname = itemView.findViewById(R.id.hospitalnamett);
             transferShow = itemView.findViewById(R.id.transfer_show);
             transferShow2 = itemView.findViewById(R.id.transfer_show2);
+
+            linearLayout=itemView.findViewById(R.id.linearLayout);
+
+            tvBankImg=itemView.findViewById(R.id.bankImageText);
+            tvUdstImg=itemView.findViewById(R.id.udstImageText);
+
+            bankHeading=itemView.findViewById(R.id.bankHeading);
+            usdcHeading=itemView.findViewById(R.id.usdeHeading);
 
 
             sexImage = itemView.findViewById(R.id.sexImage);

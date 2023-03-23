@@ -20,7 +20,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/_12sdp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:fontFamily="@font/nunitosans_bold_2"
             android:text="Customer name"
             android:gravity="center_vertical"
@@ -559,6 +559,66 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:layout_marginBottom="@dimen/_6sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/bankHeading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_weight="2"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:text="Bank"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                />
+            <TextView
+                android:id="@+id/bankImageText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_weight="2"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                />
+
+            <TextView
+                android:id="@+id/usdeHeading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_weight="2"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:text="UDST"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                />
+
+            <TextView
+                android:id="@+id/udstImageText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_weight="2"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/_11sdp"
+                />
+
+
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
