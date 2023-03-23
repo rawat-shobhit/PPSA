@@ -23,6 +23,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TuSearchPatientList : AppCompatActivity() {
     private lateinit var tuSpinner: Spinner
@@ -30,13 +31,13 @@ class TuSearchPatientList : AppCompatActivity() {
     private lateinit var searchBtn: TextView
     private lateinit var tvTu: EditText
     private lateinit var filtertt: TextView
-    private lateinit var visiit:LinearLayout
+    private lateinit var visiit: LinearLayout
     private lateinit var checkboxNonVisit: CheckBox
     private lateinit var patientRecyclerView: RecyclerView
     private lateinit var backBtn: ImageView
     var fdcHospitalsAdapter: LpaPatientAdapter? = null
 
-    var registerParentDataList: List<RegisterParentData>? = null
+    var registerParentDataList: ArrayList<RegisterParentData>? = null
     var tuString = ""
 
     var tuStrings: MutableList<String> = ArrayList()
@@ -88,7 +89,7 @@ class TuSearchPatientList : AppCompatActivity() {
             // BaseUtils.showToast(HospitalsList.this, String.valueOf(b));
 
             try {
-                filter()
+                filter(b)
 
             } catch (e: Exception) {
 
@@ -105,21 +106,32 @@ class TuSearchPatientList : AppCompatActivity() {
         backBtn.setOnClickListener { super.onBackPressed() }
     }
 
-    private fun filter() {
-        val temp: ArrayList<RegisterParentData?> =
-            registerParentDataList as ArrayList<RegisterParentData?>
-        if (registerParentDataList!!.isNotEmpty()) {
-            for (d in registerParentDataList!!) {
-                temp.add(d)
-                if (checkboxNonVisit.isChecked) {
-                    if (d.aadhar_img != "0" || d.notf_img != "0" || d.bnk_img != "0") {
-                        temp.remove(d)
+    private fun filter(isChecked: Boolean) {
+        var temp: ArrayList<RegisterParentData> = registerParentDataList!!
+
+        if (isChecked) {
+
+            temp.clear()
+            //  BaseUtils.showToast(this,registerParentDataList!!.size.toString())
+            if (registerParentDataList!!.isNotEmpty()) {
+                for (d in registerParentDataList!!) {
+                    if (checkboxNonVisit.isChecked) {
+                        if (d.aadhar_img == "0" || d.notf_img == "0" || d.bnk_img == "0" || d.aadhar_img == null || d.notf_img == null || d.bnk_img == null) {
+                            if (temp.contains(d)) {
+
+                            } else {
+                                temp.add(d)
+                            }
+                        }
                     }
                 }
             }
-            if (temp != null) {
-                fdcHospitalsAdapter!!.updateList(temp)
-            }
+        } else {
+            getPatient()
+        }
+
+        if (temp != null) {
+            fdcHospitalsAdapter!!.updateList(temp)
         }
     }
 
@@ -154,12 +166,13 @@ class TuSearchPatientList : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     if (response.body()!!.status) {
-                        registerParentDataList = response.body()!!.userData
+                        registerParentDataList =
+                            response.body()!!.userData as ArrayList<RegisterParentData>
                         patientRecyclerView.layoutManager =
                             LinearLayoutManager(this@TuSearchPatientList)
                         fdcHospitalsAdapter =
                             LpaPatientAdapter(registerParentDataList, this@TuSearchPatientList)
-                        patientRecyclerView.setAdapter(fdcHospitalsAdapter);
+                        patientRecyclerView.adapter = fdcHospitalsAdapter;
                     } else {
                         BaseUtils.showToast(this@TuSearchPatientList, "No patient found")
                     }
