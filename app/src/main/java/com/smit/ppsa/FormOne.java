@@ -100,7 +100,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private String gender;
     private ImageView patientNotificationImg, patientBankImg;
     private String imageType = "front";
-    private TextView EnrollmentDate;
+    private TextView EnrollmentDate,dataOf;
     private EditText tuString, EnrollHealthFacilitySector, EnrollmentFaciltyPHI, EnrollmentFaciltyHFcode, UserIDEnrollment, EnrolmentId, PatientName, Age, Weight, Height, Address,
             Taluka, Town, Ward, Landmark, Pincode, PrimaryPhoneNumber, SecondaryPhoneNumber;
     private Spinner EnrollmentFaciltyState, EnrollmentFaciltyDistrict, EnrollmentFaciltyTBU, Gender, ResidentialState, ResidentialDistrict, ResidentialTU;
@@ -108,6 +108,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     Uri bankImageUri = null;
     int SELECT_PICTURE = 200;
     int PIC_CROP = 500;
+
     // Permissions for accessing the storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -122,6 +123,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_form_one);
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver, new IntentFilter(""));
         verifyStoragePermissions(FormOne.this);
+        dataOf = findViewById(R.id.dataOf);
         initViews();
         if (getIntent().hasExtra("type")) {
             type = getIntent().getStringExtra("type");
@@ -172,6 +174,11 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
 
+        if(type=="sample"){
+            EnrollmentDate.setVisibility(View.GONE);
+        }else{
+            dataOf.setText("Date of Diagnosis*");
+        }
         // handle the Choose Image button to trigger
         // the image chooser function
         patientNotificationImg.setOnClickListener(new View.OnClickListener() {
