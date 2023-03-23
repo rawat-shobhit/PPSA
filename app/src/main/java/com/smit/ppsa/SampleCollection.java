@@ -1,13 +1,5 @@
 package com.smit.ppsa;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -18,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -37,27 +28,30 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.bumptech.glide.Glide;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.smit.ppsa.Adapter.CustomSpinnerAdapter;
 import com.smit.ppsa.Dao.AppDataBase;
 import com.smit.ppsa.Network.ApiClient;
 import com.smit.ppsa.Network.NetworkCalls;
 import com.smit.ppsa.Response.AddDocResponse;
 import com.smit.ppsa.Response.FormOneData;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.smit.ppsa.Response.FormOneResponse;
-import com.smit.ppsa.Response.HospitalList;
-import com.smit.ppsa.Response.HospitalResponse;
 import com.smit.ppsa.Response.MedicineResponse.MedicineResponse;
 import com.smit.ppsa.Response.PatientResponse;
 import com.smit.ppsa.Response.RegisterParentData;
-import com.smit.ppsa.Response.RoomMedicines;
 import com.yalantis.ucrop.UCrop;
-
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -76,7 +70,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FormOne extends AppCompatActivity implements View.OnClickListener {
+public class SampleCollection extends AppCompatActivity implements View.OnClickListener {
     private CardView proceedbtn;
     private ImageView backBtn;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -122,12 +116,9 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_one);
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver, new IntentFilter(""));
-        verifyStoragePermissions(FormOne.this);
+        verifyStoragePermissions(SampleCollection.this);
         dataOf = findViewById(R.id.dataOf);
         initViews();
-
-        type=getIntent().getStringExtra("type");
-
         if (getIntent().hasExtra("type")) {
             type = getIntent().getStringExtra("type");
         }
@@ -177,21 +168,11 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
 
-
-        type=getIntent().getStringExtra("type");
-        if(Objects.equals(getIntent().getStringExtra("type"), "sample")){
-
-            dataOf.setVisibility(View.GONE);
+        if(type=="sample"){
             EnrollmentDate.setVisibility(View.GONE);
-            Log.d("typeCheck",type.toString());
         }else{
-
             dataOf.setText("Date of Diagnosis*");
-            Log.d("typeCheckElse",type.toString());
         }
-
-
-
         // handle the Choose Image button to trigger
         // the image chooser function
         patientNotificationImg.setOnClickListener(new View.OnClickListener() {
@@ -203,7 +184,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     notificationImageUri = null;
                 }*/
 
-                chooseImage(FormOne.this);
+                chooseImage(SampleCollection.this);
             }
         });
 
@@ -216,7 +197,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     bankImageUri = null;
                 }*/
 
-                chooseImage(FormOne.this);
+                chooseImage(SampleCollection.this);
             }
         });
 
@@ -240,7 +221,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     st_id_res = "";
                 } else {
                     st_id_res = state.get(i - 1).getId();
-                    getDistrict(FormOne.this, st_id_res);
+                    getDistrict(SampleCollection.this, st_id_res);
                 }
             }
 
@@ -272,7 +253,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     dis_id_res = "";
                 } else {
                     dis_id_res = district.get(i - 1).getId();
-                    getTU(FormOne.this, st_id_res, dis_id_res);
+                    getTU(SampleCollection.this, st_id_res, dis_id_res);
                 }
             }
 
@@ -301,8 +282,8 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
     private void fillDetailForEdit() {
         //progressDialog.showProgressBar();
-        if (!BaseUtils.isNetworkAvailable(FormOne.this)) {
-            Toast.makeText(FormOne.this, "Please Check your internet  Connectivity", Toast.LENGTH_SHORT).show();
+        if (!BaseUtils.isNetworkAvailable(SampleCollection.this)) {
+            Toast.makeText(SampleCollection.this, "Please Check your internet  Connectivity", Toast.LENGTH_SHORT).show();
             //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
             return;
         }
@@ -416,7 +397,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (optionsMenu[i].equals("Take Photo")) {
                     // Open the camera and get the photo
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(takePicture, 0);
                 } else if (optionsMenu[i].equals("Choose from Gallery")) {
                     // choose from  external storage
@@ -432,7 +413,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     // this function is triggered when
     // the Select Image Button is clicked
     void imageChooser() {
-        verifyStoragePermissions(FormOne.this);
+        verifyStoragePermissions(SampleCollection.this);
         // create an instance of the
         // intent of the type image
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -677,7 +658,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 //        uCrop.withAspectRatio(16, 9);
         uCrop.withMaxResultSize(450, 450);
         uCrop.withOptions(getUcropOptions());
-        uCrop.start(FormOne.this);
+        uCrop.start(SampleCollection.this);
     }
 
     private UCrop.Options getUcropOptions() {
@@ -715,7 +696,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
 
             } else if (intent.hasExtra("notifyGender")) {
-                genders = BaseUtils.getGender(FormOne.this);
+                genders = BaseUtils.getGender(SampleCollection.this);
                 for (FormOneData gender : genders) {
                     genderStrings.add(gender.getcTyp());
                 }
@@ -728,7 +709,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             }
 
             if (intent.hasExtra("localDistrict")) {
-                district = BaseUtils.getDistrict(FormOne.this);
+                district = BaseUtils.getDistrict(SampleCollection.this);
                 if (distri.size() > 0) {
                     distri.clear();
                 }
@@ -740,7 +721,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                 setSpinnerAdapter(ResidentialDistrict, distri);
             }
             if (intent.hasExtra("localTU")) {
-                tu = BaseUtils.getTU(FormOne.this);
+                tu = BaseUtils.getTU(SampleCollection.this);
                 if (tuStrings.size() > 0) {
                     tuStrings.clear();
                 }
@@ -758,7 +739,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                 setSpinnerAdapter(ResidentialTU, tuStrings);
             }
             if (intent.hasExtra("localState")) {
-                state = BaseUtils.getState(FormOne.this);
+                state = BaseUtils.getState(SampleCollection.this);
                 for (FormOneData stat : state) {
                     stateStrings.add(stat.getcStNam());
                 }
@@ -772,7 +753,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
     private void setSpinnerAdapter(Spinner spinner, List<String> values) {
 
-        CustomSpinnerAdapter spinnerAdapter = new CustomSpinnerAdapter(FormOne.this, values);
+        CustomSpinnerAdapter spinnerAdapter = new CustomSpinnerAdapter(SampleCollection.this, values);
         spinner.setAdapter(spinnerAdapter);
 
         if (genderStrings.isEmpty()) {
@@ -797,10 +778,10 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             String bank = "";
 
             if (notificationImageUri != null) {
-                noti = new Imagee().getEncodedImage(notificationImageUri, FormOne.this);
+                noti = new Imagee().getEncodedImage(notificationImageUri, SampleCollection.this);
             }
             if (bankImageUri != null) {
-                bank = new Imagee().getEncodedImage(bankImageUri, FormOne.this);
+                bank = new Imagee().getEncodedImage(bankImageUri, SampleCollection.this);
             }
             RequestBody d_reg_dat = RequestBody.create("d_reg_dat", MediaType.parse("text/plain"));
             RequestBody n_nksh_id = RequestBody.create("n_nksh_id", MediaType.parse("text/plain"));
@@ -841,7 +822,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     if (response.isSuccessful()) {
                         //  parentDataTestReportResults = response.body().getUser_data();
 
-                        startActivity(new Intent(FormOne.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        startActivity(new Intent(SampleCollection.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     }
 
                 }
@@ -862,15 +843,15 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
     private void validMobile(String mob) {
         //progressDialog.showProgressBar();
-        if (!BaseUtils.isNetworkAvailable(FormOne.this)) {
-            Toast.makeText(FormOne.this, "Please Check your internet  Connectivity", Toast.LENGTH_SHORT).show();
+        if (!BaseUtils.isNetworkAvailable(SampleCollection.this)) {
+            Toast.makeText(SampleCollection.this, "Please Check your internet  Connectivity", Toast.LENGTH_SHORT).show();
             //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
             return;
         }
-        BaseUtils.putPatientName(FormOne.this, getIntent().getStringExtra("patient_name"));
+        BaseUtils.putPatientName(SampleCollection.this, getIntent().getStringExtra("patient_name"));
 
         //  Log.d("dkl9", "getPatientdd: " + getIntent().getStringExtra("hf_id"));
-        Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(FormOne.this).getnUserLevel());
+        Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(SampleCollection.this).getnUserLevel());
 
         String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enrol&w=n_tu_id<<GT>>0<<AND>><<SBRK>>c_mob<<SLIKE>>" + mob + "<<ELIKE>><<OR>>c_mob_2<<SLIKE>>" + mob + "<<ELIKE>><<EBRK>>";
         ApiClient.getClient().getMedicine(url).enqueue(new Callback<MedicineResponse>() {
@@ -883,17 +864,17 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                         String bank = "";
 
                         if (notificationImageUri != null) {
-                            noti = new Imagee().getEncodedImage(notificationImageUri, FormOne.this);
+                            noti = new Imagee().getEncodedImage(notificationImageUri, SampleCollection.this);
                         }
                         if (bankImageUri != null) {
-                            bank = new Imagee().getEncodedImage(bankImageUri, FormOne.this);
+                            bank = new Imagee().getEncodedImage(bankImageUri, SampleCollection.this);
                         }
 
                         NetworkCalls.sendForm(
-                                FormOne.this,
-                                BaseUtils.getUserOtherInfo(FormOne.this).getnStId(),
-                                BaseUtils.getUserOtherInfo(FormOne.this).getnDisId(),
-                                BaseUtils.getUserOtherInfo(FormOne.this).getnTuId(),
+                                SampleCollection.this,
+                                BaseUtils.getUserOtherInfo(SampleCollection.this).getnStId(),
+                                BaseUtils.getUserOtherInfo(SampleCollection.this).getnDisId(),
+                                BaseUtils.getUserOtherInfo(SampleCollection.this).getnTuId(),
                                 getIntent().getStringExtra("hf_id"),
                                 getIntent().getStringExtra("doc_id"),
                                 EnrollmentDate.getText().toString(),
@@ -915,16 +896,16 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                                 PrimaryPhoneNumber.getText().toString(),
                                 SecondaryPhoneNumber.getText().toString(),
                                 lat, lng,
-                                BaseUtils.getUserInfo(FormOne.this).getId(),
+                                BaseUtils.getUserInfo(SampleCollection.this).getId(),
                                 type,
                                 true,
                                 noti,
                                 bank,
-                                BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc()
+                                BaseUtils.getUserInfo(SampleCollection.this).getN_staff_sanc()
 
                         );
                     } else {
-                        BaseUtils.showToast(FormOne.this, "Patient Already Registered with Programme");
+                        BaseUtils.showToast(SampleCollection.this, "Patient Already Registered with Programme");
                     }
                 }
             }
@@ -975,10 +956,10 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLocation();
             } else if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(FormOne.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(SampleCollection.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                     requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
                 } else {
-                    new androidx.appcompat.app.AlertDialog.Builder(FormOne.this)
+                    new AlertDialog.Builder(SampleCollection.this)
                             .setMessage("Please Grant Permission first")
                             .setCancelable(false)
                             .setPositiveButton("GO TO SETTING", new DialogInterface.OnClickListener() {

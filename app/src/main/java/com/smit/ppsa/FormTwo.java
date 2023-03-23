@@ -140,7 +140,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
 
                         mViewModel.submitLabReport(
                                 formSixData.get(a).getN_st_id(),
-                                formSixData.get(a).getN_dis_id(),
+                                formSixData.get(a).rgetN_dis_id(),
                                 formSixData.get(a).getN_tu_id(),
                                 formSixData.get(a).getN_hf_id(),
                                 formSixData.get(a).getN_doc_id(),
