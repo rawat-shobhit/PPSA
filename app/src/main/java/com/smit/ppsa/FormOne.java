@@ -184,8 +184,16 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             dataOf.setVisibility(View.GONE);
             EnrollmentDate.setVisibility(View.GONE);
             Log.d("typeCheck",type.toString());
-        }else{
+        }
+        else if(Objects.equals(getIntent().getStringExtra("type"), "tree")){
+            dataOf.setVisibility(View.GONE);
+            EnrollmentDate.setVisibility(View.GONE);
+            Log.d("typeCheck",type.toString());
+        }
+        else{
 
+            dataOf.setVisibility(View.VISIBLE);
+            EnrollmentDate.setVisibility(View.VISIBLE);
             dataOf.setText("Date of Diagnosis*");
             Log.d("typeCheckElse",type.toString());
         }

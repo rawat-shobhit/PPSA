@@ -107,6 +107,7 @@ public class NotificationFagment extends DialogFragment {
                 startActivity(new Intent(getActivity(), HospitalFacility.class)
                         .putExtra("type", "provider")
                         .putExtra("doc_id", docId)
+                        .putExtra("type","normal")
                         .putExtra("hf_id", hfId).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
                 dismiss();

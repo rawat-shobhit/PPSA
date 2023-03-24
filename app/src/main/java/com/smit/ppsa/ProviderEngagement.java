@@ -447,6 +447,7 @@ public class ProviderEngagement extends AppCompatActivity implements View.OnClic
                     if(visitnames.get(j).equals("Notification Collection")){
                         notificationCollectionPresent = true;
                         instance = instance + 1;
+
                         if (instance == 1){
                             last = true;
                         }else {
@@ -915,8 +916,10 @@ public class ProviderEngagement extends AppCompatActivity implements View.OnClic
                     Bundle bundle = new Bundle();
                     bundle.putString("hf_id", BaseUtils.getGlobalHfIdProvider(context));
                     bundle.putString("doc_id", BaseUtils.getGlobalDocIdProvider(context));
+
                     fragment.setArguments(bundle);
                     fragment.show(fragmentManager, "providerfrag");
+                    Log.d("notificationCollection","shobhit");
                 } else {
                     ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }
@@ -962,8 +965,10 @@ public class ProviderEngagement extends AppCompatActivity implements View.OnClic
                                 fragment.setCancelable(false);
                                 Bundle bundle = new Bundle();
                                 bundle.putString("hf_id", BaseUtils.getGlobalHfIdProvider(context));
+                                bundle.putString("shobhit","shobhit");
                                 //bundle.putString("doc_id", getIntent().getStringExtra("doc_id"));
                                 fragment.setArguments(bundle);
+                                Log.d("notificationCollection","shobhit fragment");
                                 fragment.show(fragmentManager, "providerfrag");
                             } else {
                                 ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));

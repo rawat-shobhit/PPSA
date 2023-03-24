@@ -109,11 +109,14 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
         providerEngagementViewModel = new ViewModelProvider(this).get(ProviderEngagementViewModel.class);
 
 
+
+
+
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver2, new IntentFilter("qual"));
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver, new IntentFilter("doc"));
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiverOne, new IntentFilter("doctors"));
 
-
+        type= getIntent().getStringExtra("type");
         if (getIntent().hasExtra("type")){
             type= getIntent().getStringExtra("type");
         }
@@ -421,10 +424,10 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
 
                             BaseUtils.savedSelectedDoctors(HospitalFacility.this, selectedroomDoctorsLists);
 
-
+                            Log.d("type",type+"  to form one ");
                             startActivity(new Intent(HospitalFacility.this, FormOne.class)
                                     .putExtra("doc_id", doc_id)
-                                    .putExtra("type","sample")
+                                    .putExtra("type",type)
                                     .putExtra("hf_id", hf_id));
 
                             finish();
@@ -747,6 +750,9 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
+        type =getIntent().getStringExtra("type");
+        Log.d("type",type+"  onresume");
+
     }
 
     private boolean emptyText(EditText editText) {
