@@ -33,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,6 +80,7 @@ import retrofit2.Response;
 public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private CardView proceedbtn;
     private ImageView backBtn;
+    private LinearLayout notificationImageForm;
     private FusedLocationProviderClient mFusedLocationClient;
     private List<FormOneData> genders = new ArrayList<>();
     private List<FormOneData> state = new ArrayList<>();
@@ -159,6 +161,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         tuString = findViewById(R.id.tuString);
         EnrolmentId = findViewById(R.id.f1_enrollID);
         PatientName = findViewById(R.id.f1_patientName);
+        notificationImageForm = findViewById(R.id.notificationImageForm);
         Age = findViewById(R.id.f1_age);
         Gender = findViewById(R.id.f1_gender);
         Weight = findViewById(R.id.f1_weight);
@@ -180,18 +183,23 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
         type=getIntent().getStringExtra("type");
         if(Objects.equals(getIntent().getStringExtra("type"), "sample")){
-
             dataOf.setVisibility(View.GONE);
             EnrollmentDate.setVisibility(View.GONE);
             Log.d("typeCheck",type.toString());
         }
         else if(Objects.equals(getIntent().getStringExtra("type"), "tree")){
             dataOf.setVisibility(View.GONE);
+            try {
+                setCurrentDate();
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
             EnrollmentDate.setVisibility(View.GONE);
+            notificationImageForm.setVisibility(View.GONE);
+
             Log.d("typeCheck",type.toString());
         }
         else{
-
             dataOf.setVisibility(View.VISIBLE);
             EnrollmentDate.setVisibility(View.VISIBLE);
             dataOf.setText("Date of Diagnosis*");
@@ -306,6 +314,8 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         });
         setOnclick();
     }
+
+
 
     private void fillDetailForEdit() {
         //progressDialog.showProgressBar();
@@ -502,7 +512,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private boolean emptyText(EditText editText) {
         return editText.getText().toString().isEmpty();
     }
-
+//Objects.equals(getIntent().getStringExtra("type"), "tree")
     private boolean isValidate() {
         if (EnrollmentDate.getText().toString().isEmpty()) {
             BaseUtils.showToast(this, "Enter Enrollment date");
@@ -513,7 +523,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         } else if (emptyText(PatientName)) {
             BaseUtils.showToast(this, "Enter patient name");
             return false;
-        } else if (notificationImageUri == null) {
+        }else if (notificationImageUri == null && !Objects.equals(getIntent().getStringExtra("type"), "tree")) {
             BaseUtils.showToast(this, "Select notification form image");
             return false;
         } else if (emptyText(Age)) {
@@ -1031,30 +1041,22 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                 String myFormat = "yyyy-MM-dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 EnrollmentDate.setText(sdf.format(myCalendar.getTime()));
-                try {
-                    setCurrentDate();
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
+
             }
         };
         EnrollmentDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    setCurrentDate();
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
-//                DatePickerDialog m_date = new DatePickerDialog(FormOne.this, R.style.calender_theme, date, myCalendar
-//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-//                        myCalendar.get(Calendar.DAY_OF_MONTH));
-//
-//
-//                m_date.show();
-//                m_date.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
-//                m_date.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
-//                m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
+
+                DatePickerDialog m_date = new DatePickerDialog(FormOne.this, R.style.calender_theme, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+
+
+                m_date.show();
+                m_date.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
+                m_date.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
+                m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
             }
         });
     }
