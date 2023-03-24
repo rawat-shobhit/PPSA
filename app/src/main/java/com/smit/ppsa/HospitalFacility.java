@@ -420,7 +420,7 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
                             );
                         } else if (BaseUtils.getSection(HospitalFacility.this).equals("addpat")) {
 
-                            BaseUtils.showToast(HospitalFacility.this,"6");
+                            //BaseUtils.showToast(HospitalFacility.this,"6");
 
                             BaseUtils.savedSelectedDoctors(HospitalFacility.this, selectedroomDoctorsLists);
 

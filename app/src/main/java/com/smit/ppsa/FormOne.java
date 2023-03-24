@@ -494,13 +494,8 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.bt_proceedone:
 
-                if (getIntent().hasExtra("pateintId")) {
-
-                } else {
                     if (isValidate()) {
                         sendForm();
-                    }
-                    break;
                 }
 
             case R.id.backbtn:
@@ -866,6 +861,10 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
                 @Override
                 public void onFailure(Call<AddDocResponse> call, Throwable t) {
+                   // startActivity(new Intent(FormOne.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+
+                    Log.d("infalure",t.toString());
+
                 }
             });
 
