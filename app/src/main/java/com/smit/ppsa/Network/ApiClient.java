@@ -538,6 +538,8 @@ public class ApiClient {
         @GET()
         Call<HospitalResponse> getHospitalDetail(@Url String url);
 
+        @Multipart
+        @POST()
         Call<AddDocResponse> updateHospital(@Url String url, @Part("d_reg_dat") RequestBody d_reg_dat,
                                         @Part("n_nksh_id") RequestBody n_nksh_id,
                                         @Part("c_pat_nam") RequestBody c_pat_nam,
