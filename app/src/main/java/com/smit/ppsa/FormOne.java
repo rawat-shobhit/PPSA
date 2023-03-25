@@ -102,7 +102,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private String gender;
     private ImageView patientNotificationImg, patientBankImg;
     private String imageType = "front";
-    private TextView EnrollmentDate,dataOf;
+    private TextView EnrollmentDate, dataOf;
     private EditText tuString, EnrollHealthFacilitySector, EnrollmentFaciltyPHI, EnrollmentFaciltyHFcode, UserIDEnrollment, EnrolmentId, PatientName, Age, Weight, Height, Address,
             Taluka, Town, Ward, Landmark, Pincode, PrimaryPhoneNumber, SecondaryPhoneNumber;
     private Spinner EnrollmentFaciltyState, EnrollmentFaciltyDistrict, EnrollmentFaciltyTBU, Gender, ResidentialState, ResidentialDistrict, ResidentialTU;
@@ -128,7 +128,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         dataOf = findViewById(R.id.dataOf);
         initViews();
 
-        type=getIntent().getStringExtra("type");
+        type = getIntent().getStringExtra("type");
 
         if (getIntent().hasExtra("type")) {
             type = getIntent().getStringExtra("type");
@@ -181,13 +181,12 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
 
 
-        type=getIntent().getStringExtra("type");
-        if(Objects.equals(getIntent().getStringExtra("type"), "sample")){
+        type = getIntent().getStringExtra("type");
+        if (Objects.equals(getIntent().getStringExtra("type"), "sample")) {
             dataOf.setVisibility(View.GONE);
             EnrollmentDate.setVisibility(View.GONE);
-            Log.d("typeCheck",type.toString());
-        }
-        else if(Objects.equals(getIntent().getStringExtra("type"), "tree")){
+            Log.d("typeCheck", type.toString());
+        } else if (Objects.equals(getIntent().getStringExtra("type"), "tree")) {
             dataOf.setVisibility(View.GONE);
             try {
                 setCurrentDate();
@@ -197,15 +196,13 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             EnrollmentDate.setVisibility(View.GONE);
             notificationImageForm.setVisibility(View.GONE);
 
-            Log.d("typeCheck",type.toString());
-        }
-        else{
+            Log.d("typeCheck", type.toString());
+        } else {
             dataOf.setVisibility(View.VISIBLE);
             EnrollmentDate.setVisibility(View.VISIBLE);
             dataOf.setText("Date of Diagnosis*");
-            Log.d("typeCheckElse",type.toString());
+            Log.d("typeCheckElse", type.toString());
         }
-
 
 
         // handle the Choose Image button to trigger
@@ -314,7 +311,6 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         });
         setOnclick();
     }
-
 
 
     private void fillDetailForEdit() {
@@ -494,8 +490,8 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.bt_proceedone:
 
-                    if (isValidate()) {
-                        sendForm();
+                if (isValidate()) {
+                    sendForm();
                 }
 
             case R.id.backbtn:
@@ -507,7 +503,8 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private boolean emptyText(EditText editText) {
         return editText.getText().toString().isEmpty();
     }
-//Objects.equals(getIntent().getStringExtra("type"), "tree")
+
+    //Objects.equals(getIntent().getStringExtra("type"), "tree")
     private boolean isValidate() {
         if (EnrollmentDate.getText().toString().isEmpty()) {
             BaseUtils.showToast(this, "Enter Enrollment date");
@@ -518,7 +515,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         } else if (emptyText(PatientName)) {
             BaseUtils.showToast(this, "Enter patient name");
             return false;
-        }else if (notificationImageUri == null && !Objects.equals(getIntent().getStringExtra("type"), "tree")) {
+        } else if (notificationImageUri == null && !Objects.equals(getIntent().getStringExtra("type"), "tree")) {
             BaseUtils.showToast(this, "Select notification form image");
             return false;
         } else if (emptyText(Age)) {
@@ -861,9 +858,9 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
                 @Override
                 public void onFailure(Call<AddDocResponse> call, Throwable t) {
-                   // startActivity(new Intent(FormOne.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    // startActivity(new Intent(FormOne.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
 
-                    Log.d("infalure",t.toString());
+                    Log.d("infalure", t.toString());
 
                 }
             });
@@ -887,69 +884,70 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         BaseUtils.putPatientName(FormOne.this, getIntent().getStringExtra("patient_name"));
 
         //  Log.d("dkl9", "getPatientdd: " + getIntent().getStringExtra("hf_id"));
-        Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(FormOne.this).getnUserLevel());
+        //   Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(FormOne.this).getnUserLevel());
 
-        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enrol&w=n_tu_id<<GT>>0<<AND>><<SBRK>>c_mob<<SLIKE>>" + mob + "<<ELIKE>><<OR>>c_mob_2<<SLIKE>>" + mob + "<<ELIKE>><<EBRK>>";
-        ApiClient.getClient().getMedicine(url).enqueue(new Callback<MedicineResponse>() {
-            @Override
-            public void onResponse(Call<MedicineResponse> call, Response<MedicineResponse> response) {
-                if (response.isSuccessful()) {
-                    if (response.body().getStatus().equals("false")) {
-                        //  parentDataTestReportResults = response.body().getUser_data();
-                        String noti = "";
-                        String bank = "";
+        String noti = "";
+        String bank = "";
 
-                        if (notificationImageUri != null) {
-                            noti = new Imagee().getEncodedImage(notificationImageUri, FormOne.this);
-                        }
-                        if (bankImageUri != null) {
-                            bank = new Imagee().getEncodedImage(bankImageUri, FormOne.this);
-                        }
+        if (notificationImageUri != null) {
+            noti = new Imagee().getEncodedImage(notificationImageUri, FormOne.this);
+        }
+        if (bankImageUri != null) {
+            bank = new Imagee().getEncodedImage(bankImageUri, FormOne.this);
+        }
 
-                        NetworkCalls.sendForm(
-                                FormOne.this,
-                                BaseUtils.getUserOtherInfo(FormOne.this).getnStId(),
-                                BaseUtils.getUserOtherInfo(FormOne.this).getnDisId(),
-                                BaseUtils.getUserOtherInfo(FormOne.this).getnTuId(),
-                                getIntent().getStringExtra("hf_id"),
-                                getIntent().getStringExtra("doc_id"),
-                                EnrollmentDate.getText().toString(),
-                                EnrolmentId.getText().toString(),
-                                PatientName.getText().toString(),
-                                Age.getText().toString(),
-                                genders.get(Gender.getSelectedItemPosition() - 1).getId(),
-                                Weight.getText().toString(),
-                                Height.getText().toString(),
-                                Address.getText().toString(),
-                                Taluka.getText().toString(),
-                                Town.getText().toString(),
-                                Ward.getText().toString(),
-                                Landmark.getText().toString(),
-                                Pincode.getText().toString(),
-                                st_id_res,
-                                dis_id_res,
-                                tuString.getText().toString(),
-                                PrimaryPhoneNumber.getText().toString(),
-                                SecondaryPhoneNumber.getText().toString(),
-                                lat, lng,
-                                BaseUtils.getUserInfo(FormOne.this).getId(),
-                                type,
-                                true,
-                                noti,
-                                bank,
-                                BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc()
+        NetworkCalls.sendForm(
+                FormOne.this,
+                BaseUtils.getUserOtherInfo(FormOne.this).getnStId(),
+                BaseUtils.getUserOtherInfo(FormOne.this).getnDisId(),
+                BaseUtils.getUserOtherInfo(FormOne.this).getnTuId(),
+                getIntent().getStringExtra("hf_id"),
+                getIntent().getStringExtra("doc_id"),
+                EnrollmentDate.getText().toString(),
+                EnrolmentId.getText().toString(),
+                PatientName.getText().toString(),
+                Age.getText().toString(),
+                genders.get(Gender.getSelectedItemPosition() - 1).getId(),
+                Weight.getText().toString(),
+                Height.getText().toString(),
+                Address.getText().toString(),
+                Taluka.getText().toString(),
+                Town.getText().toString(),
+                Ward.getText().toString(),
+                Landmark.getText().toString(),
+                Pincode.getText().toString(),
+                st_id_res,
+                dis_id_res,
+                tuString.getText().toString(),
+                PrimaryPhoneNumber.getText().toString(),
+                SecondaryPhoneNumber.getText().toString(),
+                lat, lng,
+                BaseUtils.getUserInfo(FormOne.this).getId(),
+                type,
+                true,
+                noti,
+                bank,
+                BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc()
 
-                        );
-                    } else {
-                        BaseUtils.showToast(FormOne.this, "Patient Already Registered with Programme");
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MedicineResponse> call, Throwable t) {
-            }
-        });
+        );
+//        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enrol&w=n_tu_id<<GT>>0<<AND>><<SBRK>>c_mob<<SLIKE>>" + mob + "<<ELIKE>><<OR>>c_mob_2<<SLIKE>>" + mob + "<<ELIKE>><<EBRK>>";
+//        ApiClient.getClient().getMedicine(url).enqueue(new Callback<MedicineResponse>() {
+//            @Override
+//            public void onResponse(Call<MedicineResponse> call, Response<MedicineResponse> response) {
+//                if (response.isSuccessful()) {
+//                    if (response.body().getStatus().equals("false")) {
+//                        //  parentDataTestReportResults = response.body().getUser_data();
+//
+//                    } else {
+//                        BaseUtils.showToast(FormOne.this, "Patient Already Registered with Programme");
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<MedicineResponse> call, Throwable t) {
+//            }
+//        });
 
 
     }
