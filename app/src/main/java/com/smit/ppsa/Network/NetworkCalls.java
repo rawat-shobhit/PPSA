@@ -20,8 +20,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.google.gson.JsonObject;
 import com.smit.ppsa.BaseUtils;
 import com.smit.ppsa.Dao.AppDataBase;
+import com.smit.ppsa.FormTwo;
 import com.smit.ppsa.GlobalProgressDialog;
 import com.smit.ppsa.HospitalFacility;
+import com.smit.ppsa.HospitalsList;
 import com.smit.ppsa.LogIn;
 import com.smit.ppsa.LoginViewModel;
 import com.smit.ppsa.MainActivity;
@@ -1752,7 +1754,8 @@ public class NetworkCalls {
                 if (type.equals("provider")) {
                     ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 } else {
-                    ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+
+                   ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 }
             }
 
@@ -1818,8 +1821,17 @@ public class NetworkCalls {
                                     if (BaseUtils.getSection(context).equals("addpat")) {
                                         BaseUtils.putSection(context, BaseUtils.getPrevSection(context));
                                     }
-                                    ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                }
+                                  //  ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                    ((Activity) context).startActivity(new Intent(context, FormTwo.class)
+                                            .putExtra("hf_type_id",n_hf_idd)
+                                            .putExtra("section", "sample")
+                                            .putExtra("type", "sample")
+                                            //.putExtra("sample", "sample")
+
+                                            .putExtra("sample", "")
+
+                                            .putExtra("hf_id", n_hf_idd)
+                                    );   }
                             }
 
                         }
