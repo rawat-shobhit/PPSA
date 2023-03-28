@@ -327,10 +327,55 @@
                         android:textStyle="bold"
                         android:visibility="gone" />
 
+                    <LinearLayout
+                        android:id="@+id/filtteerr"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:visibility="gone"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_3sdp"
+                        android:background="@drawable/back_three"
+                        android:backgroundTint="@color/edit_text_bg_grey"
+                        android:minHeight="@dimen/_35sdp"
+                        android:orientation="horizontal">
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="-10dp"
+                            android:layout_marginTop="-8dp"
+                            android:backgroundTint="@color/edit_text_bg_grey"
+                            app:boxStrokeColor="@color/edit_text_bg_grey"
+                            app:boxStrokeWidth="0dp">
+
+                            <!-- Inside text input layout add
+                                  an auto complete text view
+                                    and make its input type to none-->
+                            <AutoCompleteTextView
+                                android:id="@+id/autoCompleteTextViewForFilters"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:backgroundTint="@color/edit_text_bg_grey"
+                                android:editable="false"
+                                android:text="Select Pending Filters"
+                                android:gravity="center_vertical|start"
+                                android:inputType="none"
+                                android:textAlignment="viewStart"
+                                android:textSize="@dimen/_10ssp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/filtertt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginHorizontal="@dimen/_12sdp"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/nunitosans_semibold"
@@ -362,6 +407,7 @@
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginHorizontal="@dimen/_10ssp"
                         android:layout_marginTop="@dimen/_3sdp"
+                        android:visibility="gone"
                         android:background="@drawable/back_two"
                         android:fontFamily="@font/nunitosans_regular_2"
                         android:hint="Enter TU Name"

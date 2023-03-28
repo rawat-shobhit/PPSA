@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -13,17 +15,16 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smit.ppsa.Adapter.CustomSpinnerAdapter
+import com.smit.ppsa.Adapter.FilterDropdownAdapter
 import com.smit.ppsa.Adapter.LpaPatientAdapter
 import com.smit.ppsa.Network.ApiClient
 import com.smit.ppsa.Network.NetworkCalls
-import com.smit.ppsa.Response.FormOneData
-import com.smit.ppsa.Response.RegisterParentData
-import com.smit.ppsa.Response.RegisterParentResponse
+import com.smit.ppsa.Response.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class TuSearchPatientList : AppCompatActivity() {
     private lateinit var tuSpinner: Spinner
@@ -35,10 +36,14 @@ class TuSearchPatientList : AppCompatActivity() {
     private lateinit var checkboxNonVisit: CheckBox
     private lateinit var patientRecyclerView: RecyclerView
     private lateinit var backBtn: ImageView
+    private lateinit var filtteerr:LinearLayout
+    private lateinit var dropDownForFilter: AutoCompleteTextView
     var fdcHospitalsAdapter: LpaPatientAdapter? = null
 
     var registerParentDataList: ArrayList<RegisterParentData>? = null
     var tuString = ""
+    var selectedFilter = ""
+    private var filterArray = ArrayList<PatientFilterDataModel>()
 
     var tuStrings: MutableList<String> = ArrayList()
     private var tu: MutableList<FormOneData> = ArrayList()
@@ -49,13 +54,56 @@ class TuSearchPatientList : AppCompatActivity() {
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(broadcastReceiver, IntentFilter(""))
         init()
+
+        searchText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if (getIntent().hasExtra("upload")) {
+                    filter(searchText.text.toString())
+                }
+            }
+        })
+        updateSpinner()
+    }
+
+    private fun updateSpinner() {
+        filterArray.add(PatientFilterDataModel(1, "Aadhar Card Is Missing"))
+        filterArray.add(PatientFilterDataModel(2, "Prescription Copy is missing"))
+        filterArray.add(PatientFilterDataModel(3, "Bank Document is missing"))
+        filterArray.add(PatientFilterDataModel(4, "Test Report is missing"))
+        filterArray.add(PatientFilterDataModel(5, "UDST Report is missing"))
+        filterArray.add(PatientFilterDataModel(6, "Diabetes Report is missing"))
+        filterArray.add(PatientFilterDataModel(7, "HIV Report is missing"))
+
+        val statusAdapter = FilterDropdownAdapter(this, filterArray)
+        // set adapter to the autocomplete tv to the arrayAdapter
+        dropDownForFilter.setAdapter(statusAdapter)
+        dropDownForFilter.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, pos, _ ->
+                //this is the way to find selected object/item
+                //unitId = filterData!!.Unitmaster[pos].id
+                selectedFilter = (pos + 1).toString()
+                getPatient()
+                //   Toast.makeText(this,selectedFilter, Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun init() {
+        dropDownForFilter = findViewById(R.id.autoCompleteTextViewForFilters)
 
         tuSpinner = findViewById(R.id.filterCounsell)
         checkboxNonVisit = findViewById(R.id.checkboxNonVisit)
         backBtn = findViewById(R.id.backbtn)
+        filtteerr = findViewById(R.id.filtteerr)
         tvTu = findViewById(R.id.tvTU)
         visiit = findViewById(R.id.visiit)
         searchText = findViewById(R.id.search)
@@ -65,8 +113,10 @@ class TuSearchPatientList : AppCompatActivity() {
         if (getIntent().hasExtra("upload")) {
             tvTu.visibility = View.GONE
             filtertt.visibility = View.GONE
-            visiit.visibility = View.VISIBLE
+            searchBtn.visibility = View.GONE
+            filtteerr.visibility = View.VISIBLE
         }
+
         NetworkCalls.getTU(this)
 
         //nextbtn.setEnabled(false);
@@ -85,53 +135,45 @@ class TuSearchPatientList : AppCompatActivity() {
         currentDate.setText(curFormater.format(currentTime));*/
         //hospitalType = findViewById(R.id.hospitalType);
 
-        checkboxNonVisit.setOnCheckedChangeListener { compoundButton, b ->
-            // BaseUtils.showToast(HospitalsList.this, String.valueOf(b));
 
-            try {
-                filter(b)
-
-            } catch (e: Exception) {
-
-            }
-            //   filter(search.getText().toString().trim(),b);
-        }
         searchBtn.setOnClickListener {
-            if (searchText.text.length < 4) {
-                BaseUtils.showToast(this, "Minimun for 4 character required")
+            if (!getIntent().hasExtra("upload")) {
+                if (searchText.text.length < 4) {
+                    BaseUtils.showToast(this, "Minimun for 4 character required")
+                } else {
+                    getPatient()
+                }
             } else {
-                getPatient()
+                filter(searchText.text.toString())
+
             }
         }
         backBtn.setOnClickListener { super.onBackPressed() }
     }
 
-    private fun filter(isChecked: Boolean) {
-        var temp: ArrayList<RegisterParentData> = registerParentDataList!!
-
-        if (isChecked) {
-
-            temp.clear()
-            //  BaseUtils.showToast(this,registerParentDataList!!.size.toString())
-            if (registerParentDataList!!.isNotEmpty()) {
-                for (d in registerParentDataList!!) {
-                    if (checkboxNonVisit.isChecked) {
-                        if (d.aadhar_img == "0" || d.notf_img == "0" || d.bnk_img == "0" || d.aadhar_img == null || d.notf_img == null || d.bnk_img == null) {
-                            if (temp.contains(d)) {
-
-                            } else {
-                                temp.add(d)
-                            }
+    private fun filter(text: String) {
+        val temp: ArrayList<RegisterParentData?> = ArrayList<RegisterParentData?>()
+        if (registerParentDataList!!.isNotEmpty()) {
+            for (d in registerParentDataList!!) {
+                val value = d.getcPatNam().lowercase(Locale.getDefault())
+                if (value.contains(text.lowercase(Locale.getDefault()))) {
+                    Log.d("TAG", "filter: $d")
+                    temp.add(d)
+                }
+                if (temp.isEmpty()) {
+                    for (d in registerParentDataList!!) {
+                        val value = d.getnNkshId().lowercase(Locale.getDefault())
+                        if (value.contains(text.lowercase(Locale.getDefault()))) {
+                            Log.d("TAG", "filter: $d")
+                            temp.add(d)
                         }
                     }
                 }
             }
-        } else {
-            getPatient()
-        }
 
-        if (temp != null) {
-            fdcHospitalsAdapter!!.updateList(temp)
+            if (temp != null) {
+                fdcHospitalsAdapter!!.updateList(temp)
+            }
         }
     }
 
@@ -148,17 +190,19 @@ class TuSearchPatientList : AppCompatActivity() {
 
         val name = searchText.text.toString().trim()
         // BaseUtils.showToast(this,tuString)
-        val url = if (getIntent().hasExtra("upload")) {
-            //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=n
-            // _tu_id<<EQUALTO>>235<<AND>><<SBRK>>c_pat_nam<<SLIKE>>Anil<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>Anil<<ELIKE>><<OR>>c_mob<<SLIKE>>Anil<<ELIKE>><<EBRK>>
+        val url = if (!getIntent().hasExtra("upload")) {
+            Toast.makeText(this, "this", Toast.LENGTH_SHORT).show()
+
+            //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll
+            // &w=<<SBRK>>n_tu_id<<EQUALTO>>162<<OR>>n_tu_id<<EQUALTO>>163<<OR>>n_tu_id<<EQUALTO>>164<<EBRK>><<AND>><<SBRK>>c_pat_nam<<SLIKE>>8532<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>8532<<ELIKE>><<OR>>c_mob<<SLIKE>>8532<<ELIKE>><<EBRK>><<AND>>trans_out<<ISNULL>>
             "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>" + tuString + "<<EBRK>><<AND>><<SBRK>>c_pat_nam<<SLIKE>>" + name + "<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>" + name + "<<ELIKE>><<OR>>c_mob<<SLIKE>>" + name + "<<ELIKE>><<EBRK>>"
         } else {
-            var tuString = tvTu.text.toString().trim()
-
-
-            "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll&w=n_tu_id<<EQUALTO>>" + tuString + "<<AND>>trans_out<<ISNULL>>" + "<<AND>><<SBRK>>c_pat_nam<<SLIKE>>" + name + "<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>" + name + "<<ELIKE>><<OR>>c_mob<<SLIKE>>" + name + "<<ELIKE>><<EBRK>>"
+          //  var tuString = tvTu.text.toString().trim()
+//https://nikshayppsa.hlfppt.org/_api-v1_/_srch_docs.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>n_tu_id<<EQUALTO>>162<<OR>>n_tu_id<<EQUALTO>>163<<OR>>n_tu_id<<EQUALTO>>164<<EBRK>>&typ=1
+            "_srch_docs.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>$tuString<<EBRK>>&typ=$selectedFilter"
         }
 
+        Log.d("url",url)
         ApiClient.getClient().getTUPatient(url).enqueue(object : Callback<RegisterParentResponse> {
             override fun onResponse(
                 call: Call<RegisterParentResponse>,
@@ -216,6 +260,8 @@ class TuSearchPatientList : AppCompatActivity() {
                     }
                 }
 
+                Log.d("TUSTRING",tuString)
+
                 setSpinnerAdapter(tuSpinner, tuStrings)
 
 //                for (a in tu.indices) {
@@ -236,5 +282,6 @@ class TuSearchPatientList : AppCompatActivity() {
         val spinnerAdapter = CustomSpinnerAdapter(this@TuSearchPatientList, values)
         spinner.adapter = spinnerAdapter
     }
+
 
 }

@@ -946,6 +946,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                                 .putExtra("hospitalName", hfNam)
                                 .putExtra("tu_id", tuId).putExtra("hf_id", hfId).putExtra("enroll_id", enroll_id));
                     } else if (getIntent().hasExtra("report_col")) {
+                        BaseUtils.showToast(FormTwo.this, BaseUtils.getUserInfo(this).getnDisCd().toString());
                         startActivity(new Intent(FormTwo.this, FormSix.class)
                                 .putExtra("hf_id", hfId).putExtra("enroll_id", enroll_id)
                                 .putExtra("doc_id", doc_id).putExtra("doc_name", doctorname)
@@ -1246,6 +1247,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
             usedUrl = urlOne;
         }
 
+        Log.d("Used Url",usedUrl);
         ApiClient.getClient().getRegisterParent(usedUrl).enqueue(new Callback<RegisterParentResponse>() {
             @Override
             public void onResponse(Call<RegisterParentResponse> call, Response<RegisterParentResponse> response) {

@@ -112,7 +112,7 @@ public class NetworkCalls {
 
                         allUser = response.body().getUserData().get(0);
                         BaseUtils.saveUserInfo(context, allUser);
-
+                     //   BaseUtils.showToast(context,allUser.getnDisCd());
                         //  BaseUtils.showToast(context,allUser.getN_staff_sanc());
                         Log.d("userInfo", allUser.toString());
                         BaseUtils.putUsername(context, phoneNumber);
@@ -699,6 +699,7 @@ public class NetworkCalls {
         String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_smplcol_indv_lst&w=" + TuId;
         //String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=5&sanc=34&tu_id=235";
 
+        Log.d("Latest url",url);
         apiInterface.getTUPatient(url).enqueue(new Callback<RegisterParentResponse>() {
             @Override
             public void onResponse(Call<RegisterParentResponse> call, @NotNull Response<RegisterParentResponse> response) {

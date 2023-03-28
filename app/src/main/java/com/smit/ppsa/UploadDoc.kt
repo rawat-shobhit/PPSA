@@ -106,16 +106,18 @@ class UploadDoc : AppCompatActivity() {
         udst_report.setOnClickListener {
             chooseImage(this, "udst")
         }
-        hiv_report . setOnClickListener {
+        hiv_report.setOnClickListener {
             chooseImage(this, "hiv")
         }
-        diabetes_report . setOnClickListener {
+        diabetes_report.setOnClickListener {
             chooseImage(this, "diabetes")
         }
 
         backbtn.setOnClickListener { super.onBackPressed() }
         proceed.setOnClickListener {
-            if (adhaar_img.equals("") && presc_img.equals("") && bank_img.equals("") && test_img.equals("")&&hiv_img.equals("")&&udst_img.equals("")&&diabetes_img.equals("")
+            if (adhaar_img.equals("") && presc_img.equals("") && bank_img.equals("") && test_img.equals(
+                    ""
+                ) && hiv_img.equals("") && udst_img.equals("") && diabetes_img.equals("")
             ) {
                 startActivity(
                     Intent(
@@ -524,18 +526,21 @@ class UploadDoc : AppCompatActivity() {
         if (!test_img.equals("")) {
             map["c_tst_rpt_img"] = c_test
         }
-        if(!udst_img.equals("")){
-            map["c_udst_img"]=c_udst
+        if (!udst_img.equals("")) {
+            map["c_udst_img"] = c_udst
         }
-        if(!hiv_img.equals("")){
-            map["c_hiv_img"]=c_hiv
+        if (!hiv_img.equals("")) {
+            map["c_hiv_img"] = c_hiv
         }
-        if(!diabetes_img.equals("")){
-            map["c_diab_img"]=c_diabetes
+        if (!diabetes_img.equals("")) {
+            map["c_diab_img"] = c_diabetes
         }
 
         val url =
-            "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=id<<EQUALTO>>" + patient.getId()
+            "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=n_enroll_id<<EQUALTO>>" + patient.id
+
+//        val url =
+//            "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=id<<EQUALTO>>" + patient.getId()
         val apiClient = when (isUploaded) {
             true -> ApiClient.getClient().uploadDocumentIfResult(url, map)
 
@@ -595,9 +600,10 @@ class UploadDoc : AppCompatActivity() {
         if (!test_img.equals("")) {
             map["c_tst_rpt_img"] = c_test
         }
-
+//https://nikshayppsa.hlfppt.org/_api-v1_/
+//           _data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=n_enroll_id<<EQUALTO>>35
         val url =
-            "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=id<<EQUALTO>>" + patient.getId()
+            "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=n_enroll_id<<EQUALTO>>" + patient.n_enroll_id
         ApiClient.getClient().uploadDocumentIfResult(url, map)
             .enqueue(object : Callback<AddDocResponse> {
                 override fun onResponse(
@@ -638,17 +644,33 @@ class UploadDoc : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     if (response.body()!!.status) {
-                        try{
-                            setImage(response.body()!!.userData[0].getC_aadh_img(), adhaar)
-                            setImage(response.body()!!.userData[0].getC_presc_img(), prescription)
-                            setImage(response.body()!!.userData[0].getC_bnk_img(), bank_detail)
-                            setImage(response.body()!!.userData[0].getC_tst_rpt_img(), test_report)
-                            setImage(response.body()!!.userData[0].getC_hiv_img(),hiv_report)
-                            setImage(response.body()!!.userData[0].getC_udst_img(),udst_report)
-                            setImage(response.body()!!.userData[0].getC_diab_img(),diabetes_report)
+                        try {
+                            if (response.body()!!.userData[0].getC_aadh_img().contains(".png")) {
+                                setImage(response.body()!!.userData[0].getC_aadh_img(), adhaar)
+                            }
+                            if (response.body()!!.userData[0].getC_presc_img().contains(".png")) {
+                                setImage(response.body()!!.userData[0].getC_presc_img(), prescription)
+                            }
+                            if (response.body()!!.userData[0].getC_bnk_img().contains(".png")) {
+                                setImage(response.body()!!.userData[0].getC_bnk_img(), bank_detail)
+                            }
+                            if (response.body()!!.userData[0].getC_tst_rpt_img().contains(".png")) {
+                                setImage(response.body()!!.userData[0].getC_tst_rpt_img(), test_report)
+                            }
+                            if (response.body()!!.userData[0].getC_hiv_img().contains(".png")) {
+                                setImage(response.body()!!.userData[0].getC_hiv_img(), hiv_report)
+                            }
+                            if (response.body()!!.userData[0].getC_udst_img().contains(".png")) {
+                                setImage(response.body()!!.userData[0].getC_udst_img(), udst_report)
+                            }
+                            if (response.body()!!.userData[0].getC_diab_img().contains(".png")) {
+                                setImage(response.body()!!.userData[0].getC_diab_img(), diabetes_report)
+                            }
+
+
                             isUploaded = true
 
-                        }catch (e:Exception){
+                        } catch (e: Exception) {
                             Toast.makeText(this@UploadDoc, e.message!!, Toast.LENGTH_SHORT).show()
                         }
 
