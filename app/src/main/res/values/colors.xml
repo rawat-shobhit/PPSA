@@ -11,5 +11,6 @@
     <color name="grey">#B5B4B4</color>
     <color name="transparent">#00000000</color>
     <color name="edit_text_bg_grey">#F4F4F4</color>
+    <color name="green">#5EC362</color>
 
 </resources>

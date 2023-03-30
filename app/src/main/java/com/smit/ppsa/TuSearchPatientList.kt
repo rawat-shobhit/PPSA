@@ -202,7 +202,7 @@ class TuSearchPatientList : AppCompatActivity() {
             "_srch_docs.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>$tuString<<EBRK>>&typ=$selectedFilter"
         }
 
-        Log.d("url",url)
+        Log.d("url  shobhit",url)
         ApiClient.getClient().getTUPatient(url).enqueue(object : Callback<RegisterParentResponse> {
             override fun onResponse(
                 call: Call<RegisterParentResponse>,
@@ -214,9 +214,16 @@ class TuSearchPatientList : AppCompatActivity() {
                             response.body()!!.userData as ArrayList<RegisterParentData>
                         patientRecyclerView.layoutManager =
                             LinearLayoutManager(this@TuSearchPatientList)
-                        fdcHospitalsAdapter =
-                            LpaPatientAdapter(registerParentDataList, this@TuSearchPatientList)
-                        patientRecyclerView.adapter = fdcHospitalsAdapter;
+                        if (getIntent().hasExtra("transfer")) {
+                            fdcHospitalsAdapter =
+                                LpaPatientAdapter(registerParentDataList, this@TuSearchPatientList,"transfer")
+                            patientRecyclerView.adapter = fdcHospitalsAdapter;
+                        }  else{
+                            fdcHospitalsAdapter =
+                                LpaPatientAdapter(registerParentDataList, this@TuSearchPatientList,"photo")
+                            patientRecyclerView.adapter = fdcHospitalsAdapter;
+                        }
+
                     } else {
                         BaseUtils.showToast(this@TuSearchPatientList, "No patient found")
                     }

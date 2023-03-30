@@ -96,7 +96,7 @@ class RefillPatientList : AppCompatActivity() {
                         parentData = response.body()!!.userData
                         patientRecyclerView.layoutManager =
                             LinearLayoutManager(this@RefillPatientList)
-                        lpaPatientAdapter = LpaPatientAdapter(parentData, this@RefillPatientList)
+                        lpaPatientAdapter = LpaPatientAdapter(parentData, this@RefillPatientList,"refilPatientList")
                         patientRecyclerView.adapter = lpaPatientAdapter
                     } else {
                         BaseUtils.showToast(this@RefillPatientList, "No patient found")

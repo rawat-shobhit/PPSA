@@ -767,6 +767,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // startActivity(new Intent(MainActivity.this,ReportDelivery.class));
                 break;
             case R.id.fdcrec:
+
+                startActivity(new Intent(MainActivity.this, HospitalsList.class).putExtra("fdc", "fdc"));
+                break;
+                /*
                 LayoutInflater li = LayoutInflater.from(MainActivity.this);
                 View dialogView = li.inflate(R.layout.demo_layout, null);
                 TextView yesbtn = dialogView.findViewById(R.id.yesbtn);
@@ -787,7 +791,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(new Intent(MainActivity.this, HospitalsList.class).putExtra("fdc", "fdc"));
                 });
                 sDialog.show();
-                break;
+                       */
+
+
+
+
+
             case R.id.fdc_issued:
                 break;
             case R.id.lpaResult:

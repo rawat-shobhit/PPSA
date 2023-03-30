@@ -38,6 +38,7 @@ import com.smit.ppsa.Adapter.CustomSpinnerAdapter;
 import com.smit.ppsa.Adapter.PreviousSampleAdapter;
 import com.smit.ppsa.Dao.AppDataBase;
 import com.smit.ppsa.Network.ApiClient;
+import com.smit.ppsa.Network.NetworkCalls;
 import com.smit.ppsa.Response.RoomLpaTestResult;
 import com.smit.ppsa.Response.RoomPreviousSamples;
 import com.smit.ppsa.Response.RoomPythologyLabResult;
@@ -201,6 +202,28 @@ public class FormSix extends AppCompatActivity {
 
                                                     if (!nrpt_del.equals("")) {
                                                         addLabTestReport();
+                                                        /*
+                                                          Context context,     String n_enroll_idd,       String n_user_idd,       Boolean navigate,      String date,            String confirm
+                                                         */
+
+                                                        if( parentDataTestReportResults.get(testReportResult.getSelectedItemPosition() - 1).getC_val().equals("MTB Detected Rif Not Detected")) {
+                                                            NetworkCalls.reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(),false, dTestReport,"1");
+
+                                                            Log.d("shobhit 1",getIntent().getStringExtra("enroll_id")+"->"+BaseUtils.getUserInfo(FormSix.this).getnUserLevel());
+
+                                                        }
+                                                        else if ( parentDataTestReportResults.get(testReportResult.getSelectedItemPosition() - 1).getC_val().equals("MTB Detected Rif Detected")) {
+                                                            NetworkCalls.reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(),false, dTestReport,"1");
+
+                                                            Log.d("shobhit 2",getIntent().getStringExtra("enroll_id")+"->"+BaseUtils.getUserInfo(FormSix.this).getnUserLevel());
+                                                        }
+                                                        else if ( parentDataTestReportResults.get(testReportResult.getSelectedItemPosition() - 1).getC_val().equals( "Positive ( + )")) {
+                                                            NetworkCalls.reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(),false, dTestReport,"1");
+
+                                                            Log.d("shobhit 3",getIntent().getStringExtra("enroll_id")+"->"+BaseUtils.getUserInfo(FormSix.this).getnUserLevel());
+                                                        }
+
+
                                                     }else {
                                                         BaseUtils.showToast(FormSix.this, "Choose report delivered");
                                                     }
@@ -1162,6 +1185,7 @@ public class FormSix extends AppCompatActivity {
                 Log.d("huyui", "getRoomTestResult: " + parentDataTestReportResults.get(i).getC_val());
                 if (!stringnames.contains(parentDataTestReportResults.get(i).getC_val())) {
                     stringnames.add(parentDataTestReportResults.get(i).getC_val());
+                    Log.d("huyui  shobhit", "getRoomTestResult: " + parentDataTestReportResults.get(i).getC_val());
                 }
                 setSpinnerAdapter(testReportResult, stringnames);
             }
@@ -1312,6 +1336,9 @@ public class FormSix extends AppCompatActivity {
 
         progressDialog.showProgressBar();
 
+//n_user_idd
+
+    //    Toast.makeText(this,dTestReport.toString(),Toast.LENGTH_SHORT).show();
         mViewModel.submitLabReport(
                 BaseUtils.getUserInfo(this).getnStCd(),
                 BaseUtils.getUserInfo(this).getnDisCd(),

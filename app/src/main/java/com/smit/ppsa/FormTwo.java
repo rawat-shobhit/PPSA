@@ -132,8 +132,14 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
 
         dataBase = AppDataBase.getDatabase(this);
 
+
+
+
+
+
         /*    if (BaseUtils.getSubmitLabReportStatus(this).equals("false")) {
-         *//*LiveData<List<RoomFormSixData>> formSix = dataBase.customerDao().fetchFormSix();
+         */
+         /*LiveData<List<RoomFormSixData>> formSix = dataBase.customerDao().fetchFormSix();
             formSix.observe(this, formSixData ->
             {
 
@@ -205,7 +211,12 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
 
 
         }*/
+
+
+
+
         if (getIntent().hasExtra("report_col")) {
+
             LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter(""));
             LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver2, new IntentFilter("patient"));
             title.setText("Report collection");
@@ -645,7 +656,9 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
 
         setOnclick();
         getFilters();
-        getPatient();
+
+        Log.d("shobhitChecking","on Create:- getPatient ");
+    //    getPatient();
 
         tuCounsell.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -654,7 +667,11 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
 
                 } else if (filterspinner.getSelectedItemPosition() == 0) {
                     BaseUtils.showToast(FormTwo.this, "Please select filter to view list");
+                  patientrecycler.setVisibility(View.GONE);
                 } else {
+
+                    patientrecycler.setVisibility(View.VISIBLE);
+
                     try {
                         getCounselPatList();
                         BaseUtils.showToast(FormTwo.this, tuCounsell.getSelectedItemPosition() + "");
@@ -682,7 +699,11 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                     /*filter = parentDataFilters.get(i - 1).getC_val();
                     filter(filter, "pure");
                     Log.d("dded", "onItemSelected: " + filter);*/
+                    patientrecycler.setVisibility(View.GONE);
+
                 } else {
+                    patientrecycler.setVisibility(View.VISIBLE);
+                    Log.d("shobhitChecking"," 704 else filter spinner");
                     getCounselPatList();
                 }
 
@@ -721,6 +742,9 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void getCounselPatList() {
+
+        Log.d("shobhitChecking","getCounselPatList");
+
         progressDialog.showProgressBar();
         if (!BaseUtils.isNetworkAvailable(this)) {
             BaseUtils.showToast(FormTwo.this, "Please Check your internet  Connectivity");
@@ -946,6 +970,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                                 .putExtra("hospitalName", hfNam)
                                 .putExtra("tu_id", tuId).putExtra("hf_id", hfId).putExtra("enroll_id", enroll_id));
                     } else if (getIntent().hasExtra("report_col")) {
+
                         BaseUtils.showToast(FormTwo.this, BaseUtils.getUserInfo(this).getnDisCd().toString());
                         startActivity(new Intent(FormTwo.this, FormSix.class)
                                 .putExtra("hf_id", hfId).putExtra("enroll_id", enroll_id)
@@ -1218,6 +1243,9 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void getPatient() {
+
+        Log.d("shobhitChecking","function :- getPatient");
+
         progressDialog.showProgressBar();
         if (!BaseUtils.isNetworkAvailable(FormTwo.this)) {
             BaseUtils.showToast(FormTwo.this, "Please Check your internet  Connectivity");            //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
@@ -1298,6 +1326,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void setPatientAdapter() {
+        Log.d("shobhitChecking"," -- setPatientAdapter");
         parentData = BaseUtils.getTuPatient(this);
         if (title.getText() == "Report collection") {
             docAdapter = new PatientAdapter(
@@ -1307,6 +1336,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
             patientrecycler.setLayoutManager(new LinearLayoutManager(this));
             patientrecycler.setAdapter(docAdapter);
         } else {
+            Log.d("shobhitChecking"," --else  setPatientAdapter");
             docAdapter = new PatientAdapter(
                     parentData,
                     FormTwo.this,
@@ -1343,7 +1373,9 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
         super.onResume();
         enroll_id = "";
         if (!getIntent().hasExtra("report_col")) {
-            getPatient();
+
+            Log.d("shobhitChecking","onResume:- getPatient");
+             getPatient();
         }
     }
 

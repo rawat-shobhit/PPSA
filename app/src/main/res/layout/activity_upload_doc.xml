@@ -50,15 +50,36 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:fontFamily="@font/nunitosans_semibold"
-                android:text="Aadhar Card Copy"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Aadhar Card Copy"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/adharDownload"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Downlaod"
+                    android:textColor="@color/black"
+
+                    android:textSize="@dimen/_12sdp"/>
+            </LinearLayout>
+
 
             <ImageView
                 android:id="@+id/adhaar"
@@ -72,15 +93,35 @@
                 android:radius="@dimen/_8sdp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/photo" />
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:fontFamily="@font/nunitosans_semibold"
-                android:text="Prescription Copy"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Prescription Copy"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/presDownload"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Downlaod"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"/>
+            </LinearLayout>
+
 
             <ImageView
                 android:id="@+id/prescription"
@@ -94,15 +135,37 @@
                 android:radius="@dimen/_8sdp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/photo" />
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:fontFamily="@font/nunitosans_semibold"
-                android:text="Bank Details Copy"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Bank Details Copy"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/bankDownload"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Downlaod"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"/>
+
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/bank_detail"
@@ -116,15 +179,37 @@
                 android:radius="@dimen/_8sdp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/photo" />
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:fontFamily="@font/nunitosans_semibold"
-                android:text="Test Reports Copy"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Test Reports Copy"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/testDownload"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Downlaod"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"/>
+
+            </LinearLayout>
+
 
             <ImageView
                 android:id="@+id/test_report"
@@ -139,15 +224,37 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/photo" />
 
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:fontFamily="@font/nunitosans_semibold"
-                android:text="UDST Report Copy"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="UDST Report Copy"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/udstDowload"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Downlaod"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"/>
+
+            </LinearLayout>
+
+
 
             <ImageView
                 android:id="@+id/udst_report"
@@ -162,7 +269,15 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/photo" />
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
             <TextView
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
@@ -171,6 +286,20 @@
                 android:text="Diabetes Report Copy"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/diabDownload"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="Downlaod"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/diabetes_report"
@@ -185,15 +314,38 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/photo" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:fontFamily="@font/nunitosans_semibold"
                 android:text="HIV Report Copy"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/hivDownload"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="Downlaod"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"/>
+            </LinearLayout>
+
 
             <ImageView
                 android:id="@+id/hiv_report"

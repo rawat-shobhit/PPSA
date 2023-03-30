@@ -904,7 +904,8 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
 
 
-             *//*   if (getIntent().hasExtra("provider")) {
+             */
+            /*   if (getIntent().hasExtra("provider")) {
                     startActivity(new Intent(HospitalsList.this, ProviderEngagement.class).putExtra("hf_id", hfID));
                 } else if (getIntent().hasExtra("counsel")) {
                     startActivity(new Intent(HospitalsList.this, FormTwo.class).putExtra("hospitalName", hospitalName).putExtra("hf_id", hfID).putExtra("tu_id", tuId).
@@ -1058,13 +1059,16 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void run() {
                         //Do something after 1000ms
+
+                        Log.d("shobhit_hospitalList","inside broadcast reviever 1062");
                         setHospitalRecycler();
                     }
-                }, 1000);
+                }, 10);
             } else if (intent.hasExtra("localData")) {
                 // setHospitalRecycler();
             }
             if (intent.hasExtra("localTU")) {
+
                 Log.d("gjuy", "onReceive: njkguyg");
                 tu = BaseUtils.getTU(HospitalsList.this);
                 Log.d("mijop", "onReceive: " + tu.size());
@@ -1080,6 +1084,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                 setSpinnerAdapter(ResidentialTU, tuStrings);
                 ResidentialTU.setSelection(1);
                 try {
+                    Log.d("shobhit_hospitalList","if get extra have local tu 1085");
                     setHospitalRecycler();
                 } catch (Exception e) {
                 }
@@ -1201,6 +1206,8 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
 
     private void setHospitalRecycler() {
+
+        Log.d("shobhit_hospitalList","setHospital 1206");
         hospitalLists = BaseUtils.getHospital(HospitalsList.this);
         if (!hospitalLists.isEmpty()) {
             hfID = hospitalLists.get(0).getnHfId();

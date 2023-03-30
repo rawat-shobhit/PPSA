@@ -3,6 +3,7 @@ package com.smit.ppsa.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.smit.ppsa.FdcForm;
@@ -35,14 +37,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mholder> {
     private List<RegisterParentData> registerParentData;
     private Context context;
     private boolean isComingForReport;
-    public LpaPatientAdapter(List<RegisterParentData> registerParentData, Context context) {
+    private String type;
+    public LpaPatientAdapter(List<RegisterParentData> registerParentData, Context context,String type) {
         this.registerParentData = registerParentData;
         this.context = context;
+        this.type=type;
     }
 
     @NonNull
@@ -66,6 +71,81 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         holder.patientType.setText(parentData.getcTyp());
         holder.actualHospitalname.setText(parentData.getC_hf_nam());
         holder.doctorName.setText(parentData.getcDocNam());
+
+        if (Objects.equals(type, "photo")){
+            holder.details_Img.setVisibility(View.VISIBLE);
+        }
+
+
+        try{
+            if(parentData.getAadhar_img().toString().equals("0")){
+                holder.adhar.setBackgroundColor(Color.parseColor("#FFFF5151"));
+            }else{
+                holder.adhar.setBackgroundColor(Color.parseColor("#5EC362"));
+            }
+        }catch (Exception e){}
+
+        try{
+            if(parentData.getBnk_img().toString().equals("0")){
+                holder.bank.setBackgroundColor(Color.parseColor("#FFFF5151"));
+            }else{
+                holder.bank.setBackgroundColor(Color.parseColor("#5EC362"));
+            }
+        }catch (Exception e){}
+
+        try{
+            if(parentData.getPrescImg().toString().equals("0")){
+
+                holder.pres.setBackgroundColor(Color.parseColor("#FFFF5151"));
+            }else{
+
+                holder.pres.setBackgroundColor(Color.parseColor("#5EC362"));
+            }
+        }catch (Exception e){}
+
+
+        try{
+            if(parentData.getTstRptImg().toString().equals("0")){
+
+                holder.tst.setBackgroundColor(Color.parseColor("#FFFF5151"));
+            }else{
+
+                holder.tst.setBackgroundColor(Color.parseColor("#5EC362"));
+            }
+        }catch (Exception e){}
+
+
+        try{
+            if(parentData.getC_udst_img().toString().equals("0")){
+                holder.udst.setBackgroundColor(Color.parseColor("#FFFF5151"));
+            }else{
+                holder.udst.setBackgroundColor(Color.parseColor("#5EC362"));
+            }
+        }catch (Exception e){}
+
+
+        try{
+            if(parentData.getC_diab_img().toString().equals("0")){
+                holder.diab.setBackgroundColor(Color.parseColor("#FFFF5151"));
+            }else{
+                holder.diab.setBackgroundColor(Color.parseColor("#5EC362"));
+            }
+        }catch (Exception e){}
+
+
+        try{
+            if(parentData.getC_hiv_img().toString().equals("0")){
+                holder.hiv.setBackgroundColor(Color.parseColor("#FFFF5151"));
+            }else{
+                holder.hiv.setBackgroundColor(Color.parseColor("#5EC362"));
+            }
+        }catch (Exception e){}
+
+
+
+
+
+
 
         holder.hospitalName.setText(parentData.getcPatNam());
         String newDate="";
@@ -169,11 +249,11 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
 
     public class Mholder extends RecyclerView.ViewHolder {
         TextView hospitalName,/*phone*//*address,*/
-                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName,ddayLeft;
+                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName,ddayLeft,adhar,bank,pres,tst,udst,diab,hiv;
         CheckBox radioButton;
         ImageView user_img,people_img,doctor_img,hospital_img;
         RadioButton radioButtonOne;
-        LinearLayout istransfer, istransfer2;
+        LinearLayout istransfer, istransfer2,details_Img;
 
         public Mholder(@NonNull View itemView) {
             super(itemView);
@@ -188,6 +268,16 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
             ddayLeft = itemView.findViewById(R.id.ddayLeft);
             //   phone = itemView.findViewById(R.id.phone);
             // address = itemView.findViewById(R.id.address);
+            adhar=itemView.findViewById(R.id.adhaar);
+            bank=itemView.findViewById(R.id.bank);
+            pres=itemView.findViewById(R.id.pres);
+            tst=itemView.findViewById(R.id.tst);
+            udst=itemView.findViewById(R.id.udst);
+            diab=itemView.findViewById(R.id.diab);
+            hiv=itemView.findViewById(R.id.hiv);
+
+            details_Img=itemView.findViewById(R.id.details_Img);
+
             nikshayId = itemView.findViewById(R.id.regid);
             doctorName = itemView.findViewById(R.id.doctorname);
             radioButton = itemView.findViewById(R.id.radioButton);

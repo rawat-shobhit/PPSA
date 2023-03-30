@@ -212,6 +212,35 @@ public class RegisterParentData implements Serializable {
     @SerializedName("c_presc_img")
     @Expose
     private String c_presc_img;
+
+    @SerializedName("presc_img")
+    @Expose
+    private String prescImg;
+
+    public String getPrescImg() {
+        return prescImg;
+    }
+
+    public void setPrescImg(String prescImg) {
+        this.prescImg = prescImg;
+    }
+
+    @SerializedName("tst_rpt_img")
+    @Expose
+    private String tstRptImg;
+
+    public String getTstRptImg() {
+        return tstRptImg;
+    }
+
+    public void setTstRptImg(String tstRptImg) {
+        this.tstRptImg = tstRptImg;
+    }
+
+
+
+
+
     @SerializedName("c_bnk_img")
     @Expose
     private String c_bnk_img;

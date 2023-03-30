@@ -5,6 +5,7 @@
     android:id="@+id/transfer_show2"
     android:layout_marginBottom="@dimen/_5sdp"
     android:background="@drawable/back_cardview"
+    android:paddingBottom="@dimen/_10sdp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -305,7 +306,7 @@
     </LinearLayout>-->
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_12sdp"
         android:orientation="vertical">
@@ -380,7 +381,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
             android:background="@color/white"
-
             android:orientation="horizontal">
 
             <ImageView
@@ -559,6 +559,107 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11sdp" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/details_Img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/adhaar"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:background="@color/red"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:text="A"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/pres"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:background="@color/red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="P"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/bank"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:background="@color/red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tst"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:background="@color/red"
+                android:layout_height="wrap_content"
+                android:text="T"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/udst"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:background="@color/red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="U"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/diab"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:background="@color/red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="D"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/hiv"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:background="@color/red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="H"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_weight="1"/>
+
+
         </LinearLayout>
 
         <LinearLayout

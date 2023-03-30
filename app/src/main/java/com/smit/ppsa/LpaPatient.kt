@@ -194,7 +194,7 @@ class LpaPatient : AppCompatActivity() {
         Log.d("jiouyo", "setHospitalRecycler: " + patientsList.size)
 
             fdcHospitalsAdapter =
-                LpaPatientAdapter(patientsList, this@LpaPatient)
+                LpaPatientAdapter(patientsList, this@LpaPatient,"LpaPatient")
 
         val linearLayoutManager =
             LinearLayoutManager(this@LpaPatient, LinearLayoutManager.VERTICAL, false)

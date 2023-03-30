@@ -2,6 +2,7 @@ package com.smit.ppsa
 
 import android.Manifest
 import android.app.Activity
+import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,7 +12,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
+import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -48,6 +51,17 @@ class UploadDoc : AppCompatActivity() {
     private lateinit var diabetes_report: ImageView
     private lateinit var backbtn: ImageView
     private lateinit var proceed: CardView
+
+    var manager: DownloadManager? = null
+
+    lateinit var adharDownload:TextView
+    lateinit var presDownload:TextView
+    lateinit var testDonload:TextView
+    lateinit var hivDownload:TextView
+    lateinit var udstDownload:TextView
+    lateinit var diabDownload:TextView
+    lateinit var bankDownload:TextView
+
     private var adhaarUri: Uri? = null
     private var prescriptionUri: Uri? = null
     private var bank_detailUri: Uri? = null
@@ -75,6 +89,8 @@ class UploadDoc : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload_doc)
+        manager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+
         init()
     }
 
@@ -91,6 +107,17 @@ class UploadDoc : AppCompatActivity() {
         hiv_report = findViewById(R.id.hiv_report)
         udst_report = findViewById(R.id.udst_report)
         diabetes_report = findViewById(R.id.diabetes_report)
+
+        adharDownload=findViewById(R.id.adharDownload)
+        bankDownload=findViewById(R.id.bankDownload)
+        testDonload=findViewById(R.id.testDownload)
+        hivDownload=findViewById(R.id.hivDownload)
+        udstDownload=findViewById(R.id.udstDowload)
+        diabDownload=findViewById(R.id.diabDownload)
+        presDownload=findViewById(R.id.presDownload)
+
+
+
         adhaar.setOnClickListener {
             chooseImage(this, "adhaar")
         }
@@ -645,26 +672,57 @@ class UploadDoc : AppCompatActivity() {
                 if (response.isSuccessful) {
                     if (response.body()!!.status) {
                         try {
+
                             if (response.body()!!.userData[0].getC_aadh_img().contains(".png")) {
+                                adharDownload.visibility= View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_aadh_img(), adhaar)
+
+                                adharDownload.setOnClickListener(){
+                                    download((response.body()!!.userData[0].getC_aadh_img()))
+                                }
                             }
                             if (response.body()!!.userData[0].getC_presc_img().contains(".png")) {
+                                presDownload.visibility= View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_presc_img(), prescription)
+
+                                presDownload.setOnClickListener(){
+                                    download((response.body()!!.userData[0].getC_presc_img()))
+                                }
                             }
                             if (response.body()!!.userData[0].getC_bnk_img().contains(".png")) {
+                                bankDownload.visibility= View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_bnk_img(), bank_detail)
+                                bankDownload.setOnClickListener(){
+                                    download((response.body()!!.userData[0].getC_bnk_img()))
+                                }
                             }
                             if (response.body()!!.userData[0].getC_tst_rpt_img().contains(".png")) {
+                                testDonload.visibility= View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_tst_rpt_img(), test_report)
+                                testDonload.setOnClickListener(){
+                                    download((response.body()!!.userData[0].getC_tst_rpt_img()))
+                                }
                             }
                             if (response.body()!!.userData[0].getC_hiv_img().contains(".png")) {
+                                hivDownload.visibility= View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_hiv_img(), hiv_report)
+                                hivDownload.setOnClickListener(){
+                                    download((response.body()!!.userData[0].getC_hiv_img()))
+                                }
                             }
                             if (response.body()!!.userData[0].getC_udst_img().contains(".png")) {
+                                udstDownload.visibility= View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_udst_img(), udst_report)
+                                udstDownload.setOnClickListener(){
+                                    download((response.body()!!.userData[0].getC_udst_img()))
+                                }
                             }
                             if (response.body()!!.userData[0].getC_diab_img().contains(".png")) {
+                                diabDownload.visibility= View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_diab_img(), diabetes_report)
+                                diabDownload.setOnClickListener(){
+                                    download((response.body()!!.userData[0].getC_diab_img()))
+                                }
                             }
 
 
@@ -685,6 +743,17 @@ class UploadDoc : AppCompatActivity() {
             }
         })
     }
+
+
+    private fun download(url:String){
+        manager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+        val uri =
+            Uri.parse(url)
+        val request = DownloadManager.Request(uri)
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
+        val reference = manager!!.enqueue(request)
+    }
+
 
     private fun setImage(url: String, imageView: ImageView) {
         Glide.with(this).load(url).into(imageView)

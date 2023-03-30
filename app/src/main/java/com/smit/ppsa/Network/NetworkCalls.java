@@ -498,7 +498,7 @@ public class NetworkCalls {
         RequestBody d_diag_dt = RequestBody.create(date, MediaType.parse("text/plain"));
         RequestBody n_cfrm = RequestBody.create(confirm, MediaType.parse("text/plain"));
 
-        ApiClient.getClient().reason(d_diag_dt, n_cfrm, n_enroll_idd, "id<<EQUALTO>>" + n_user_idd).enqueue(new Callback<JsonObject>() {
+        ApiClient.getClient().reason(d_diag_dt, n_cfrm, n_enroll_idd, "id<<EQUALTO>>" + n_user_idd+"<<AND>>n_cfrm<<EQUALTO>>"+confirm).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
@@ -1715,7 +1715,9 @@ public class NetworkCalls {
             Boolean navigate,
             String notification_image,
             String bank_image,
-            String n_sac_idd
+            String n_sac_idd,
+            String d_diag_dt,
+            String n_cfrm
 
     ) {
         dataBase = AppDataBase.getDatabase(context);
@@ -1744,7 +1746,7 @@ public class NetworkCalls {
                 c_mob_22,
                 n_latt,
                 n_lngg,
-                n_user_idd, notification_image, bank_image, n_sac_idd);
+                n_user_idd, notification_image, bank_image, n_sac_idd , d_diag_dt, n_cfrm);
         if (!BaseUtils.isNetworkAvailable(context)) {
             // BaseUtils.putSubmitFormOne(context, "false");
             BaseUtils.putSubmitFormOne(context, "true");
