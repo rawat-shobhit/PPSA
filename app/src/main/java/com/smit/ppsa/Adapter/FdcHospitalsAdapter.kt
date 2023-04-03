@@ -110,7 +110,7 @@ class FdcHospitalsAdapter(
             holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
             holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
         } else {
-            Log.d("elseStatement", position.toString() + "")
+          //  Log.d("elseStatement", position.toString() + "")
             holder.container.setBackgroundColor(Color.WHITE)
             holder.contone.setBackgroundColor(Color.WHITE)
             holder.conttwo.setBackgroundColor(Color.parseColor("#DFDFDE"))

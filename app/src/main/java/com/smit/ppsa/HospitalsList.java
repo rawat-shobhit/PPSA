@@ -40,8 +40,10 @@ import com.smit.ppsa.Network.ApiClient;
 import com.smit.ppsa.Network.NetworkCalls;
 import com.smit.ppsa.Response.DoctorModel;
 import com.smit.ppsa.Response.FormOneData;
+import com.smit.ppsa.Response.FormOneResponse;
 import com.smit.ppsa.Response.HospitalList;
 import com.smit.ppsa.Response.HospitalModel;
+import com.smit.ppsa.Response.HospitalResponse;
 import com.smit.ppsa.Response.PrevVisitsResponse;
 import com.smit.ppsa.Response.RoomPrevVisitsData;
 
@@ -69,8 +71,13 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
     private ImageView backbtn, addbtn;
     private TextView nextbtn;
     private EditText search;
+    private static ApiClient.APIInterface apiInterface;
+
     private CheckBox checkboxNonVisit;
     private boolean isFirstTymOnThisPage = true;
+    private boolean isDataChanged = false;
+    private static List<FormOneData> TuList = new ArrayList<>();
+
     private Thread thread = new Thread("name");
     //    private TextView hospitalNameTt, hospitalNameLocation, doctorNameTv, hospitalTypeTitle,
 //            currentDate, hospitalNameTv, hospitalAddress, hospitalType, lastVisit, date;
@@ -746,6 +753,13 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                     try {
                         tuId = tu.get(/*i - 1*/i - 1).getN_tu_id();//selecting the second value in list first value is null
 
+                      //  isDataChanged = true;
+
+                       // BaseUtils.showToast(HospitalsList.this,"called");
+                        getHospitalData(HospitalsList.this, tuId, false);
+
+                       // setHospitalRecycler();
+
                     } catch (Exception e) {
 
                     }
@@ -762,7 +776,6 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 //                        setHospitalRecycler();
 //                    }
                     NetworkCalls.getUserOtherData(HospitalsList.this, BaseUtils.getUserInfo(HospitalsList.this).getN_staff_sanc(), tuId);
-                    NetworkCalls.getHospitalData(HospitalsList.this, tuId, false);
                 }
 
 
@@ -773,9 +786,130 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
             }
         });
-        NetworkCalls.getTU(this);
+        getTU(this);
 
 
+    }
+
+    public  void getHospitalData(Context context, String TuId, Boolean navigate) {
+        BaseUtils.showToast(context, "Please wait while we fetch data.");
+
+        apiInterface = ApiClient.getClient();
+        progressDialog = new GlobalProgressDialog(HospitalsList.this);
+        progressDialog.showProgressBar();
+        if (!BaseUtils.isNetworkAvailable(context)) {
+            // progressDialog.hideProgressBar();
+            BaseUtils.showToast(context, "Please Check your internet  Connectivity");
+          //  LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
+
+            return;
+        }
+        Log.d("rerw", "onResponseIdd TU: " + TuId);
+        Log.d("rerw", "onResponseIdd: Base" + BaseUtils.getUserInfo(context).getnAccessRights());
+
+        // String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=n_tu_id<<EQUALTO>>" + TuId;
+        // String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=" + BaseUtils.getUserInfo(context).getnAccessRights() + "&sanc=" + BaseUtils.getUserOtherInfo(context).getN_staff_sanc() + "&tu_id=" + TuId;
+        String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=" + BaseUtils.getUserInfo(context).getnAccessRights() + "&sanc=" + BaseUtils.getUserInfo(context).getN_staff_sanc() + "&tu_id=" + TuId;
+        //String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=5&sanc=34&tu_id=235";
+
+        apiInterface.getHospitalList(url).enqueue(new Callback<HospitalResponse>() {
+            @Override
+            public void onResponse(Call<HospitalResponse> call, @NotNull Response<HospitalResponse> response) {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    BaseUtils.putAddHospitalForm(context, "true");
+
+                    if (response.body().getStatus().equals("true")) {
+                        hospitalLists = response.body().getUserData();
+
+                        setHospitalRecycler();
+                   //     progressDialog.hideProgressBar();
+
+                        Log.d("lpossapo", "onResponse: " + hospitalLists.size());
+                        Log.d("Hospitals Data", hospitalLists.toString());
+                        BaseUtils.putSelectedTu(context, TuId);
+                        BaseUtils.saveHospitalList(context, hospitalLists);
+                        //    LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("notifyAdapter", ""));
+                       progressDialog.hideProgressBar();
+                      //  hideProgress(progressDialog);
+
+
+                    } else {
+                        BaseUtils.saveHospitalList(context, hospitalLists);
+                        Log.d("lpossapo", "error: " + response.body().getStatus() + response.body().getMessage());
+                     //   LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
+                         progressDialog.hideProgressBar();
+                    }
+                } else {
+                    Log.d("lpossapo", "error: " + response.errorBody().toString());
+                //    LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
+                      progressDialog.hideProgressBar();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<HospitalResponse> call, @NotNull Throwable t) {
+                 progressDialog.hideProgressBar();
+                LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
+            }
+        });
+    }
+
+
+    public void getTU(Context context) {
+
+        if (!BaseUtils.isNetworkAvailable(context)) {
+            BaseUtils.showToast(context, "Please Check your internet  Connectivity");
+            LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localTU", ""));
+
+            return;
+        }
+
+        Log.d("ihsi", "getTU: W  " + BaseUtils.getUserInfo(context).getnAccessRights());
+        Log.d("ihsi", "getTU: sanc  " + BaseUtils.getUserInfo(context).getN_staff_sanc());
+
+        String url = "_sptu_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_tu&w=" + BaseUtils.getUserInfo(context).getnAccessRights() + "&sanc=" + BaseUtils.getUserInfo(context).getN_staff_sanc();
+        Log.d("ihsi", "getTU: sanc  " + url);
+
+        ApiClient.getClient().getFormTU(url).enqueue(new Callback<FormOneResponse>() {
+            @Override
+            public void onResponse(Call<FormOneResponse> call, Response<FormOneResponse> response) {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    if (response.body().getStatus()) {
+                        Log.d("uhuhoy", "onResponse: " + response.body().getUserData().size());
+                        BaseUtils.saveTU(context, response.body().getUserData());
+                        tu = response.body().getUserData();
+                        Log.d("mijop", "onReceive: " + tu.size());
+                        Log.d("mijop", "onReceive: " + tu.toString());
+                        for (int a = 0; a < tu.size(); a++) {
+
+                            if (!tuStrings.contains(tu.get(a).getcTuName())) {
+                                tuStrings.add(tu.get(a).getcTuName());
+                            }
+
+                        }
+                        //setSpinnerAdapter(EnrollmentFaciltyTBU,tuStrings);
+                        setSpinnerAdapter(ResidentialTU, tuStrings);
+                        ResidentialTU.setSelection(1);
+
+                        //   LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localTU", ""));
+
+                    } else {
+                        BaseUtils.saveTU(context, TuList);
+                        //  LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localTU", ""));
+                    }
+                } else {
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localTU", ""));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FormOneResponse> call, Throwable t) {
+                LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localTU", ""));
+            }
+        });
     }
 
 
@@ -989,7 +1123,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                             BaseUtils.putSection(HospitalsList.this, "sample");
 
                             startActivity(new Intent(HospitalsList.this, FormTwo.class)
-                                    .putExtra("hf_type_id",hf_type_id)
+                                    .putExtra("hf_type_id", hf_type_id)
                                     .putExtra("section", "sample")
                                     .putExtra("type", "sample")
                                     //.putExtra("sample", "sample")
@@ -997,7 +1131,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                                     .putExtra("sample", "")
                                     .putExtra("hospitalName", hospitalName)
                                     .putExtra("hospitallocation", hospitallocation)
-                                    .putExtra("hospitaltypeName",hospitaltypeName)
+                                    .putExtra("hospitaltypeName", hospitaltypeName)
                                     .putExtra("hf_id", hfID)
                             );
 //                            startActivity(new Intent(HospitalsList.this, HospitalFacility.class)
@@ -1053,47 +1187,22 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                 // hospitalName = intent.getStringExtra("hospitalName");
 
             } else if (intent.hasExtra("notifyAdapter")) {
-                final Handler handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    @SuppressLint("NotifyDataSetChanged")
-                    @Override
-                    public void run() {
-                        //Do something after 1000ms
-                        setHospitalRecycler();
 
-
-                    }
-                }, 1000);
+//                final Handler handler = new Handler(Looper.getMainLooper());
+//                handler.postDelayed(new Runnable() {
+//                    @SuppressLint("NotifyDataSetChanged")
+//                    @Override
+//                    public void run() {
+//                        //Do something after 1000ms
+//                        setHospitalRecycler();
+//
+//
+//                    }
+//                }, 1000);
             } else if (intent.hasExtra("localData")) {
                 // setHospitalRecycler();
             }
             if (intent.hasExtra("localTU")) {
-
-                Log.d("gjuy", "onReceive: njkguyg");
-                tu = BaseUtils.getTU(HospitalsList.this);
-                Log.d("mijop", "onReceive: " + tu.size());
-                Log.d("mijop", "onReceive: " + tu.toString());
-                for (int a = 0; a < tu.size(); a++) {
-
-                    if (!tuStrings.contains(tu.get(a).getcTuName())) {
-                        tuStrings.add(tu.get(a).getcTuName());
-                    }
-
-                }
-                //setSpinnerAdapter(EnrollmentFaciltyTBU,tuStrings);
-                setSpinnerAdapter(ResidentialTU, tuStrings);
-                ResidentialTU.setSelection(1);
-                try {
-                    Log.d("shobhit_hospitalList","if get extra have local tu 1085");
-
-                    if(hospitalLists.isEmpty()){
-                        setHospitalRecycler();
-                    }
-
-
-                } catch (Exception e) {
-                }
-                ;
 
 
             }
@@ -1212,7 +1321,14 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
     private void setHospitalRecycler() {
 
-        Log.d("shobhit_hospitalList","setHospital 1206");
+//        if (isFirstTymOnThisPage) {
+//            isFirstTymOnThisPage = false;
+//        } else {
+//            getHospitalData(this, tuId, false);
+//        }
+
+      //  BaseUtils.showToast(HospitalsList.this,"Called");
+        Log.d("shobhit_hospitalList", "setHospital 1206");
         hospitalLists = BaseUtils.getHospital(HospitalsList.this);
         if (!hospitalLists.isEmpty()) {
             hfID = hospitalLists.get(0).getnHfId();
@@ -1293,7 +1409,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
         if (isFirstTymOnThisPage) {
             isFirstTymOnThisPage = false;
         } else {
-            NetworkCalls.getHospitalData(this, tuId, false);
+            getHospitalData(this, tuId, false);
         }
         //nextbtn.setEnabled(false);
     }
