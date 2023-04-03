@@ -415,7 +415,11 @@ class FdcHospitalsAdapter(
     }
 
     override fun getItemCount(): Int {
-        return hospitalLists.size
+        if(hospitalLists.size>200){
+            return 100
+        }else{
+            return hospitalLists.size
+        }
     }
 
     inner class Mholder(itemView: View) : RecyclerView.ViewHolder(itemView) {

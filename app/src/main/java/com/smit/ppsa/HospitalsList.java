@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.smit.ppsa.Adapter.CustomSpinnerAdapter;
@@ -792,8 +793,9 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
     }
 
     public  void getHospitalData(Context context, String TuId, Boolean navigate) {
-        BaseUtils.showToast(context, "Please wait while we fetch data.");
-
+        //Log.d("mosojdo","API CalleEd");
+    //    BaseUtils.showToast(HospitalsList.this, "Please wait while we fetch data.");
+        Toast.makeText(context, "Please wait while we fetch data.", Toast.LENGTH_SHORT).show();
         apiInterface = ApiClient.getClient();
         progressDialog = new GlobalProgressDialog(HospitalsList.this);
         progressDialog.showProgressBar();
