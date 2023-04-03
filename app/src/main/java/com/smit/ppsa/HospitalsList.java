@@ -1059,9 +1059,11 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void run() {
                         //Do something after 1000ms
-
-                        Log.d("shobhit_hospitalList","inside broadcast reviever 1062");
+                    if(hospitalLists.isEmpty()){
                         setHospitalRecycler();
+                        Log.d("shobhit_hospitalList","inside broadcast reviever 1062");
+                    }
+
                     }
                 }, 10);
             } else if (intent.hasExtra("localData")) {
@@ -1085,7 +1087,12 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                 ResidentialTU.setSelection(1);
                 try {
                     Log.d("shobhit_hospitalList","if get extra have local tu 1085");
-                    setHospitalRecycler();
+
+                    if(hospitalLists.isEmpty()){
+                        setHospitalRecycler();
+                    }
+
+
                 } catch (Exception e) {
                 }
                 ;
