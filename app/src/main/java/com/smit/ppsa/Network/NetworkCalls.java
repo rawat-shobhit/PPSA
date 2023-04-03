@@ -2431,7 +2431,7 @@ public class NetworkCalls {
             return;
         }
 
-        apiInterface.getAttendenceList("n_user_id=" + BaseUtils.getUserInfo(context).getnUserLevel()).enqueue(new Callback<AttendenceListResponse>() {
+        apiInterface.getAttendenceList("n_user_id=" + BaseUtils.getUserInfo(context).getN_staff_sanc()).enqueue(new Callback<AttendenceListResponse>() {
             @Override
             public void onResponse(Call<AttendenceListResponse> call, @NotNull Response<AttendenceListResponse> response) {
                 if (response.isSuccessful()) {
