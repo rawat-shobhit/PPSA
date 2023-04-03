@@ -795,7 +795,10 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
     public  void getHospitalData(Context context, String TuId, Boolean navigate) {
         //Log.d("mosojdo","API CalleEd");
     //    BaseUtils.showToast(HospitalsList.this, "Please wait while we fetch data.");
-        Toast.makeText(context, "Please wait while we fetch data.", Toast.LENGTH_SHORT).show();
+        try{
+          hospitalLists.clear();
+          setHospitalRecycler();
+        }catch (Exception e){}
         apiInterface = ApiClient.getClient();
         progressDialog = new GlobalProgressDialog(HospitalsList.this);
         progressDialog.showProgressBar();
@@ -1331,7 +1334,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
       //  BaseUtils.showToast(HospitalsList.this,"Called");
         Log.d("shobhit_hospitalList", "setHospital 1206");
-        hospitalLists = BaseUtils.getHospital(HospitalsList.this);
+       // hospitalLists = BaseUtils.getHospital(HospitalsList.this);
         if (!hospitalLists.isEmpty()) {
             hfID = hospitalLists.get(0).getnHfId();
         }

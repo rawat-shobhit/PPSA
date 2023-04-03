@@ -112,7 +112,7 @@ public class NetworkCalls {
 
                         allUser = response.body().getUserData().get(0);
                         BaseUtils.saveUserInfo(context, allUser);
-                     //   BaseUtils.showToast(context,allUser.getnDisCd());
+                        //   BaseUtils.showToast(context,allUser.getnDisCd());
                         //  BaseUtils.showToast(context,allUser.getN_staff_sanc());
                         Log.d("userInfo", allUser.toString());
                         BaseUtils.putUsername(context, phoneNumber);
@@ -498,7 +498,7 @@ public class NetworkCalls {
         RequestBody d_diag_dt = RequestBody.create(date, MediaType.parse("text/plain"));
         RequestBody n_cfrm = RequestBody.create(confirm, MediaType.parse("text/plain"));
 
-        ApiClient.getClient().reason(d_diag_dt, n_cfrm, n_enroll_idd, "id<<EQUALTO>>" + n_user_idd+"<<AND>>n_cfrm<<EQUALTO>>"+confirm).enqueue(new Callback<JsonObject>() {
+        ApiClient.getClient().reason(d_diag_dt, n_cfrm, n_enroll_idd, "id<<EQUALTO>>" + n_user_idd + "<<AND>>n_cfrm<<EQUALTO>>" + confirm).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
@@ -699,7 +699,7 @@ public class NetworkCalls {
         String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_smplcol_indv_lst&w=" + TuId;
         //String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=5&sanc=34&tu_id=235";
 
-        Log.d("Latest url",url);
+        Log.d("Latest url", url);
         apiInterface.getTUPatient(url).enqueue(new Callback<RegisterParentResponse>() {
             @Override
             public void onResponse(Call<RegisterParentResponse> call, @NotNull Response<RegisterParentResponse> response) {
@@ -1746,7 +1746,7 @@ public class NetworkCalls {
                 c_mob_22,
                 n_latt,
                 n_lngg,
-                n_user_idd, notification_image, bank_image, n_sac_idd , d_diag_dt, n_cfrm);
+                n_user_idd, notification_image, bank_image, n_sac_idd, d_diag_dt, n_cfrm);
         if (!BaseUtils.isNetworkAvailable(context)) {
             // BaseUtils.putSubmitFormOne(context, "false");
             BaseUtils.putSubmitFormOne(context, "true");
@@ -1758,7 +1758,7 @@ public class NetworkCalls {
                     ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 } else {
 
-                   ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 }
             }
 
@@ -1824,9 +1824,9 @@ public class NetworkCalls {
                                     if (BaseUtils.getSection(context).equals("addpat")) {
                                         BaseUtils.putSection(context, BaseUtils.getPrevSection(context));
                                     }
-                                  //  ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                    //  ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                     ((Activity) context).startActivity(new Intent(context, FormTwo.class)
-                                            .putExtra("hf_type_id",n_hf_idd)
+                                            .putExtra("hf_type_id", n_hf_idd)
                                             .putExtra("section", "sample")
                                             .putExtra("type", "sample")
                                             //.putExtra("sample", "sample")
@@ -1834,7 +1834,8 @@ public class NetworkCalls {
                                             .putExtra("sample", "")
 
                                             .putExtra("hf_id", n_hf_idd)
-                                    );   }
+                                    );
+                                }
                             }
 
                         }
@@ -2291,7 +2292,22 @@ public class NetworkCalls {
             LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localPythologylabsample", ""));
             return;
         }
-        String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=5&sanc=" + BaseUtils.getUserInfo(context).getN_staff_sanc() + "&tu_id=" + BaseUtils.getGlobalTuid(context) + "&hf=" + BaseUtils.getGlobalnHfTypeid(context) + "&labt=" + type;
+//Pls Change it to as follows
+//
+//IF Govt Lab then
+//
+//https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>1<<AND>>n_st_id<<EQUALTO>>3<<AND>>n_dis_id<<EQUALTO>>11
+//
+//ELSE IF PRIVATE LAB THEN
+//
+//https://nikshayppsa.hlfppt.org/_api-v1_/
+        String url = "";
+        if (type == "1") {
+            url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>1<<AND>>n_st_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnStCd() + "<<AND>>n_dis_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnDisCd();
+            // url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=5&sanc=" + BaseUtils.getUserInfo(context).getN_staff_sanc() + "&tu_id=" + BaseUtils.getGlobalTuid(context) + "&hf=" + BaseUtils.getGlobalnHfTypeid(context) + "&labt=" + type;
+        } else {
+            url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>2<<AND>>n_st_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnStCd() + "<<AND>>n_dis_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnDisCd();
+        }
 
         ApiClient.getClient().getPythologyLabs(url).enqueue(new Callback<PythologyLabResponse>() {
             @Override
@@ -2303,8 +2319,8 @@ public class NetworkCalls {
                         BaseUtils.savePythologyLabSamples(context, response.body().getUser_data());
                         Log.d("jioussqw", "onResponse: " + response.body().getUser_data().size());
                         LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localPythologylabsample", ""));
-
                     } else {
+                        BaseUtils.savePythologyLabSamples(context, response.body().getUser_data());
                         LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localPythologylabsample", ""));
                     }
                 } else {
