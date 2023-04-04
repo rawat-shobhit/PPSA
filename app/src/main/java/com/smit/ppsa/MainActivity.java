@@ -55,7 +55,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private CardView Providerengagement, Reportdelivery, Dcbtn, UploadDocument, SampleCollections,
-            Conselling, usermainbtn, logOutBtn, refill, changePassBtn, stockReceive, fdcrec, fdcIssued, transfer, lpaResult;
+            Conselling, usermainbtn, logOutBtn, refill, changePassBtn, stockReceive, fdcrec, fdcIssued, transfer, lpaResult,NotificationBtn;
     private TextView username, dateandtime;
     private ImageView img, img2;
     private AppDataBase dataBase;
@@ -586,6 +586,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         username = findViewById(R.id.username);
         fdcIssued = findViewById(R.id.fdc_issued);
         dateandtime = findViewById(R.id.dateandtime);
+        NotificationBtn=findViewById(R.id.NotificationBtn);
         img = findViewById(R.id.img);
         img2 = findViewById(R.id.img2);
         Bitmap icon = ((BitmapDrawable) img2.getDrawable()).getBitmap();
@@ -713,6 +714,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         UploadDocument.setOnClickListener(this);
         refill.setOnClickListener(this);
         transfer.setOnClickListener(this);
+        NotificationBtn.setOnClickListener(this);
     }
 
     @Override
@@ -801,6 +803,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.lpaResult:
                 startActivity(new Intent(MainActivity.this, LpaPatient.class));
+
+            case R.id.NotificationBtn    :
+                startActivity(new Intent(MainActivity.this,FormOne.class).putExtra("type","normal"));
+                break;
+
+
         }
     }
 
