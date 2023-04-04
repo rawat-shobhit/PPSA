@@ -44,10 +44,11 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
     private Context context;
     private boolean isComingForReport;
     private String type;
-    public LpaPatientAdapter(List<RegisterParentData> registerParentData, Context context,String type) {
+
+    public LpaPatientAdapter(List<RegisterParentData> registerParentData, Context context, String type) {
         this.registerParentData = registerParentData;
         this.context = context;
-        this.type=type;
+        this.type = type;
     }
 
     @NonNull
@@ -72,87 +73,89 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         holder.actualHospitalname.setText(parentData.getC_hf_nam());
         holder.doctorName.setText(parentData.getcDocNam());
 
-        if (Objects.equals(type, "photo")){
+        if (Objects.equals(type, "photo")) {
             holder.details_Img.setVisibility(View.VISIBLE);
         }
 
 
-        try{
-            if(parentData.getAadhar_img().toString().equals("0")){
+        try {
+            if (parentData.getAadhar_img().toString().equals("0")) {
                 holder.adhar.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            }else{
+            } else {
                 holder.adhar.setBackgroundColor(Color.parseColor("#5EC362"));
             }
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
-        try{
-            if(parentData.getBnk_img().toString().equals("0")){
+        try {
+            if (parentData.getBnk_img().toString().equals("0")) {
                 holder.bank.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            }else{
+            } else {
                 holder.bank.setBackgroundColor(Color.parseColor("#5EC362"));
             }
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
-        try{
-            if(parentData.getPrescImg().toString().equals("0")){
+        try {
+            if (parentData.getPrescImg().toString().equals("0")) {
 
                 holder.pres.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            }else{
+            } else {
 
                 holder.pres.setBackgroundColor(Color.parseColor("#5EC362"));
             }
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
 
-        try{
-            if(parentData.getTstRptImg().toString().equals("0")){
+        try {
+            if (parentData.getTstRptImg().toString().equals("0")) {
 
                 holder.tst.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            }else{
+            } else {
 
                 holder.tst.setBackgroundColor(Color.parseColor("#5EC362"));
             }
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
 
-        try{
-            if(parentData.getC_udst_img().toString().equals("0")){
+        try {
+            if (parentData.getC_udst_img().toString().equals("0")) {
                 holder.udst.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            }else{
+            } else {
                 holder.udst.setBackgroundColor(Color.parseColor("#5EC362"));
             }
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
 
-        try{
-            if(parentData.getC_diab_img().toString().equals("0")){
+        try {
+            if (parentData.getC_diab_img().toString().equals("0")) {
                 holder.diab.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            }else{
+            } else {
                 holder.diab.setBackgroundColor(Color.parseColor("#5EC362"));
             }
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
 
-        try{
-            if(parentData.getC_hiv_img().toString().equals("0")){
+        try {
+            if (parentData.getC_hiv_img().toString().equals("0")) {
                 holder.hiv.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            }else{
+            } else {
                 holder.hiv.setBackgroundColor(Color.parseColor("#5EC362"));
             }
-        }catch (Exception e){}
-
-
-
-
-
+        } catch (Exception e) {
+        }
 
 
         holder.hospitalName.setText(parentData.getcPatNam());
-        String newDate="";
+        String newDate = "";
         if (context instanceof RefillPatientList) {
-             newDate = parentData.getD_lst_dispn();
+            newDate = parentData.getD_lst_dispn();
         } else {
-             newDate = parentData.getdRegDat();
+            newDate = parentData.getdRegDat();
         }
 
 
@@ -160,8 +163,8 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:"+parentData.getC_mob()));
-               context.startActivity(intent);
+                intent.setData(Uri.parse("tel:" + parentData.getC_mob()));
+                context.startActivity(intent);
             }
         });
        /* if (context instanceof TuSearchPatientList &&
@@ -173,19 +176,19 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         if (context instanceof RefillPatientList) {
             Toast.makeText(context, "this", Toast.LENGTH_SHORT).show();
             holder.date.setText(parentData.getD_lst_dispn());
-            holder.ddayLeft.setText((Utils.Companion.getDateDiff(df,formattedDate,newDate)+" Day Left"));
+            holder.ddayLeft.setText((Utils.Companion.getDateDiff(df, formattedDate, newDate) + " Day Left"));
             holder.doctorName.setText(parentData.getC_mob());
-            holder.doctor_img.setImageResource( R.drawable.ic_baseline_phone_24);
+            holder.doctor_img.setImageResource(R.drawable.ic_baseline_phone_24);
 
         } else {
             holder.date.setText(parentData.getdRegDat());
-         //   holder.ddayLeft.setVisibility(View.GONE);
-         //  Toast.makeText(context, "this2", Toast.LENGTH_SHORT).show();
+            //   holder.ddayLeft.setVisibility(View.GONE);
+            //  Toast.makeText(context, "this2", Toast.LENGTH_SHORT).show();
 
         }
 
-        if(context instanceof LpaPatient){
-            holder.hospitalName.setText(parentData.getcPatNam() +"("+ parentData.getC_mob()+")");
+        if (context instanceof LpaPatient) {
+            holder.hospitalName.setText(parentData.getcPatNam() + "(" + parentData.getC_mob() + ")");
 
         }
 
@@ -196,14 +199,15 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
                 holder.hospital_img.setImageResource(R.drawable.new_hospital_img);
                 holder.doctor_img.setImageResource(R.drawable.new_doctor_img);
                 holder.people_img.setImageResource(R.drawable.new_people_img);
-            }}
+            }
+        }
 
-        if (parentData.getTrans_out()!=null){
-            if (!parentData.getTrans_out().equals("")){
+        if (parentData.getTrans_out() != null) {
+            if (!parentData.getTrans_out().equals("")) {
                 holder.istransfer.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.red)));
                 holder.istransfer2.setBackground(context.getDrawable(R.drawable.back_cardview2));
             }
-        }else{
+        } else {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -244,16 +248,17 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
 
     @Override
     public int getItemCount() {
-        return registerParentData.size();
+
+        return Math.min(registerParentData.size(), 150);
     }
 
     public class Mholder extends RecyclerView.ViewHolder {
         TextView hospitalName,/*phone*//*address,*/
-                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName,ddayLeft,adhar,bank,pres,tst,udst,diab,hiv;
+                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName, ddayLeft, adhar, bank, pres, tst, udst, diab, hiv;
         CheckBox radioButton;
-        ImageView user_img,people_img,doctor_img,hospital_img;
+        ImageView user_img, people_img, doctor_img, hospital_img;
         RadioButton radioButtonOne;
-        LinearLayout istransfer, istransfer2,details_Img;
+        LinearLayout istransfer, istransfer2, details_Img;
 
         public Mholder(@NonNull View itemView) {
             super(itemView);
@@ -268,15 +273,15 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
             ddayLeft = itemView.findViewById(R.id.ddayLeft);
             //   phone = itemView.findViewById(R.id.phone);
             // address = itemView.findViewById(R.id.address);
-            adhar=itemView.findViewById(R.id.adhaar);
-            bank=itemView.findViewById(R.id.bank);
-            pres=itemView.findViewById(R.id.pres);
-            tst=itemView.findViewById(R.id.tst);
-            udst=itemView.findViewById(R.id.udst);
-            diab=itemView.findViewById(R.id.diab);
-            hiv=itemView.findViewById(R.id.hiv);
+            adhar = itemView.findViewById(R.id.adhaar);
+            bank = itemView.findViewById(R.id.bank);
+            pres = itemView.findViewById(R.id.pres);
+            tst = itemView.findViewById(R.id.tst);
+            udst = itemView.findViewById(R.id.udst);
+            diab = itemView.findViewById(R.id.diab);
+            hiv = itemView.findViewById(R.id.hiv);
 
-            details_Img=itemView.findViewById(R.id.details_Img);
+            details_Img = itemView.findViewById(R.id.details_Img);
 
             nikshayId = itemView.findViewById(R.id.regid);
             doctorName = itemView.findViewById(R.id.doctorname);

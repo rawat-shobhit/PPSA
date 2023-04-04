@@ -36,7 +36,7 @@ class TuSearchPatientList : AppCompatActivity() {
     private lateinit var checkboxNonVisit: CheckBox
     private lateinit var patientRecyclerView: RecyclerView
     private lateinit var backBtn: ImageView
-    private lateinit var filtteerr:LinearLayout
+    private lateinit var filtteerr: LinearLayout
     private lateinit var dropDownForFilter: AutoCompleteTextView
     var fdcHospitalsAdapter: LpaPatientAdapter? = null
 
@@ -67,9 +67,13 @@ class TuSearchPatientList : AppCompatActivity() {
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
-                if (getIntent().hasExtra("upload")) {
-                    filter(searchText.text.toString())
-                }
+//                if (getIntent().hasExtra("upload")) {
+//                    if(searchText.text.toString().length>4){
+//                        filter(searchText.text.toString())
+//                    }else{
+//                        BaseUtils.showToast(this@TuSearchPatientList,"Please enter atleast 4 characters.")
+//                    }
+//                }
             }
         })
         updateSpinner()
@@ -113,7 +117,6 @@ class TuSearchPatientList : AppCompatActivity() {
         if (getIntent().hasExtra("upload")) {
             tvTu.visibility = View.GONE
             filtertt.visibility = View.GONE
-            searchBtn.visibility = View.GONE
             filtteerr.visibility = View.VISIBLE
         }
 
@@ -141,10 +144,17 @@ class TuSearchPatientList : AppCompatActivity() {
                 if (searchText.text.length < 4) {
                     BaseUtils.showToast(this, "Minimun for 4 character required")
                 } else {
-                    getPatient()
+                    filter(searchText.text.toString())
+
+                    // getPatient()
                 }
             } else {
-                filter(searchText.text.toString())
+                try {
+                    filter(searchText.text.toString())
+
+                } catch (e: java.lang.Exception) {
+
+                }
 
             }
         }
@@ -191,18 +201,19 @@ class TuSearchPatientList : AppCompatActivity() {
         val name = searchText.text.toString().trim()
         // BaseUtils.showToast(this,tuString)
         val url = if (!getIntent().hasExtra("upload")) {
-            Toast.makeText(this, "this", Toast.LENGTH_SHORT).show()
+         //
+            //   Toast.makeText(this, "this", Toast.LENGTH_SHORT).show()
 
             //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll
             // &w=<<SBRK>>n_tu_id<<EQUALTO>>162<<OR>>n_tu_id<<EQUALTO>>163<<OR>>n_tu_id<<EQUALTO>>164<<EBRK>><<AND>><<SBRK>>c_pat_nam<<SLIKE>>8532<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>8532<<ELIKE>><<OR>>c_mob<<SLIKE>>8532<<ELIKE>><<EBRK>><<AND>>trans_out<<ISNULL>>
             "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>" + tuString + "<<EBRK>><<AND>><<SBRK>>c_pat_nam<<SLIKE>>" + name + "<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>" + name + "<<ELIKE>><<OR>>c_mob<<SLIKE>>" + name + "<<ELIKE>><<EBRK>>"
         } else {
-          //  var tuString = tvTu.text.toString().trim()
+            //  var tuString = tvTu.text.toString().trim()
 //https://nikshayppsa.hlfppt.org/_api-v1_/_srch_docs.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>n_tu_id<<EQUALTO>>162<<OR>>n_tu_id<<EQUALTO>>163<<OR>>n_tu_id<<EQUALTO>>164<<EBRK>>&typ=1
             "_srch_docs.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>$tuString<<EBRK>>&typ=$selectedFilter"
         }
 
-        Log.d("url  shobhit",url)
+        Log.d("url  shobhit", url)
         ApiClient.getClient().getTUPatient(url).enqueue(object : Callback<RegisterParentResponse> {
             override fun onResponse(
                 call: Call<RegisterParentResponse>,
@@ -212,15 +223,29 @@ class TuSearchPatientList : AppCompatActivity() {
                     if (response.body()!!.status) {
                         registerParentDataList =
                             response.body()!!.userData as ArrayList<RegisterParentData>
+
+//                        Toast.makeText(
+//                            this@TuSearchPatientList,
+//                            registerParentDataList!!.size.toString(),
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                         patientRecyclerView.layoutManager =
                             LinearLayoutManager(this@TuSearchPatientList)
                         if (getIntent().hasExtra("transfer")) {
                             fdcHospitalsAdapter =
-                                LpaPatientAdapter(registerParentDataList, this@TuSearchPatientList,"transfer")
+                                LpaPatientAdapter(
+                                    registerParentDataList,
+                                    this@TuSearchPatientList,
+                                    "transfer"
+                                )
                             patientRecyclerView.adapter = fdcHospitalsAdapter;
-                        }  else{
+                        } else {
                             fdcHospitalsAdapter =
-                                LpaPatientAdapter(registerParentDataList, this@TuSearchPatientList,"photo")
+                                LpaPatientAdapter(
+                                    registerParentDataList,
+                                    this@TuSearchPatientList,
+                                    "photo"
+                                )
                             patientRecyclerView.adapter = fdcHospitalsAdapter;
                         }
 
@@ -267,7 +292,7 @@ class TuSearchPatientList : AppCompatActivity() {
                     }
                 }
 
-                Log.d("TUSTRING",tuString)
+                Log.d("TUSTRING", tuString)
 
                 setSpinnerAdapter(tuSpinner, tuStrings)
 

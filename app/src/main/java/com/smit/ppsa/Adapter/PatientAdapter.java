@@ -72,10 +72,10 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // BaseUtils.showToast(context, type);
+                // BaseUtils.showToast(context, type);
                 Intent intent = new Intent(context, FormOne.class);
                 intent.putExtra("pateintId", registerParentData.get(position).getId());
-                intent.putExtra("type",type.toString());
+                intent.putExtra("type", type.toString());
                 context.startActivity(intent);
             }
         });
@@ -150,32 +150,30 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
 //
 //
 //
-        try{
-            if(registerParentData.get(position).getC_udst_img().toString().equals("0"))
-            {
+        try {
+            if (registerParentData.get(position).getC_udst_img().toString().equals("0")) {
                 holder.linearLayout.setVisibility(View.VISIBLE);
                 holder.usdcHeading.setVisibility(View.VISIBLE);
                 holder.tvUdstImg.setText("N");
-            }else
-            {
+            } else {
 
                 holder.usdcHeading.setVisibility(View.VISIBLE);
                 holder.tvUdstImg.setText("Y");
             }
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
-        try{
-            if(registerParentData.get(position).getBnk_img().toString().equals("0"))
-            {
+        try {
+            if (registerParentData.get(position).getBnk_img().toString().equals("0")) {
                 holder.linearLayout.setVisibility(View.VISIBLE);
                 holder.bankHeading.setVisibility(View.VISIBLE);
                 holder.tvBankImg.setText("Y");
-            }else
-            {
+            } else {
                 holder.bankHeading.setVisibility(View.VISIBLE);
                 holder.tvBankImg.setText("N");
             }
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
 
         holder.tvFromFDC.setText(registerParentData.get(position).getOnfdc());
@@ -277,15 +275,19 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
 
     @Override
     public int getItemCount() {
-        return registerParentData.size();
+        if (registerParentData.size() > 200) {
+            return 150;
+        } else {
+            return registerParentData.size();
+        }
     }
 
     public class Mholder extends RecyclerView.ViewHolder {
         TextView hospitalName,/*phone*//*address,*/
-                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName,tvFromFDC,tvBankImg,tvUdstImg, bankHeading,usdcHeading;
+                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName, tvFromFDC, tvBankImg, tvUdstImg, bankHeading, usdcHeading;
         CheckBox radioButton;
         RadioButton radioButtonOne;
-        LinearLayout transferShow2, transferShow,linearLayout;
+        LinearLayout transferShow2, transferShow, linearLayout;
         ImageView sexImage, patientImage, editIcon;
 
 
@@ -296,13 +298,13 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
             transferShow = itemView.findViewById(R.id.transfer_show);
             transferShow2 = itemView.findViewById(R.id.transfer_show2);
 
-            linearLayout=itemView.findViewById(R.id.linearLayout);
+            linearLayout = itemView.findViewById(R.id.linearLayout);
 
-            tvBankImg=itemView.findViewById(R.id.bankImageText);
-            tvUdstImg=itemView.findViewById(R.id.udstImageText);
+            tvBankImg = itemView.findViewById(R.id.bankImageText);
+            tvUdstImg = itemView.findViewById(R.id.udstImageText);
 
-            bankHeading=itemView.findViewById(R.id.bankHeading);
-            usdcHeading=itemView.findViewById(R.id.usdeHeading);
+            bankHeading = itemView.findViewById(R.id.bankHeading);
+            usdcHeading = itemView.findViewById(R.id.usdeHeading);
 
 
             sexImage = itemView.findViewById(R.id.sexImage);
@@ -310,7 +312,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
             //   phone = itemView.findViewById(R.id.phone);
             // address = itemView.findViewById(R.id.address);
             nikshayId = itemView.findViewById(R.id.regid);
-            tvFromFDC=itemView.findViewById(R.id.tvFromFDC);
+            tvFromFDC = itemView.findViewById(R.id.tvFromFDC);
             doctorName = itemView.findViewById(R.id.doctorname);
             radioButton = itemView.findViewById(R.id.radioButton);
             radioButtonOne = itemView.findViewById(R.id.radioButtonOne);

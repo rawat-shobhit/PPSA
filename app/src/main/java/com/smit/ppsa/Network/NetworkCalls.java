@@ -481,6 +481,88 @@ public class NetworkCalls {
         });
     }
 
+    public static void addSample2(
+            Context context,
+            String n_st_idd,
+            String n_dis_idd,
+            String n_tu_idd,
+            String n_hf_idd,
+            String n_doc_idd,
+            String n_enroll_idd,
+            String d_specm_coll,
+            String n_smpl_ext_idd,
+            String n_test_reas_idd,
+            String n_purp_vstt,
+            String n_typ_specm_idd,
+            String n_cont_smpll,
+            String c_plc_samp_coll,
+            String n_sputm_typ_idd,
+            String n_diag_tstt,
+            String n_lab_idd,
+            String n_staff_infoo,
+            String n_user_idd,
+            Boolean navigate,
+            String date,
+            String confirm
+    ) {
+        BaseUtils.putSubmitAddSampleForm(context, "false");
+        BaseUtils.putAddSampleData(context, n_st_idd, n_dis_idd, n_tu_idd, n_hf_idd, n_doc_idd, n_enroll_idd, d_specm_coll, n_smpl_ext_idd, n_test_reas_idd, n_purp_vstt, n_typ_specm_idd, n_cont_smpll, c_plc_samp_coll, n_sputm_typ_idd, n_diag_tstt, n_lab_idd, n_staff_infoo, n_user_idd);
+
+        if (!BaseUtils.isNetworkAvailable(context)) {
+            BaseUtils.showToast(context, "Please Check your internet  Connectivity");
+            //  dataBase.customerDao().insertAddSample(roomAddSample);
+            if (navigate) {
+                BaseUtils.showToast(context, "Data will be submitted when back online");
+                context.startActivity(new Intent(context, MainActivity.class));
+                //  ((Activity) context).finish();
+            }
+            return;
+        }
+        RequestBody n_st_id = RequestBody.create(n_st_idd, MediaType.parse("text/plain"));
+        RequestBody n_dis_id = RequestBody.create(n_dis_idd, MediaType.parse("text/plain"));
+        RequestBody n_tu_id = RequestBody.create(n_tu_idd, MediaType.parse("text/plain"));
+        RequestBody n_hf_id = RequestBody.create(n_hf_idd, MediaType.parse("text/plain"));
+        RequestBody n_doc_id = RequestBody.create(n_doc_idd, MediaType.parse("text/plain"));
+        RequestBody n_enroll_id = RequestBody.create(n_enroll_idd, MediaType.parse("text/plain"));
+        RequestBody d_specm_col = RequestBody.create(d_specm_coll, MediaType.parse("text/plain"));
+        RequestBody n_smpl_ext_id = RequestBody.create(n_smpl_ext_idd, MediaType.parse("text/plain"));
+        RequestBody n_test_reas_id = RequestBody.create(n_test_reas_idd, MediaType.parse("text/plain"));
+        RequestBody n_purp_vst = RequestBody.create(n_purp_vstt, MediaType.parse("text/plain"));
+        RequestBody n_typ_specm_id = RequestBody.create(n_typ_specm_idd, MediaType.parse("text/plain"));
+        RequestBody n_cont_smpl = RequestBody.create(n_cont_smpll, MediaType.parse("text/plain"));
+        RequestBody c_plc_samp_col = RequestBody.create(/*f2_placeofsamplecollection.getText().toString()*/"0", MediaType.parse("text/plain"));
+        RequestBody n_sputm_typ_id = RequestBody.create(n_sputm_typ_idd, MediaType.parse("text/plain"));
+        RequestBody n_diag_tst = RequestBody.create(n_diag_tstt, MediaType.parse("text/plain"));
+        RequestBody n_lab_id = RequestBody.create(n_lab_idd, MediaType.parse("text/plain"));
+        RequestBody n_staff_info = RequestBody.create(n_staff_infoo, MediaType.parse("text/plain"));
+        RequestBody n_user_id = RequestBody.create(n_user_idd, MediaType.parse("text/plain"));
+        RequestBody d_diag_dt = RequestBody.create(date, MediaType.parse("text/plain"));
+        RequestBody n_cfrm = RequestBody.create(confirm, MediaType.parse("text/plain"));
+
+        ApiClient.getClient().postFormPartOne2(n_st_id, n_dis_id, n_tu_id, n_hf_id, n_doc_id, n_enroll_id, d_specm_col, n_smpl_ext_id, n_test_reas_id, n_purp_vst, n_typ_specm_id, n_cont_smpl, c_plc_samp_col, n_sputm_typ_id, n_diag_tst, n_lab_id, n_staff_info, n_user_id,d_diag_dt,n_cfrm).enqueue(new Callback<AddDocResponse>() {
+            @Override
+            public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
+                if (response.isSuccessful()) {
+                    BaseUtils.putSubmitAddSampleForm(context, "true");
+                    // dataBase.customerDao().deleteAddSample(roomAddSample);
+                    if (response.body().isStatus()) {
+                        BaseUtils.showToast(context, "Sample submitted");
+                        if (navigate) {
+                            ((Activity) context).finish();
+                        }
+                    }
+                } else {
+                    BaseUtils.putSubmitAddSampleForm(context, "false");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddDocResponse> call, Throwable t) {
+                BaseUtils.putSubmitAddSampleForm(context, "false");
+            }
+        });
+    }
+
     public static void reasonForTesting(
             Context context,
             String n_enroll_idd,
@@ -498,7 +580,8 @@ public class NetworkCalls {
         RequestBody d_diag_dt = RequestBody.create(date, MediaType.parse("text/plain"));
         RequestBody n_cfrm = RequestBody.create(confirm, MediaType.parse("text/plain"));
 
-        ApiClient.getClient().reason(d_diag_dt, n_cfrm, n_enroll_idd, "id<<EQUALTO>>" + n_user_idd + "<<AND>>n_cfrm<<EQUALTO>>" + confirm).enqueue(new Callback<JsonObject>() {
+        String url = "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=" + n_enroll_idd + "&w=" + n_user_idd;
+        ApiClient.getClient().reason(d_diag_dt, n_cfrm, url).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
@@ -1716,8 +1799,8 @@ public class NetworkCalls {
             String notification_image,
             String bank_image,
             String n_sac_idd,
-            String d_diag_dt,
-            String n_cfrm
+            String d_diag_dtt,
+            String n_cfrmm, Boolean fromEngagement
 
     ) {
         dataBase = AppDataBase.getDatabase(context);
@@ -1746,7 +1829,7 @@ public class NetworkCalls {
                 c_mob_22,
                 n_latt,
                 n_lngg,
-                n_user_idd, notification_image, bank_image, n_sac_idd, d_diag_dt, n_cfrm);
+                n_user_idd, notification_image, bank_image, n_sac_idd, d_diag_dtt, n_cfrmm);
         if (!BaseUtils.isNetworkAvailable(context)) {
             // BaseUtils.putSubmitFormOne(context, "false");
             BaseUtils.putSubmitFormOne(context, "true");
@@ -1793,66 +1876,131 @@ public class NetworkCalls {
         RequestBody c_bnk_img = RequestBody.create(bank_image, MediaType.parse("text/plain"));
         RequestBody n_sac_id = RequestBody.create(n_sac_idd, MediaType.parse("text/plain"));
         RequestBody n_user_id = RequestBody.create(n_user_idd, MediaType.parse("text/plain"));
+        RequestBody d_diag_dt = RequestBody.create(d_diag_dtt, MediaType.parse("text/plain"));
+        RequestBody n_cfrm = RequestBody.create(n_cfrmm, MediaType.parse("text/plain"));
         ApiClient apiClient = null;
         if (bank_image.equals("")) {
-            ApiClient.getClient().postFormOne(n_st_id, n_dis_id
-                    , n_tu_id, n_hf_id
-                    , n_doc_id, d_reg_dat
-                    , n_nksh_id, c_pat_nam
-                    , n_age, n_sex
-                    , n_wght, n_hght
-                    , c_add, c_taluka
-                    , c_town, c_ward
-                    , c_lnd_mrk, n_pin
-                    , n_st_id_res, n_dis_id_res
-                    , n_tu_id_res, c_mob
-                    , c_mob_2, n_lat
-                    , n_lng, c_not_img, n_sac_id, n_user_id).enqueue(new Callback<AddDocResponse>() {
-                @Override
-                public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
-                    if (response.isSuccessful()) {
 
-                        if (response.body().isStatus()) {
-                            dataBase.customerDao().deletePatient(formOneModel);
-                            BaseUtils.showToast(context, "Form one submitted");
-                            BaseUtils.putSubmitFormOne(context, "true");
-                            // startActivity(new Intent(FormOne.this, FormTwo.class));
-                            if (navigate) {
-                                if (type.equals("provider")) {
-                                    ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                } else {
-                                    if (BaseUtils.getSection(context).equals("addpat")) {
-                                        BaseUtils.putSection(context, BaseUtils.getPrevSection(context));
+            if (!fromEngagement) {
+                ApiClient.getClient().postFormOneSample(n_st_id, n_dis_id
+                        , n_tu_id, n_hf_id
+                        , n_doc_id, d_reg_dat
+                        , n_nksh_id, c_pat_nam
+                        , n_age, n_sex
+                        , n_wght, n_hght
+                        , c_add, c_taluka
+                        , c_town, c_ward
+                        , c_lnd_mrk, n_pin
+                        , n_st_id_res, n_dis_id_res
+                        , n_tu_id_res, c_mob
+                        , c_mob_2, n_lat
+                        , n_lng, c_not_img, n_sac_id, n_user_id).enqueue(new Callback<AddDocResponse>() {
+                    @Override
+                    public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
+                        if (response.isSuccessful()) {
+
+                            if (response.body().isStatus()) {
+                                dataBase.customerDao().deletePatient(formOneModel);
+                                BaseUtils.showToast(context, "Form one submitted");
+                                BaseUtils.putSubmitFormOne(context, "true");
+                                // startActivity(new Intent(FormOne.this, FormTwo.class));
+                                if (navigate) {
+                                    if (type.equals("provider")) {
+                                        ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                    } else {
+                                        if (BaseUtils.getSection(context).equals("addpat")) {
+                                            BaseUtils.putSection(context, BaseUtils.getPrevSection(context));
+                                        }
+                                        //  ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                        ((Activity) context).startActivity(new Intent(context, FormTwo.class)
+                                                .putExtra("hf_type_id", n_hf_idd)
+                                                .putExtra("section", "sample")
+                                                .putExtra("type", "sample")
+                                                //.putExtra("sample", "sample")
+
+                                                .putExtra("sample", "")
+
+                                                .putExtra("hf_id", n_hf_idd)
+                                        );
                                     }
-                                    //  ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                    ((Activity) context).startActivity(new Intent(context, FormTwo.class)
-                                            .putExtra("hf_type_id", n_hf_idd)
-                                            .putExtra("section", "sample")
-                                            .putExtra("type", "sample")
-                                            //.putExtra("sample", "sample")
-
-                                            .putExtra("sample", "")
-
-                                            .putExtra("hf_id", n_hf_idd)
-                                    );
                                 }
+
                             }
-
+                        } else {
+                            // BaseUtils.putSubmitFormOne(context, "false");
+                            BaseUtils.putSubmitFormOne(context, "true");
                         }
-                    } else {
-                        // BaseUtils.putSubmitFormOne(context, "false");
-                        BaseUtils.putSubmitFormOne(context, "true");
                     }
-                }
 
-                @Override
-                public void onFailure(Call<AddDocResponse> call, Throwable t) {
-                    //   BaseUtils.putSubmitFormOne(context, "false");
-                    BaseUtils.putSubmitFormOne(context, "true");
+                    @Override
+                    public void onFailure(Call<AddDocResponse> call, Throwable t) {
+                        //   BaseUtils.putSubmitFormOne(context, "false");
+                        BaseUtils.putSubmitFormOne(context, "true");
 
 
-                }
-            });
+                    }
+                });
+            } else {
+                ApiClient.getClient().postFormOne(n_st_id, n_dis_id
+                        , n_tu_id, n_hf_id
+                        , n_doc_id, d_reg_dat
+                        , n_nksh_id, c_pat_nam
+                        , n_age, n_sex
+                        , n_wght, n_hght
+                        , c_add, c_taluka
+                        , c_town, c_ward
+                        , c_lnd_mrk, n_pin
+                        , n_st_id_res, n_dis_id_res
+                        , n_tu_id_res, c_mob
+                        , c_mob_2, n_lat
+                        , n_lng, c_not_img, n_sac_id, n_user_id, d_diag_dt, n_cfrm).enqueue(new Callback<AddDocResponse>() {
+                    @Override
+                    public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
+                        if (response.isSuccessful()) {
+
+                            if (response.body().isStatus()) {
+                                dataBase.customerDao().deletePatient(formOneModel);
+                                BaseUtils.showToast(context, "Form one submitted");
+                                BaseUtils.putSubmitFormOne(context, "true");
+                                // startActivity(new Intent(FormOne.this, FormTwo.class));
+                                if (navigate) {
+                                    if (type.equals("provider")) {
+                                        ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                    } else {
+                                        if (BaseUtils.getSection(context).equals("addpat")) {
+                                            BaseUtils.putSection(context, BaseUtils.getPrevSection(context));
+                                        }
+                                        //  ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                        ((Activity) context).startActivity(new Intent(context, FormTwo.class)
+                                                .putExtra("hf_type_id", n_hf_idd)
+                                                .putExtra("section", "sample")
+                                                .putExtra("type", "sample")
+                                                //.putExtra("sample", "sample")
+
+                                                .putExtra("sample", "")
+
+                                                .putExtra("hf_id", n_hf_idd)
+                                        );
+                                    }
+                                }
+
+                            }
+                        } else {
+                            // BaseUtils.putSubmitFormOne(context, "false");
+                            BaseUtils.putSubmitFormOne(context, "true");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<AddDocResponse> call, Throwable t) {
+                        //   BaseUtils.putSubmitFormOne(context, "false");
+                        BaseUtils.putSubmitFormOne(context, "true");
+
+
+                    }
+                });
+            }
+
         } else {
             ApiClient.getClient().postFormOne(n_st_id, n_dis_id
                     , n_tu_id, n_hf_id

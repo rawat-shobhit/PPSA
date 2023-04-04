@@ -840,6 +840,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             RequestBody c_not_img = RequestBody.create("c_not_img", MediaType.parse("text/plain"));
             RequestBody c_bnk_img = RequestBody.create("c_bnk_img", MediaType.parse("text/plain"));
             RequestBody d_diag_dt = RequestBody.create("d_diag_dt", MediaType.parse("text/plain"));
+            RequestBody n_cfrm = RequestBody.create("n_cfrm", MediaType.parse("text/plain"));
             ApiClient.getClient().updateHospital(url, d_reg_dat, n_nksh_id,
                     c_pat_nam, n_age,
                     n_sex, n_wght,
@@ -852,7 +853,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     n_st_id_res, n_dis_id_res,
                     n_tu_id_res, c_mob,
                     c_mob_2, c_not_img,
-                    c_bnk_img, d_diag_dt).enqueue(new Callback<AddDocResponse>() {
+                    c_bnk_img, d_diag_dt,n_cfrm).enqueue(new Callback<AddDocResponse>() {
                 @Override
                 public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
                     if (response.isSuccessful()) {
@@ -903,42 +904,82 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             bank = new Imagee().getEncodedImage(bankImageUri, FormOne.this);
         }
 
-        NetworkCalls.sendForm(
-                FormOne.this,
-                BaseUtils.getUserOtherInfo(FormOne.this).getnStId(),
-                BaseUtils.getUserOtherInfo(FormOne.this).getnDisId(),
-                BaseUtils.getUserOtherInfo(FormOne.this).getnTuId(),
-                getIntent().getStringExtra("hf_id"),
-                getIntent().getStringExtra("doc_id"),
-                EnrollmentDate.getText().toString(),
-                EnrolmentId.getText().toString(),
-                PatientName.getText().toString(),
-                Age.getText().toString(),
-                genders.get(Gender.getSelectedItemPosition() - 1).getId(),
-                Weight.getText().toString(),
-                Height.getText().toString(),
-                Address.getText().toString(),
-                Taluka.getText().toString(),
-                Town.getText().toString(),
-                Ward.getText().toString(),
-                Landmark.getText().toString(),
-                Pincode.getText().toString(),
-                st_id_res,
-                dis_id_res,
-                tuString.getText().toString(),
-                PrimaryPhoneNumber.getText().toString(),
-                SecondaryPhoneNumber.getText().toString(),
-                lat, lng,
-                BaseUtils.getUserInfo(FormOne.this).getId(),
-                type,
-                true,
-                noti,
-                bank,
-                BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc(),
-                EnrollmentDate.getText().toString(),
-                "0"
+        if(formProviderEngagement){
+            NetworkCalls.sendForm(
+                    FormOne.this,
+                    BaseUtils.getUserOtherInfo(FormOne.this).getnStId(),
+                    BaseUtils.getUserOtherInfo(FormOne.this).getnDisId(),
+                    BaseUtils.getUserOtherInfo(FormOne.this).getnTuId(),
+                    getIntent().getStringExtra("hf_id"),
+                    getIntent().getStringExtra("doc_id"),
+                    EnrollmentDate.getText().toString(),
+                    EnrolmentId.getText().toString(),
+                    PatientName.getText().toString(),
+                    Age.getText().toString(),
+                    genders.get(Gender.getSelectedItemPosition() - 1).getId(),
+                    Weight.getText().toString(),
+                    Height.getText().toString(),
+                    Address.getText().toString(),
+                    Taluka.getText().toString(),
+                    Town.getText().toString(),
+                    Ward.getText().toString(),
+                    Landmark.getText().toString(),
+                    Pincode.getText().toString(),
+                    st_id_res,
+                    dis_id_res,
+                    tuString.getText().toString(),
+                    PrimaryPhoneNumber.getText().toString(),
+                    SecondaryPhoneNumber.getText().toString(),
+                    lat, lng,
+                    BaseUtils.getUserInfo(FormOne.this).getId(),
+                    type,
+                    true,
+                    noti,
+                    bank,
+                    BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc(),
+                    EnrollmentDate.getText().toString(),
+                    "1",true
 
-        );
+            );
+        }else{
+            NetworkCalls.sendForm(
+                    FormOne.this,
+                    BaseUtils.getUserOtherInfo(FormOne.this).getnStId(),
+                    BaseUtils.getUserOtherInfo(FormOne.this).getnDisId(),
+                    BaseUtils.getUserOtherInfo(FormOne.this).getnTuId(),
+                    getIntent().getStringExtra("hf_id"),
+                    getIntent().getStringExtra("doc_id"),
+                    EnrollmentDate.getText().toString(),
+                    EnrolmentId.getText().toString(),
+                    PatientName.getText().toString(),
+                    Age.getText().toString(),
+                    genders.get(Gender.getSelectedItemPosition() - 1).getId(),
+                    Weight.getText().toString(),
+                    Height.getText().toString(),
+                    Address.getText().toString(),
+                    Taluka.getText().toString(),
+                    Town.getText().toString(),
+                    Ward.getText().toString(),
+                    Landmark.getText().toString(),
+                    Pincode.getText().toString(),
+                    st_id_res,
+                    dis_id_res,
+                    tuString.getText().toString(),
+                    PrimaryPhoneNumber.getText().toString(),
+                    SecondaryPhoneNumber.getText().toString(),
+                    lat, lng,
+                    BaseUtils.getUserInfo(FormOne.this).getId(),
+                    type,
+                    true,
+                    noti,
+                    bank,
+                    BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc(),
+                    EnrollmentDate.getText().toString(),
+                    "0",false
+
+            );
+        }
+
 //        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enrol&w=n_tu_id<<GT>>0<<AND>><<SBRK>>c_mob<<SLIKE>>" + mob + "<<ELIKE>><<OR>>c_mob_2<<SLIKE>>" + mob + "<<ELIKE>><<EBRK>>";
 //        ApiClient.getClient().getMedicine(url).enqueue(new Callback<MedicineResponse>() {
 //            @Override

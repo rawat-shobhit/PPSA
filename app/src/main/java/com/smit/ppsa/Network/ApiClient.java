@@ -224,9 +224,7 @@ public class ApiClient {
                                          @Part("lng") RequestBody lng);
 
 
-
-
-     // @POST("https://nikshayppsa.hlfppt.org/_api-v1_/_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_hf&w=")
+        // @POST("https://nikshayppsa.hlfppt.org/_api-v1_/_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_hf&w=")
         @Multipart   //id<<EQUALTO>>142
         @POST()
         Call<AddDocResponse> editDoctorApi(@Part("n_st_id") RequestBody c_doc_nam,
@@ -234,7 +232,7 @@ public class ApiClient {
                                            @Part("n_tu_id") RequestBody n_spec_id,
                                            @Part("n_hf_cd") RequestBody c_mob,
                                            @Part("c_hf_nam") RequestBody c_regno,
-                                           @Url String url );
+                                           @Url String url);
 
         // https://nikshayppsa.hlfppt.org/_api-v1_/_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_hf_doc&w=
 
@@ -404,7 +402,40 @@ public class ApiClient {
                                          @Part("n_lng") RequestBody n_lng,
                                          @Part("c_not_img") RequestBody c_not_img,
                                          @Part("n_sac_id") RequestBody n_sac_id,
-                                         @Part("n_user_id") RequestBody n_user_id);
+                                         @Part("n_user_id") RequestBody n_user_id,
+                                         @Part("d_diag_dt") RequestBody d_diag_dt,
+                                         @Part("n_cfrm") RequestBody n_cfrm);
+
+        @Multipart
+        @POST("_enroll_INagent.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll")
+        Call<AddDocResponse> postFormOneSample(@Part("n_st_id") RequestBody n_st_id,
+                                               @Part("n_dis_id") RequestBody n_dis_id,
+                                               @Part("n_tu_id") RequestBody n_tu_id,
+                                               @Part("n_hf_id") RequestBody n_hf_id,
+                                               @Part("n_doc_id") RequestBody n_doc_id,
+                                               @Part("d_reg_dat") RequestBody d_reg_dat,
+                                               @Part("n_nksh_id") RequestBody n_nksh_id,
+                                               @Part("c_pat_nam") RequestBody c_pat_nam,
+                                               @Part("n_age") RequestBody n_age,
+                                               @Part("n_sex") RequestBody n_sex,
+                                               @Part("n_wght") RequestBody n_wght,
+                                               @Part("n_hght") RequestBody n_hght,
+                                               @Part("c_add") RequestBody c_add,
+                                               @Part("c_taluka") RequestBody c_taluka,
+                                               @Part("c_town") RequestBody c_town,
+                                               @Part("c_ward") RequestBody c_ward,
+                                               @Part("c_lnd_mrk") RequestBody c_lnd_mrk,
+                                               @Part("n_pin") RequestBody n_pin,
+                                               @Part("n_st_id_res") RequestBody n_st_id_res,
+                                               @Part("n_dis_id_res") RequestBody n_dis_id_res,
+                                               @Part("n_tu_id_res") RequestBody n_tu_id_res,
+                                               @Part("c_mob") RequestBody c_mob,
+                                               @Part("c_mob_2") RequestBody c_mob_2,
+                                               @Part("n_lat") RequestBody n_lat,
+                                               @Part("n_lng") RequestBody n_lng,
+                                               @Part("c_not_img") RequestBody c_not_img,
+                                               @Part("n_sac_id") RequestBody n_sac_id,
+                                               @Part("n_user_id") RequestBody n_user_id);
 
         //d_reg_dat	date
 //n_nksh_id	varchar(20)
@@ -474,7 +505,7 @@ public class ApiClient {
         Call<FormOneResponse> getType();
 
         @Multipart
-        @POST("_data_agentUSS.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_smpl_col_rpt")
+        @POST("_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll&w=id ")
         Call<AddDocResponse> postFormPartOne(@Part("n_st_id") RequestBody n_st_id,
                                              @Part("n_dis_id") RequestBody n_dis_id,
                                              @Part("n_tu_id") RequestBody n_tu_id,
@@ -494,15 +525,40 @@ public class ApiClient {
                                              @Part("n_staff_info") RequestBody n_staff_info,
                                              @Part("n_user_id") RequestBody n_user_id);
 
+        @Multipart
+        @POST("_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll&w=id&n_cfrm<<EQUALTO>>0")
+        Call<AddDocResponse> postFormPartOne2(@Part("n_st_id") RequestBody n_st_id,
+                                             @Part("n_dis_id") RequestBody n_dis_id,
+                                             @Part("n_tu_id") RequestBody n_tu_id,
+                                             @Part("n_hf_id") RequestBody n_hf_id,
+                                             @Part("n_doc_id") RequestBody n_doc_id,
+                                             @Part("n_enroll_id") RequestBody n_enroll_id,
+                                             @Part("d_specm_col") RequestBody d_specm_col,
+                                             @Part("n_smpl_ext_id") RequestBody n_smpl_ext_id,
+                                             @Part("n_test_reas_id") RequestBody n_test_reas_id,
+                                             @Part("n_purp_vst") RequestBody n_purp_vst,
+                                             @Part("n_typ_specm_id") RequestBody n_typ_specm_id,
+                                             @Part("n_cont_smpl") RequestBody n_cont_smpl,
+                                             @Part("c_plc_samp_col") RequestBody c_plc_samp_col,
+                                             @Part("n_sputm_typ_id") RequestBody n_sputm_typ_id,
+                                             @Part("n_diag_tst") RequestBody n_diag_tst,
+                                             @Part("n_lab_id") RequestBody n_lab_id,
+                                             @Part("n_staff_info") RequestBody n_staff_info,
+                                             @Part("n_user_id") RequestBody n_user_id,
+                                              @Part("d_diag_dt") RequestBody d_diag_dt,
+                                              @Part("n_cfrm") RequestBody n_cfrm
+                                              );
+
 
         @Multipart
-        @POST("_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll&w=id<<EQUALTO>>3")
+        @POST()
         Call<JsonObject> reason(@Part("d_diag_dt") RequestBody d_diag_dt,
                                 @Part("n_cfrm") RequestBody n_cfrm,
 
-                                @Query("t") String n_enroll_id,
 
-                                @Query("w") String n_user_id);
+                                @Url String url
+
+        );
 
 //        @GET("_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll&w=n_hf_id<<EQUALTO>>32<<AND>>n_user_id<<EQUALTO>>18")
 //        Call<>
@@ -541,26 +597,27 @@ public class ApiClient {
         @Multipart
         @POST()
         Call<AddDocResponse> updateHospital(@Url String url, @Part("d_reg_dat") RequestBody d_reg_dat,
-                                        @Part("n_nksh_id") RequestBody n_nksh_id,
-                                        @Part("c_pat_nam") RequestBody c_pat_nam,
-                                        @Part("n_age") RequestBody n_age,
-                                        @Part("n_sex") RequestBody n_sex,
-                                        @Part("n_wght") RequestBody n_wght,
-                                        @Part("n_hght") RequestBody n_hght,
-                                        @Part("c_add") RequestBody c_add,
-                                        @Part("c_taluka") RequestBody c_taluka,
-                                        @Part("c_town") RequestBody c_town,
-                                        @Part("c_ward") RequestBody c_ward,
-                                        @Part("c_lnd_mrk") RequestBody c_lnd_mrk,
-                                        @Part("n_pin") RequestBody n_pin,
-                                        @Part("n_st_id_res") RequestBody n_st_id_res,
-                                        @Part("n_dis_id_res") RequestBody n_dis_id_res,
-                                        @Part("n_tu_id_res") RequestBody n_tu_id_res,
-                                        @Part("c_mob") RequestBody c_mob,
-                                        @Part("c_mob_2") RequestBody c_mob_2,
-                                        @Part("c_not_img") RequestBody c_not_img,
-                                        @Part("c_bnk_img") RequestBody c_bnk_img,
-                                        @Part("d_diag_dt") RequestBody d_diag_dt);
+                                            @Part("n_nksh_id") RequestBody n_nksh_id,
+                                            @Part("c_pat_nam") RequestBody c_pat_nam,
+                                            @Part("n_age") RequestBody n_age,
+                                            @Part("n_sex") RequestBody n_sex,
+                                            @Part("n_wght") RequestBody n_wght,
+                                            @Part("n_hght") RequestBody n_hght,
+                                            @Part("c_add") RequestBody c_add,
+                                            @Part("c_taluka") RequestBody c_taluka,
+                                            @Part("c_town") RequestBody c_town,
+                                            @Part("c_ward") RequestBody c_ward,
+                                            @Part("c_lnd_mrk") RequestBody c_lnd_mrk,
+                                            @Part("n_pin") RequestBody n_pin,
+                                            @Part("n_st_id_res") RequestBody n_st_id_res,
+                                            @Part("n_dis_id_res") RequestBody n_dis_id_res,
+                                            @Part("n_tu_id_res") RequestBody n_tu_id_res,
+                                            @Part("c_mob") RequestBody c_mob,
+                                            @Part("c_mob_2") RequestBody c_mob_2,
+                                            @Part("c_not_img") RequestBody c_not_img,
+                                            @Part("c_bnk_img") RequestBody c_bnk_img,
+                                            @Part("d_diag_dt") RequestBody d_diag_dt,
+                                            @Part("n_cfrm") RequestBody n_cfrm);
 
         @GET()
         Call<DoctorsResponse> getDoctorDetails(@Url String url);

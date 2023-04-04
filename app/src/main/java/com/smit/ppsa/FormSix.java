@@ -218,7 +218,7 @@ public class FormSix extends AppCompatActivity {
                                                             Log.d("shobhit 2",getIntent().getStringExtra("enroll_id")+"->"+BaseUtils.getUserInfo(FormSix.this).getnUserLevel());
                                                         }
                                                         else if ( parentDataTestReportResults.get(testReportResult.getSelectedItemPosition() - 1).getC_val().equals( "Positive ( + )")) {
-                                                            NetworkCalls.reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(),false, dTestReport,"1");
+                                                            NetworkCalls. reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(),false, dTestReport,"1");
 
                                                             Log.d("shobhit 3",getIntent().getStringExtra("enroll_id")+"->"+BaseUtils.getUserInfo(FormSix.this).getnUserLevel());
                                                         }

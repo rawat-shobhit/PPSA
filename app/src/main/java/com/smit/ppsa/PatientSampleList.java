@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,8 +49,9 @@ import retrofit2.Response;
 
 public class PatientSampleList extends AppCompatActivity implements View.OnClickListener {
     private EditText f2_placeofsamplecollection;
-    private TextView f2_datespecimencollected, nextbtn, hospitalName, docname, patientname, patientphone;
+    private TextView f2_datespecimencollected, nextbtn, hospitalName, docname, patientname, patientphone, date_of_diagnosis;
     private ImageView backbtn;
+    private LinearLayout llDOD;
     private List<FormOneData> specimens = new ArrayList<>();
     private List<FormOneData> testings = new ArrayList<>();
     private RecyclerView previousSamplesRecycler;
@@ -70,9 +72,9 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
     private List<String> pythologyLabsString = new ArrayList<>();
     private List<String> pythologyLabsTypeString = new ArrayList<>();
     private List<String> typString = new ArrayList<>();
-    private String reg_date="";
+    private String reg_date = "";
     private Spinner ReasonforTesting, Typeofspecimen, noOfContainers, Sampleextractiondoneby,
-            Sampleextractionfrom, SputumsampletypeandNumber, diagnosticTestSpi, pythologyLabs,pythologyLabsType;
+            Sampleextractionfrom, SputumsampletypeandNumber, diagnosticTestSpi, pythologyLabs, pythologyLabsType;
     private AppDataBase dataBase;
     PreviousSamplesCollectionAdapter previousAdapter;
     List<RoomPreviousSamplesCollection> parentDataPreviousSamples;
@@ -93,9 +95,10 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
         noOfContainers = findViewById(R.id.f2_noofcont);
         Typeofspecimen = findViewById(R.id.f2_typeofspecimen);
         pythologyLabs = findViewById(R.id.f2_pythologylabs);
-                pythologyLabsType = findViewById(R.id.f2_pythologylabsType);
-
-                nextbtn = findViewById(R.id.nextbtn);
+        pythologyLabsType = findViewById(R.id.f2_pythologylabsType);
+        date_of_diagnosis = findViewById(R.id.date_of_diagnosis);
+        llDOD = findViewById(R.id.llDOD);
+        nextbtn = findViewById(R.id.nextbtn);
         backbtn = findViewById(R.id.backbtn);
         hospitalName = findViewById(R.id.hospitalName);
         docname = findViewById(R.id.docname);
@@ -117,11 +120,11 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
         diagnosticTestSpi = findViewById(R.id.f2_diagnostictests);
         SputumsampletypeandNumber = findViewById(R.id.f2_sputumsampletypeandnumber);
 
-        Log.d("jijsoj", "init: "+BaseUtils.getGlobalPatientName(this));
-        Log.d("jijsoj", "init: "+BaseUtils.getGlobalSelectedPatientName(this));
+        Log.d("jijsoj", "init: " + BaseUtils.getGlobalPatientName(this));
+        Log.d("jijsoj", "init: " + BaseUtils.getGlobalSelectedPatientName(this));
 
         //if (BaseUtils.getGlobalPatientName(this).equals(BaseUtils.getGlobalSelectedPatientName(this))) {
-            getRoomPreviousSamples();
+        getRoomPreviousSamples();
         //}
 
         NetworkCalls.getTesting(this);
@@ -135,6 +138,7 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
         NetworkCalls.getType(this);
         NetworkCalls.getPythologyLabType(this);
         setUpCalender();
+        setUpCalender2();
         setOnClick();
     }
 
@@ -143,19 +147,19 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
         nextbtn.setOnClickListener(this);
         backbtn.setOnClickListener(this);
 
-
+//testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getC_sputm_typ()=="UDST MC")
         pythologyLabsType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // your code here
-                if(position==0){
+                if (position == 0) {
 
-                }else if(position==1){
+                } else if (position == 1) {
                     NetworkCalls.getPythologyLabSample(PatientSampleList.this,
                             getIntent().getStringExtra("tu_id"),
                             "1");
 
-                }else{
+                } else {
                     NetworkCalls.getPythologyLabSample(PatientSampleList.this,
                             getIntent().getStringExtra("tu_id"),
                             "2");
@@ -168,6 +172,32 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
             }
 
         });
+
+        ReasonforTesting.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // your code here
+               // Toast.makeText(PatientSampleList.this, position+"", Toast.LENGTH_SHORT).show();
+                try{
+                    if (testings.get(ReasonforTesting.getSelectedItemPosition()-1).getC_test_reas().contains("UDST MC")) {
+                        llDOD.setVisibility(View.VISIBLE);
+                    }else{
+                        llDOD.setVisibility(View.GONE);
+
+                    }
+                }catch (Exception e){
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
     }
 
     @Override
@@ -265,9 +295,9 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
                 //setSpinnerAdapter(EnrollmentFaciltyTBU,tuStrings);
                 setSpinnerAdapter(pythologyLabs, pythologyLabsString);
             }
-            if(intent.hasExtra("localPythologylabtype")){
+            if (intent.hasExtra("localPythologylabtype")) {
                 pythologyLabsTypeLi = BaseUtils.getPythologyLabTypes(PatientSampleList.this);
-             //   Log.d("kioij", "onReceive: " + diagnostictests.size());
+                //   Log.d("kioij", "onReceive: " + diagnostictests.size());
                 for (LabResponseInternal list : pythologyLabsTypeLi) {
                     if (!pythologyLabsTypeString.contains(list.getC_val())) {
                         pythologyLabsTypeString.add(list.getC_val());
@@ -289,24 +319,22 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
     };
 
     private boolean isValidate() {
-         if (f2_datespecimencollected.getText().toString().equals("")) {
+        if (f2_datespecimencollected.getText().toString().equals("")) {
             BaseUtils.showToast(PatientSampleList.this, "Enter date of specimen collected");
             return false;
         } else if (Sampleextractiondoneby.getSelectedItemPosition() == 0) {
-             BaseUtils.showToast(PatientSampleList.this, "Select sample collected by");
-             return false;
-         }else if (Sampleextractionfrom.getSelectedItemPosition() == 0) {
-             BaseUtils.showToast(PatientSampleList.this, "Select sample collected from");
-             return false;
-         }
-         else if (ReasonforTesting.getSelectedItemPosition() == 0) {
+            BaseUtils.showToast(PatientSampleList.this, "Select sample collected by");
+            return false;
+        } else if (Sampleextractionfrom.getSelectedItemPosition() == 0) {
+            BaseUtils.showToast(PatientSampleList.this, "Select sample collected from");
+            return false;
+        } else if (ReasonforTesting.getSelectedItemPosition() == 0) {
             BaseUtils.showToast(PatientSampleList.this, "Select reason for testing");
             return false;
-        }  else if (noOfContainers.getSelectedItemPosition() == 0) {
-             BaseUtils.showToast(PatientSampleList.this, "Select no of containers");
-             return false;
-         }
-         else if (Typeofspecimen.getSelectedItemPosition() == 0) {
+        } else if (noOfContainers.getSelectedItemPosition() == 0) {
+            BaseUtils.showToast(PatientSampleList.this, "Select no of containers");
+            return false;
+        } else if (Typeofspecimen.getSelectedItemPosition() == 0) {
             BaseUtils.showToast(PatientSampleList.this, "Select type of specimen");
             return false;
         } /* else if (f2_placeofsamplecollection.getText().toString().equals("")) {
@@ -315,7 +343,7 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
         }*/ /* else if (SputumsampletypeandNumber.getSelectedItemPosition() == 0) {
             BaseUtils.showToast(PatientSampleList.this, "Select sputum sample type and number");
             return false;
-        } */else if (diagnosticTestSpi.getSelectedItemPosition() == 0) {
+        } */ else if (diagnosticTestSpi.getSelectedItemPosition() == 0) {
             BaseUtils.showToast(PatientSampleList.this, "Select diagnostic test");
             return false;
         } else if (pythologyLabs.getSelectedItemPosition() == 0) {
@@ -331,33 +359,62 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
     }
 
     private void addSample(Context context) {
+        if ((testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getC_sputm_typ() == "UDST MC")) {
+            if (date_of_diagnosis.getText() == "") {
+                BaseUtils.showToast(PatientSampleList.this, "Please select date of diagnosis");
+            } else {
+                NetworkCalls.addSample2(
+                        context,
+                        BaseUtils.getUserOtherInfo(PatientSampleList.this).getnStId(),
+                        BaseUtils.getUserOtherInfo(PatientSampleList.this).getnDisId(),
+                        BaseUtils.getUserOtherInfo(PatientSampleList.this).getnTuId(),
+                        getIntent().getStringExtra("hf_id"),
+                        BaseUtils.getGlobaldocId(context),
+                        getIntent().getStringExtra("enroll_id"),
+                        f2_datespecimencollected.getText().toString(),
+                        extractions.get(Sampleextractiondoneby.getSelectedItemPosition() - 1).getId(),
+                        testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getId(),
+                        collectedFrom.get(Sampleextractionfrom.getSelectedItemPosition() - 1).getId(),
+                        specimens.get(Typeofspecimen.getSelectedItemPosition() - 1).getId(),
+                        noOfContainerss.get(noOfContainers.getSelectedItemPosition() - 1).getId(),
+                        "0",
+                        "0"/*types.get(SputumsampletypeandNumber.getSelectedItemPosition() - 1).getId()*/,
+                        diagnostictests.get(diagnosticTestSpi.getSelectedItemPosition() - 1).getId(),
+                        pythologyLabsLi.get(pythologyLabs.getSelectedItemPosition() - 1).getId(),
+                        BaseUtils.getUserInfo(this).getN_staff_sanc(),
+                        BaseUtils.getUserInfo(PatientSampleList.this).getId(), true, date_of_diagnosis.getText().toString(), "1"
+                );
+                if (testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getC_sputm_typ() == "UDST MC") {
+                    NetworkCalls.reasonForTesting(PatientSampleList.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(PatientSampleList.this).getnUserLevel(), false, f2_datespecimencollected.getText().toString(), "1");
+                }
+            }
+        } else {
 
-        NetworkCalls.addSample(
-                context,
-                BaseUtils.getUserOtherInfo(PatientSampleList.this).getnStId(),
-                BaseUtils.getUserOtherInfo(PatientSampleList.this).getnDisId(),
-                BaseUtils.getUserOtherInfo(PatientSampleList.this).getnTuId(),
-                getIntent().getStringExtra("hf_id"),
-                BaseUtils.getGlobaldocId(context),
-                getIntent().getStringExtra("enroll_id"),
-                f2_datespecimencollected.getText().toString(),
-                extractions.get(Sampleextractiondoneby.getSelectedItemPosition() - 1).getId(),
-                testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getId(),
-                collectedFrom.get(Sampleextractionfrom.getSelectedItemPosition() - 1).getId(),
-                specimens.get(Typeofspecimen.getSelectedItemPosition() - 1).getId(),
-                noOfContainerss.get(noOfContainers.getSelectedItemPosition() - 1).getId(),
-                "0",
-                "0"/*types.get(SputumsampletypeandNumber.getSelectedItemPosition() - 1).getId()*/,
-                diagnostictests.get(diagnosticTestSpi.getSelectedItemPosition() - 1).getId(),
-                pythologyLabsLi.get(pythologyLabs.getSelectedItemPosition() - 1).getPm_staff_id(),
-                BaseUtils.getUserInfo(this).getnAccessRights(),
-                BaseUtils.getUserInfo(PatientSampleList.this).getnUserLevel(), true
-        );
 
-        if( testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getC_sputm_typ()=="UDST MC") {
-            NetworkCalls.reasonForTesting(PatientSampleList.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(PatientSampleList.this).getnUserLevel(),false,  f2_datespecimencollected.getText().toString(),"1");
+            NetworkCalls.addSample(
+                    context,
+                    BaseUtils.getUserOtherInfo(PatientSampleList.this).getnStId(),
+                    BaseUtils.getUserOtherInfo(PatientSampleList.this).getnDisId(),
+                    BaseUtils.getUserOtherInfo(PatientSampleList.this).getnTuId(),
+                    getIntent().getStringExtra("hf_id"),
+                    BaseUtils.getGlobaldocId(context),
+                    getIntent().getStringExtra("enroll_id"),
+                    f2_datespecimencollected.getText().toString(),
+                    extractions.get(Sampleextractiondoneby.getSelectedItemPosition() - 1).getId(),
+                    testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getId(),
+                    collectedFrom.get(Sampleextractionfrom.getSelectedItemPosition() - 1).getId(),
+                    specimens.get(Typeofspecimen.getSelectedItemPosition() - 1).getId(),
+                    noOfContainerss.get(noOfContainers.getSelectedItemPosition() - 1).getId(),
+                    "0",
+                    "0"/*types.get(SputumsampletypeandNumber.getSelectedItemPosition() - 1).getId()*/,
+                    diagnostictests.get(diagnosticTestSpi.getSelectedItemPosition() - 1).getId(),
+                    pythologyLabsLi.get(pythologyLabs.getSelectedItemPosition() - 1).getId(),
+                    BaseUtils.getUserInfo(this).getN_staff_sanc(),
+                    BaseUtils.getUserInfo(PatientSampleList.this).getId(), true
+            );
+
+
         }
-
     }
 
     private void getPreviousSamples() {
@@ -471,7 +528,7 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
                 m_date.show();
                 Calendar calendar1 = Calendar.getInstance();
                 calendar1.set(Integer.parseInt(reg_date.split("-")[0]),
-                        Integer.parseInt(reg_date.split("-")[1])-1,
+                        Integer.parseInt(reg_date.split("-")[1]) - 1,
                         Integer.parseInt(reg_date.split("-")[2]));
                 Calendar calendar = Calendar.getInstance();
                 m_date.getDatePicker().setMaxDate(calendar.getTimeInMillis());
@@ -480,5 +537,45 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
                 m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
             }
         });
+
+
+    }
+
+    private void setUpCalender2() {
+        final Calendar myCalendar = Calendar.getInstance();
+
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                String myFormat = "yyyy-MM-dd";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                date_of_diagnosis.setText(sdf.format(myCalendar.getTime()));
+            }
+        };
+        date_of_diagnosis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog m_date = new DatePickerDialog(PatientSampleList.this, R.style.calender_theme, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+
+
+                m_date.show();
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.set(Integer.parseInt(reg_date.split("-")[0]),
+                        Integer.parseInt(reg_date.split("-")[1]) - 1,
+                        Integer.parseInt(reg_date.split("-")[2]));
+                Calendar calendar = Calendar.getInstance();
+                m_date.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+            //    m_date.getDatePicker().setMinDate(calendar1.getTimeInMillis());
+                m_date.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
+                m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
+            }
+        });
+
+
     }
 }

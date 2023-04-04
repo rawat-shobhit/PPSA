@@ -674,7 +674,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
 
                     try {
                         getCounselPatList();
-                        BaseUtils.showToast(FormTwo.this, tuCounsell.getSelectedItemPosition() + "");
+                      //  BaseUtils.showToast(FormTwo.this, tuCounsell.getSelectedItemPosition() + "");
                     } catch (Exception e) {
 
                     }
@@ -1259,7 +1259,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
         Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(FormTwo.this).getnUserLevel());
 
 
-        String urlOne = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll&w=n_hf_id<<EQUALTO>>" + getIntent().getStringExtra("hf_id") + "<<AND>>n_user_id<<EQUALTO>>" + BaseUtils.getUserInfo(FormTwo.this).getId();
+        String urlOne = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll&w=n_hf_id<<EQUALTO>>" + getIntent().getStringExtra("hf_id");
         String url = "_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=1" /*+ getIntent().getStringExtra("hf_id")*/;
         String urlTwo = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_smplcol_indv_lst&w=n_tu_id<<EQUALTO>>" + tuId;
 
@@ -1312,6 +1312,8 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onFailure(Call<RegisterParentResponse> call, Throwable t) {
                 progressDialog.hideProgressBar();
+
+                BaseUtils.showToast(FormTwo.this,t.getMessage());
                 //    progressDialog.hideProgressBar();
             }
         });

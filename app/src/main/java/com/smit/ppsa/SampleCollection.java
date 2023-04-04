@@ -171,6 +171,7 @@ public class SampleCollection extends AppCompatActivity implements View.OnClickL
         if(type=="sample"){
             EnrollmentDate.setVisibility(View.GONE);
         }else{
+            dataOf.setVisibility(View.VISIBLE);
             dataOf.setText("Date of Diagnosis*");
         }
         // handle the Choose Image button to trigger
@@ -773,7 +774,7 @@ public class SampleCollection extends AppCompatActivity implements View.OnClickL
 
 
         if (getIntent().hasExtra("pateintId")) {
-            String url = "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll&w=id<<EQUALTO>>" + getIntent().getStringExtra("pateintId");
+            String url = " _data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll&w=id<<EQUALTO>>" + getIntent().getStringExtra("pateintId");
             String noti = "";
             String bank = "";
 
@@ -804,7 +805,7 @@ public class SampleCollection extends AppCompatActivity implements View.OnClickL
             RequestBody c_not_img = RequestBody.create("c_not_img", MediaType.parse("text/plain"));
             RequestBody c_bnk_img = RequestBody.create("c_bnk_img", MediaType.parse("text/plain"));
             RequestBody d_diag_dt = RequestBody.create("d_diag_dt", MediaType.parse("text/plain"));
-
+            RequestBody n_cfrm = RequestBody.create("n_cfrm", MediaType.parse("text/plain"));
 
             ApiClient.getClient().updateHospital(url, d_reg_dat, n_nksh_id,
                     c_pat_nam, n_age,
@@ -818,7 +819,7 @@ public class SampleCollection extends AppCompatActivity implements View.OnClickL
                     n_st_id_res, n_dis_id_res,
                     n_tu_id_res, c_mob,
                     c_mob_2, c_not_img,
-                    c_bnk_img, d_diag_dt ).enqueue(new Callback<AddDocResponse>() {
+                    c_bnk_img, d_diag_dt,n_cfrm ).enqueue(new Callback<AddDocResponse>() {
                 @Override
                 public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
                     if (response.isSuccessful()) {
@@ -903,7 +904,7 @@ public class SampleCollection extends AppCompatActivity implements View.OnClickL
                                 true,
                                 noti,
                                 bank,
-                                BaseUtils.getUserInfo(SampleCollection.this).getN_staff_sanc(),"",""
+                                BaseUtils.getUserInfo(SampleCollection.this).getN_staff_sanc(),"","",false
 
                         );
                     } else {
