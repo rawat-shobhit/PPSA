@@ -905,7 +905,7 @@ public class SampleCollection extends AppCompatActivity implements View.OnClickL
                                 noti,
                                 bank,
                                 BaseUtils.getUserInfo(SampleCollection.this).getN_staff_sanc(),"","",false
-
+,"",""
                         );
                     } else {
                         BaseUtils.showToast(SampleCollection.this, "Patient Already Registered with Programme");

@@ -1800,7 +1800,7 @@ public class NetworkCalls {
             String bank_image,
             String n_sac_idd,
             String d_diag_dtt,
-            String n_cfrmm, Boolean fromEngagement
+            String n_cfrmm, Boolean fromEngagement,String n_hivv,String n_diabb
 
     ) {
         dataBase = AppDataBase.getDatabase(context);
@@ -1829,7 +1829,7 @@ public class NetworkCalls {
                 c_mob_22,
                 n_latt,
                 n_lngg,
-                n_user_idd, notification_image, bank_image, n_sac_idd, d_diag_dtt, n_cfrmm);
+                n_user_idd, notification_image, bank_image, n_sac_idd, d_diag_dtt, n_cfrmm,n_hivv,n_diabb);
         if (!BaseUtils.isNetworkAvailable(context)) {
             // BaseUtils.putSubmitFormOne(context, "false");
             BaseUtils.putSubmitFormOne(context, "true");
@@ -1878,6 +1878,8 @@ public class NetworkCalls {
         RequestBody n_user_id = RequestBody.create(n_user_idd, MediaType.parse("text/plain"));
         RequestBody d_diag_dt = RequestBody.create(d_diag_dtt, MediaType.parse("text/plain"));
         RequestBody n_cfrm = RequestBody.create(n_cfrmm, MediaType.parse("text/plain"));
+        RequestBody n_hiv = RequestBody.create(n_hivv, MediaType.parse("text/plain"));
+        RequestBody n_diab = RequestBody.create(n_diabb, MediaType.parse("text/plain"));
         ApiClient apiClient = null;
         if (bank_image.equals("")) {
 
@@ -1894,7 +1896,7 @@ public class NetworkCalls {
                         , n_st_id_res, n_dis_id_res
                         , n_tu_id_res, c_mob
                         , c_mob_2, n_lat
-                        , n_lng, c_not_img, n_sac_id, n_user_id).enqueue(new Callback<AddDocResponse>() {
+                        , n_lng, c_not_img, n_sac_id, n_user_id,n_hiv,n_diab).enqueue(new Callback<AddDocResponse>() {
                     @Override
                     public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
                         if (response.isSuccessful()) {

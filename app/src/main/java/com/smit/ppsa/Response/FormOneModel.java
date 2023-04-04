@@ -38,6 +38,12 @@ public class FormOneModel {
     private String c_taluka;
     @ColumnInfo(name = "c_town")
     private String c_town;
+
+    @ColumnInfo(name = "n_hiv")
+    private String n_hiv;
+
+    @ColumnInfo(name = "n_diab")
+    private String n_diab;
     @ColumnInfo(name = "c_ward")
     private String c_ward;
     @ColumnInfo(name = "c_lnd_mrk")
@@ -92,7 +98,7 @@ public class FormOneModel {
         this.d_diag_dt = d_diag_dt;
     }
 
-    public FormOneModel(String n_st_id, String n_dis_id, String n_tu_id, String n_hf_id, String n_doc_id, String d_reg_dat, String n_nksh_id, String c_pat_nam, String n_age, String n_sex, String n_wght, String n_hght, String c_add, String c_taluka, String c_town, String c_ward, String c_lnd_mrk, String n_pin, String n_st_id_res, String n_dis_id_res, String n_tu_id_res, String c_mob, String c_mob_2, String n_lat, String n_lng, String n_user_id, String notification_image, String bank_image, String n_sac_id, String d_diag_dt, String n_cfrm) {
+    public FormOneModel(String n_st_id, String n_dis_id, String n_tu_id, String n_hf_id, String n_doc_id, String d_reg_dat, String n_nksh_id, String c_pat_nam, String n_age, String n_sex, String n_wght, String n_hght, String c_add, String c_taluka, String c_town, String c_ward, String c_lnd_mrk, String n_pin, String n_st_id_res, String n_dis_id_res, String n_tu_id_res, String c_mob, String c_mob_2, String n_lat, String n_lng, String n_user_id, String notification_image, String bank_image, String n_sac_id, String d_diag_dt, String n_cfrm,String n_hiv,String n_diab) {
         this.n_st_id = n_st_id;
         this.n_dis_id = n_dis_id;
         this.n_tu_id = n_tu_id;
@@ -124,6 +130,8 @@ public class FormOneModel {
         this.n_sac_id = n_sac_id;
         this.d_diag_dt=d_diag_dt;
         this.n_cfrm=n_cfrm;
+        this.n_hiv = n_hiv;
+        this.n_diab = n_diab;
     }
 
     public String getN_st_id() {
@@ -362,4 +370,19 @@ public class FormOneModel {
         return id;
     }
 
+    public String getN_hiv() {
+        return n_hiv;
+    }
+
+    public void setN_hiv(String n_hiv) {
+        this.n_hiv = n_hiv;
+    }
+
+    public String getN_diab() {
+        return n_diab;
+    }
+
+    public void setN_diab(String n_diab) {
+        this.n_diab = n_diab;
+    }
 }

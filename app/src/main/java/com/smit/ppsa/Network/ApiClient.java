@@ -435,7 +435,9 @@ public class ApiClient {
                                                @Part("n_lng") RequestBody n_lng,
                                                @Part("c_not_img") RequestBody c_not_img,
                                                @Part("n_sac_id") RequestBody n_sac_id,
-                                               @Part("n_user_id") RequestBody n_user_id);
+                                               @Part("n_user_id") RequestBody n_user_id,
+                                               @Part("n_hiv") RequestBody n_hiv,
+                                               @Part("n_diab") RequestBody n_diab);
 
         //d_reg_dat	date
 //n_nksh_id	varchar(20)
@@ -528,26 +530,26 @@ public class ApiClient {
         @Multipart
         @POST("_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll&w=id&n_cfrm<<EQUALTO>>0")
         Call<AddDocResponse> postFormPartOne2(@Part("n_st_id") RequestBody n_st_id,
-                                             @Part("n_dis_id") RequestBody n_dis_id,
-                                             @Part("n_tu_id") RequestBody n_tu_id,
-                                             @Part("n_hf_id") RequestBody n_hf_id,
-                                             @Part("n_doc_id") RequestBody n_doc_id,
-                                             @Part("n_enroll_id") RequestBody n_enroll_id,
-                                             @Part("d_specm_col") RequestBody d_specm_col,
-                                             @Part("n_smpl_ext_id") RequestBody n_smpl_ext_id,
-                                             @Part("n_test_reas_id") RequestBody n_test_reas_id,
-                                             @Part("n_purp_vst") RequestBody n_purp_vst,
-                                             @Part("n_typ_specm_id") RequestBody n_typ_specm_id,
-                                             @Part("n_cont_smpl") RequestBody n_cont_smpl,
-                                             @Part("c_plc_samp_col") RequestBody c_plc_samp_col,
-                                             @Part("n_sputm_typ_id") RequestBody n_sputm_typ_id,
-                                             @Part("n_diag_tst") RequestBody n_diag_tst,
-                                             @Part("n_lab_id") RequestBody n_lab_id,
-                                             @Part("n_staff_info") RequestBody n_staff_info,
-                                             @Part("n_user_id") RequestBody n_user_id,
+                                              @Part("n_dis_id") RequestBody n_dis_id,
+                                              @Part("n_tu_id") RequestBody n_tu_id,
+                                              @Part("n_hf_id") RequestBody n_hf_id,
+                                              @Part("n_doc_id") RequestBody n_doc_id,
+                                              @Part("n_enroll_id") RequestBody n_enroll_id,
+                                              @Part("d_specm_col") RequestBody d_specm_col,
+                                              @Part("n_smpl_ext_id") RequestBody n_smpl_ext_id,
+                                              @Part("n_test_reas_id") RequestBody n_test_reas_id,
+                                              @Part("n_purp_vst") RequestBody n_purp_vst,
+                                              @Part("n_typ_specm_id") RequestBody n_typ_specm_id,
+                                              @Part("n_cont_smpl") RequestBody n_cont_smpl,
+                                              @Part("c_plc_samp_col") RequestBody c_plc_samp_col,
+                                              @Part("n_sputm_typ_id") RequestBody n_sputm_typ_id,
+                                              @Part("n_diag_tst") RequestBody n_diag_tst,
+                                              @Part("n_lab_id") RequestBody n_lab_id,
+                                              @Part("n_staff_info") RequestBody n_staff_info,
+                                              @Part("n_user_id") RequestBody n_user_id,
                                               @Part("d_diag_dt") RequestBody d_diag_dt,
                                               @Part("n_cfrm") RequestBody n_cfrm
-                                              );
+        );
 
 
         @Multipart

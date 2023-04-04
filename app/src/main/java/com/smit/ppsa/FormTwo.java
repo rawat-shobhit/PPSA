@@ -61,6 +61,8 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
     private CardView proceedbtn;
     private ImageView backBtn, hl_addbtn;
     private TextView filterTitle, counselTuTitle;
+
+    private  boolean isFirstTym;
     List<String> tuStrings = new ArrayList<>();
     private List<FormOneData> tu = new ArrayList<>();
     private EditText Enrollmentid, Placeofsamplecollection, TestId, DiagnosingFaciltyDistrict,
@@ -73,7 +75,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
     Spinner filterspinner;
     private GlobalProgressDialog progressDialog;
     private List<RoomCounsellingFilters> parentDataFilters = new ArrayList<>();
-    private TextView nextbtn;
+    private TextView nextbtn,searchbtn;
     private String enroll_id = "";
     private String doc_id = "";
     private String doctorname = "";
@@ -629,6 +631,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
         PatientStatus = findViewById(R.id.f2_patientstatus);
         backBtn = findViewById(R.id.backbtn);
         search = findViewById(R.id.search);
+        searchbtn = findViewById(R.id.searchbtn);
         filterspinner = findViewById(R.id.filterCounsell);
         filterTitle = findViewById(R.id.filtertt);
         backBtn = findViewById(R.id.backbtn);
@@ -715,6 +718,21 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
+        searchbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (parentData.size() == 0) {
+
+                } else {
+                    if(search.getText().toString().length()>4){
+                        filter(search.getText().toString(), "normal");
+                    }else{
+                        BaseUtils.showToast(FormTwo.this,"Please enter atleast 4 characters.");
+                    }
+                }
+            }
+        });
+
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -728,11 +746,11 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (parentData.size() == 0) {
-
-                } else {
-                    filter(editable.toString(), "normal");
-                }
+//                if (parentData.size() == 0) {
+//
+//                } else {
+//                    filter(editable.toString(), "normal");
+//                }
 
             }
         });
@@ -971,7 +989,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                                 .putExtra("tu_id", tuId).putExtra("hf_id", hfId).putExtra("enroll_id", enroll_id));
                     } else if (getIntent().hasExtra("report_col")) {
 
-                        BaseUtils.showToast(FormTwo.this, BaseUtils.getUserInfo(this).getnDisCd().toString());
+                       // BaseUtils.showToast(FormTwo.this, BaseUtils.getUserInfo(this).getnDisCd().toString());
                         startActivity(new Intent(FormTwo.this, FormSix.class)
                                 .putExtra("hf_id", hfId).putExtra("enroll_id", enroll_id)
                                 .putExtra("doc_id", doc_id).putExtra("doc_name", doctorname)
@@ -1276,12 +1294,16 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
         }
 
         Log.d("Used Url",usedUrl);
+        BaseUtils.showToast(FormTwo.this,"Please wait while we fetch data for you.");
+
         ApiClient.getClient().getRegisterParent(usedUrl).enqueue(new Callback<RegisterParentResponse>() {
             @Override
             public void onResponse(Call<RegisterParentResponse> call, Response<RegisterParentResponse> response) {
                 if (response.isSuccessful()) {
+
                     if (response.body().getStatus()) {
                         // parentData = response.body().getUserData();
+
                         Log.d("popipok", "onResponse: " + response.body().getUserData().size());
                         parentData.clear();
                         List<RegisterParentData> nett = new ArrayList<>();
@@ -1313,7 +1335,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
             public void onFailure(Call<RegisterParentResponse> call, Throwable t) {
                 progressDialog.hideProgressBar();
 
-                BaseUtils.showToast(FormTwo.this,t.getMessage());
+             //   BaseUtils.showToast(FormTwo.this,t.getMessage());
                 //    progressDialog.hideProgressBar();
             }
         });

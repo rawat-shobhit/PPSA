@@ -1,70 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".FormOne">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#2ea8df">
+        android:background="#2ea8df"
+        android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/backbtn"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/ic_arrow_back"
-            android:padding="@dimen/_5sdp"
             android:layout_margin="@dimen/_5sdp"
-            app:tint="@color/white"
-            />
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/white" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Patient Notification"
-            android:fontFamily="@font/nunitosans_bold_2"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
             android:layout_marginEnd="@dimen/_40sdp"
+            android:fontFamily="@font/nunitosans_bold_2"
+            android:gravity="center"
+            android:text="Patient Notification"
             android:textColor="@color/white"
-            android:textSize="@dimen/_20sdp"/>
+            android:textSize="@dimen/_20sdp" />
     </LinearLayout>
+
     <TextView
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginStart="@dimen/_12sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:text="* are mandatory fields"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/nunitosans_bold_2"
+        android:gravity="center"
         android:text="Enrollment"
         android:textColor="@color/black"
-        android:fontFamily="@font/nunitosans_bold_2"
         android:textSize="@dimen/_16sdp"
-        android:visibility="gone"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/_10sdp"/>
+        android:visibility="gone" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/dataOf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Date of Enrollment*"
                 android:fontFamily="@font/nunitosans_semibold"
+                android:text="Date of Enrollment*"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -246,10 +252,10 @@
                 android:elevation="@dimen/_4sdp"
                 android:fontFamily="@font/nunitosans_regular_2"
                 android:hint="--"
-                android:textColorHint="@color/grey"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
+                android:textColorHint="@color/grey"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -258,8 +264,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Nikshaya ID*"
                 android:fontFamily="@font/nunitosans_semibold"
+                android:text="Nikshaya ID*"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -269,24 +275,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
                 android:elevation="@dimen/_4sdp"
                 android:fontFamily="@font/nunitosans_regular_2"
-                android:textStyle="bold"
-                android:background="@drawable/back_two"
                 android:hint="--"
                 android:inputType="number"
-                android:textColorHint="@color/grey"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Patient Name*"
                 android:fontFamily="@font/nunitosans_semibold"
+                android:text="Patient Name*"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -296,16 +303,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
                 android:elevation="@dimen/_4sdp"
                 android:fontFamily="@font/nunitosans_regular_2"
-                android:textStyle="bold"
-                android:background="@drawable/back_two"
                 android:hint="--"
-                android:textColorHint="@color/grey"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/notificationImageForm"
@@ -344,8 +351,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Age*"
                 android:fontFamily="@font/nunitosans_semibold"
+                android:text="Age*"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -355,24 +362,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
                 android:elevation="@dimen/_4sdp"
                 android:fontFamily="@font/nunitosans_regular_2"
-                android:textStyle="bold"
-                android:background="@drawable/back_two"
-                android:inputType="number"
                 android:hint="--"
-                android:textColorHint="@color/grey"
+                android:inputType="number"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Gender*"
                 android:fontFamily="@font/nunitosans_semibold"
+                android:text="Gender*"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -380,47 +388,49 @@
                 android:id="@+id/f1_gender"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:elevation="@dimen/_4sdp"
-                android:textStyle="bold"
                 android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
                 android:hint="--"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Primary Phone Number*"
                 android:fontFamily="@font/nunitosans_semibold"
+                android:text="Primary Phone Number*"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <EditText
                     android:id="@+id/f1_primaryphonenumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/back_two"
                     android:elevation="@dimen/_4sdp"
                     android:fontFamily="@font/nunitosans_regular_2"
-                    android:textStyle="bold"
+                    android:hint="--"
                     android:inputType="number"
                     android:maxLength="10"
-                    android:textColorHint="@color/grey"
-                    android:background="@drawable/back_two"
-                    android:hint="--"
                     android:paddingHorizontal="@dimen/_10sdp"
                     android:paddingVertical="@dimen/_12sdp"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
             </ScrollView>
 
             <TextView
@@ -452,8 +462,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Weight (in Kg)"
                 android:fontFamily="@font/nunitosans_semibold"
+                android:text="Weight (in Kg)"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -463,25 +473,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:elevation="@dimen/_4sdp"
-                android:textColorHint="@color/grey"
-                android:fontFamily="@font/nunitosans_regular_2"
-                android:textStyle="bold"
                 android:background="@drawable/back_two"
-                android:inputType="numberDecimal"
+                android:elevation="@dimen/_4sdp"
+                android:fontFamily="@font/nunitosans_regular_2"
                 android:hint="--"
-                android:text=""
+                android:inputType="numberDecimal"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
+                android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Height (cm)"
                 android:fontFamily="@font/nunitosans_semibold"
+                android:text="Height (cm)"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -491,25 +502,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:elevation="@dimen/_4sdp"
-                android:text=""
-                android:fontFamily="@font/nunitosans_regular_2"
-                android:textStyle="bold"
-                android:textColorHint="@color/grey"
-                android:inputType="numberDecimal"
                 android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
+                android:fontFamily="@font/nunitosans_regular_2"
                 android:hint="--"
+                android:inputType="numberDecimal"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
+                android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Address"
                 android:fontFamily="@font/nunitosans_semibold"
+                android:text="Address"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -523,8 +535,89 @@
                 android:elevation="@dimen/_4sdp"
                 android:fontFamily="@font/nunitosans_regular_2"
                 android:hint="--"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_12sdp"
                 android:text=""
+                android:textColor="@color/black"
                 android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="Taluka"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <EditText
+                android:id="@+id/f1_taluka"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:hint="--"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="Town"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <EditText
+                android:id="@+id/f1_town"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:hint="--"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="Ward"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <EditText
+                android:id="@+id/f1_ward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
+                android:fontFamily="@font/nunitosans_regular_2"
+                android:hint="--"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
@@ -534,88 +627,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:text="Taluka"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/nunitosans_semibold"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"/>
-
-            <EditText
-                android:id="@+id/f1_taluka"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:elevation="@dimen/_4sdp"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:fontFamily="@font/nunitosans_regular_2"
-                android:textStyle="bold"
-                android:background="@drawable/back_two"
-                android:hint="--"
-                android:text=""
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_12sdp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:text="Town"
-                android:fontFamily="@font/nunitosans_semibold"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"/>
-
-            <EditText
-                android:id="@+id/f1_town"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:elevation="@dimen/_4sdp"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:fontFamily="@font/nunitosans_regular_2"
-                android:textStyle="bold"
-                android:text=""
-                android:textColorHint="@color/grey"
-                android:background="@drawable/back_two"
-                android:hint="--"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_12sdp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:text="Ward"
-                android:fontFamily="@font/nunitosans_semibold"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"/>
-
-            <EditText
-                android:id="@+id/f1_ward"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:elevation="@dimen/_4sdp"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:fontFamily="@font/nunitosans_regular_2"
-                android:textStyle="bold"
-                android:background="@drawable/back_two"
-                android:hint="--"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_12sdp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:text="Landmark"
-                android:fontFamily="@font/nunitosans_semibold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -625,23 +640,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:elevation="@dimen/_4sdp"
-                android:textColorHint="@color/grey"
-                android:fontFamily="@font/nunitosans_regular_2"
-                android:textStyle="bold"
                 android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
+                android:fontFamily="@font/nunitosans_regular_2"
                 android:hint="--"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Pincode"
                 android:fontFamily="@font/nunitosans_semibold"
+                android:text="Pincode"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
 
@@ -651,26 +667,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
                 android:elevation="@dimen/_4sdp"
                 android:fontFamily="@font/nunitosans_regular_2"
-                android:textStyle="bold"
-                android:inputType="number"
-                android:textColorHint="@color/grey"
-                android:background="@drawable/back_two"
                 android:hint="--"
+                android:inputType="number"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:text="Residential State"
-                android:fontFamily="@font/nunitosans_semibold"
                 android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"/>
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="Residential State"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
 
             <Spinner
                 android:id="@+id/f1_residentialstate"
@@ -690,52 +707,53 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:text="Residential District"
-                android:fontFamily="@font/nunitosans_semibold"
                 android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"/>
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="Residential District"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
 
             <Spinner
                 android:id="@+id/f1_residentialdistrict"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:elevation="@dimen/_4sdp"
-                android:textStyle="bold"
                 android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
                 android:hint="--"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:text="Residential TU"
-                android:fontFamily="@font/nunitosans_semibold"
                 android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"/>
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:text="Residential TU"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
 
             <Spinner
                 android:id="@+id/f1_residentialTu"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:elevation="@dimen/_4sdp"
-                android:textStyle="bold"
-                android:visibility="gone"
                 android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
                 android:hint="--"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/tuString"
@@ -743,47 +761,49 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
                 android:elevation="@dimen/_4sdp"
                 android:fontFamily="@font/nunitosans_regular_2"
-                android:textStyle="bold"
-                android:textColorHint="@color/grey"
-                android:background="@drawable/back_two"
                 android:hint="--"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Secondary Phone Number"
                 android:fontFamily="@font/nunitosans_semibold"
+                android:text="Secondary Phone Number"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
+
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <EditText
                     android:id="@+id/f1_secondaryphonenumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/back_two"
                     android:elevation="@dimen/_4sdp"
                     android:fontFamily="@font/nunitosans_regular_2"
-                    android:textStyle="bold"
-                    android:inputType="number"
-                    android:background="@drawable/back_two"
                     android:hint="--"
-                    android:textColorHint="@color/grey"
+                    android:inputType="number"
                     android:maxLength="10"
                     android:paddingHorizontal="@dimen/_10sdp"
                     android:paddingVertical="@dimen/_12sdp"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
             </ScrollView>
 
 
@@ -794,19 +814,19 @@
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginVertical="@dimen/_40sdp"
                 android:gravity="center"
-                app:cardUseCompatPadding="true"
+                android:paddingVertical="@dimen/_8sdp"
                 app:cardCornerRadius="@dimen/_8sdp"
-                android:paddingVertical="@dimen/_8sdp">
+                app:cardUseCompatPadding="true">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunitosans_semibold"
                     android:background="#2ea8df"
+                    android:fontFamily="@font/nunitosans_semibold"
                     android:gravity="center"
                     android:padding="@dimen/_12sdp"
-                    android:textAllCaps="true"
                     android:text="Proceed"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />

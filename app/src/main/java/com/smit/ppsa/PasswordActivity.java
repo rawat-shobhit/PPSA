@@ -27,8 +27,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PasswordActivity extends AppCompatActivity {
-
-
     private TextInputEditText oldpassword, newpassword, renewpassword;
     private TextInputLayout oldContainer;
     private Context context;
