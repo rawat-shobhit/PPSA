@@ -30,6 +30,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,6 +41,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.smit.ppsa.Adapter.CustomSpinnerAdapter;
+import com.smit.ppsa.Adapter.FilterDropdownAdapter;
 import com.smit.ppsa.Dao.AppDataBase;
 import com.smit.ppsa.Network.ApiClient;
 import com.smit.ppsa.Network.NetworkCalls;
@@ -53,6 +55,7 @@ import com.smit.ppsa.Response.FormOneResponse;
 import com.smit.ppsa.Response.HospitalList;
 import com.smit.ppsa.Response.HospitalResponse;
 import com.smit.ppsa.Response.MedicineResponse.MedicineResponse;
+import com.smit.ppsa.Response.PatientFilterDataModel;
 import com.smit.ppsa.Response.PatientResponse;
 import com.smit.ppsa.Response.RegisterParentData;
 import com.smit.ppsa.Response.RoomMedicines;
@@ -110,6 +113,15 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     Uri bankImageUri = null;
     int SELECT_PICTURE = 200;
     int PIC_CROP = 500;
+
+
+    String hivFilterId="";
+    String diabeticsId="";
+
+    ArrayList<PatientFilterDataModel> hivFilter = new ArrayList<>();
+    ArrayList<PatientFilterDataModel> diabetiesFilter = new ArrayList<>();
+
+    private AutoCompleteTextView hivDropDown,diabetiesDropDown;
 
     // Permissions for accessing the storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -179,6 +191,8 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
+        hivDropDown=findViewById(R.id.hivAutoComplete);
+        diabetiesDropDown=findViewById(R.id.diabtesAutoComplete);
 
 
         type = getIntent().getStringExtra("type");
@@ -313,6 +327,49 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             }
         });
         setOnclick();
+
+        updateSpinner();
+
+    }
+
+    private void updateSpinner() {
+
+        hivFilter.add(new PatientFilterDataModel(1,"Reactive"));
+        hivFilter.add(new PatientFilterDataModel(2,"Non-Reactive"));
+        hivFilter.add(new PatientFilterDataModel(3,"Positive"));
+        hivFilter.add(new PatientFilterDataModel(4,"Negative"));
+
+
+        diabetiesFilter.add(new PatientFilterDataModel(1,"Non-Diabetics"));
+        diabetiesFilter.add(new PatientFilterDataModel(2,"Diabetics"));
+
+        newFilterDropDown hivAdaptee = new newFilterDropDown(this,hivFilter);
+        hivDropDown.setAdapter(hivAdaptee);
+
+        hivDropDown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                hivFilterId=(position+1)+"";
+
+
+
+            }
+        });
+
+        newFilterDropDown DiabeticAdaptee = new newFilterDropDown(this,diabetiesFilter);
+        diabetiesDropDown.setAdapter(DiabeticAdaptee);
+
+        diabetiesDropDown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                diabeticsId=(position+1)+"";
+
+            }
+        });
+
+
     }
 
 
@@ -938,7 +995,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     bank,
                     BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc(),
                     EnrollmentDate.getText().toString(),
-                    "1",true
+                    "1",true,hivFilterId,diabeticsId
 
             );
         }else{
@@ -975,7 +1032,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     bank,
                     BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc(),
                     EnrollmentDate.getText().toString(),
-                    "0",false
+                    "0",false,hivFilterId,diabeticsId
 
             );
         }

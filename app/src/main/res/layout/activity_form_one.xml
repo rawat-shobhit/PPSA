@@ -314,6 +314,84 @@
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="HIV Status*"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:backgroundTint="@color/edit_text_bg_grey"
+                app:boxStrokeColor="@color/edit_text_bg_grey"
+                app:boxStrokeWidth="0dp">
+
+
+
+                <!-- Inside text input layout add
+                      an auto complete text view
+                        and make its input type to none-->
+                <AutoCompleteTextView
+                    android:id="@+id/hivAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/edit_text_bg_grey"
+                    android:editable="false"
+                    android:text="Select"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:background="@drawable/back_two"
+                    android:gravity="center_vertical|start"
+                    android:inputType="none"
+                    android:textAlignment="viewStart"
+                    android:textSize="@dimen/_10ssp" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:text="Diabetes*"
+                android:fontFamily="@font/nunitosans_semibold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:backgroundTint="@color/edit_text_bg_grey"
+                app:boxStrokeColor="@color/edit_text_bg_grey"
+                app:boxStrokeWidth="0dp">
+
+                <!-- Inside text input layout add
+                      an auto complete text view
+                        and make its input type to none-->
+                <AutoCompleteTextView
+                    android:id="@+id/diabtesAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/edit_text_bg_grey"
+                    android:editable="false"
+                    android:text="Select "
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@drawable/back_two"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:gravity="center_vertical|start"
+                    android:inputType="none"
+                    android:textAlignment="viewStart"
+                    android:textSize="@dimen/_10ssp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <LinearLayout
                 android:id="@+id/notificationImageForm"
                 android:layout_width="match_parent"
