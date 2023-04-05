@@ -8,7 +8,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.LiveData;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
 import android.app.Activity;
@@ -26,11 +28,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
@@ -47,16 +51,22 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.smit.ppsa.Adapter.CustomSpinnerAdapter;
+import com.smit.ppsa.Adapter.FdcHospitalsAdapter;
 import com.smit.ppsa.Dao.AppDataBase;
 import com.smit.ppsa.Network.ApiClient;
 import com.smit.ppsa.Network.NetworkCalls;
 import com.smit.ppsa.Response.AddDocResponse;
 import com.smit.ppsa.Response.FormOneData;
 import com.smit.ppsa.Response.FormOneResponse;
+import com.smit.ppsa.Response.HospitalList;
+import com.smit.ppsa.Response.HospitalResponse;
 import com.smit.ppsa.Response.PatientFilterDataModel;
 import com.smit.ppsa.Response.PatientResponse;
 import com.smit.ppsa.Response.RegisterParentData;
+import com.smit.ppsa.Response.RoomDoctorsList;
 import com.yalantis.ucrop.UCrop;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -89,8 +99,11 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     List<String> stateStrings = new ArrayList<>();
     List<String> distri = new ArrayList<>();
     List<String> tuStrings = new ArrayList<>();
+    List<String > hospitalName=new ArrayList<>();
+    List<String > doctorName=new ArrayList<>();
+    List<HospitalList> hospitalLists = new ArrayList<>();
     private List<FormOneData> tu = new ArrayList<>();
-    String lat = "0", lng = "0",tuId = "0";
+    String lat = "0", lng = "0",tuId = "0",hfID="";
     private AppDataBase dataBase;
     private String[] st_id;
     private String st_id_res = "";
@@ -104,13 +117,20 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     private TextView EnrollmentDate, dataOf;
     private EditText tuString, EnrollHealthFacilitySector, EnrollmentFaciltyPHI, EnrollmentFaciltyHFcode, UserIDEnrollment, EnrolmentId, PatientName, Age, Weight, Height, Address,
             Taluka, Town, Ward, Landmark, Pincode, PrimaryPhoneNumber, SecondaryPhoneNumber;
-    private Spinner EnrollmentFaciltyState, EnrollmentFaciltyDistrict, EnrollmentFaciltyTBU, Gender, ResidentialState, ResidentialDistrict, ResidentialTU;
+    private Spinner EnrollmentFaciltyState, EnrollmentFaciltyDistrict, EnrollmentFaciltyTBU, Gender, ResidentialState, ResidentialDistrict, ResidentialTU,hospitalSpinner,spinnerDoctor;
     Uri notificationImageUri = null;
     Uri bankImageUri = null;
     int SELECT_PICTURE = 200;
     int PIC_CROP = 500;
+    private static ApiClient.APIInterface apiInterface;
+
+    private List<RoomDoctorsList> DoctorsLists = new ArrayList<>();
 
     private static List<FormOneData> TuList = new ArrayList<>();
+
+    String hfIdGlobal="",doctorIdGlobal="";
+
+    private GlobalProgressDialog progressDialog;
 
 
     String hivFilterId="";
@@ -141,9 +161,13 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
         type = getIntent().getStringExtra("type");
 
+        progressDialog = new GlobalProgressDialog(this);
         if (getIntent().hasExtra("type")) {
             type = getIntent().getStringExtra("type");
         }
+
+        LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiverDoc, new IntentFilter("doc"));
+
     }
 
     public static void verifyStoragePermissions(Activity activity) {
@@ -161,6 +185,9 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     }
 
     private void initViews() {
+        dataBase = AppDataBase.getDatabase(newNotificationScreen.this);
+
+
         dataBase = AppDataBase.getDatabase(this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLocation();
@@ -192,6 +219,8 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
         hivDropDown=findViewById(R.id.hivAutoComplete);
         diabetiesDropDown=findViewById(R.id.diabtesAutoComplete);
+        hospitalSpinner=findViewById(R.id.spinnerHospital);
+        spinnerDoctor=findViewById(R.id.spinnerDoctor);
 
 
 
@@ -280,6 +309,96 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             }
         });
 
+            //        NetworkCalls.getDocData(this, getIntent().getStringExtra("hf_id"));
+//
+//        spinnerDoctor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                if (position == 0) {
+//
+//                } else{
+//
+//                    doctorIdGlobal=hospitalLists.get(position-1).toString();
+//
+//
+//                    Log.d("shobhit id",hfIdGlobal+" -> "+doctorIdGlobal);
+//                    try {
+//                        NetworkCalls.getDocData(newNotificationScreen.this,(position-1)+"");
+//
+//                    }catch (Exception e){}
+//
+//                }
+//            }
+//        });
+
+        spinnerDoctor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i == 0) {
+
+                } else {
+                    //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
+                    doctorIdGlobal=DoctorsLists.get(i-1).getIdd();
+
+                    Log.d("shobhit id " ,doctorIdGlobal+"->"+hfIdGlobal);
+
+
+                    try {
+
+                    } catch (Exception e) {
+
+                    }
+
+//                    if (tuId.equals(BaseUtils.getSelectedTu(HospitalsList.this))) {
+//                        setHospitalRecycler();
+//                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        hospitalSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i == 0) {
+
+                } else {
+                    //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
+                    Log.d("mosojdo", "onItemSelected: " + tu.size());
+
+                    Toast.makeText(newNotificationScreen.this, hospitalLists.get(i-1).getnHfId().toString(), Toast.LENGTH_SHORT).show();
+
+                    hfIdGlobal= hospitalLists.get(i-1).getnHfId().toString();
+
+                    try {
+                       NetworkCalls.getDocData(newNotificationScreen.this, hospitalLists.get(i-1).getnHfId().toString() );
+                    } catch (Exception e) {
+
+                    }
+
+//                    if (tuId.equals(BaseUtils.getSelectedTu(HospitalsList.this))) {
+//                        setHospitalRecycler();
+//                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
         ResidentialTU.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -288,6 +407,14 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                 } else {
                     //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
                     Log.d("mosojdo", "onItemSelected: " + tu.size());
+
+
+                    hospitalName.clear();
+                    doctorName.clear();
+
+
+                    hospitalSpinner.setSelection(0);
+                    spinnerDoctor.setSelection(0);
 
                     try {
                         tuId = tu.get(/*i - 1*/i - 1).getN_tu_id();//selecting the second value in list first value is null
@@ -314,6 +441,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 //                    if (tuId.equals(BaseUtils.getSelectedTu(HospitalsList.this))) {
 //                        setHospitalRecycler();
 //                    }
+
                     NetworkCalls.getUserOtherData(newNotificationScreen.this, BaseUtils.getUserInfo(newNotificationScreen.this).getN_staff_sanc(), tuId);
                 }
 
@@ -545,6 +673,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     } catch (Exception e) {
 
                     }
+
                     //  parentDataTestReportResults = response.body().getUser_data();
 
 //
@@ -864,6 +993,139 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
     }
 
+
+    private void setHospitalRecycler() {
+
+
+        setSpinnerAdapter(hospitalSpinner, hospitalName);
+    //    ResidentialTU.setSelection(1);
+
+
+
+//        if (isFirstTymOnThisPage) {
+//            isFirstTymOnThisPage = false;
+//        } else {
+//            getHospitalData(this, tuId, false);
+//        }
+
+        //  BaseUtils.showToast(HospitalsList.this,"Called");
+
+//        Log.d("shobhit_hospitalList", "setHospital 1206");
+//        // hospitalLists = BaseUtils.getHospital(HospitalsList.this);
+//        if (!hospitalLists.isEmpty()) {
+//            hfID = hospitalLists.get(0).getnHfId();
+//        }
+//        Log.d("jiouyo", "setHospitalRecycler: " + hospitalLists.size());
+//
+//        if (getIntent().hasExtra("fdc")) {
+//            fdcHospitalsAdapter = new FdcHospitalsAdapter(hospitalLists, newNotificationScreen.this, "fdc", hfID, dataBase);
+//        } else if (getIntent().hasExtra("provider")) {
+//
+//            try {
+//                fdcHospitalsAdapter = new FdcHospitalsAdapter(hospitalLists, newNotificationScreen.this, "provider", hfID, dataBase);
+//            } catch (Exception e) {
+//            }
+//            ;
+//
+//
+//        } else {
+//            fdcHospitalsAdapter = new FdcHospitalsAdapter(hospitalLists, newNotificationScreen.this, "koko", hfID, dataBase);
+//
+//        }
+
+
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(newNotificationScreen.this, LinearLayoutManager.VERTICAL, false);
+//        hospitalRecycler.setLayoutManager(linearLayoutManager);
+//        hospitalRecycler.setAdapter(fdcHospitalsAdapter);
+//        hospitalRecycler.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation));
+      /*  }else {
+            hospitalsAdapter = new HospitalsAdapter(hospitalLists);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HospitalsList.this, LinearLayoutManager.VERTICAL, false);
+            hospitalRecycler.setLayoutManager(linearLayoutManager);
+            hospitalRecycler.setAdapter(hospitalsAdapter);
+            hospitalRecycler.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation));
+        }*/
+    }
+
+
+    public  void getHospitalData(Context context, String TuId, Boolean navigate) {
+        //Log.d("mosojdo","API CalleEd");
+        //    BaseUtils.showToast(HospitalsList.this, "Please wait while we fetch data.");
+        try{
+            hospitalLists.clear();
+            setHospitalRecycler();
+        }catch (Exception e){}
+        apiInterface = ApiClient.getClient();
+        progressDialog = new GlobalProgressDialog(newNotificationScreen.this);
+        progressDialog.showProgressBar();
+        if (!BaseUtils.isNetworkAvailable(context)) {
+            // progressDialog.hideProgressBar();
+            BaseUtils.showToast(context, "Please Check your internet  Connectivity");
+            //  LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
+
+            return;
+        }
+        Log.d("rerw", "onResponseIdd TU: " + TuId);
+        Log.d("rerw", "onResponseIdd: Base" + BaseUtils.getUserInfo(context).getnAccessRights());
+
+        // String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=n_tu_id<<EQUALTO>>" + TuId;
+        // String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=" + BaseUtils.getUserInfo(context).getnAccessRights() + "&sanc=" + BaseUtils.getUserOtherInfo(context).getN_staff_sanc() + "&tu_id=" + TuId;
+        String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=" + BaseUtils.getUserInfo(context).getnAccessRights() + "&sanc=" + BaseUtils.getUserInfo(context).getN_staff_sanc() + "&tu_id=" + TuId;
+        //String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=5&sanc=34&tu_id=235";
+
+        apiInterface.getHospitalList(url).enqueue(new Callback<HospitalResponse>() {
+            @Override
+            public void onResponse(Call<HospitalResponse> call, @NotNull Response<HospitalResponse> response) {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    BaseUtils.putAddHospitalForm(context, "true");
+
+                    if (response.body().getStatus().equals("true")) {
+                        hospitalLists = response.body().getUserData();
+
+                        hospitalName.clear();
+                        for(int i=0;i<hospitalLists.size();i++){
+
+                            hospitalName.add(hospitalLists.get(i).getcHfNam());
+
+                        }
+
+                        setHospitalRecycler();
+                        //     progressDialog.hideProgressBar();
+
+                        Log.d("lpossapo", "onResponse: " + hospitalLists.size());
+                        Log.d("Hospitals Data", hospitalLists.toString());
+                        BaseUtils.putSelectedTu(context, TuId);
+                        BaseUtils.saveHospitalList(context, hospitalLists);
+                        //    LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("notifyAdapter", ""));
+                        progressDialog.hideProgressBar();
+                        //  hideProgress(progressDialog);
+
+
+                    } else {
+                        BaseUtils.saveHospitalList(context, hospitalLists);
+                        Log.d("lpossapo", "error: " + response.body().getStatus() + response.body().getMessage());
+                        //   LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
+                        progressDialog.hideProgressBar();
+                    }
+                } else {
+                    Log.d("lpossapo", "error: " + response.errorBody().toString());
+                    //    LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
+                    progressDialog.hideProgressBar();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<HospitalResponse> call, @NotNull Throwable t) {
+                progressDialog.hideProgressBar();
+                LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
+            }
+        });
+    }
+
+
+
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -1059,8 +1321,8 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnStId(),
                     BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnDisId(),
                     BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnTuId(),
-                    getIntent().getStringExtra("hf_id"),
-                    getIntent().getStringExtra("doc_id"),
+                    hfIdGlobal,
+                    doctorIdGlobal,
                     EnrollmentDate.getText().toString(),
                     EnrolmentId.getText().toString(),
                     PatientName.getText().toString(),
@@ -1076,7 +1338,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     Pincode.getText().toString(),
                     st_id_res,
                     dis_id_res,
-                    tuString.getText().toString(),
+                    tuId,
                     PrimaryPhoneNumber.getText().toString(),
                     SecondaryPhoneNumber.getText().toString(),
                     lat, lng,
@@ -1337,6 +1599,51 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             public void onFailure(Call<FormOneResponse> call, Throwable t) {
                 LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localTU", ""));
             }
+        });
+    }
+
+    public BroadcastReceiver broadcastReceiverDoc = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, @NotNull Intent intent) {
+
+            if (intent.hasExtra("notifyDocAdapter")) {
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(() -> {
+                    //Do something after 1000ms
+                    getRoomDoctors();
+                }, 1000);
+            } else if (intent.hasExtra("localDocData")) {
+                getRoomDoctors();
+            }
+        }
+
+
+    };
+
+    private void getRoomDoctors() {
+        LiveData<List<RoomDoctorsList>> roomDoc = dataBase.customerDao().getSelectedDoctorsFromRoom(hfIdGlobal);
+        roomDoc.observe(newNotificationScreen.this, roomDoctorsLists -> {
+
+            Log.d("shobhit_docName","inside room ");
+
+            Log.d("shobhit_docName",roomDoctorsLists.size()+"");
+            doctorName.clear();
+
+            DoctorsLists= roomDoctorsLists;
+
+
+            for(int i=0;i<roomDoctorsLists.size();i++){
+
+
+                doctorName.add(roomDoctorsLists.get(i).getDocname());
+
+                Log.d("shobhit_docName",roomDoctorsLists.get(i).getDocname());
+            }
+
+
+            setSpinnerAdapter(spinnerDoctor, doctorName);
+
+//                setHospitalRecycler(this.roomDoctorsLists);
         });
     }
 }

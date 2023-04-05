@@ -686,7 +686,6 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
         }
 
          */
-
         /*
           if (BaseUtils.getSection(HospitalFacility.this).equals("sample")) {
 
