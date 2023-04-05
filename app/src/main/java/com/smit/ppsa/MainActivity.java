@@ -805,7 +805,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, LpaPatient.class));
 
             case R.id.NotificationBtn    :
-                startActivity(new Intent(MainActivity.this,FormOne.class).putExtra("type","normal"));
+                startActivity(new Intent(MainActivity.this,newNotificationScreen.class).putExtra("type","normal"));
                 break;
 
 
