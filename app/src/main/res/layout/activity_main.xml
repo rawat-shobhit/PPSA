@@ -191,9 +191,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:scaleType="fitXY"
-                                android:layout_marginVertical="@dimen/_5sdp"
+                                android:layout_marginVertical="@dimen/_3sdp"
                                 android:src="@drawable/ppsa_homme_logo" />
-
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>

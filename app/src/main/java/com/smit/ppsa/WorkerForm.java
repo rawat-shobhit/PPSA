@@ -197,7 +197,7 @@ public class WorkerForm extends AppCompatActivity implements View.OnClickListene
             BaseUtils.showToast(this, "Please Check your internet  Connectivity");            //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
             return;
         }
-        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_t_attend&w=Year(d_rpt)%3C%3CEQUALTO%3E%3E"+date.split("/")[2]+"%3C%3CAND%3E%3EMonth(d_rpt)%3C%3CEQUALTO%3E%3E"+date.split("/")[1]+"%3C%3CAND%3E%3EDay(d_rpt)%3C%3CEQUALTO%3E%3E"+date.split("/")[0]+"%3C%3CAND%3E%3En_user_id%3C%3CEQUALTO%3E%3E"+BaseUtils.getUserInfo(WorkerForm.this).getnUserLevel();
+        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_t_attend&w=Year(d_rpt)%3C%3CEQUALTO%3E%3E"+date.split("/")[2]+"%3C%3CAND%3E%3EMonth(d_rpt)%3C%3CEQUALTO%3E%3E"+date.split("/")[1]+"%3C%3CAND%3E%3EDay(d_rpt)%3C%3CEQUALTO%3E%3E"+date.split("/")[0]+"%3C%3CAND%3E%3En_user_id%3C%3CEQUALTO%3E%3E"+BaseUtils.getUserInfo(WorkerForm.this).getId();
         ApiClient.getClient().getAttendence(url).enqueue(new Callback<AttendeceResponse>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
