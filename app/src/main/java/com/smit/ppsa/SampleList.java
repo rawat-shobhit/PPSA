@@ -84,6 +84,7 @@ public class SampleList extends AppCompatActivity implements View.OnClickListene
                 super.onBackPressed();
                 break;
             case R.id.addSpecimenBtn:
+
                 startActivity(new Intent(this, PatientSampleList.class)
                         .putExtra("enroll_id", getIntent().getStringExtra("enroll_id"))
                         .putExtra("hf_id", getIntent().getStringExtra("hf_id"))

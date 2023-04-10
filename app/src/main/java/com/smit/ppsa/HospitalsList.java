@@ -656,6 +656,11 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
         setClickListners();
         nextbtn.setOnClickListener(view -> {
+
+            BaseUtils.setHospitalName(this,hospitalName);
+            BaseUtils.setDocName(this,doctorName);
+
+            Log.d("shobhit",hospitalName+"-> "+doctorName);
             Log.d("hswtyes", "onClick: clickeddd");
             if (getIntent().hasExtra("fdc")) {
                 LayoutInflater li = LayoutInflater.from(HospitalsList.this);

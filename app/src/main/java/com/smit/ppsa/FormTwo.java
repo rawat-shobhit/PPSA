@@ -129,6 +129,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
         fdcDispensationToPatientViewModel = new ViewModelProvider(this).get(FdcDispensationToPatientViewModel.class);
         title = findViewById(R.id.title);
 
+
     //    Toast.makeText(this, "checking 1231", Toast.LENGTH_SHORT).show();
 
 
@@ -1009,6 +1010,11 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                                 .putExtra("n_diag_cd", n_diag_cd)
                                 .putExtra("resn", resn));
                     } else if (getIntent().hasExtra("sample")) {
+
+
+
+
+
                         startActivity(new Intent(FormTwo.this, SampleList.class)
                                 .putExtra("hf_id", hfId)
                                 .putExtra("hospitalName", getIntent().getStringExtra("hospitalName"))

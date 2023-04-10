@@ -326,6 +326,7 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
         if (getIntent().hasExtra("issued")) {
             nextbtn.setOnClickListener(view -> {
                 if (checked) {
+
                     BaseUtils.showToast(HospitalFacility.this,"1");
                     if (getIntent().getStringExtra("issued").equals("patient")) {
                         Intent intent = new Intent(HospitalFacility.this, FormTwo.class);
@@ -361,8 +362,14 @@ public class HospitalFacility extends AppCompatActivity implements View.OnClickL
 
                     Log.d("jmuih", "onClick: " + BaseUtils.getSection(HospitalFacility.this));
 
+
+
+
+
                     if (selectedroomDoctorsLists.size() > 0) {
 
+
+                        BaseUtils.setDocName(HospitalFacility.this,docName);
 
                         Log.d("insideIfCondition","checking outside if condition  ");
                         if (BaseUtils.getSection(HospitalFacility.this).equals("hospital") || BaseUtils.getSection(HospitalFacility.this).equals("hospitald")) {

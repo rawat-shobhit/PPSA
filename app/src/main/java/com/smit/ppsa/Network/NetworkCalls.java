@@ -29,6 +29,7 @@ import com.smit.ppsa.LoginViewModel;
 import com.smit.ppsa.MainActivity;
 import com.smit.ppsa.NotificationFagment;
 import com.smit.ppsa.PasswordActivity;
+import com.smit.ppsa.PatientSampleList;
 import com.smit.ppsa.Response.AddDocResponse;
 import com.smit.ppsa.Response.AllUserResponse;
 import com.smit.ppsa.Response.AttendeceResponse;
@@ -1902,6 +1903,16 @@ public class NetworkCalls {
                         if (response.isSuccessful()) {
 
                             if (response.body().isStatus()) {
+
+                                Log.d("shobhit_0",response.body().toString());
+                                Log.d("shobhit_0",response.body().getUserData().toString());
+                                Log.d("shobhit_0",response.body().getMessage());
+
+
+                                BaseUtils.setPatientName(context,c_pat_namm);
+                                BaseUtils.setPhoneNo(context,c_mobb);
+
+
                                 dataBase.customerDao().deletePatient(formOneModel);
                                 BaseUtils.showToast(context, "Form one submitted");
                                 BaseUtils.putSubmitFormOne(context, "true");
@@ -1914,16 +1925,17 @@ public class NetworkCalls {
                                             BaseUtils.putSection(context, BaseUtils.getPrevSection(context));
                                         }
                                         //  ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                        ((Activity) context).startActivity(new Intent(context, FormTwo.class)
-                                                .putExtra("hf_type_id", n_hf_idd)
-                                                .putExtra("section", "sample")
-                                                .putExtra("type", "sample")
-                                                //.putExtra("sample", "sample")
-
-                                                .putExtra("sample", "")
-
-                                                .putExtra("hf_id", n_hf_idd)
-                                        );
+//                                        ((Activity) context).startActivity(new Intent(context, FormTwo.class)
+//                                                .putExtra("hf_type_id", n_hf_idd)
+//                                                .putExtra("section", "sample")
+//                                                .putExtra("type", "sample")
+//                                                //.putExtra("sample", "sample")
+//
+//                                                .putExtra("sample", "")
+//
+//                                                .putExtra("hf_id", n_hf_idd)
+//                                        );
+                                        ((Activity) context).startActivity(new Intent(context, PatientSampleList.class));
                                     }
                                 }
 
@@ -1961,6 +1973,9 @@ public class NetworkCalls {
                         if (response.isSuccessful()) {
 
                             if (response.body().isStatus()) {
+                                Log.d("shobhit_1",response.body().toString());
+                                Log.d("shobhit_1",response.body().getUserData().toString());
+                                Log.d("shobhit_1",response.body().getMessage());
                                 dataBase.customerDao().deletePatient(formOneModel);
                                 BaseUtils.showToast(context, "Form one submitted");
                                 BaseUtils.putSubmitFormOne(context, "true");
@@ -2022,6 +2037,18 @@ public class NetworkCalls {
                     if (response.isSuccessful()) {
 
                         if (response.body().isStatus()) {
+                            Log.d("shobhit_2",response.body().toString());
+                            Log.d("shobhit_2",response.body().getUserData().toString());
+                            Log.d("shobhit_2",response.body().getMessage());
+
+
+
+                            BaseUtils.setPatientName(context,c_pat_namm);
+                            BaseUtils.setPhoneNo(context,c_mobb);
+
+
+                            Log.d("shobhit2",c_pat_namm);
+
                             dataBase.customerDao().deletePatient(formOneModel);
                             BaseUtils.showToast(context, "Form one submitted");
                             BaseUtils.putSubmitFormOne(context, "true");
@@ -2033,7 +2060,7 @@ public class NetworkCalls {
                                     if (BaseUtils.getSection(context).equals("addpat")) {
                                         BaseUtils.putSection(context, BaseUtils.getPrevSection(context));
                                     }
-                                    ((Activity) context).finish();
+                                    ((Activity) context).startActivity(new Intent(context, PatientSampleList.class));
                                 }
                             }
 

@@ -97,7 +97,11 @@ public class BaseUtils {
     public static String getUserName(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return preferences.getString("username", "");
+
+
     }
+
+
 
     public static String getSelectedTu(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -2356,5 +2360,86 @@ public class BaseUtils {
         }
         return arrayItems;
     }
+
+
+
+
+    public static String getPatientsNams(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return preferences.getString("patientName", "");
+
+
+    }
+
+    public static void setPatientName(Context context, String patientNam) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("patientName", patientNam);
+        editor.apply();
+    }
+
+
+
+    public static String getHospitalNams(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return preferences.getString("HospitalName", "");
+
+
+    }
+
+    public static void setHospitalName(Context context, String HosNam) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("HospitalName", HosNam);
+        editor.apply();
+    }
+
+
+
+    public static String getDocNams(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return preferences.getString("DocName", "");
+
+
+    }
+
+    public static void setDocName(Context context, String docName) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("DocName", docName);
+        editor.apply();
+    }
+
+
+    public static String getPhoneNo(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return preferences.getString("phoneNo", "");
+
+
+    }
+
+    public static void setPhoneNo(Context context, String phoneNo) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("phoneNo", phoneNo);
+        editor.apply();
+    }
+
+    public static String getEnrollNo(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return preferences.getString("enrollNo", "");
+
+
+    }
+
+    public static void seEnrollNo(Context context, String enrollNo) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("enrollNo", enrollNo);
+        editor.apply();
+    }
+
+
+
 
 }

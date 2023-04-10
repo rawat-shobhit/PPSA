@@ -84,6 +84,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private CardView proceedbtn;
     private ImageView backBtn;
     private LinearLayout notificationImageForm;
+    private LinearLayout layoutSpinners;
     private FusedLocationProviderClient mFusedLocationClient;
     private List<FormOneData> genders = new ArrayList<>();
     private List<FormOneData> state = new ArrayList<>();
@@ -138,6 +139,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver, new IntentFilter(""));
         verifyStoragePermissions(FormOne.this);
         dataOf = findViewById(R.id.dataOf);
+        layoutSpinners=findViewById(R.id.layoutSpinners);
         initViews();
 
         type = getIntent().getStringExtra("type");
@@ -199,6 +201,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         if (Objects.equals(getIntent().getStringExtra("type"), "sample")) {
             formProviderEngagement=false;
             dataOf.setVisibility(View.GONE);
+            layoutSpinners.setVisibility(View.GONE);
             EnrollmentDate.setVisibility(View.GONE);
             Log.d("typeCheck", type.toString());
         } else if (Objects.equals(getIntent().getStringExtra("type"), "tree")) {
@@ -209,12 +212,14 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
+            layoutSpinners.setVisibility(View.GONE);
             EnrollmentDate.setVisibility(View.GONE);
             notificationImageForm.setVisibility(View.GONE);
 
             Log.d("typeCheck", type.toString());
         } else {
             formProviderEngagement=true;
+            layoutSpinners.setVisibility(View.VISIBLE);
             dataOf.setVisibility(View.VISIBLE);
             EnrollmentDate.setVisibility(View.VISIBLE);
             dataOf.setText("Date of Diagnosis*");
@@ -352,7 +357,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
                 hivFilterId=(position+1)+"";
 
-
+                Toast.makeText(FormOne.this, hivFilterId, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -365,6 +370,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 diabeticsId=(position+1)+"";
+                Toast.makeText(FormOne.this, diabeticsId, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -391,7 +397,6 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                         RegisterParentData model = response.body().getUserData().get(0);
 
                         //HospitalList model = response.body().getUserData().get(0);
-
                         //  BaseUtils.showToast(FormOne.this, model.getcTyp());
 
                         EnrollmentDate.setText(model.getdRegDat());
@@ -962,6 +967,10 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         }
 
         if(formProviderEngagement){
+            BaseUtils.setPatientName(this,PatientName.getText().toString());
+            BaseUtils.setPhoneNo(this,PrimaryPhoneNumber.getText().toString());
+
+
             NetworkCalls.sendForm(
                     FormOne.this,
                     BaseUtils.getUserOtherInfo(FormOne.this).getnStId(),
@@ -999,6 +1008,10 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
             );
         }else{
+
+            BaseUtils.setPatientName(this,PatientName.getText().toString());
+
+
             NetworkCalls.sendForm(
                     FormOne.this,
                     BaseUtils.getUserOtherInfo(FormOne.this).getnStId(),

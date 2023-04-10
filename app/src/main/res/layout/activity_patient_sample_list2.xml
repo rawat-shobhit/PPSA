@@ -170,7 +170,7 @@
                         android:layout_marginStart="@dimen/_12sdp"
                         android:layout_weight="2"
                         android:fontFamily="@font/nunitosans_bold_2"
-                        android:text="Hospital name"
+                        android:text="patient name"
                         android:textColor="@color/black" />
 
                     <TextView
