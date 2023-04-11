@@ -1,11 +1,5 @@
 package com.smit.ppsa;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.DatePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,6 +19,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.smit.ppsa.Adapter.CustomSpinnerAdapter;
 import com.smit.ppsa.Adapter.PreviousSamplesCollectionAdapter;
 import com.smit.ppsa.Dao.AppDataBase;
@@ -39,6 +39,7 @@ import com.smit.ppsa.Response.pythologylab.LabResponseInternal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -88,6 +89,7 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
         progressDialog = new GlobalProgressDialog(this);
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver, new IntentFilter(""));
         init();
+
     }
 
     private void init() {
@@ -106,7 +108,19 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
         patientname = findViewById(R.id.patientname);
         patientphone = findViewById(R.id.patientphone);
 
-        reg_date = getIntent().getStringExtra("reg_date");
+        try {
+            if(getIntent().hasExtra("reg_date")){
+                reg_date = getIntent().getStringExtra("reg_date");
+
+            }else{
+                reg_date= new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+
+            }
+        }catch (Exception e){
+
+
+        }
 
         if(BaseUtils.getPatientsNams(this).equals("")){
             patientname.setText(getIntent().getStringExtra("patient_name"));
@@ -124,10 +138,10 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
 
         if(BaseUtils.getDocNams(this).equals("")){
             docname.setText(getIntent().getStringExtra("doc_name"));
-            Toast.makeText(this, "from get string ", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "from get string ", Toast.LENGTH_SHORT).show();
         }else{
             docname.setText(BaseUtils.getDocNams(this));
-            Toast.makeText(this, "pref ", Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(this, "pref ", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -573,9 +587,14 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
 
                 m_date.show();
                 Calendar calendar1 = Calendar.getInstance();
-                calendar1.set(Integer.parseInt(reg_date.split("-")[0]),
-                        Integer.parseInt(reg_date.split("-")[1]) - 1,
-                        Integer.parseInt(reg_date.split("-")[2]));
+                try{
+                    calendar1.set(Integer.parseInt(reg_date.split("-")[0]),
+                            Integer.parseInt(reg_date.split("-")[1]) - 1,
+                            Integer.parseInt(reg_date.split("-")[2]));
+                }catch (Exception e){
+
+                }
+
                 Calendar calendar = Calendar.getInstance();
                 m_date.getDatePicker().setMaxDate(calendar.getTimeInMillis());
                 m_date.getDatePicker().setMinDate(calendar1.getTimeInMillis());
