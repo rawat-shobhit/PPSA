@@ -599,7 +599,6 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
             BaseUtils.putSection(FormTwo.this, BaseUtils.getPrevSection(FormTwo.this));
         }
 
-        progressDialog = new GlobalProgressDialog(this);
         tuCounsell = findViewById(R.id.tuCounsell);
         counselTuTitle = findViewById(R.id.counselTuTitle);
         patientrecycler = findViewById(R.id.f2_patientrecycler);

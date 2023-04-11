@@ -19,7 +19,10 @@ import com.smit.ppsa.Adapter.FilterDropdownAdapter
 import com.smit.ppsa.Adapter.LpaPatientAdapter
 import com.smit.ppsa.Network.ApiClient
 import com.smit.ppsa.Network.NetworkCalls
-import com.smit.ppsa.Response.*
+import com.smit.ppsa.Response.FormOneData
+import com.smit.ppsa.Response.PatientFilterDataModel
+import com.smit.ppsa.Response.RegisterParentData
+import com.smit.ppsa.Response.RegisterParentResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -44,6 +47,7 @@ class TuSearchPatientList : AppCompatActivity() {
     var tuString = ""
     var selectedFilter = ""
     private var filterArray = ArrayList<PatientFilterDataModel>()
+    private var progressDialog: GlobalProgressDialog? = null
 
     var tuStrings: MutableList<String> = ArrayList()
     private var tu: MutableList<FormOneData> = ArrayList()
@@ -103,6 +107,7 @@ class TuSearchPatientList : AppCompatActivity() {
 
     private fun init() {
         dropDownForFilter = findViewById(R.id.autoCompleteTextViewForFilters)
+        progressDialog = GlobalProgressDialog(this)
 
         tuSpinner = findViewById(R.id.filterCounsell)
         checkboxNonVisit = findViewById(R.id.checkboxNonVisit)
@@ -188,12 +193,16 @@ class TuSearchPatientList : AppCompatActivity() {
     }
 
     private fun getPatient() {
+
+        progressDialog!!.showProgressBar()
+
         if (!BaseUtils.isNetworkAvailable(this@TuSearchPatientList)) {
             BaseUtils.showToast(
                 this,
                 "Please Check your internet  Connectivity"
             ) //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
 
+            progressDialog!!.hideProgressBar()
 
             return
         }
@@ -253,6 +262,8 @@ class TuSearchPatientList : AppCompatActivity() {
                         BaseUtils.showToast(this@TuSearchPatientList, "No patient found")
                     }
                 }
+                progressDialog!!.hideProgressBar()
+
             }
 
             //  fdcHospitalsAdapter = new FdcHospitalsAdapter(hospitalLists, HospitalsList.this, "koko", hfID, dataBase);
@@ -265,6 +276,7 @@ class TuSearchPatientList : AppCompatActivity() {
             //
 
             override fun onFailure(call: Call<RegisterParentResponse>, t: Throwable) {
+                progressDialog!!.hideProgressBar()
 
             }
         })
