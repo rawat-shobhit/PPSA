@@ -265,6 +265,7 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
         switch (view.getId()) {
             case R.id.nextbtn:
                 if (isValidate()) {
+                    Log.d("buttonClick","clicked");
                     addSample(PatientSampleList.this);
                 }
                 break;
@@ -423,14 +424,16 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
             if (date_of_diagnosis.getText() == "") {
                 BaseUtils.showToast(PatientSampleList.this, "Please select date of diagnosis");
             } else {
+
                 NetworkCalls.addSample2(
+
                         context,
                         BaseUtils.getUserOtherInfo(PatientSampleList.this).getnStId(),
                         BaseUtils.getUserOtherInfo(PatientSampleList.this).getnDisId(),
                         BaseUtils.getUserOtherInfo(PatientSampleList.this).getnTuId(),
                         getIntent().getStringExtra("hf_id"),
                         BaseUtils.getGlobaldocId(context),
-                     enroll_id,
+                        enroll_id,
                         f2_datespecimencollected.getText().toString(),
                         extractions.get(Sampleextractiondoneby.getSelectedItemPosition() - 1).getId(),
                         testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getId(),
@@ -444,14 +447,16 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
                         BaseUtils.getUserInfo(this).getN_staff_sanc(),
                         BaseUtils.getUserInfo(PatientSampleList.this).getId(), true, date_of_diagnosis.getText().toString(), "1"
                 );
+                Log.d("button","add sample2");
                 if (testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getC_sputm_typ() == "UDST MC") {
                     NetworkCalls.reasonForTesting(PatientSampleList.this, enroll_id, BaseUtils.getUserInfo(PatientSampleList.this).getnUserLevel(), false, f2_datespecimencollected.getText().toString(), "1");
                 }
             }
         } else {
 
-
+            Log.d("button","add sample");
             NetworkCalls.addSample(
+
                     context,
                     BaseUtils.getUserOtherInfo(PatientSampleList.this).getnStId(),
                     BaseUtils.getUserOtherInfo(PatientSampleList.this).getnDisId(),
@@ -475,6 +480,9 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
 
 
         }
+
+        Log.d("button","add sample ends");
+
     }
 
     private void getPreviousSamples() {

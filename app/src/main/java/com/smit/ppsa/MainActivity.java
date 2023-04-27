@@ -797,8 +797,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-
-
             case R.id.fdc_issued:
                 break;
             case R.id.lpaResult:
@@ -807,7 +805,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.NotificationBtn    :
                 startActivity(new Intent(MainActivity.this,newNotificationScreen.class).putExtra("type","normal"));
                 break;
-
 
         }
     }

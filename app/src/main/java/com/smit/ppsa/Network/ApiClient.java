@@ -507,7 +507,7 @@ public class ApiClient {
         Call<FormOneResponse> getType();
 
         @Multipart
-        @POST("_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll&w=id ")
+        @POST("_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll&w=id")
         Call<AddDocResponse> postFormPartOne(@Part("n_st_id") RequestBody n_st_id,
                                              @Part("n_dis_id") RequestBody n_dis_id,
                                              @Part("n_tu_id") RequestBody n_tu_id,

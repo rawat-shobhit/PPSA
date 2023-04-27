@@ -471,12 +471,16 @@ public class NetworkCalls {
                         }
                     }
                 } else {
+
+                    Log.d("button","error aa gaya");
+
                     BaseUtils.putSubmitAddSampleForm(context, "false");
                 }
             }
 
             @Override
             public void onFailure(Call<AddDocResponse> call, Throwable t) {
+                Log.d("button","on Failure ");
                 BaseUtils.putSubmitAddSampleForm(context, "false");
             }
         });
@@ -1935,7 +1939,9 @@ public class NetworkCalls {
 //
 //                                                .putExtra("hf_id", n_hf_idd)
 //                                        );
-                                        ((Activity) context).startActivity(new Intent(context, PatientSampleList.class));
+                                        ((Activity) context).startActivity(new Intent(context, PatientSampleList.class)
+                                                .putExtra("hf_id",n_hf_id.toString()));
+
                                     }
                                 }
 
@@ -2060,7 +2066,8 @@ public class NetworkCalls {
                                     if (BaseUtils.getSection(context).equals("addpat")) {
                                         BaseUtils.putSection(context, BaseUtils.getPrevSection(context));
                                     }
-                                    ((Activity) context).startActivity(new Intent(context, PatientSampleList.class));
+                                    ((Activity) context).startActivity(new Intent(context, PatientSampleList.class)
+                                            .putExtra("hf_id",n_hf_id.toString()));
                                 }
                             }
 
