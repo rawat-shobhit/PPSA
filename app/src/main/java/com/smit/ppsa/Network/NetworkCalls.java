@@ -101,7 +101,7 @@ public class NetworkCalls {
         progressDialog.showProgressBar();
         if (!BaseUtils.isNetworkAvailable(context)) {
             progressDialog.hideProgressBar();
-            BaseUtils.showToast(context, "Please Check your internet  Connectivity");            //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
+            BaseUtils.showToast(context, "Please Check your internet  Connectivity");         //LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
             return;
         }
         Log.d("djuyehdu", "getUserData: " + phoneNumber);

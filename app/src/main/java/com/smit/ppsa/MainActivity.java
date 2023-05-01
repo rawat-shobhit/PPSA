@@ -801,6 +801,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.lpaResult:
                 startActivity(new Intent(MainActivity.this, LpaPatient.class));
+                break;
 
             case R.id.NotificationBtn    :
                 startActivity(new Intent(MainActivity.this,newNotificationScreen.class).putExtra("type","normal"));
