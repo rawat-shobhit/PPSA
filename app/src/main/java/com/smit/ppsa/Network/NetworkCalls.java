@@ -404,6 +404,88 @@ public class NetworkCalls {
 
     }
 
+    public static void addSampleData(
+            Context context,
+            String n_st_idd,
+            String n_dis_idd,
+            String n_tu_idd,
+            String n_hf_idd,
+            String n_doc_idd,
+            String n_enroll_idd,
+            String d_specm_coll,
+            String n_smpl_ext_idd,
+            String n_test_reas_idd,
+            String n_purp_vstt,
+            String n_typ_specm_idd,
+            String n_cont_smpll,
+            String c_plc_samp_coll,
+            String n_sputm_typ_idd,
+            String n_diag_tstt,
+            String n_lab_idd,
+            String n_staff_infoo,
+            String n_user_idd,
+            Boolean navigate
+    ) {
+        BaseUtils.putSubmitAddSampleForm(context, "false");
+        BaseUtils.putAddSampleData(context, n_st_idd, n_dis_idd, n_tu_idd, n_hf_idd, n_doc_idd, n_enroll_idd, d_specm_coll, n_smpl_ext_idd, n_test_reas_idd, n_purp_vstt, n_typ_specm_idd, n_cont_smpll, c_plc_samp_coll, n_sputm_typ_idd, n_diag_tstt, n_lab_idd, n_staff_infoo, n_user_idd);
+
+        if (!BaseUtils.isNetworkAvailable(context)) {
+            BaseUtils.showToast(context, "Please Check your internet  Connectivity");
+            //  dataBase.customerDao().insertAddSample(roomAddSample);
+            if (navigate) {
+                BaseUtils.showToast(context, "Data will be submitted when back online");
+                context.startActivity(new Intent(context, MainActivity.class));
+                //  ((Activity) context).finish();
+            }
+            return;
+        }
+        RequestBody n_st_id = RequestBody.create(n_st_idd, MediaType.parse("text/plain"));
+        RequestBody n_dis_id = RequestBody.create(n_dis_idd, MediaType.parse("text/plain"));
+        RequestBody n_tu_id = RequestBody.create(n_tu_idd, MediaType.parse("text/plain"));
+        RequestBody n_hf_id = RequestBody.create(n_hf_idd, MediaType.parse("text/plain"));
+        RequestBody n_doc_id = RequestBody.create(n_doc_idd, MediaType.parse("text/plain"));
+        RequestBody n_enroll_id = RequestBody.create(n_enroll_idd, MediaType.parse("text/plain"));
+        RequestBody d_specm_col = RequestBody.create(d_specm_coll, MediaType.parse("text/plain"));
+        RequestBody n_smpl_ext_id = RequestBody.create(n_smpl_ext_idd, MediaType.parse("text/plain"));
+        RequestBody n_test_reas_id = RequestBody.create(n_test_reas_idd, MediaType.parse("text/plain"));
+        RequestBody n_purp_vst = RequestBody.create(n_purp_vstt, MediaType.parse("text/plain"));
+        RequestBody n_typ_specm_id = RequestBody.create(n_typ_specm_idd, MediaType.parse("text/plain"));
+        RequestBody n_cont_smpl = RequestBody.create(n_cont_smpll, MediaType.parse("text/plain"));
+        RequestBody c_plc_samp_col = RequestBody.create(/*f2_placeofsamplecollection.getText().toString()*/"0", MediaType.parse("text/plain"));
+        RequestBody n_sputm_typ_id = RequestBody.create(n_sputm_typ_idd, MediaType.parse("text/plain"));
+        RequestBody n_diag_tst = RequestBody.create(n_diag_tstt, MediaType.parse("text/plain"));
+        RequestBody n_lab_id = RequestBody.create(n_lab_idd, MediaType.parse("text/plain"));
+        RequestBody n_staff_info = RequestBody.create(n_staff_infoo, MediaType.parse("text/plain"));
+        RequestBody n_user_id = RequestBody.create(n_user_idd, MediaType.parse("text/plain"));
+
+        ApiClient.getClient().addSampleApi(n_st_id, n_dis_id, n_tu_id, n_hf_id, n_doc_id, n_enroll_id, d_specm_col, n_smpl_ext_id, n_test_reas_id, n_purp_vst, n_typ_specm_id, n_cont_smpl, c_plc_samp_col, n_sputm_typ_id, n_diag_tst, n_lab_id, n_staff_info, n_user_id).enqueue(new Callback<AddDocResponse>() {
+            @Override
+            public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
+                if (response.isSuccessful()) {
+                    BaseUtils.putSubmitAddSampleForm(context, "true");
+                    // dataBase.customerDao().deleteAddSample(roomAddSample);
+                    if (response.body().isStatus()) {
+                        BaseUtils.showToast(context, "Sample submitted");
+                        if (navigate) {
+                            ((Activity) context).finish();
+                        }
+                    }
+                } else {
+
+                    Log.d("button","error aa gaya");
+
+                    BaseUtils.putSubmitAddSampleForm(context, "false");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddDocResponse> call, Throwable t) {
+                Log.d("button","on Failure ");
+                BaseUtils.putSubmitAddSampleForm(context, "false");
+            }
+        });
+    }
+
     public static void addSample(
             Context context,
             String n_st_idd,
@@ -787,7 +869,7 @@ public class NetworkCalls {
         String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_smplcol_indv_lst&w=" + TuId;
         //String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=5&sanc=34&tu_id=235";
 
-        Log.d("Latest url", url);
+        Log.d("Latest url_counselling", url);
         apiInterface.getTUPatient(url).enqueue(new Callback<RegisterParentResponse>() {
             @Override
             public void onResponse(Call<RegisterParentResponse> call, @NotNull Response<RegisterParentResponse> response) {

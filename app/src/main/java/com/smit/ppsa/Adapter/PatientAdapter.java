@@ -35,6 +35,9 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
     private Context context;
     private String type;
     int prevPos = -1;
+    String data="";
+
+
 
     public PatientAdapter(List<RegisterParentData> registerParentData, Context context, String type) {
         this.registerParentData = registerParentData;
@@ -51,6 +54,10 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Mholder holder, @SuppressLint("RecyclerView") int position) {
+
+        Log.d("checking_Data",registerParentData+"");
+
+
         holder.radioButton.setClickable(false);
         holder.radioButton.setFocusable(false);
 
@@ -69,6 +76,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
 
         }*/
 
+        //working
         holder.editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,7 +214,12 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (registerParentData.get(position).getnHfId().equals("")) {
+                    // crashHandled
+                    try{
+                         data =registerParentData.get(position).getnHfId().toString();
+                    }catch (Exception e){}
+
+                    if (data.equals("")) {
                         Toast.makeText(view.getContext(), "Can not add or view doctors because it is added in local due to no internet connection", Toast.LENGTH_SHORT).show();
                     } else {
                         if (prevPos == -1) {

@@ -180,6 +180,7 @@ public class WorkerForm extends AppCompatActivity implements View.OnClickListene
                 // Showing the popup menu
                 popupMenu.show();
                 break;
+
             case R.id.home:
                 if (pp_spinner.getSelectedItemPosition() == 0 ){
                     BaseUtils.showToast(this,"Please select presence type");

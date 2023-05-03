@@ -455,7 +455,7 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
         } else {
 
             Log.d("button","add sample");
-            NetworkCalls.addSample(
+            NetworkCalls.addSampleData(
 
                     context,
                     BaseUtils.getUserOtherInfo(PatientSampleList.this).getnStId(),
