@@ -454,8 +454,15 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
             }
         } else {
 
-            Log.d("button","add sample");
+            Log.d("button","  hf_if->"+getIntent().getStringExtra("hf_id")+"  doc id->"+BaseUtils.getGlobaldocId(context)+"  enrollment id"+enroll_id);
             NetworkCalls.addSampleData(
+
+                    /*
+Context context,            String n_st_idd,            String n_dis_idd,            String n_tu_idd,
+            String n_hf_idd,
+            String n_doc_idd,
+            String n_enroll_idd,
+                     */
 
                     context,
                     BaseUtils.getUserOtherInfo(PatientSampleList.this).getnStId(),
