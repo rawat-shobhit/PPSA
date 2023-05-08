@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -458,6 +459,9 @@ public class NetworkCalls {
         RequestBody n_staff_info = RequestBody.create(n_staff_infoo, MediaType.parse("text/plain"));
         RequestBody n_user_id = RequestBody.create(n_user_idd, MediaType.parse("text/plain"));
 
+//        Toast.makeText(context,"hos id"+ n_hf_idd, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context,"Doc id"+  n_doc_idd, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context,"enro id"+ n_enroll_idd, Toast.LENGTH_SHORT).show();
         ApiClient.getClient().addSampleApi(n_st_id, n_dis_id, n_tu_id, n_hf_id, n_doc_id, n_enroll_id, d_specm_col, n_smpl_ext_id, n_test_reas_id, n_purp_vst, n_typ_specm_id, n_cont_smpl, c_plc_samp_col, n_sputm_typ_id, n_diag_tst, n_lab_id, n_staff_info, n_user_id).enqueue(new Callback<AddDocResponse>() {
             @Override
             public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
@@ -2023,7 +2027,7 @@ public class NetworkCalls {
 //                                                .putExtra("hf_id", n_hf_idd)
 //                                        );
                                         ((Activity) context).startActivity(new Intent(context, PatientSampleList.class)
-                                                .putExtra("hf_id",n_hf_id.toString()));
+                                                .putExtra("hf_id",n_hf_idd).putExtra("doc_id",n_doc_idd).putExtra("enroll_Id",n_nksh_idd));
 
                                     }
                                 }

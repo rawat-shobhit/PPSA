@@ -74,7 +74,7 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
     private List<String> pythologyLabsTypeString = new ArrayList<>();
     private List<String> typString = new ArrayList<>();
     private String reg_date = "";
-    private  String enroll_id="";
+    private String enroll_id = "";
     private Spinner ReasonforTesting, Typeofspecimen, noOfContainers, Sampleextractiondoneby,
             Sampleextractionfrom, SputumsampletypeandNumber, diagnosticTestSpi, pythologyLabs, pythologyLabsType;
     private AppDataBase dataBase;
@@ -109,54 +109,52 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
         patientphone = findViewById(R.id.patientphone);
 
         try {
-            if(getIntent().hasExtra("reg_date")){
+            if (getIntent().hasExtra("reg_date")) {
                 reg_date = getIntent().getStringExtra("reg_date");
 
-            }else{
-                reg_date= new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+            } else {
+                reg_date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
 
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
 
         }
 
-        if(BaseUtils.getPatientsNams(this).equals("")){
+        if (BaseUtils.getPatientsNams(this).equals("")) {
             patientname.setText(getIntent().getStringExtra("patient_name"));
-        }
-        else{
+        } else {
             patientname.setText(BaseUtils.getPatientsNams(this));
         }
 
-        if(BaseUtils.getHospitalNams(this).equals("")){
+        if (BaseUtils.getHospitalNams(this).equals("")) {
             hospitalName.setText(getIntent().getStringExtra("hospitalName"));
-        }else{
+        } else {
             hospitalName.setText(BaseUtils.getHospitalNams(this));
         }
 
 
-        if(BaseUtils.getDocNams(this).equals("")){
+        if (BaseUtils.getDocNams(this).equals("")) {
             docname.setText(getIntent().getStringExtra("doc_name"));
 //            Toast.makeText(this, "from get string ", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             docname.setText(BaseUtils.getDocNams(this));
-         //   Toast.makeText(this, "pref ", Toast.LENGTH_SHORT).show();
+            //   Toast.makeText(this, "pref ", Toast.LENGTH_SHORT).show();
         }
 
 
-        if(BaseUtils.getPhoneNo(this).equals("")){
+        if (BaseUtils.getPhoneNo(this).equals("")) {
             patientphone.setText(getIntent().getStringExtra("patient_phone"));
-        }else{
+        } else {
             patientphone.setText(BaseUtils.getPhoneNo(this));
         }
 
-        if(BaseUtils.getPhoneNo(this).equals("")){
-            enroll_id=getIntent().getStringExtra("enroll_id");
-        }else{
-            enroll_id=BaseUtils.getEnrollNo(this);
+        if (BaseUtils.getPhoneNo(this).equals("")) {
+            enroll_id = getIntent().getStringExtra("enroll_id");
+        } else {
+            enroll_id = BaseUtils.getEnrollNo(this);
         }
-
 
 
         previousSamplesRecycler = findViewById(R.id.previoussamplecollectionsrecycler);
@@ -195,10 +193,10 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
     protected void onDestroy() {
         super.onDestroy();
 
-        BaseUtils.setPhoneNo(this,"");
-        BaseUtils.setPatientName(this,"");
-        BaseUtils.setDocName(this,"");
-        BaseUtils.setHospitalName(this,"");
+        BaseUtils.setPhoneNo(this, "");
+        BaseUtils.setPatientName(this, "");
+        BaseUtils.setDocName(this, "");
+        BaseUtils.setHospitalName(this, "");
 
 
     }
@@ -238,14 +236,14 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // your code here
-               // Toast.makeText(PatientSampleList.this, position+"", Toast.LENGTH_SHORT).show();
-                try{
-                    if (testings.get(ReasonforTesting.getSelectedItemPosition()-1).getC_test_reas().contains("UDST MC")) {
+                // Toast.makeText(PatientSampleList.this, position+"", Toast.LENGTH_SHORT).show();
+                try {
+                    if (testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getC_test_reas().contains("UDST MC")) {
                         llDOD.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         llDOD.setVisibility(View.GONE);
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -265,7 +263,7 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
         switch (view.getId()) {
             case R.id.nextbtn:
                 if (isValidate()) {
-                    Log.d("buttonClick","clicked");
+                    Log.d("buttonClick", "clicked");
                     addSample(PatientSampleList.this);
                 }
                 break;
@@ -447,30 +445,44 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
                         BaseUtils.getUserInfo(this).getN_staff_sanc(),
                         BaseUtils.getUserInfo(PatientSampleList.this).getId(), true, date_of_diagnosis.getText().toString(), "1"
                 );
-                Log.d("button","add sample2");
+                Log.d("button", "add sample2");
                 if (testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getC_sputm_typ() == "UDST MC") {
                     NetworkCalls.reasonForTesting(PatientSampleList.this, enroll_id, BaseUtils.getUserInfo(PatientSampleList.this).getnUserLevel(), false, f2_datespecimencollected.getText().toString(), "1");
                 }
             }
         } else {
 
-            Log.d("button","  hf_if->"+getIntent().getStringExtra("hf_id")+"  doc id->"+BaseUtils.getGlobaldocId(context)+"  enrollment id"+enroll_id);
-            NetworkCalls.addSampleData(
+            String docID = "";
+            String hosID = "";
+            String enrollmentID = "";
 
-                    /*
-Context context,            String n_st_idd,            String n_dis_idd,            String n_tu_idd,
-            String n_hf_idd,
-            String n_doc_idd,
-            String n_enroll_idd,
-                     */
+            if (getIntent().hasExtra("hf_id")) {
+                hosID = getIntent().getStringExtra("hf_id");
+            } else {
+                hosID = getIntent().getStringExtra("hf_id");
+            }
+
+            if (getIntent().hasExtra("doc_id")) {
+                docID = getIntent().getStringExtra("doc_id");
+            } else {
+                docID = BaseUtils.getGlobaldocId(context);
+            }
+
+            if (getIntent().hasExtra("enroll_Id")) {
+                enrollmentID = getIntent().getStringExtra("enroll_Id");
+            } else {
+                enrollmentID = enroll_id;
+            }
+
+            NetworkCalls.addSampleData(
 
                     context,
                     BaseUtils.getUserOtherInfo(PatientSampleList.this).getnStId(),
                     BaseUtils.getUserOtherInfo(PatientSampleList.this).getnDisId(),
                     BaseUtils.getUserOtherInfo(PatientSampleList.this).getnTuId(),
-                    getIntent().getStringExtra("hf_id"),
-                    BaseUtils.getGlobaldocId(context),
-                    enroll_id,
+                    hosID,
+                    docID,
+                    enrollmentID,
                     f2_datespecimencollected.getText().toString(),
                     extractions.get(Sampleextractiondoneby.getSelectedItemPosition() - 1).getId(),
                     testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getId(),
@@ -488,7 +500,7 @@ Context context,            String n_st_idd,            String n_dis_idd,       
 
         }
 
-        Log.d("button","add sample ends");
+        Log.d("button", "add sample ends");
 
     }
 
@@ -602,11 +614,11 @@ Context context,            String n_st_idd,            String n_dis_idd,       
 
                 m_date.show();
                 Calendar calendar1 = Calendar.getInstance();
-                try{
+                try {
                     calendar1.set(Integer.parseInt(reg_date.split("-")[0]),
                             Integer.parseInt(reg_date.split("-")[1]) - 1,
                             Integer.parseInt(reg_date.split("-")[2]));
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -650,7 +662,7 @@ Context context,            String n_st_idd,            String n_dis_idd,       
                         Integer.parseInt(reg_date.split("-")[2]));
                 Calendar calendar = Calendar.getInstance();
                 m_date.getDatePicker().setMaxDate(calendar.getTimeInMillis());
-            //    m_date.getDatePicker().setMinDate(calendar1.getTimeInMillis());
+                //    m_date.getDatePicker().setMinDate(calendar1.getTimeInMillis());
                 m_date.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
                 m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
             }

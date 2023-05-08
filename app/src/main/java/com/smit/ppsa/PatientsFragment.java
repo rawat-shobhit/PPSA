@@ -129,6 +129,7 @@ public class PatientsFragment extends DialogFragment {
 
         dataBase = AppDataBase.getDatabase(getActivity());
 
+      //  Toast.makeText(context, "thissss", Toast.LENGTH_SHORT).show();
         if (BaseUtils.getSubmitLabReportStatus(getActivity()).equals("false")) {
             /*LiveData<List<RoomFormSixData>> formSix = dataBase.customerDao().fetchFormSix();
             formSix.observe(this, formSixData -> {

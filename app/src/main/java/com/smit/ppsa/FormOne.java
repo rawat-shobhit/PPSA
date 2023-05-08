@@ -357,7 +357,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
                 hivFilterId=(position+1)+"";
 
-                Toast.makeText(FormOne.this, hivFilterId, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(FormOne.this, hivFilterId, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -370,7 +370,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 diabeticsId=(position+1)+"";
-                Toast.makeText(FormOne.this, diabeticsId, Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(FormOne.this, diabeticsId, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -1008,7 +1008,6 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
             );
         }else{
-
             BaseUtils.setPatientName(this,PatientName.getText().toString());
 
 

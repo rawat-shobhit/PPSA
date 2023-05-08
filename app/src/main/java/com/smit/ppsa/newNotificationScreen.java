@@ -373,7 +373,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
                     Log.d("mosojdo", "onItemSelected: " + tu.size());
 
-                    Toast.makeText(newNotificationScreen.this, hospitalLists.get(i-1).getnHfId().toString(), Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(newNotificationScreen.this, hospitalLists.get(i-1).getnHfId().toString(), Toast.LENGTH_SHORT).show();
 
                     hfIdGlobal= hospitalLists.get(i-1).getnHfId().toString();
 
