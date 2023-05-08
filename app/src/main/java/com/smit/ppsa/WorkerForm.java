@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -100,6 +101,8 @@ public class WorkerForm extends AppCompatActivity implements View.OnClickListene
         dateone = findViewById(R.id.at_datefone);
         at_dateftwo = findViewById(R.id.at_dateftwo);
 
+        progressDialog = new GlobalProgressDialog(this);
+
         pp_spinner = findViewById(R.id.pp_spinner);
         name = findViewById(R.id.at_worker_name);
         at_timeftwo = findViewById(R.id.at_timeftwo);
@@ -154,7 +157,9 @@ public class WorkerForm extends AppCompatActivity implements View.OnClickListene
                     BaseUtils.showToast(this,"Please select presence type");
                     return;
                 }
+                submitbtn.setEnabled(false);
                 postAttendance();
+                progressDialog.showProgressBar();
                 break;
 
             case R.id.menuBtn:
@@ -343,7 +348,9 @@ public class WorkerForm extends AppCompatActivity implements View.OnClickListene
     }
     private void postAttendance(){
         if (!BaseUtils.isNetworkAvailable(this)){
-            BaseUtils.showToast(this, "Please Check your internet  Connectivity");            //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
+            BaseUtils.showToast(this, "Please Check your internet  Connectivity");//   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
+            progressDialog.hideProgressBar();
+            submitbtn.setEnabled(true);
             return;
         }
         RequestBody date1 = RequestBody.create(post,MediaType.parse("text/plain"));
@@ -357,6 +364,8 @@ public class WorkerForm extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
                 BaseUtils.showToast(context, "Attendance updated");
+                progressDialog.hideProgressBar();
+                submitbtn.setEnabled(true);
                 BaseUtils.putUserAttendance(context,true);
                 getAttendence(WorkerForm.this,date);
                 startActivity(new Intent(WorkerForm.this,MainActivity.class));
@@ -365,7 +374,7 @@ public class WorkerForm extends AppCompatActivity implements View.OnClickListene
 
             @Override
             public void onFailure(Call<AddDocResponse> call, Throwable t) {
-
+                progressDialog.hideProgressBar();
             }
         });
     }
