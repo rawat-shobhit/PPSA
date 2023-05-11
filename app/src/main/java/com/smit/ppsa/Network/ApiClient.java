@@ -74,7 +74,7 @@ import retrofit2.http.Url;
 public class ApiClient {
     public static final String BASE_URL = "http://nikshayppsa.hlfppt.org/_api-v1_/";
 
- //      http://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=2&n_tu=409
+ //      http://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>2<<AND>>n_st_id<<EQUALTO>>6<<AND>>n_dis_id<<EQUALTO>>80
      public static APIInterface getClient() {
         // Create a trust manager that does not validate certificate chains
         @SuppressLint("TrustAllX509TrustManager") final TrustManager[] trustAllCerts = new TrustManager[]{

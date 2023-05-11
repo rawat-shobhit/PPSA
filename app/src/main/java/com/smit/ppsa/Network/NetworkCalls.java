@@ -2580,6 +2580,8 @@ public class NetworkCalls {
             url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>2<<AND>>n_st_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnStCd() + "<<AND>>n_dis_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnDisCd();
         }
 
+        Log.d("finalUrl",url);
+
         ApiClient.getClient().getPythologyLabs(url).enqueue(new Callback<PythologyLabResponse>() {
             @Override
             public void onResponse(Call<PythologyLabResponse> call, Response<PythologyLabResponse> response) {

@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FdcDispensationToHfViewModel fdcDispensationToHfViewModel;
     FdcOpeningStockBalanceViewModel fdcOpeningStockBalanceViewModel;
     FdcDispensationToPatientViewModel fdcDispensationToPatientViewModel;
+    private TextView version;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             );
 
         }*/
+
 
         if (BaseUtils.getProviderForm(this).equals("false")) {
             NetworkCalls.postProvider(

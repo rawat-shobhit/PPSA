@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "142969147264",
+    "project_id": "ppsa-5d9da",
+    "storage_bucket": "ppsa-5d9da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142969147264:android:59ffce65fd706aa4217b65",
+        "android_client_info": {
+          "package_name": "com.smit.ppsa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "142969147264-ajb5rd0fbeb4dfml60g9bqs95nao35i9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smit.ppsa",
+            "certificate_hash": "4fb4e569320ea3479d1831064f76fab33bb25d5c"
+          }
+        },
+        {
+          "client_id": "142969147264-k2ieokngaa817piltvilqn5ecs35jkal.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smit.ppsa",
+            "certificate_hash": "79da98a355d14e0a21ff6f31ac0c31b3a2f70339"
+          }
+        },
+        {
+          "client_id": "142969147264-t0f2r40dq4dudrp7esg6lrfuikrl6d55.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSmP6OcYwBEjkpKdKaXuC7cPS4w9EqP9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "142969147264-t0f2r40dq4dudrp7esg6lrfuikrl6d55.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
