@@ -83,7 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         /*     if (BaseUtils.getAddSampleForm(this).equals("false")) {
 
-         *//*  LiveData<List<RoomAddSample>> samples = dataBase.customerDao().fetchAddSample();
+         */
+        /*  LiveData<List<RoomAddSample>> samples = dataBase.customerDao().fetchAddSample();
             samples.observe(this, addSamples -> {
 
                 if (addSamples.size() != 0) {
@@ -92,7 +93,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
 
-            });*//*
+            });*/
+        /*
             NetworkCalls.addSample(
                     this,
                     BaseUtils.getAddSamplen_st_idd(this),
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     BaseUtils.getAddSamplen_user_idd(this),
                     false
             );
+
 
         }*/
 
