@@ -117,7 +117,7 @@ class SendLiveLocationService : Service() {
 
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                getLocation()
+                //getLocation()
 
             }
         }, 0, 15*60*1000)

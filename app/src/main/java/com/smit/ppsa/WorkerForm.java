@@ -157,6 +157,7 @@ public class WorkerForm extends AppCompatActivity implements View.OnClickListene
                     BaseUtils.showToast(this,"Please select presence type");
                     return;
                 }
+                submitbtn.setVisibility(View.GONE);
                 submitbtn.setEnabled(false);
                 postAttendance();
                 progressDialog.showProgressBar();
