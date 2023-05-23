@@ -514,7 +514,7 @@
                         android:id="@+id/NotificationBtn"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="@dimen/_120sdp"
+                        android:layout_height="@dimen/_80sdp"
                         android:layout_marginTop="@dimen/_3sdp"
                         android:elevation="@dimen/_5sdp"
                         app:cardCornerRadius="@dimen/_20sdp">
@@ -529,6 +529,7 @@
                             android:padding="@dimen/_10sdp">
 
                             <ImageView
+                                android:src="@drawable/notification"
                                 android:layout_width="@dimen/_50sdp"
                                 android:layout_height="@dimen/_10sdp"
                                 android:layout_gravity="center"
@@ -542,7 +543,7 @@
                                 android:layout_marginBottom="@dimen/_5sdp"
                                 android:fontFamily="@font/nunitosans_bold_2"
                                 android:gravity="center"
-                                android:text="Patient Enrollment"
+                                android:text="Patient Notification"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_16sdp" />
                         </LinearLayout>
@@ -896,7 +897,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunitosans_bold_2"
                     android:gravity="center"
-                    android:text="Version 2.9"
+                    android:text="Version 3.2"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     android:layout_marginBottom="@dimen/_20sdp"/>
