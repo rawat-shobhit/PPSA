@@ -1117,6 +1117,7 @@ public class NetworkCalls {
         BaseUtils.putAddDocForm(context, "false");
         if (!BaseUtils.isNetworkAvailable(context)) {
             BaseUtils.putAddDocForm(context, "false");
+
             dataBase.customerDao().insertDoctor(doctorModel);
             if (navigate) {
                 sDialog.dismiss();

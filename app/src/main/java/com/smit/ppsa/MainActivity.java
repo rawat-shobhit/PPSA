@@ -55,7 +55,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private CardView Providerengagement, Reportdelivery, Dcbtn, UploadDocument, SampleCollections,
-            Conselling, usermainbtn, logOutBtn, refill, changePassBtn, stockReceive, fdcrec, fdcIssued, transfer, lpaResult,NotificationBtn;
+            Conselling, usermainbtn, logOutBtn, refill, changePassBtn, stockReceive, fdcrec, fdcIssued, transfer, lpaResult, NotificationBtn;
     private TextView username, dateandtime;
     private ImageView img, img2;
     private AppDataBase dataBase;
@@ -575,7 +575,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initViews() {
 
-        ContextCompat.startForegroundService(this, new Intent(this, SendLiveLocationService.class));
+        try {
+            ContextCompat.startForegroundService(this, new Intent(this, SendLiveLocationService.class));
+        } catch (Exception e) {
+        }
         fdcrec = findViewById(R.id.fdcrec);
         Providerengagement = findViewById(R.id.providerangagementbtn);
         Reportdelivery = findViewById(R.id.reportdeliverybtn);
@@ -591,7 +594,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         username = findViewById(R.id.username);
         fdcIssued = findViewById(R.id.fdc_issued);
         dateandtime = findViewById(R.id.dateandtime);
-        NotificationBtn=findViewById(R.id.NotificationBtn);
+        NotificationBtn = findViewById(R.id.NotificationBtn);
         img = findViewById(R.id.img);
         img2 = findViewById(R.id.img2);
         Bitmap icon = ((BitmapDrawable) img2.getDrawable()).getBitmap();
@@ -649,7 +652,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     String atype = response.body().getAsJsonArray("user_data").get(0).getAsJsonObject().get("c_attend_typ").getAsString();
 
-                    BaseUtils.putUserAttendanceType(MainActivity.this,atype);
+                    BaseUtils.putUserAttendanceType(MainActivity.this, atype);
                     if (BaseUtils.getUserInfo(MainActivity.this).getC_lng_desc().equals("")) {
                         username.setText(BaseUtils.getUserInfo(MainActivity.this).getcName() + "\n" + BaseUtils.getattendanceType(MainActivity.this));
                     } else {
@@ -801,15 +804,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                        */
 
 
-
             case R.id.fdc_issued:
                 break;
             case R.id.lpaResult:
                 startActivity(new Intent(MainActivity.this, LpaPatient.class));
                 break;
 
-            case R.id.NotificationBtn    :
-                startActivity(new Intent(MainActivity.this,newNotificationScreen.class).putExtra("type","normal"));
+            case R.id.NotificationBtn:
+                startActivity(new Intent(MainActivity.this, newNotificationScreen.class).putExtra("type", "normal"));
                 break;
 
         }
