@@ -492,9 +492,10 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
                     "0",
                     "0"/*types.get(SputumsampletypeandNumber.getSelectedItemPosition() - 1).getId()*/,
                     diagnostictests.get(diagnosticTestSpi.getSelectedItemPosition() - 1).getId(),
-                    pythologyLabsLi.get(pythologyLabs.getSelectedItemPosition() - 1).getId(),
+                     pythologyLabsLi.get(pythologyLabs.getSelectedItemPosition() - 1).getId(),
                     BaseUtils.getUserInfo(this).getN_staff_sanc(),
-                    BaseUtils.getUserInfo(PatientSampleList.this).getId(), true
+                    BaseUtils.getUserInfo(PatientSampleList.this).getId(),
+                    true
             );
 
 

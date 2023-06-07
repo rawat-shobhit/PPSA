@@ -440,6 +440,7 @@ public class NetworkCalls {
             }
             return;
         }
+
         RequestBody n_st_id = RequestBody.create(n_st_idd, MediaType.parse("text/plain"));
         RequestBody n_dis_id = RequestBody.create(n_dis_idd, MediaType.parse("text/plain"));
         RequestBody n_tu_id = RequestBody.create(n_tu_idd, MediaType.parse("text/plain"));
@@ -471,7 +472,10 @@ public class NetworkCalls {
                     if (response.body().isStatus()) {
                         BaseUtils.showToast(context, "Sample submitted");
                         if (navigate) {
-                            ((Activity) context).finish();
+//                             HRITIK CHECK HERE ABOUT NAVIGATION
+                             context.startActivity(new Intent(context, HospitalsList.class));
+
+//                             ((Activity) context).finish();
                         }
                     }
                 } else {
