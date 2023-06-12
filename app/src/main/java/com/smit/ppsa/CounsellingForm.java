@@ -158,11 +158,11 @@ public class CounsellingForm extends AppCompatActivity {
                     Log.d("jduh", "onClick: "+ diff);
 
                     if (!typeOfCounselling.equals("")) {
-                        if (diff < 0) {
+//                        if (diff < 0) {
                             submitCounseling();
-                        } else {
-                            BaseUtils.showToast(CounsellingForm.this, "Counselling date should be greater than registration date");
-                        }
+//                        } else {
+//                            BaseUtils.showToast(CounsellingForm.this, "Counselling date should be greater than registration date");
+//                        }
                     } else {
                         BaseUtils.showToast(CounsellingForm.this, "Choose type of counselling");
                     }
