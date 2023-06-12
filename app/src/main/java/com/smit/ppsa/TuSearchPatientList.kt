@@ -91,6 +91,9 @@ class TuSearchPatientList : AppCompatActivity() {
         filterArray.add(PatientFilterDataModel(5, "UDST Report is missing"))
         filterArray.add(PatientFilterDataModel(6, "Diabetes Report is missing"))
         filterArray.add(PatientFilterDataModel(7, "HIV Report is missing"))
+        filterArray.add(PatientFilterDataModel(8, "Consent Form is missing"))
+        filterArray.add(PatientFilterDataModel(9, "Additional Prescription is missing"))
+        filterArray.add(PatientFilterDataModel(10, "Notification Image is missing"))
 
         val statusAdapter = FilterDropdownAdapter(this, filterArray)
         // set adapter to the autocomplete tv to the arrayAdapter
@@ -217,6 +220,8 @@ class TuSearchPatientList : AppCompatActivity() {
             // &w=<<SBRK>>n_tu_id<<EQUALTO>>162<<OR>>n_tu_id<<EQUALTO>>163<<OR>>n_tu_id<<EQUALTO>>164<<EBRK>><<AND>><<SBRK>>c_pat_nam<<SLIKE>>8532<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>8532<<ELIKE>><<OR>>c_mob<<SLIKE>>8532<<ELIKE>><<EBRK>><<AND>>trans_out<<ISNULL>>
             "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>" + tuString + "<<EBRK>><<AND>><<SBRK>>c_pat_nam<<SLIKE>>" + name + "<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>" + name + "<<ELIKE>><<OR>>c_mob<<SLIKE>>" + name + "<<ELIKE>><<EBRK>>"
         } else {
+             //  Toast.makeText(this, "this", Toast.LENGTH_SHORT).show()
+
             //  var tuString = tvTu.text.toString().trim()
 //https://nikshayppsa.hlfppt.org/_api-v1_/_srch_docs.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>n_tu_id<<EQUALTO>>162<<OR>>n_tu_id<<EQUALTO>>163<<OR>>n_tu_id<<EQUALTO>>164<<EBRK>>&typ=1
             "_srch_docs.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>$tuString<<EBRK>>&typ=$selectedFilter"

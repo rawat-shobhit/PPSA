@@ -660,6 +660,46 @@
                 android:layout_weight="1"/>
 
 
+            <TextView
+                android:id="@+id/additionalprescription"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:background="@color/red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AP"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/consent"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:background="@color/red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="C"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/notification"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:background="@color/red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="N"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_weight="1"/>
+
+
         </LinearLayout>
 
         <LinearLayout

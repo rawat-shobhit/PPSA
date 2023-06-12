@@ -471,7 +471,7 @@ public class NetworkCalls {
                     if (response.body().isStatus()) {
                         BaseUtils.showToast(context, "Sample submitted");
                         if (navigate) {
-                            ((Activity) context).finish();
+                            context.startActivity(new Intent(context, MainActivity.class));
                         }
                     }
                 } else {
@@ -634,12 +634,14 @@ public class NetworkCalls {
             @Override
             public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
                 if (response.isSuccessful()) {
+                    BaseUtils.showToast(context,response.body().getMessage());
+
                     BaseUtils.putSubmitAddSampleForm(context, "true");
                     // dataBase.customerDao().deleteAddSample(roomAddSample);
                     if (response.body().isStatus()) {
                         BaseUtils.showToast(context, "Sample submitted");
                         if (navigate) {
-                            ((Activity) context).finish();
+                            context.startActivity(new Intent(context, MainActivity.class));
                         }
                     }
                 } else {
@@ -2027,8 +2029,9 @@ public class NetworkCalls {
 //
 //                                                .putExtra("hf_id", n_hf_idd)
 //                                        );
+                                        Log.d("shobhit_0","here");
                                         ((Activity) context).startActivity(new Intent(context, PatientSampleList.class)
-                                                .putExtra("hf_id",n_hf_idd).putExtra("doc_id",n_doc_idd).putExtra("enroll_Id",n_nksh_idd));
+                                                .putExtra("hf_id",n_hf_idd).putExtra("doc_id",n_doc_idd).putExtra("enroll_Id",response.body().getUserData().toString()));
 
                                     }
                                 }
@@ -2087,7 +2090,6 @@ public class NetworkCalls {
                                                 .putExtra("section", "sample")
                                                 .putExtra("type", "sample")
                                                 //.putExtra("sample", "sample")
-
                                                 .putExtra("sample", "")
 
                                                 .putExtra("hf_id", n_hf_idd)

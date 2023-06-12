@@ -359,6 +359,145 @@
                 android:radius="@dimen/_8sdp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/photo" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Additional Prescription"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/prescriptionDownload"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Downlaod"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"/>
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/additionalprescription"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:radius="@dimen/_8sdp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/photo" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Consent Form"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/consentDownload"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Downlaod"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"/>
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/consent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:radius="@dimen/_8sdp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/photo" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Notification Image"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/notificationDownload"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="@font/nunitosans_semibold"
+                    android:text="Downlaod"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"/>
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/notification"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/back_two"
+                android:elevation="@dimen/_4sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:radius="@dimen/_8sdp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/photo" />
             <androidx.cardview.widget.CardView
                 android:id="@+id/bt_proceedone"
                 android:layout_width="match_parent"

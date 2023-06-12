@@ -149,6 +149,34 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         } catch (Exception e) {
         }
 
+        try {
+            if (parentData.getC_add_presc_img().toString().equals("0")) {
+                holder.additionalprescription.setBackgroundColor(Color.parseColor("#FFFF5151"));
+            } else {
+                holder.additionalprescription.setBackgroundColor(Color.parseColor("#5EC362"));
+            }
+        } catch (Exception e) {
+        }
+
+        try {
+            if (parentData.getC_con_frm_img().toString().equals("0")) {
+                holder.consent.setBackgroundColor(Color.parseColor("#FFFF5151"));
+            } else {
+                holder.consent.setBackgroundColor(Color.parseColor("#5EC362"));
+            }
+        } catch (Exception e) {
+        }
+
+
+        try {
+            if (parentData.getC_not_img().toString().equals("0")) {
+                holder.notification.setBackgroundColor(Color.parseColor("#FFFF5151"));
+            } else {
+                holder.notification.setBackgroundColor(Color.parseColor("#5EC362"));
+            }
+        } catch (Exception e) {
+        }
+
 
         holder.hospitalName.setText(parentData.getcPatNam());
         String newDate = "";
@@ -249,12 +277,12 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
     @Override
     public int getItemCount() {
 
-        return Math.min(registerParentData.size(), 150);
+        return Math.min(registerParentData.size(), 100);
     }
 
     public class Mholder extends RecyclerView.ViewHolder {
         TextView hospitalName,/*phone*//*address,*/
-                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName, ddayLeft, adhar, bank, pres, tst, udst, diab, hiv;
+                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName, ddayLeft, adhar, bank, pres, tst, udst, diab, hiv,additionalprescription,consent,notification;
         CheckBox radioButton;
         ImageView user_img, people_img, doctor_img, hospital_img;
         RadioButton radioButtonOne;
@@ -280,6 +308,9 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
             udst = itemView.findViewById(R.id.udst);
             diab = itemView.findViewById(R.id.diab);
             hiv = itemView.findViewById(R.id.hiv);
+            additionalprescription = itemView.findViewById(R.id.additionalprescription);
+            consent = itemView.findViewById(R.id.consent);
+            notification = itemView.findViewById(R.id.notification);
 
             details_Img = itemView.findViewById(R.id.details_Img);
 

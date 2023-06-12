@@ -39,7 +39,6 @@ import com.smit.ppsa.Response.GetTestResponse;
 import com.smit.ppsa.Response.HospitalModel;
 import com.smit.ppsa.Response.PostProviderFromRoom;
 import com.smit.ppsa.Response.RoomTestData;
-import com.smit.ppsa.service.SendLiveLocationService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -576,7 +575,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initViews() {
 
         try {
-            ContextCompat.startForegroundService(this, new Intent(this, SendLiveLocationService.class));
+           // ContextCompat.startForegroundService(this, new Intent(this, SendLiveLocationService.class));
         } catch (Exception e) {
         }
         fdcrec = findViewById(R.id.fdcrec);

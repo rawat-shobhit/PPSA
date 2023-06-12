@@ -70,7 +70,7 @@ import com.smit.ppsa.Response.RoomWeightBand;
         RoomCounsellingFilters.class,
         RoomWeightBand.class,
         FdcReceivedModel.class
-}, version = 25, exportSchema = true)
+}, version = 26, exportSchema = true)
 public abstract class AppDataBase extends RoomDatabase {
 
     public static String DATABASE_NAME = "hospital_facility";

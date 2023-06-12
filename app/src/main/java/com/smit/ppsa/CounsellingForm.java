@@ -141,16 +141,18 @@ public class CounsellingForm extends AppCompatActivity {
                     SimpleDateFormat curFormater = new SimpleDateFormat("yyyy-MM-dd");
                     Date currentTime = Calendar.getInstance().getTime();
                     try {
+                        //registration dsate
                         dateOne = curFormater.parse(modifyDateLayout(getIntent().getStringExtra("reg_date")));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                     try {
+                        //counselling date
                         date = curFormater.parse(modifyDateLayout(dateOfCounseling));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    long diffInMillies = Math.abs(dateOne.getTime() - date.getTime());
+                    long diffInMillies = Math.abs(date.getTime() - dateOne.getTime());
                     long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
                     Log.d("jduh", "onClick: "+ diff);
@@ -159,7 +161,7 @@ public class CounsellingForm extends AppCompatActivity {
                         if (diff > 0) {
                             submitCounseling();
                         } else {
-                            BaseUtils.showToast(CounsellingForm.this, "Registration date should be greater than counselling date");
+                            BaseUtils.showToast(CounsellingForm.this, "Counselling date should be greater than registration date");
                         }
                     } else {
                         BaseUtils.showToast(CounsellingForm.this, "Choose type of counselling");

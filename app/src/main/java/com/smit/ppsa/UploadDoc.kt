@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -49,18 +50,24 @@ class UploadDoc : AppCompatActivity() {
     private lateinit var hiv_report: ImageView
     private lateinit var udst_report: ImageView
     private lateinit var diabetes_report: ImageView
+    private lateinit var additionalprescription: ImageView
+    private lateinit var consent: ImageView
+    private lateinit var notification: ImageView
+    private lateinit var notificationDownload: TextView
     private lateinit var backbtn: ImageView
     private lateinit var proceed: CardView
 
     var manager: DownloadManager? = null
 
-    lateinit var adharDownload:TextView
-    lateinit var presDownload:TextView
-    lateinit var testDonload:TextView
-    lateinit var hivDownload:TextView
-    lateinit var udstDownload:TextView
-    lateinit var diabDownload:TextView
-    lateinit var bankDownload:TextView
+    lateinit var adharDownload: TextView
+    lateinit var presDownload: TextView
+    lateinit var prescriptionDownload:TextView
+    lateinit var consentDownload:TextView
+    lateinit var testDonload: TextView
+    lateinit var hivDownload: TextView
+    lateinit var udstDownload: TextView
+    lateinit var diabDownload: TextView
+    lateinit var bankDownload: TextView
 
     private var adhaarUri: Uri? = null
     private var prescriptionUri: Uri? = null
@@ -68,6 +75,9 @@ class UploadDoc : AppCompatActivity() {
     private var test_reportUri: Uri? = null
     private var udst_reportUri: Uri? = null
     private var hiv_reportUri: Uri? = null
+    private var additionalPrescriptionUri: Uri? = null
+    private var consentUri: Uri? = null
+    private var notificationUri: Uri? = null
     private var diabetes_reportUri: Uri? = null
     private var imageType = ""
     private val PERMISSIONS_STORAGE = arrayOf(
@@ -82,6 +92,9 @@ class UploadDoc : AppCompatActivity() {
     private var udst_img = ""
     private var hiv_img = ""
     private var diabetes_img = ""
+    private var additionalPres_img = ""
+    private var consent_img = ""
+    private var notification_img = ""
     var SELECT_PICTURE = 200
     private val REQUEST_EXTERNAL_STORAGE = 1
     private var patient: RegisterParentData = RegisterParentData()
@@ -107,16 +120,20 @@ class UploadDoc : AppCompatActivity() {
         hiv_report = findViewById(R.id.hiv_report)
         udst_report = findViewById(R.id.udst_report)
         diabetes_report = findViewById(R.id.diabetes_report)
+        prescriptionDownload = findViewById(R.id.prescriptionDownload)
+        consentDownload = findViewById(R.id.consentDownload)
+        additionalprescription = findViewById(R.id.additionalprescription)
+        consent = findViewById(R.id.consent)
+        notification = findViewById(R.id.notification)
 
-        adharDownload=findViewById(R.id.adharDownload)
-        bankDownload=findViewById(R.id.bankDownload)
-        testDonload=findViewById(R.id.testDownload)
-        hivDownload=findViewById(R.id.hivDownload)
-        udstDownload=findViewById(R.id.udstDowload)
-        diabDownload=findViewById(R.id.diabDownload)
-        presDownload=findViewById(R.id.presDownload)
-
-
+        adharDownload = findViewById(R.id.adharDownload)
+        bankDownload = findViewById(R.id.bankDownload)
+        testDonload = findViewById(R.id.testDownload)
+        hivDownload = findViewById(R.id.hivDownload)
+        udstDownload = findViewById(R.id.udstDowload)
+        diabDownload = findViewById(R.id.diabDownload)
+        presDownload = findViewById(R.id.presDownload)
+        notificationDownload = findViewById(R.id.notificationDownload)
 
         adhaar.setOnClickListener {
             chooseImage(this, "adhaar")
@@ -139,12 +156,22 @@ class UploadDoc : AppCompatActivity() {
         diabetes_report.setOnClickListener {
             chooseImage(this, "diabetes")
         }
+        additionalprescription.setOnClickListener {
+            chooseImage(this, "additionalprescription")
+        }
+        consent.setOnClickListener {
+            chooseImage(this, "consent")
+        }
+        notification.setOnClickListener {
+            chooseImage(this, "notification")
+        }
 
         backbtn.setOnClickListener { super.onBackPressed() }
         proceed.setOnClickListener {
-            if (adhaar_img.equals("") && presc_img.equals("") && bank_img.equals("") && test_img.equals(
-                    ""
-                ) && hiv_img.equals("") && udst_img.equals("") && diabetes_img.equals("")
+            if (adhaar_img == "" && presc_img == "" && bank_img == ""
+                && test_img == "" && hiv_img == "" && udst_img == ""
+                && diabetes_img == "" && additionalPres_img == "" && consent_img ==
+                "" && notification_img == ""
             ) {
                 startActivity(
                     Intent(
@@ -153,9 +180,13 @@ class UploadDoc : AppCompatActivity() {
                     ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 )
             } else {
-                uploadDocuments()
-            }
 
+                uploadDocuments()
+
+                if (notification_img != "" || bank_img != "") {
+                    uploadBankNotificationDocuments()
+                }
+            }
 
         }
         getPrevUpload()
@@ -198,7 +229,7 @@ class UploadDoc : AppCompatActivity() {
                 lat = location.latitude.toString()
                 lng = location.longitude.toString()
                 //                  lat=30.977006;
-//                  lng=76.537880;
+                //                  lng=76.537880;
                 //saveAddress();
             } else {
                 // Toast.makeText(HomeActivity.this, "Location not found", Toast.LENGTH_SHORT).show();
@@ -276,41 +307,69 @@ class UploadDoc : AppCompatActivity() {
                         adhaar_img = Imagee().getEncodedImage(adhaarUri!!, this)
                         startCrop(adhaarUri!!)
                     }
+
                     "presc" -> {
                         prescriptionUri = data!!.data
                         presc_img = Imagee().getEncodedImage(prescriptionUri!!, this)
                         prescription.setImageURI(prescriptionUri)
                         startCrop(prescriptionUri!!)
                     }
+
                     "bank" -> {
                         bank_detailUri = data!!.data
                         bank_img = Imagee().getEncodedImage(bank_detailUri!!, this)
                         bank_detail.setImageURI(bank_detailUri)
                         startCrop(bank_detailUri!!)
                     }
+
                     "test" -> {
                         test_reportUri = data!!.data
                         test_img = Imagee().getEncodedImage(test_reportUri!!, this)
                         test_report.setImageURI(test_reportUri)
                         startCrop(test_reportUri!!)
                     }
+
                     "diabetes" -> {
                         diabetes_reportUri = data!!.data
                         diabetes_img = Imagee().getEncodedImage(diabetes_reportUri!!, this)
                         diabetes_report.setImageURI(diabetes_reportUri)
                         startCrop(diabetes_reportUri!!)
                     }
+
                     "hiv" -> {
                         hiv_reportUri = data!!.data
                         hiv_img = Imagee().getEncodedImage(hiv_reportUri!!, this)
                         hiv_report.setImageURI(hiv_reportUri)
                         startCrop(hiv_reportUri!!)
                     }
+
                     "udst" -> {
                         udst_reportUri = data!!.data
                         udst_img = Imagee().getEncodedImage(udst_reportUri!!, this)
                         udst_report.setImageURI(udst_reportUri)
                         startCrop(udst_reportUri!!)
+                    }
+
+                    "additionalprescription" -> {
+                        additionalPrescriptionUri = data!!.data
+                        additionalPres_img =
+                            Imagee().getEncodedImage(additionalPrescriptionUri!!, this)
+                        additionalprescription.setImageURI(additionalPrescriptionUri)
+                        startCrop(additionalPrescriptionUri!!)
+                    }
+
+                    "consent" -> {
+                        consentUri = data!!.data
+                        consent_img = Imagee().getEncodedImage(consentUri!!, this)
+                        consent.setImageURI(consentUri)
+                        startCrop(consentUri!!)
+                    }
+
+                    "notification" -> {
+                        notificationUri = data!!.data
+                        notification_img = Imagee().getEncodedImage(notificationUri!!, this)
+                        notification.setImageURI(notificationUri)
+                        startCrop(notificationUri!!)
                     }
                 }
 
@@ -329,6 +388,7 @@ class UploadDoc : AppCompatActivity() {
                         adhaar.setImageURI(adhaarUri)
                         startCrop(adhaarUri!!)
                     }
+
                     "presc" -> {
                         val selectedImage = data!!.extras!!["data"] as Bitmap?
                         prescriptionUri = selectedImage?.let {
@@ -341,6 +401,7 @@ class UploadDoc : AppCompatActivity() {
                         prescription.setImageURI(prescriptionUri)
                         startCrop(prescriptionUri!!)
                     }
+
                     "bank" -> {
                         val selectedImage = data!!.extras!!["data"] as Bitmap?
                         bank_detailUri = selectedImage?.let {
@@ -353,6 +414,7 @@ class UploadDoc : AppCompatActivity() {
                         bank_detail.setImageURI(bank_detailUri)
                         startCrop(bank_detailUri!!)
                     }
+
                     "test" -> {
                         val selectedImage = data!!.extras!!["data"] as Bitmap?
                         test_reportUri = selectedImage?.let {
@@ -365,6 +427,7 @@ class UploadDoc : AppCompatActivity() {
                         test_report.setImageURI(test_reportUri)
                         startCrop(test_reportUri!!)
                     }
+
                     "diabetes" -> {
                         val selectedImage = data!!.extras!!["data"] as Bitmap?
                         diabetes_reportUri = selectedImage?.let {
@@ -377,6 +440,7 @@ class UploadDoc : AppCompatActivity() {
                         diabetes_report.setImageURI(diabetes_reportUri)
                         startCrop(diabetes_reportUri!!)
                     }
+
                     "hiv" -> {
                         val selectedImage = data!!.extras!!["data"] as Bitmap?
                         hiv_reportUri = selectedImage?.let {
@@ -389,6 +453,7 @@ class UploadDoc : AppCompatActivity() {
                         hiv_report.setImageURI(hiv_reportUri)
                         startCrop(hiv_reportUri!!)
                     }
+
                     "udst" -> {
                         val selectedImage = data!!.extras!!["data"] as Bitmap?
                         udst_reportUri = selectedImage?.let {
@@ -400,6 +465,42 @@ class UploadDoc : AppCompatActivity() {
                         udst_img = Imagee().getEncodedImage(udst_reportUri!!, this)
                         udst_report.setImageURI(udst_reportUri)
                         startCrop(udst_reportUri!!)
+                    }
+                    "additionalprescription" -> {
+                        val selectedImage = data!!.extras!!["data"] as Bitmap?
+                        additionalPrescriptionUri = selectedImage?.let {
+                            getImageUri(
+                                applicationContext,
+                                it
+                            )
+                        }
+                        additionalPres_img = Imagee().getEncodedImage(additionalPrescriptionUri!!, this)
+                        additionalprescription.setImageURI(additionalPrescriptionUri)
+                        startCrop(additionalPrescriptionUri!!)
+                    }
+                    "consent" -> {
+                        val selectedImage = data!!.extras!!["data"] as Bitmap?
+                        consentUri = selectedImage?.let {
+                            getImageUri(
+                                applicationContext,
+                                it
+                            )
+                        }
+                        consent_img = Imagee().getEncodedImage(consentUri!!, this)
+                        consent.setImageURI(consentUri)
+                        startCrop(consentUri!!)
+                    }
+                    "notification" -> {
+                        val selectedImage = data!!.extras!!["data"] as Bitmap?
+                        notificationUri = selectedImage?.let {
+                            getImageUri(
+                                applicationContext,
+                                it
+                            )
+                        }
+                        notification_img = Imagee().getEncodedImage(notificationUri!!, this)
+                        notification.setImageURI(notificationUri)
+                        startCrop(notificationUri!!)
                     }
                 }
 
@@ -415,6 +516,7 @@ class UploadDoc : AppCompatActivity() {
                             adhaar_img = Imagee().getEncodedImage(adhaarUri!!, this)
                             adhaar.setImageURI(adhaarUri)
                         }
+
                         "presc" -> {
                             val uri = UCrop.getOutput(data)
 
@@ -422,6 +524,7 @@ class UploadDoc : AppCompatActivity() {
                             presc_img = Imagee().getEncodedImage(prescriptionUri!!, this)
                             prescription.setImageURI(prescriptionUri)
                         }
+
                         "bank" -> {
                             val uri = UCrop.getOutput(data)
 
@@ -429,6 +532,7 @@ class UploadDoc : AppCompatActivity() {
                             bank_img = Imagee().getEncodedImage(bank_detailUri!!, this)
                             bank_detail.setImageURI(bank_detailUri)
                         }
+
                         "test" -> {
                             val uri = UCrop.getOutput(data)
 
@@ -436,6 +540,7 @@ class UploadDoc : AppCompatActivity() {
                             test_img = Imagee().getEncodedImage(test_reportUri!!, this)
                             test_report.setImageURI(test_reportUri)
                         }
+
                         "hiv" -> {
                             val uri = UCrop.getOutput(data)
 
@@ -443,6 +548,7 @@ class UploadDoc : AppCompatActivity() {
                             hiv_img = Imagee().getEncodedImage(hiv_reportUri!!, this)
                             hiv_report.setImageURI(hiv_reportUri)
                         }
+
                         "udst" -> {
                             val uri = UCrop.getOutput(data)
 
@@ -450,6 +556,7 @@ class UploadDoc : AppCompatActivity() {
                             udst_img = Imagee().getEncodedImage(udst_reportUri!!, this)
                             udst_report.setImageURI(udst_reportUri)
                         }
+
                         "diabetes" -> {
                             val uri = UCrop.getOutput(data)
 
@@ -457,6 +564,28 @@ class UploadDoc : AppCompatActivity() {
                             diabetes_img = Imagee().getEncodedImage(diabetes_reportUri!!, this)
                             diabetes_report.setImageURI(diabetes_reportUri)
                         }
+                        "additionalprescription" -> {
+                            val uri = UCrop.getOutput(data)
+
+                            additionalPrescriptionUri = uri
+                            additionalPres_img = Imagee().getEncodedImage(additionalPrescriptionUri!!, this)
+                            additionalprescription.setImageURI(additionalPrescriptionUri)
+                        }
+                        "consent" -> {
+                            val uri = UCrop.getOutput(data)
+
+                            consentUri = uri
+                            consent_img = Imagee().getEncodedImage(consentUri!!, this)
+                            consent.setImageURI(consentUri)
+                        }
+                        "notification" -> {
+                            val uri = UCrop.getOutput(data)
+
+                            notificationUri = uri
+                            notification_img = Imagee().getEncodedImage(notificationUri!!, this)
+                            notification.setImageURI(notificationUri)
+                        }
+
                     }
 
 
@@ -506,6 +635,91 @@ class UploadDoc : AppCompatActivity() {
         options.setToolbarTitle("Crop image");*/return options
     }
 
+    private fun uploadBankNotificationDocuments() {
+        if (!BaseUtils.isNetworkAvailable(this@UploadDoc)) {
+            BaseUtils.showToast(
+                this,
+                "Please Check your internet  Connectivity"
+            ) //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
+
+
+            return
+        }
+
+        val n_st_id = RequestBody.create("text/plain".toMediaTypeOrNull(), patient.getnStId())
+        val n_dis_id = RequestBody.create("text/plain".toMediaTypeOrNull(), patient.getnDisId())
+        val n_tu_id = RequestBody.create("text/plain".toMediaTypeOrNull(), patient.getnTuId())
+        val n_hf_id = RequestBody.create("text/plain".toMediaTypeOrNull(), patient.getnHfId())
+        val n_doc_id = RequestBody.create("text/plain".toMediaTypeOrNull(), patient.getnDocId())
+        val n_enroll_id = RequestBody.create("text/plain".toMediaTypeOrNull(), patient.getId())
+        val c_bankImage = RequestBody.create("text/plain".toMediaTypeOrNull(), bank_img)
+        val c_notification = RequestBody.create("text/plain".toMediaTypeOrNull(), notification_img)
+
+        val n_lat = RequestBody.create("text/plain".toMediaTypeOrNull(), lat)
+        val n_lng = RequestBody.create("text/plain".toMediaTypeOrNull(), lng)
+        val n_sanc_id = RequestBody.create(
+            "text/plain".toMediaTypeOrNull(),
+            BaseUtils.getUserInfo(this).n_staff_sanc
+        )
+        val n_user_id = RequestBody.create(
+            "text/plain".toMediaTypeOrNull(),
+            BaseUtils.getUserInfo(this).getId()
+        )
+        val map: HashMap<String, RequestBody> = HashMap()
+
+        if (!bank_img.equals("")) {
+            map["c_bnk_img"] = c_bankImage
+        }
+        if (!notification_img.equals("")) {
+            map["c_not_img"] = c_notification
+        }
+
+        val url =
+            "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll&w=id<<EQUALTO>>" + patient.id
+//        val url =
+//            "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=n_enroll_id<<EQUALTO>>" + patient.id
+
+        val apiClient = when (isUploaded) {
+            true -> ApiClient.getClient().uploadDocumentIfResult(url, map)
+
+            else -> ApiClient.getClient().uploadDocumentIfNoResult(
+                n_st_id,
+                n_dis_id,
+                n_tu_id,
+                n_hf_id,
+                n_doc_id,
+                n_enroll_id,
+                map,
+                n_lat,
+                n_lng,
+                n_sanc_id,
+                n_user_id
+            )
+        }
+        apiClient.enqueue(object : Callback<AddDocResponse> {
+            override fun onResponse(
+                call: Call<AddDocResponse>,
+                response: Response<AddDocResponse>
+            ) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.isStatus) {
+                        BaseUtils.showToast(this@UploadDoc, "Document uploaded successfully")
+                        startActivity(
+                            Intent(this@UploadDoc, MainActivity::class.java).setFlags(
+                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            )
+                        )
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<AddDocResponse>, t: Throwable) {
+
+            }
+        })
+
+    }
+
     private fun uploadDocuments() {
         if (!BaseUtils.isNetworkAvailable(this@UploadDoc)) {
             BaseUtils.showToast(
@@ -525,7 +739,10 @@ class UploadDoc : AppCompatActivity() {
         val n_enroll_id = RequestBody.create("text/plain".toMediaTypeOrNull(), patient.getId())
         val c_adhaar = RequestBody.create("text/plain".toMediaTypeOrNull(), adhaar_img)
         val c_presc = RequestBody.create("text/plain".toMediaTypeOrNull(), presc_img)
-        val c_bank = RequestBody.create("text/plain".toMediaTypeOrNull(), bank_img)
+        val c_additionalPrescription =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), additionalPres_img)
+        val c_consent =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), consent_img)
         val c_test = RequestBody.create("text/plain".toMediaTypeOrNull(), test_img)
         val c_udst = RequestBody.create("text/plain".toMediaTypeOrNull(), udst_img)
         val c_hiv = RequestBody.create("text/plain".toMediaTypeOrNull(), hiv_img)
@@ -547,8 +764,11 @@ class UploadDoc : AppCompatActivity() {
         if (!presc_img.equals("")) {
             map["c_presc_img"] = c_presc
         }
-        if (!bank_img.equals("")) {
-            map["c_bnk_img"] = c_bank
+        if (!additionalPres_img.equals("")) {
+            map["c_add_presc_img"] = c_additionalPrescription
+        }
+        if (!consent_img.equals("")) {
+            map["c_con_frm_img"] = c_consent
         }
         if (!test_img.equals("")) {
             map["c_tst_rpt_img"] = c_test
@@ -664,6 +884,7 @@ class UploadDoc : AppCompatActivity() {
         //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_pat_docs&w=n_tu_id<<EQUALTO>>235<<AND>>n_enroll_id<<EQUQLTO>>1
         val url =
             "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_pat_docs&w=n_tu_id<<EQUALTO>>" + patient.getnTuId() + "<<AND>>n_enroll_id<<EQUALTO>>" + patient.getId()
+        Log.d("Pateint LIst URL ", url)
         ApiClient.getClient().getTUPatient(url).enqueue(object : Callback<RegisterParentResponse> {
             override fun onResponse(
                 call: Call<RegisterParentResponse>,
@@ -674,57 +895,102 @@ class UploadDoc : AppCompatActivity() {
                         try {
 
                             if (response.body()!!.userData[0].getC_aadh_img().contains(".png")) {
-                                adharDownload.visibility= View.VISIBLE
+                                adharDownload.visibility = View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_aadh_img(), adhaar)
-
-                                adharDownload.setOnClickListener(){
+                                adharDownload.setOnClickListener() {
                                     download((response.body()!!.userData[0].getC_aadh_img()))
                                 }
                             }
-                            if (response.body()!!.userData[0].getC_presc_img().contains(".png")) {
-                                presDownload.visibility= View.VISIBLE
-                                setImage(response.body()!!.userData[0].getC_presc_img(), prescription)
 
-                                presDownload.setOnClickListener(){
+                            if (response.body()!!.userData[0].c_presc_img.contains(".png")) {
+                                presDownload.visibility = View.VISIBLE
+                                setImage(
+                                    response.body()!!.userData[0].getC_presc_img(),
+                                    prescription
+                                )
+                                presDownload.setOnClickListener() {
                                     download((response.body()!!.userData[0].getC_presc_img()))
                                 }
                             }
-                            if (response.body()!!.userData[0].getC_bnk_img().contains(".png")) {
-                                bankDownload.visibility= View.VISIBLE
-                                setImage(response.body()!!.userData[0].getC_bnk_img(), bank_detail)
-                                bankDownload.setOnClickListener(){
-                                    download((response.body()!!.userData[0].getC_bnk_img()))
-                                }
-                            }
-                            if (response.body()!!.userData[0].getC_tst_rpt_img().contains(".png")) {
-                                testDonload.visibility= View.VISIBLE
-                                setImage(response.body()!!.userData[0].getC_tst_rpt_img(), test_report)
-                                testDonload.setOnClickListener(){
-                                    download((response.body()!!.userData[0].getC_tst_rpt_img()))
-                                }
-                            }
-                            if (response.body()!!.userData[0].getC_hiv_img().contains(".png")) {
-                                hivDownload.visibility= View.VISIBLE
-                                setImage(response.body()!!.userData[0].getC_hiv_img(), hiv_report)
-                                hivDownload.setOnClickListener(){
-                                    download((response.body()!!.userData[0].getC_hiv_img()))
-                                }
-                            }
-                            if (response.body()!!.userData[0].getC_udst_img().contains(".png")) {
-                                udstDownload.visibility= View.VISIBLE
-                                setImage(response.body()!!.userData[0].getC_udst_img(), udst_report)
-                                udstDownload.setOnClickListener(){
-                                    download((response.body()!!.userData[0].getC_udst_img()))
-                                }
-                            }
-                            if (response.body()!!.userData[0].getC_diab_img().contains(".png")) {
-                                diabDownload.visibility= View.VISIBLE
-                                setImage(response.body()!!.userData[0].getC_diab_img(), diabetes_report)
-                                diabDownload.setOnClickListener(){
-                                    download((response.body()!!.userData[0].getC_diab_img()))
+
+                            if (response.body()!!.userData[0].c_add_presc_img.contains(".png")) {
+                                prescriptionDownload.visibility = View.VISIBLE
+                                setImage(
+                                    response.body()!!.userData[0].c_add_presc_img,
+                                    additionalprescription
+                                )
+                                prescriptionDownload.setOnClickListener() {
+                                    download((response.body()!!.userData[0].c_add_presc_img))
                                 }
                             }
 
+                            if (response.body()!!.userData[0].c_con_frm_img.contains(".png")) {
+                                consentDownload.visibility = View.VISIBLE
+                                setImage(
+                                    response.body()!!.userData[0].c_con_frm_img,
+                                    consent
+                                )
+                                consentDownload.setOnClickListener() {
+                                    download((response.body()!!.userData[0].c_con_frm_img))
+                                }
+                            }
+
+                            if (response.body()!!.userData[0].c_not_img.contains(".png")) {
+                                notificationDownload.visibility = View.VISIBLE
+                                setImage(
+                                    response.body()!!.userData[0].c_not_img,
+                                    notification
+                                )
+                                notificationDownload.setOnClickListener() {
+                                    download((response.body()!!.userData[0].c_not_img))
+                                }
+                            }
+
+                            if (response.body()!!.userData[0].getC_bnk_img().contains(".png")) {
+                                bankDownload.visibility = View.VISIBLE
+                                setImage(response.body()!!.userData[0].getC_bnk_img(), bank_detail)
+                                bankDownload.setOnClickListener() {
+                                    download((response.body()!!.userData[0].getC_bnk_img()))
+                                }
+                            }
+
+                            if (response.body()!!.userData[0].getC_tst_rpt_img().contains(".png")) {
+                                testDonload.visibility = View.VISIBLE
+                                setImage(
+                                    response.body()!!.userData[0].getC_tst_rpt_img(),
+                                    test_report
+                                )
+                                testDonload.setOnClickListener() {
+                                    download((response.body()!!.userData[0].getC_tst_rpt_img()))
+                                }
+                            }
+
+                            if (response.body()!!.userData[0].getC_hiv_img().contains(".png")) {
+                                hivDownload.visibility = View.VISIBLE
+                                setImage(response.body()!!.userData[0].getC_hiv_img(), hiv_report)
+                                hivDownload.setOnClickListener() {
+                                    download((response.body()!!.userData[0].getC_hiv_img()))
+                                }
+                            }
+
+                            if (response.body()!!.userData[0].getC_udst_img().contains(".png")) {
+                                udstDownload.visibility = View.VISIBLE
+                                setImage(response.body()!!.userData[0].getC_udst_img(), udst_report)
+                                udstDownload.setOnClickListener() {
+                                    download((response.body()!!.userData[0].getC_udst_img()))
+                                }
+                            }
+
+                            if (response.body()!!.userData[0].getC_diab_img().contains(".png")) {
+                                diabDownload.visibility = View.VISIBLE
+                                setImage(
+                                    response.body()!!.userData[0].getC_diab_img(),
+                                    diabetes_report
+                                )
+                                diabDownload.setOnClickListener() {
+                                    download((response.body()!!.userData[0].getC_diab_img()))
+                                }
+                            }
 
                             isUploaded = true
 
@@ -745,7 +1011,7 @@ class UploadDoc : AppCompatActivity() {
     }
 
 
-    private fun download(url:String){
+    private fun download(url: String) {
         manager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
         val uri =
             Uri.parse(url)

@@ -317,10 +317,25 @@ public class RegisterParentData implements Serializable {
         this.c_diab_img = c_diab_img;
     }
 
-
+//"c_not_img": "https://nikshayppsa.hlfppt.org/_enrollment/37811352-645350ce9aa2a.png",
+//      "c_con_frm_img": "https://nikshayppsa.hlfppt.org/_docs/",
+//      "c_add_presc_img": "https://nikshayppsa.hlfppt.org/_docs/",
     @SerializedName("d_lst_dispn")
     @Expose
     private String d_lst_dispn;
+
+
+    @SerializedName("c_not_img")
+    @Expose
+    private String c_not_img;
+
+    @SerializedName("c_con_frm_img")
+    @Expose
+    private String c_con_frm_img;
+
+    @SerializedName("c_add_presc_img")
+    @Expose
+    private String c_add_presc_img;
 
     public String getD_lst_dispn() {
         return d_lst_dispn;
@@ -655,5 +670,29 @@ public class RegisterParentData implements Serializable {
 
     public void setC_hiv_img(String c_hiv_img) {
         this.c_hiv_img = c_hiv_img;
+    }
+
+    public String getC_not_img() {
+        return c_not_img;
+    }
+
+    public void setC_not_img(String c_not_img) {
+        this.c_not_img = c_not_img;
+    }
+
+    public String getC_con_frm_img() {
+        return c_con_frm_img;
+    }
+
+    public void setC_con_frm_img(String c_con_frm_img) {
+        this.c_con_frm_img = c_con_frm_img;
+    }
+
+    public String getC_add_presc_img() {
+        return c_add_presc_img;
+    }
+
+    public void setC_add_presc_img(String c_add_presc_img) {
+        this.c_add_presc_img = c_add_presc_img;
     }
 }

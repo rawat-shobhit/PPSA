@@ -48,7 +48,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PatientSampleList extends AppCompatActivity implements View.OnClickListener {
+ public class PatientSampleList extends AppCompatActivity implements View.OnClickListener {
     private EditText f2_placeofsamplecollection;
     private TextView f2_datespecimencollected, nextbtn, hospitalName, docname, patientname, patientphone, date_of_diagnosis;
     private ImageView backbtn;
@@ -150,11 +150,13 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
             patientphone.setText(BaseUtils.getPhoneNo(this));
         }
 
-        if (BaseUtils.getPhoneNo(this).equals("")) {
+        if (BaseUtils.getEnrollNo(this).equals("")) {
             enroll_id = getIntent().getStringExtra("enroll_id");
         } else {
             enroll_id = BaseUtils.getEnrollNo(this);
         }
+
+       // Toast.makeText(this, enroll_id, Toast.LENGTH_SHORT).show();
 
 
         previousSamplesRecycler = findViewById(R.id.previoussamplecollectionsrecycler);
@@ -475,7 +477,6 @@ public class PatientSampleList extends AppCompatActivity implements View.OnClick
             }
 
             NetworkCalls.addSampleData(
-
                     context,
                     BaseUtils.getUserOtherInfo(PatientSampleList.this).getnStId(),
                     BaseUtils.getUserOtherInfo(PatientSampleList.this).getnDisId(),

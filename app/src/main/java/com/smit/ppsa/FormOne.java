@@ -89,7 +89,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private List<FormOneData> genders = new ArrayList<>();
     private List<FormOneData> state = new ArrayList<>();
     private List<FormOneData> district = new ArrayList<>();
-    private Boolean formProviderEngagement= false;
+    private Boolean formProviderEngagement = false;
     List<String> genderStrings = new ArrayList<>();
     List<String> stateStrings = new ArrayList<>();
     List<String> distri = new ArrayList<>();
@@ -116,13 +116,13 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     int PIC_CROP = 500;
 
 
-    String hivFilterId="";
-    String diabeticsId="";
+    String hivFilterId = "";
+    String diabeticsId = "";
 
     ArrayList<PatientFilterDataModel> hivFilter = new ArrayList<>();
     ArrayList<PatientFilterDataModel> diabetiesFilter = new ArrayList<>();
 
-    private AutoCompleteTextView hivDropDown,diabetiesDropDown;
+    private AutoCompleteTextView hivDropDown, diabetiesDropDown;
 
     // Permissions for accessing the storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -139,7 +139,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver, new IntentFilter(""));
         verifyStoragePermissions(FormOne.this);
         dataOf = findViewById(R.id.dataOf);
-        layoutSpinners=findViewById(R.id.layoutSpinners);
+        layoutSpinners = findViewById(R.id.layoutSpinners);
         initViews();
 
         type = getIntent().getStringExtra("type");
@@ -193,19 +193,19 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
-        hivDropDown=findViewById(R.id.hivAutoComplete);
-        diabetiesDropDown=findViewById(R.id.diabtesAutoComplete);
+        hivDropDown = findViewById(R.id.hivAutoComplete);
+        diabetiesDropDown = findViewById(R.id.diabtesAutoComplete);
 
 
         type = getIntent().getStringExtra("type");
         if (Objects.equals(getIntent().getStringExtra("type"), "sample")) {
-            formProviderEngagement=false;
+            formProviderEngagement = false;
             dataOf.setVisibility(View.GONE);
             layoutSpinners.setVisibility(View.GONE);
             EnrollmentDate.setVisibility(View.GONE);
             Log.d("typeCheck", type.toString());
         } else if (Objects.equals(getIntent().getStringExtra("type"), "tree")) {
-            formProviderEngagement=false;
+            formProviderEngagement = false;
             dataOf.setVisibility(View.GONE);
             try {
                 setCurrentDate();
@@ -218,7 +218,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
             Log.d("typeCheck", type.toString());
         } else {
-            formProviderEngagement=true;
+            formProviderEngagement = true;
             layoutSpinners.setVisibility(View.VISIBLE);
             dataOf.setVisibility(View.VISIBLE);
             EnrollmentDate.setVisibility(View.VISIBLE);
@@ -339,38 +339,38 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
     private void updateSpinner() {
 
-        hivFilter.add(new PatientFilterDataModel(1,"Reactive"));
-        hivFilter.add(new PatientFilterDataModel(2,"Non-Reactive"));
-        hivFilter.add(new PatientFilterDataModel(3,"Positive"));
-        hivFilter.add(new PatientFilterDataModel(4,"Negative"));
+        hivFilter.add(new PatientFilterDataModel(1, "Reactive"));
+        hivFilter.add(new PatientFilterDataModel(2, "Non-Reactive"));
+        hivFilter.add(new PatientFilterDataModel(3, "Positive"));
+        hivFilter.add(new PatientFilterDataModel(4, "Negative"));
 
 
-        diabetiesFilter.add(new PatientFilterDataModel(1,"Non-Diabetics"));
-        diabetiesFilter.add(new PatientFilterDataModel(2,"Diabetics"));
+        diabetiesFilter.add(new PatientFilterDataModel(1, "Non-Diabetics"));
+        diabetiesFilter.add(new PatientFilterDataModel(2, "Diabetics"));
 
-        newFilterDropDown hivAdaptee = new newFilterDropDown(this,hivFilter);
+        newFilterDropDown hivAdaptee = new newFilterDropDown(this, hivFilter);
         hivDropDown.setAdapter(hivAdaptee);
 
         hivDropDown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                hivFilterId=(position+1)+"";
+                hivFilterId = (position + 1) + "";
 
-              //  Toast.makeText(FormOne.this, hivFilterId, Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(FormOne.this, hivFilterId, Toast.LENGTH_SHORT).show();
 
             }
         });
 
-        newFilterDropDown DiabeticAdaptee = new newFilterDropDown(this,diabetiesFilter);
+        newFilterDropDown DiabeticAdaptee = new newFilterDropDown(this, diabetiesFilter);
         diabetiesDropDown.setAdapter(DiabeticAdaptee);
 
         diabetiesDropDown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                diabeticsId=(position+1)+"";
-            //    Toast.makeText(FormOne.this, diabeticsId, Toast.LENGTH_SHORT).show();
+                diabeticsId = (position + 1) + "";
+                //    Toast.makeText(FormOne.this, diabeticsId, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -414,8 +414,18 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                         Pincode.setText(model.getnPin());
                         SecondaryPhoneNumber.setText(model.getC_mob_2());
 
-                        Glide.with(getBaseContext()).load(model.getNotf_img()).into(patientNotificationImg);
-                        Glide.with(getBaseContext()).load(model.getBnk_img()).into(patientBankImg);
+                        Log.d("Patient notification",model.getNotf_img());
+                        try {
+                            Glide.with(getBaseContext()).load(model.getNotf_img()).into(patientNotificationImg);
+
+                        }catch (Exception e){
+
+                        }
+                        try {
+                            Glide.with(getBaseContext()).load(model.getBnk_img()).into(patientBankImg);
+                        }catch (Exception e){
+
+                        }
 
 
                         for (int i = 0; i < genderStrings.size(); i++) {
@@ -554,15 +564,18 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_proceedone:
-
+//BaseUtils.showToast(this,"Validdd");
                 if (isValidate()) {
-
                     sendForm();
-                }
+                } else {
 
-            case R.id.backbtn:
+                }
+                break;
+            case R.id.backbtn: {
                 super.onBackPressed();
                 break;
+            }
+
         }
     }
 
@@ -867,9 +880,6 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private void sendForm() {
 
 
-
-
-
         if (getIntent().hasExtra("pateintId")) {
             String url = "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll&w=id<<EQUALTO>>" + getIntent().getStringExtra("pateintId");
             String noti = "";
@@ -915,7 +925,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     n_st_id_res, n_dis_id_res,
                     n_tu_id_res, c_mob,
                     c_mob_2, c_not_img,
-                    c_bnk_img, d_diag_dt,n_cfrm).enqueue(new Callback<AddDocResponse>() {
+                    c_bnk_img, d_diag_dt, n_cfrm).enqueue(new Callback<AddDocResponse>() {
                 @Override
                 public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
                     if (response.isSuccessful()) {
@@ -966,9 +976,9 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             bank = new Imagee().getEncodedImage(bankImageUri, FormOne.this);
         }
 
-        if(formProviderEngagement){
-            BaseUtils.setPatientName(this,PatientName.getText().toString());
-            BaseUtils.setPhoneNo(this,PrimaryPhoneNumber.getText().toString());
+        if (formProviderEngagement) {
+            BaseUtils.setPatientName(this, PatientName.getText().toString());
+            BaseUtils.setPhoneNo(this, PrimaryPhoneNumber.getText().toString());
 
 
             NetworkCalls.sendForm(
@@ -1004,11 +1014,11 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     bank,
                     BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc(),
                     EnrollmentDate.getText().toString(),
-                    "1",true,hivFilterId,diabeticsId
+                    "1", true, hivFilterId, diabeticsId
 
             );
-        }else{
-            BaseUtils.setPatientName(this,PatientName.getText().toString());
+        } else {
+            BaseUtils.setPatientName(this, PatientName.getText().toString());
 
 
             NetworkCalls.sendForm(
@@ -1044,7 +1054,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     bank,
                     BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc(),
                     EnrollmentDate.getText().toString(),
-                    "0",false,hivFilterId,diabeticsId
+                    "0", false, hivFilterId, diabeticsId
 
             );
         }

@@ -85,6 +85,15 @@ public class SampleList extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.addSpecimenBtn:
 
+                //    startActivity(new Intent(FormTwo.this, SampleList.class)
+                //                                .putExtra("hf_id", hfId)
+                //                                .putExtra("hospitalName", getIntent().getStringExtra("hospitalName"))
+                //                                .putExtra("doc_name", doctorname)
+                //                                .putExtra("patient_name", patientname)
+                //                                .putExtra("patient_phone", patientphone)
+                //                                .putExtra("hf_type_id", getIntent().getStringExtra("hf_type_id"))
+                //                                .putExtra("enrolldate", reg_date)
+                //                                .putExtra("tu_id", tuId).putExtra("enroll_id", enroll_id));
                 startActivity(new Intent(this, PatientSampleList.class)
                         .putExtra("enroll_id", getIntent().getStringExtra("enroll_id"))
                         .putExtra("hf_id", getIntent().getStringExtra("hf_id"))

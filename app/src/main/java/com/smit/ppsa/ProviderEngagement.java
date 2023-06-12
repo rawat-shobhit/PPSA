@@ -325,14 +325,20 @@ public class ProviderEngagement extends AppCompatActivity implements View.OnClic
         hospitalAddress.setText(hospitalList.getcHfAddr());
         hospitalType.setText(hospitalList.getcHfTyp());
         String ext = "";
-        if (getIntent().getStringExtra("lastvisit") != null) {
-            if (Integer.valueOf(getIntent().getStringExtra("lastvisit")) < 2) {
-                ext = "Day";
-            } else {
-                ext = "Days";
+        try{
+            if (getIntent().getStringExtra("lastvisit") != null) {
+                if (Integer.valueOf(getIntent().getStringExtra("lastvisit")) < 2) {
+                    ext = "Day";
+                } else {
+                    ext = "Days";
+                }
+                date.setText(date.getText().toString()+String.format("(%s)",getIntent().getStringExtra("lastvisit") + " " + ext));
             }
-            date.setText(date.getText().toString()+String.format("(%s)",getIntent().getStringExtra("lastvisit") + " " + ext));
+        }catch (Exception e){
+            date.setText(date.getText().toString()+" (0 days)");
+
         }
+
         BaseUtils.putGlobalHfIdProvider(ProviderEngagement.this, getIntent().getStringExtra("hf_id"));
         BaseUtils.putGlobalDocIdProvider(ProviderEngagement.this, getIntent().getStringExtra("doc_id"));
 
