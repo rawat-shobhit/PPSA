@@ -745,7 +745,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.conselling:
                 startActivity(new Intent(MainActivity.this, FormTwo.class)
                         .putExtra("section", "counsel")
-                        .putExtra("counsel", ""));
+                        .putExtra("counsel", "")
+                        .putExtra("from","main"));
                 break;
             case R.id.stockreceive:
                 startActivity(new Intent(MainActivity.this, HospitalsList.class).putExtra("stockreceiving", ""));

@@ -88,6 +88,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
     private String hospitalname = "";
     private String niksh_id = "";
     private String patienttype = "";
+    String tus="";
     private String hfNam = "";
     private String patientdate = "";
     private String hfId = "";
@@ -128,6 +129,18 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
         fdcDispensationToHfViewModel = new ViewModelProvider(this).get(FdcDispensationToHfViewModel.class);
         fdcDispensationToPatientViewModel = new ViewModelProvider(this).get(FdcDispensationToPatientViewModel.class);
         title = findViewById(R.id.title);
+
+        String from = getIntent().getStringExtra("from");
+
+
+        Log.d("shobhit",from.toString());
+
+        if(from=="main")
+        {
+            counselTuTitle.setVisibility(View.GONE);
+            tuCounsell.setVisibility(View.GONE);
+        }
+
 
 
     //    Toast.makeText(this, "checking 1231", Toast.LENGTH_SHORT).show();
@@ -644,8 +657,9 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
 
     private void function() {
         if (getIntent().hasExtra("counsel")) {
-            counselTuTitle.setVisibility(View.VISIBLE);
-            tuCounsell.setVisibility(View.VISIBLE);
+//            counselTuTitle.setVisibility(View.GONE);
+//            tuCounsell.setVisibility(View.VISIBLE);
+
             filterspinner.setVisibility(View.VISIBLE);
             hl_addbtn.setVisibility(View.INVISIBLE);
             filterTitle.setVisibility(View.VISIBLE);
@@ -696,15 +710,17 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
 
-                } else if (tuCounsell.getSelectedItemPosition() == 0) {
-                    BaseUtils.showToast(FormTwo.this, "Select TU first to view patient list");
-                    //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
-                    /*filter = parentDataFilters.get(i - 1).getC_val();
-                    filter(filter, "pure");
-                    Log.d("dded", "onItemSelected: " + filter);*/
-                    patientrecycler.setVisibility(View.GONE);
-
-                } else {
+                }
+//                else if (tuCounsell.getSelectedItemPosition() == 0) {
+//                    BaseUtils.showToast(FormTwo.this, "Select TU first to view patient list");
+//                    //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
+//                    /*filter = parentDataFilters.get(i - 1).getC_val();
+//                    filter(filter, "pure");
+//                    Log.d("dded", "onItemSelected: " + filter);*/
+//                    patientrecycler.setVisibility(View.GONE);
+//
+//                }
+                else {
                     patientrecycler.setVisibility(View.VISIBLE);
                     Log.d("shobhitChecking"," 704 else filter spinner");
                     getCounselPatList();
@@ -771,8 +787,11 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
             return;
         }
 
-        String url = "_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=" + parentDataFilters.get(filterspinner.getSelectedItemPosition() - 1).getId() + "&n_tu=" + tu.get(/*i - 1*/tuCounsell.getSelectedItemPosition() - 1).getN_tu_id();
-        Log.d("URL", url);
+//        String url = "_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=" + parentDataFilters.get(filterspinner.getSelectedItemPosition() - 1).getId() + "&n_tu=" + tu.get(tuCounsell.getSelectedItemPosition() - 1).getN_tu_id();
+
+
+        String url = "_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=" + parentDataFilters.get(filterspinner.getSelectedItemPosition() - 1).getId() + "&n_tu=" + tus;
+        Log.d("URL_check", url);
         ApiClient.getClient().getTUPatient(url).enqueue(new Callback<RegisterParentResponse>() {
             @Override
             public void onResponse(Call<RegisterParentResponse> call, Response<RegisterParentResponse> response) {
@@ -1124,7 +1143,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                 Log.d("mijop", "onReceive: " + tu.size());
                 Log.d("mijop", "onReceive: " + tu.toString());
 
-                String tus = "";
+                 tus = "";
 
                 //w=n_tu_id<<EQUALTO>>2<<OR>>n_tu_id<<EQUALTO>>3<<OR>>n_tu_id<<EQUALTO>>4
                 for (int a = 0; a < tu.size(); a++) {
@@ -1138,23 +1157,23 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                         }
                     }
 
-                    NetworkCalls.getTUPatient(FormTwo.this, tus);
+
 
                 }
                 // BaseUtils.showToast(FormTwo.this,tus);
-
+                NetworkCalls.getTUPatient(FormTwo.this, tus);
                 //setSpinnerAdapter(EnrollmentFaciltyTBU,tuStrings);
                 if (!getIntent().hasExtra("counsel")) {
                     setSpinnerAdapter(filterspinner, tuStrings);
                     if (getIntent().hasExtra("report_col")) {
 
                     } else {
-                        filterspinner.setSelection(1);
+//                        filterspinner.setSelection(1);
                     }
 
                 }
                 setSpinnerAdapter(tuCounsell, tuStrings);
-                tuCounsell.setSelection(1);
+//                tuCounsell.setSelection(1);
 
 
             } else if (intent.hasExtra("notifyAdapter")) {
