@@ -724,7 +724,7 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                 if (parentData.size() == 0) {
 
                 } else {
-                    if(search.getText().toString().length()>4){
+                    if(search.getText().toString().length()>=4){
                         filter(search.getText().toString(), "normal");
                     }else{
                         BaseUtils.showToast(FormTwo.this,"Please enter atleast 4 characters.");
