@@ -285,7 +285,11 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
 //        NetworkCalls.getTU(this);
 //        NetworkCalls.getDistrict(this);
+/*
 
+5 2 
+
+ */
 
         //spinnerSelect(st_id,state,EnrollmentFaciltyState);
         //  spinnerSelect(dis_id,district,EnrollmentFaciltyDistrict);
@@ -558,10 +562,12 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         hivFilter.add(new PatientFilterDataModel(2,"Non-Reactive"));
         hivFilter.add(new PatientFilterDataModel(3,"Positive"));
         hivFilter.add(new PatientFilterDataModel(4,"Negative"));
+        hivFilter.add(new PatientFilterDataModel(5,"Test Not Done"));
 
 
         diabetiesFilter.add(new PatientFilterDataModel(1,"Non-Diabetics"));
         diabetiesFilter.add(new PatientFilterDataModel(2,"Diabetics"));
+        diabetiesFilter.add(new PatientFilterDataModel(3,"Test Not Done"));
 
         newFilterDropDown hivAdaptee = new newFilterDropDown(this,hivFilter);
         hivDropDown.setAdapter(hivAdaptee);
@@ -797,10 +803,12 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         } else if (emptyText(PatientName)) {
             BaseUtils.showToast(this, "Enter patient name");
             return false;
-        } else if (notificationImageUri == null && !Objects.equals(getIntent().getStringExtra("type"), "tree")) {
-            BaseUtils.showToast(this, "Select notification form image");
-            return false;
-        } else if (emptyText(Age)) {
+        }
+//        else if (notificationImageUri == null && !Objects.equals(getIntent().getStringExtra("type"), "tree")) {
+//            BaseUtils.showToast(this, "Select notification form image");
+//            return false;
+//        }
+        else if (emptyText(Age)) {
             BaseUtils.showToast(this, "Enter age");
             return false;
         } else if (Integer.parseInt(Age.getText().toString()) < 1 || Integer.parseInt(Age.getText().toString()) > 100) {

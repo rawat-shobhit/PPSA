@@ -234,6 +234,8 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             public void onClick(View v) {
                 imageType = "front";
                 Log.d("dnun", "onActivityResult:" + imageType);
+
+
                 /*if (notificationImageUri != null) {
                     notificationImageUri = null;
                 }*/
@@ -343,10 +345,12 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         hivFilter.add(new PatientFilterDataModel(2, "Non-Reactive"));
         hivFilter.add(new PatientFilterDataModel(3, "Positive"));
         hivFilter.add(new PatientFilterDataModel(4, "Negative"));
+        hivFilter.add(new PatientFilterDataModel(5,"Test Not Done"));
 
 
         diabetiesFilter.add(new PatientFilterDataModel(1, "Non-Diabetics"));
         diabetiesFilter.add(new PatientFilterDataModel(2, "Diabetics"));
+        diabetiesFilter.add(new PatientFilterDataModel(3,"Test Not Done"));
 
         newFilterDropDown hivAdaptee = new newFilterDropDown(this, hivFilter);
         hivDropDown.setAdapter(hivAdaptee);
@@ -594,10 +598,12 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         } else if (emptyText(PatientName)) {
             BaseUtils.showToast(this, "Enter patient name");
             return false;
-        } else if (notificationImageUri == null && !Objects.equals(getIntent().getStringExtra("type"), "tree")) {
-            BaseUtils.showToast(this, "Select notification form image");
-            return false;
-        } else if (emptyText(Age)) {
+        }
+//        else if (notificationImageUri == null && !Objects.equals(getIntent().getStringExtra("type"), "tree")) {
+//            BaseUtils.showToast(this, "Select notification form image");
+//            return false;
+//        }
+        else if (emptyText(Age)) {
             BaseUtils.showToast(this, "Enter age");
             return false;
         } else if (Integer.parseInt(Age.getText().toString()) < 1 || Integer.parseInt(Age.getText().toString()) > 100) {

@@ -133,24 +133,30 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
         String from = getIntent().getStringExtra("from");
 
 
-        Log.d("shobhit",from.toString());
+//        Log.d("shobhit",from.toString());
+//
+//        if(from=="main")
+//        {
+//            counselTuTitle.setVisibility(View.GONE);
+//            tuCounsell.setVisibility(View.GONE);
+//        }
 
-        if(from=="main")
-        {
-            counselTuTitle.setVisibility(View.GONE);
-            tuCounsell.setVisibility(View.GONE);
-        }
+        /*
+Hritik  All points are covered in the latest aPP
 
+1:- In Hiv and DM " Test not done " need to add..........................
+2:- TU needs to be removed in counselling..........................
+3:- options need to be given for upload consent form if the patient does not want NPY ..........................
+4:- Status of Notification document also needs to be uploaded documents. ..........................
+5:- sample collection date needs to be opened for back dated entry ..........................
+7:- option for uploading patients proscription if treatment is extended. ..
+         */
+//  1
 
-
+        // 1 2 3 5
     //    Toast.makeText(this, "checking 1231", Toast.LENGTH_SHORT).show();
 
-
         dataBase = AppDataBase.getDatabase(this);
-
-
-
-
 
 
         /*    if (BaseUtils.getSubmitLabReportStatus(this).equals("false")) {
@@ -194,7 +200,8 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
                     }
                 }
 
-            });*//*
+            });*/
+        /*
             mViewModel.submitLabReport(
                     BaseUtils.getn_st_idFormSix(this),
                     BaseUtils.getn_dis_idFormSix(this),
@@ -300,17 +307,17 @@ public class FormTwo extends AppCompatActivity implements View.OnClickListener {
         } else {
 
             if (BaseUtils.getSubmitCounsellingFormStatus(this).equals("false")) {
+
+
          /*   LiveData<List<RoomCounsellingData>> roomCounsellingData = dataBase.customerDao().fetchCounsellingFormData();
             roomCounsellingData.observe(this, roomCounsellingData1 -> {
+            // the issue that is in upload document will be resolved by backend side
 
                 if (roomCounsellingData1.size() != 0) {
                     for (int a = 0; a < roomCounsellingData1.size(); a++) {
                         Log.d("lplpl", "onCreate: "+ roomCounsellingData1.get(a).getD_Counn());
-
-
                     }
                 }
-
             });
 */
                 NetworkCalls.submitCounselling(

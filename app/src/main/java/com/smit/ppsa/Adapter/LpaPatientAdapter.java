@@ -22,7 +22,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.smit.ppsa.FdcForm;
-import com.smit.ppsa.FormTwo;
+
 import com.smit.ppsa.LpaPatient;
 import com.smit.ppsa.R;
 import com.smit.ppsa.RefillPatientList;
@@ -111,7 +111,6 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
 
         try {
             if (parentData.getTstRptImg().toString().equals("0")) {
-
                 holder.tst.setBackgroundColor(Color.parseColor("#FFFF5151"));
             } else {
 
