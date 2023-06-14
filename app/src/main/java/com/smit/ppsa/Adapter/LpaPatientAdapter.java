@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -167,6 +168,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         } catch (Exception e) {
         }
 
+        Log.d("Notification image",parentData.toString());
 
         try {
             if (parentData.getC_not_img().toString().equals("0")) {

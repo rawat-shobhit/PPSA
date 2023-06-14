@@ -648,8 +648,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
+                    String atype="";
+                    try{
+                         atype = response.body().getAsJsonArray("user_data").get(0).getAsJsonObject().get("c_attend_typ").getAsString();
+                    }catch (Exception e){
 
-                    String atype = response.body().getAsJsonArray("user_data").get(0).getAsJsonObject().get("c_attend_typ").getAsString();
+                    }
+
 
                     BaseUtils.putUserAttendanceType(MainActivity.this, atype);
                     if (BaseUtils.getUserInfo(MainActivity.this).getC_lng_desc().equals("")) {
