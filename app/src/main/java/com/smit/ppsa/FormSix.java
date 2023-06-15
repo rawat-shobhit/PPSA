@@ -737,7 +737,6 @@ public class FormSix extends AppCompatActivity {
             }
         });
     }*/
-
     /*    private boolean isValidate() {
             if (testReportDate.getText().toString().isEmpty()) {
                 BaseUtils.showToast(this, "Enter Enrollment date");
@@ -755,6 +754,8 @@ public class FormSix extends AppCompatActivity {
                 return false;
             }
         }*/
+
+
     private void getTestReportResult(int n_diag_cd) {
         progressDialog.showProgressBar();
         if (!BaseUtils.isNetworkAvailable(FormSix.this)) {
@@ -834,12 +835,17 @@ public class FormSix extends AppCompatActivity {
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
             // We don't have permission so prompt the user
+
+//            BaseUtils.showToast(activity , "if condition ");
             ActivityCompat.requestPermissions(
                     activity,
                     PERMISSIONS_STORAGE,
                     REQUEST_EXTERNAL_STORAGE
             );
         }
+//        else{
+//            BaseUtils.showToast(activity , "else condition");
+//        }
     }
 
     // function to check permission
@@ -876,6 +882,7 @@ public class FormSix extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (optionsMenu[i].equals("Take Photo")) {
                     // Open the camera and get the photo
+                    verifyStoragePermissions(FormSix.this);
                     Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(takePicture, 0);
                 } else if (optionsMenu[i].equals("Choose from Gallery")) {

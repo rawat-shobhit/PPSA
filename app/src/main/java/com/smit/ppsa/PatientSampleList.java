@@ -626,7 +626,7 @@ import retrofit2.Response;
 
                 Calendar calendar = Calendar.getInstance();
                 m_date.getDatePicker().setMaxDate(calendar.getTimeInMillis());
-                m_date.getDatePicker().setMinDate(calendar1.getTimeInMillis());
+//                m_date.getDatePicker().setMinDate(calendar1.getTimeInMillis());
                 m_date.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
                 m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
             }

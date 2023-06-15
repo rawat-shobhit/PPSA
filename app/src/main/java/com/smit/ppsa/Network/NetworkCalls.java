@@ -2566,15 +2566,17 @@ public class NetworkCalls {
             LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localPythologylabsample", ""));
             return;
         }
-//Pls Change it to as follows
-//
-//IF Govt Lab then
-//
-//https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>1<<AND>>n_st_id<<EQUALTO>>3<<AND>>n_dis_id<<EQUALTO>>11
-//
-//ELSE IF PRIVATE LAB THEN
-//
-//https://nikshayppsa.hlfppt.org/_api-v1_/
+
+        //Pls Change it to as follows
+        //
+        //IF Govt Lab then
+        //
+        //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>1<<AND>>n_st_id<<EQUALTO>>3<<AND>>n_dis_id<<EQUALTO>>11
+        //
+        //ELSE IF PRIVATE LAB THEN
+        //
+        //https://nikshayppsa.hlfppt.org/_api-v1_/
+
         String url = "";
         if (type == "1") {
             url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>1<<AND>>n_st_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnStCd() + "<<AND>>n_dis_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnDisCd();
