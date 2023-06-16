@@ -138,7 +138,7 @@ public class FormSix extends AppCompatActivity {
         doctorName = findViewById(R.id.doctorname);
         testReportBackImg = findViewById(R.id.f1_testreportbackimg);
         //sampleForLpaDate = findViewById(R.id.f1_dateofsamplelpa);
-      //  lpaTestResult = findViewById(R.id.lpatestresult);
+        //  lpaTestResult = findViewById(R.id.lpatestresult);
         reportdeliverySpinner = findViewById(R.id.rportdeliv);
         submitBtn = findViewById(R.id.submitbtn);
         previousSamplesRecycler = findViewById(R.id.previoussamplecollectionsrecycler);
@@ -148,6 +148,8 @@ public class FormSix extends AppCompatActivity {
         setUpTestReportCalender();
         hospitalNameTitle.setText(getIntent().getStringExtra("hospitalName") + " / " + getIntent().getStringExtra("hospitaltypeName"));
         regIdTT.setText(getIntent().getStringExtra("niksh_id"));
+
+        verifyStoragePermissions(FormSix.this);
 
         Log.d("dkl9", "getPreviousSamples: " + BaseUtils.getUserInfo(FormSix.this).getnUserLevel());
         Log.d("dededw", "getPreviousSamples: " + getIntent().getStringExtra("tu_id"));
