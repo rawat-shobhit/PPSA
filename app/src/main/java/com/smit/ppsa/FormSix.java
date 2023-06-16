@@ -205,8 +205,8 @@ public class FormSix extends AppCompatActivity {
                     if (!dTestReport.equals("")) {
                         if (!ntst_rpt.equals("")) {
                             if (!drpt_col.equals("")) {
-                                if (frontselectedImageUri != null) {
-                                    if (backselectedImageUri != null) {
+//                                if (frontselectedImageUri != null) {
+//                                    if (backselectedImageUri != null) {
 
                                         if (!nrpt_del.equals("")) {
                                             addLabTestReport();
@@ -234,12 +234,12 @@ public class FormSix extends AppCompatActivity {
                                             BaseUtils.showToast(FormSix.this, "Choose report delivered");
                                         }
 
-                                    } else {
-                                        BaseUtils.showToast(FormSix.this, "Upload test report back page");
-                                    }
-                                } else {
-                                    BaseUtils.showToast(FormSix.this, "Upload test report front page");
-                                }
+//                                    } else {
+//                                        BaseUtils.showToast(FormSix.this, "Upload test report back page");
+//                                    }
+//                                } else {
+//                                    BaseUtils.showToast(FormSix.this, "Upload test report front page");
+//                                }
                             } else {
                                 BaseUtils.showToast(FormSix.this, "Choose date of report collection");
                             }
