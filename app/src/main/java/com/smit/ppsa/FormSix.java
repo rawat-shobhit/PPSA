@@ -21,7 +21,6 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -34,6 +33,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.smit.ppsa.Adapter.CustomSpinnerAdapter;
 import com.smit.ppsa.Adapter.PreviousSampleAdapter;
 import com.smit.ppsa.Dao.AppDataBase;
@@ -48,10 +51,6 @@ import com.smit.ppsa.Response.lpaTestResult.LpaTestResultResponse;
 import com.smit.ppsa.Response.previoussamplesformsix.PreviousSampleResponse;
 import com.smit.ppsa.Response.pythologylab.PythologyLabResponse;
 import com.smit.ppsa.Response.testreport.TestreportResponse;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.ByteArrayOutputStream;
@@ -68,7 +67,7 @@ import retrofit2.Response;
 
 public class FormSix extends AppCompatActivity {
     private TextView testReportDate, reportCollectionDate, docId, hospitalNameTitle, regIdTT,
-             submitBtn, patientName, patientAge, patentType, patentdate, doctorName;
+            submitBtn, patientName, patientAge, patentType, patentdate, doctorName;
     private Spinner testReportResult, pythologyLab, reportdeliverySpinner;
     private ImageView testReportFrontImg, testReportBackImg;
     private RecyclerView previousSamplesRecycler;
@@ -77,8 +76,8 @@ public class FormSix extends AppCompatActivity {
     private ImageView backBtn;
     FormSixViewModel mViewModel;
     private ArrayList permissionsToRequest;
-    private ArrayList permissionsRejected = new ArrayList();
-    private ArrayList permissions = new ArrayList();
+    private final ArrayList permissionsRejected = new ArrayList();
+    private final ArrayList permissions = new ArrayList();
     PreviousSampleAdapter previousAdapter;
     List<RoomLpaTestResult> parentDataLpaSampleResult;
     List<RoomReportDelivered> parentDataReportDelivered;
@@ -87,7 +86,7 @@ public class FormSix extends AppCompatActivity {
     private FusedLocationProviderClient mFusedLocationClient;
     // Permissions for accessing the storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
+    private static final String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA,
@@ -107,10 +106,17 @@ public class FormSix extends AppCompatActivity {
     String backimgPath = null;
     private AppDataBase dataBase;
 
-    private String imageType = "front", dTestReport = "", ntst_rpt = "", drpt_col = "",
-            dlpa_smpl = "", nlpa_rslt = "", wayLatitude = "", wayLongitude = "", nrpt_del = "";
+    private String imageType = "front";
+    private String dTestReport = "";
+    private String ntst_rpt = "";
+    private String drpt_col = "";
+    private final String dlpa_smpl = "";
+    private final String nlpa_rslt = "";
+    private String wayLatitude = "";
+    private String wayLongitude = "";
+    private String nrpt_del = "";
     private int n_labid = 20998778;
-    private Boolean isTrueNatOrCbNaat = false;
+    private final Boolean isTrueNatOrCbNaat = false;
     //get this value from the selected patient
 
     @Override
@@ -170,7 +176,7 @@ public class FormSix extends AppCompatActivity {
         Log.d("jiouoj", "onCreate: " + BaseUtils.getSubmitLabReportStatus(FormSix.this));
 
 
-        getTestReportResult(getIntent().getIntExtra("n_diag_cd",-1));
+        getTestReportResult(getIntent().getIntExtra("n_diag_cd", -1));
         getLpaTestResult();
         getReportDelivered();
         getPythologyLab();
@@ -179,8 +185,8 @@ public class FormSix extends AppCompatActivity {
         BaseUtils.putFormSixTuId(FormSix.this, getIntent().getStringExtra("tu_id"));
         BaseUtils.putFormSixHfId(FormSix.this, getIntent().getStringExtra("hf_id"));
 
-        doctorName.setText(getIntent().getStringExtra("diag_test")+String.format("(%s)",getIntent().getStringExtra("resn")));
-        patientName.setText(getIntent().getStringExtra("patient_name")+" (" +getIntent().getStringExtra("patient_phone") + " )");
+        doctorName.setText(getIntent().getStringExtra("diag_test") + String.format("(%s)", getIntent().getStringExtra("resn")));
+        patientName.setText(getIntent().getStringExtra("patient_name") + " (" + getIntent().getStringExtra("patient_phone") + " )");
         patientAge.setText(getIntent().getStringExtra("patient_age"));
         patentdate.setText(getIntent().getStringExtra("d_sample"));
         patentType.setText(getIntent().getStringExtra("patient_type"));
@@ -199,43 +205,41 @@ public class FormSix extends AppCompatActivity {
                     if (!dTestReport.equals("")) {
                         if (!ntst_rpt.equals("")) {
                             if (!drpt_col.equals("")) {
-                                    if (frontselectedImageUri != null) {
-                                        if (backselectedImageUri != null) {
+                                if (frontselectedImageUri != null) {
+                                    if (backselectedImageUri != null) {
 
-                                                    if (!nrpt_del.equals("")) {
-                                                        addLabTestReport();
+                                        if (!nrpt_del.equals("")) {
+                                            addLabTestReport();
                                                         /*
                                                           Context context,     String n_enroll_idd,       String n_user_idd,       Boolean navigate,      String date,            String confirm
                                                          */
 
-                                                        if( parentDataTestReportResults.get(testReportResult.getSelectedItemPosition() - 1).getC_val().equals("MTB Detected Rif Not Detected")) {
-                                                            NetworkCalls.reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(),false, dTestReport,"1");
+                                            if (parentDataTestReportResults.get(testReportResult.getSelectedItemPosition() - 1).getC_val().equals("MTB Detected Rif Not Detected")) {
+                                                NetworkCalls.reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(), false, dTestReport, "1");
 
-                                                            Log.d("shobhit 1",getIntent().getStringExtra("enroll_id")+"->"+BaseUtils.getUserInfo(FormSix.this).getnUserLevel());
+                                                Log.d("shobhit 1", getIntent().getStringExtra("enroll_id") + "->" + BaseUtils.getUserInfo(FormSix.this).getnUserLevel());
 
-                                                        }
-                                                        else if ( parentDataTestReportResults.get(testReportResult.getSelectedItemPosition() - 1).getC_val().equals("MTB Detected Rif Detected")) {
-                                                            NetworkCalls.reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(),false, dTestReport,"1");
+                                            } else if (parentDataTestReportResults.get(testReportResult.getSelectedItemPosition() - 1).getC_val().equals("MTB Detected Rif Detected")) {
+                                                NetworkCalls.reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(), false, dTestReport, "1");
 
-                                                            Log.d("shobhit 2",getIntent().getStringExtra("enroll_id")+"->"+BaseUtils.getUserInfo(FormSix.this).getnUserLevel());
-                                                        }
-                                                        else if ( parentDataTestReportResults.get(testReportResult.getSelectedItemPosition() - 1).getC_val().equals( "Positive ( + )")) {
-                                                            NetworkCalls. reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(),false, dTestReport,"1");
+                                                Log.d("shobhit 2", getIntent().getStringExtra("enroll_id") + "->" + BaseUtils.getUserInfo(FormSix.this).getnUserLevel());
+                                            } else if (parentDataTestReportResults.get(testReportResult.getSelectedItemPosition() - 1).getC_val().equals("Positive ( + )")) {
+                                                NetworkCalls.reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(), false, dTestReport, "1");
 
-                                                            Log.d("shobhit 3",getIntent().getStringExtra("enroll_id")+"->"+BaseUtils.getUserInfo(FormSix.this).getnUserLevel());
-                                                        }
+                                                Log.d("shobhit 3", getIntent().getStringExtra("enroll_id") + "->" + BaseUtils.getUserInfo(FormSix.this).getnUserLevel());
+                                            }
 
-
-                                                    }else {
-                                                        BaseUtils.showToast(FormSix.this, "Choose report delivered");
-                                                    }
 
                                         } else {
-                                            BaseUtils.showToast(FormSix.this, "Upload test report back page");
+                                            BaseUtils.showToast(FormSix.this, "Choose report delivered");
                                         }
+
                                     } else {
-                                        BaseUtils.showToast(FormSix.this, "Upload test report front page");
+                                        BaseUtils.showToast(FormSix.this, "Upload test report back page");
                                     }
+                                } else {
+                                    BaseUtils.showToast(FormSix.this, "Upload test report front page");
+                                }
                             } else {
                                 BaseUtils.showToast(FormSix.this, "Choose date of report collection");
                             }
@@ -301,7 +305,6 @@ public class FormSix extends AppCompatActivity {
                 } else {
                     //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
                     n_labid = Integer.parseInt(parentDataPythology.get(i - 1).getPm_staff_id());
-                    ;
 
                 }
 
@@ -423,8 +426,8 @@ public class FormSix extends AppCompatActivity {
                 String myFormat = "yyyy-MM-dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 dTestReport = sdf.format(trCalendar.getTime());
-                if (!testReportDate.getText().toString().isEmpty()&&!reportCollectionDate.getText().toString().isEmpty()){
-                    if (trCalendar.getTime().after(BaseUtils.getDateFromString(reportCollectionDate.getText().toString()))){
+                if (!testReportDate.getText().toString().isEmpty() && !reportCollectionDate.getText().toString().isEmpty()) {
+                    if (trCalendar.getTime().after(BaseUtils.getDateFromString(reportCollectionDate.getText().toString()))) {
                         reportCollectionDate.setText("");
                     }
                 }
@@ -440,7 +443,7 @@ public class FormSix extends AppCompatActivity {
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Integer.parseInt(patentdate.getText().toString().split("-")[0]),
-                        Integer.parseInt(patentdate.getText().toString().split("-")[1])-1,
+                        Integer.parseInt(patentdate.getText().toString().split("-")[1]) - 1,
                         Integer.parseInt(patentdate.getText().toString().split("-")[2]));
                 m_date.show();
                 m_date.getDatePicker().setMinDate(calendar.getTimeInMillis());
@@ -663,15 +666,15 @@ public class FormSix extends AppCompatActivity {
         reportCollectionDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (testReportDate.getText().toString().isEmpty()){
-                    BaseUtils.showToast(FormSix.this,"Please select test report date first");
-                }else{
+                if (testReportDate.getText().toString().isEmpty()) {
+                    BaseUtils.showToast(FormSix.this, "Please select test report date first");
+                } else {
                     DatePickerDialog m_date = new DatePickerDialog(FormSix.this, R.style.calender_theme, date, calendar
                             .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                             calendar.get(Calendar.DAY_OF_MONTH));
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(Integer.parseInt(testReportDate.getText().toString().split("-")[0]),
-                            Integer.parseInt(testReportDate.getText().toString().split("-")[1])-1,
+                            Integer.parseInt(testReportDate.getText().toString().split("-")[1]) - 1,
                             Integer.parseInt(testReportDate.getText().toString().split("-")[2]));
 
                     m_date.show();
@@ -773,9 +776,9 @@ public class FormSix extends AppCompatActivity {
 
         if (isTrueNatOrCbNaat.equals(false)) {
             String url = "";
-            if (n_diag_cd<=3){
+            if (n_diag_cd <= 3) {
                 url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_m_test_result&w=id<<LT>>6";
-            }else{
+            } else {
                 url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_m_test_result&w=id<<GT>>5";
             }
             ApiClient.getClient().getTestReportResults(url).enqueue(new Callback<TestreportResponse>() {
@@ -984,7 +987,7 @@ public class FormSix extends AppCompatActivity {
                         }
                         Log.d("gug", "onResponse: " + response.body().getStatus());
 
-                       getRoomReportDelivered();
+                        getRoomReportDelivered();
 
                         LocalBroadcastManager.getInstance(FormSix.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
 
@@ -1022,6 +1025,7 @@ public class FormSix extends AppCompatActivity {
         });
 
     }
+
     private void getRoomReportDelivered() {
         Log.d("j8ijo", "getRoomReportDelivered: mkljui");
         LiveData<List<RoomReportDelivered>> roomReportDeliver = dataBase.customerDao().getSelectedReportDeliveredFromRoom();
@@ -1160,7 +1164,7 @@ public class FormSix extends AppCompatActivity {
 
     }
 
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
@@ -1347,7 +1351,7 @@ public class FormSix extends AppCompatActivity {
 
 //n_user_idd
 
-    //    Toast.makeText(this,dTestReport.toString(),Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(this,dTestReport.toString(),Toast.LENGTH_SHORT).show();
         mViewModel.submitLabReport(
                 BaseUtils.getUserInfo(this).getnStCd(),
                 BaseUtils.getUserInfo(this).getnDisCd(),
