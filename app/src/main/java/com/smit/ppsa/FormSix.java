@@ -196,6 +196,15 @@ public class FormSix extends AppCompatActivity {
         patentType.setText(getIntent().getStringExtra("patient_type"));
         docId.setText(getIntent().getStringExtra("doc_id"));
 
+
+        try {
+            checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+        }catch (Exception e){
+            Log.d("catchException",e.toString()) ;
+        }
+
+
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -329,8 +338,8 @@ public class FormSix extends AppCompatActivity {
                     Log.d("dded", "onItemSelected: " + ntst_rpt);
                 } else {
                     //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
-                    nrpt_del = parentDataLpaSampleResult.get(i - 1).getId();
-                    Log.d("dded", "onItemSelected: " + ntst_rpt);
+                    nrpt_del = parentDataLpaSampleResult.get(i - 1).getId().toString();
+                    Log.d("dded else ", "onItemSelected: " + ntst_rpt);
                 }
 
             }
@@ -360,6 +369,10 @@ public class FormSix extends AppCompatActivity {
         testReportBackImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+
                 imageType = "back";
                 if (backselectedImageUri != null) {
                     backselectedImageUri = null;
@@ -605,7 +618,7 @@ public class FormSix extends AppCompatActivity {
                     startCrop(frontselectedImageUri);
 
 
-                    Log.d("uploadPhoto front ",frontselectedImageUri.toString());
+                    Log.d("uploadPhoto front if  ",frontselectedImageUri.toString());
 
                     /*performCrop(frontselectedImageUri);*/
                     //  testReportFrontImg.setImageURI(frontselectedImageUri);
@@ -622,7 +635,7 @@ public class FormSix extends AppCompatActivity {
                     startCrop(backselectedImageUri);
 
 
-                    Log.d("uploadPhoto front ",frontselectedImageUri.toString());
+                    Log.d("uploadPhoto back else",frontselectedImageUri.toString());
 
                     //testReportBackImg.setImageURI(backselectedImageUri);
                 }
@@ -647,10 +660,11 @@ public class FormSix extends AppCompatActivity {
                         Log.d("Ucrop",uri.toString());
                         testReportFrontImg.setImageURI(frontselectedImageUri);
 
-                        Log.d("uploadPhoto front ",frontselectedImageUri.toString());
+                        Log.d("upload else if front",frontselectedImageUri.toString());
 
                     } else {
-                /*        // CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+                        /*        // CropImage.ActivityResult result = CropImage.getActivityResult(data);
                         backselectedImageUri = data.getData();                                                         // Get the image file URI
 
                         //backselectedImageUri = result.getUri();                                                         // Get the image file URI
@@ -664,7 +678,7 @@ public class FormSix extends AppCompatActivity {
                         testReportBackImg.setImageURI(backselectedImageUri);
 
 
-                        Log.d("uploadPhoto front ",frontselectedImageUri.toString());
+                        Log.d("upload else else front",frontselectedImageUri.toString());
 
                     }
 

@@ -420,7 +420,7 @@
                     android:layout_marginHorizontal="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:fontFamily="@font/nunitosans_semibold"
-                    android:text="Upload Notification Form*"
+                    android:text="Upload Notification Form"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
