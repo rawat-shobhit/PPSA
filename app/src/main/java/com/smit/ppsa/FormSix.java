@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -117,6 +118,9 @@ public class FormSix extends AppCompatActivity {
     private String nrpt_del = "";
     private int n_labid = 20998778;
     private final Boolean isTrueNatOrCbNaat = false;
+
+    private static final int CAMERA_PERMISSION_CODE = 100;
+    private static final int STORAGE_PERMISSION_CODE = 101;
     //get this value from the selected patient
 
     @Override
@@ -205,8 +209,8 @@ public class FormSix extends AppCompatActivity {
                     if (!dTestReport.equals("")) {
                         if (!ntst_rpt.equals("")) {
                             if (!drpt_col.equals("")) {
-//                                if (frontselectedImageUri != null) {
-//                                    if (backselectedImageUri != null) {
+                                if (frontselectedImageUri != null) {
+                                    if (backselectedImageUri != null) {
 
                                         if (!nrpt_del.equals("")) {
                                             addLabTestReport();
@@ -234,12 +238,12 @@ public class FormSix extends AppCompatActivity {
                                             BaseUtils.showToast(FormSix.this, "Choose report delivered");
                                         }
 
-//                                    } else {
-//                                        BaseUtils.showToast(FormSix.this, "Upload test report back page");
-//                                    }
-//                                } else {
-//                                    BaseUtils.showToast(FormSix.this, "Upload test report front page");
-//                                }
+                                    } else {
+                                        BaseUtils.showToast(FormSix.this, "Upload test report back page");
+                                    }
+                                } else {
+                                    BaseUtils.showToast(FormSix.this, "Upload test report front page");
+                                }
                             } else {
                                 BaseUtils.showToast(FormSix.this, "Choose date of report collection");
                             }
@@ -344,6 +348,8 @@ public class FormSix extends AppCompatActivity {
             public void onClick(View v) {
                 imageType = "front";
                 Log.d("dnun", "onActivityResult:" + imageType);
+
+                checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
                 if (frontselectedImageUri != null) {
                     frontselectedImageUri = null;
                 }
@@ -542,9 +548,16 @@ public class FormSix extends AppCompatActivity {
                  /*   } else {
                         testReportFrontImg.setImageBitmap(result.getBitmap());
                     }*/
+
+
+
+
+
                     frontselectedImageUri = data.getData();
                     testReportFrontImg.setImageURI(frontselectedImageUri);
                     startCrop(frontselectedImageUri);
+
+
                     /*performCrop(frontselectedImageUri);*/
                     //  testReportFrontImg.setImageURI(frontselectedImageUri);
                 } else {
@@ -554,9 +567,14 @@ public class FormSix extends AppCompatActivity {
                     //backselectedImageUri = result.getUri();                                                         // Get the image file URI
                     //  Picasso.with(this).load(backselectedImageUri).into(testReportBackImg);
                     //  testReportBackImg.setImageURI(backselectedImageUri);
+
+
                     backselectedImageUri = data.getData();
                     testReportBackImg.setImageURI(backselectedImageUri);
                     startCrop(backselectedImageUri);
+
+                    Log.d("shobhit front ",frontselectedImageUri.toString());
+
                     //testReportBackImg.setImageURI(backselectedImageUri);
                 }
 
@@ -585,6 +603,10 @@ public class FormSix extends AppCompatActivity {
                     frontselectedImageUri = getImageUri(getApplicationContext(), selectedImage);
                     testReportFrontImg.setImageURI(frontselectedImageUri);
                     startCrop(frontselectedImageUri);
+
+
+                    Log.d("uploadPhoto front ",frontselectedImageUri.toString());
+
                     /*performCrop(frontselectedImageUri);*/
                     //  testReportFrontImg.setImageURI(frontselectedImageUri);
                 } else {
@@ -598,6 +620,10 @@ public class FormSix extends AppCompatActivity {
                     backselectedImageUri = getImageUri(getApplicationContext(), selectedImage);
                     testReportBackImg.setImageURI(backselectedImageUri);
                     startCrop(backselectedImageUri);
+
+
+                    Log.d("uploadPhoto front ",frontselectedImageUri.toString());
+
                     //testReportBackImg.setImageURI(backselectedImageUri);
                 }
 
@@ -618,7 +644,11 @@ public class FormSix extends AppCompatActivity {
                         // get the returned data
                         Uri uri = UCrop.getOutput(data);
                         frontselectedImageUri = uri;
+                        Log.d("Ucrop",uri.toString());
                         testReportFrontImg.setImageURI(frontselectedImageUri);
+
+                        Log.d("uploadPhoto front ",frontselectedImageUri.toString());
+
                     } else {
                 /*        // CropImage.ActivityResult result = CropImage.getActivityResult(data);
                         backselectedImageUri = data.getData();                                                         // Get the image file URI
@@ -632,6 +662,9 @@ public class FormSix extends AppCompatActivity {
                         Uri uri = UCrop.getOutput(data);
                         backselectedImageUri = uri;
                         testReportBackImg.setImageURI(backselectedImageUri);
+
+
+                        Log.d("uploadPhoto front ",frontselectedImageUri.toString());
 
                     }
 
@@ -1496,4 +1529,50 @@ public class FormSix extends AppCompatActivity {
     }
 
 
+    // Function to check and request permission.
+    public void checkPermission(String permission, int requestCode)
+    {
+        if (ContextCompat.checkSelfPermission(FormSix.this, permission) == PackageManager.PERMISSION_DENIED) {
+
+            // Requesting the permission
+            ActivityCompat.requestPermissions(FormSix.this, new String[] { permission }, requestCode);
+        }
+        else {
+//            Toast.makeText(FormSix.this, "Permission already granted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // This function is called when the user accepts or decline the permission.
+    // Request Code is used to check which permission called this function.
+    // This request code is provided when the user is prompt for permission.
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode,
+                permissions,
+                grantResults);
+
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                Toast.makeText(FormSix.this, "Camera Permission Granted", Toast.LENGTH_SHORT) .show();
+            }
+            else {
+                Toast.makeText(FormSix.this, "Camera Permission Denied", Toast.LENGTH_SHORT) .show();
+            }
+        }
+        else if (requestCode == STORAGE_PERMISSION_CODE) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                Toast.makeText(MainActivity.this, "Storage Permission Granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(FormSix.this, "Storage Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
+
+
+
