@@ -172,7 +172,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/back_two"
                 android:elevation="@dimen/_4sdp"
-                android:hint="--"
+                android:hint="@string/dash"
                 android:visibility="gone"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_12sdp"

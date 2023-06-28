@@ -135,6 +135,8 @@ public class CounsellingForm extends AppCompatActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 if (!dateOfCounseling.equals("")) {
                     Date date = null;
                     Date dateOne = null;

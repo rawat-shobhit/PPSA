@@ -34,8 +34,12 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.BufferedInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
+import java.net.URL
+import java.util.*
 
 
 class UploadDoc : AppCompatActivity() {
@@ -102,7 +106,7 @@ class UploadDoc : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload_doc)
-        manager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+         manager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
 
         init()
     }
@@ -494,7 +498,7 @@ class UploadDoc : AppCompatActivity() {
                         val selectedImage = data!!.extras!!["data"] as Bitmap?
                         notificationUri = selectedImage?.let {
                             getImageUri(
-                                applicationContext,
+                                this@UploadDoc,
                                 it
                             )
                         }
@@ -598,7 +602,7 @@ class UploadDoc : AppCompatActivity() {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path =
-            MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+            MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, Calendar.getInstance().getTime().toString(), null)
         return Uri.parse(path)
     }
 
@@ -878,13 +882,15 @@ class UploadDoc : AppCompatActivity() {
                 "Please Check your internet  Connectivity"
             ) //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
 
-
             return
         }
-        //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_pat_docs&w=n_tu_id<<EQUALTO>>235<<AND>>n_enroll_id<<EQUQLTO>>1
+
+        //https://nikshayppsa.hlfppt.org/_api-v1_/_srch_docs.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>n_tu_id<<EQUALTO>>26<<OR>>n_tu_id<<EQUALTO>>28<<EBRK>>&typ=1
         val url =
             "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_pat_docs&w=n_tu_id<<EQUALTO>>" + patient.getnTuId() + "<<AND>>n_enroll_id<<EQUALTO>>" + patient.getId()
         Log.d("Pateint LIst URL ", url)
+
+        //http://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_pat_docs&w=n_tu_id<<EQUALTO>>28<<AND>>n_enroll_id<<EQUALTO>>43787
         ApiClient.getClient().getTUPatient(url).enqueue(object : Callback<RegisterParentResponse> {
             override fun onResponse(
                 call: Call<RegisterParentResponse>,
@@ -995,7 +1001,8 @@ class UploadDoc : AppCompatActivity() {
                             isUploaded = true
 
                         } catch (e: Exception) {
-                            Toast.makeText(this@UploadDoc, e.message!!, Toast.LENGTH_SHORT).show()
+                            Log.d("crash_image",e.message!!.toString())
+//                            Toast.makeText(this@UploadDoc, e.message!!, Toast.LENGTH_SHORT).show()
                         }
 
                         //  adhaar_img = encodeImage(adhaar.drawable as BitmapDrawable)
@@ -1011,13 +1018,40 @@ class UploadDoc : AppCompatActivity() {
     }
 
 
+    fun downloadImage(urlString: String) {
+        val destinationPath=Calendar.getInstance().toString()
+        val url = URL(urlString)
+        val connection = url.openConnection()
+        connection.connect()
+        val inputStream = BufferedInputStream(connection.getInputStream())
+        val outputStream = FileOutputStream(destinationPath)
+
+        val buffer = ByteArray(1024)
+        var bytesRead: Int
+        while (inputStream.read(buffer).also { bytesRead = it } != -1) {
+            outputStream.write(buffer, 0, bytesRead)
+        }
+
+        outputStream.close()
+        inputStream.close()
+    }
+
+
     private fun download(url: String) {
         manager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-        val uri =
-            Uri.parse(url)
+//        val uri =
+//            Uri.parse(url)
+//        val request = DownloadManager.Request(uri)
+//        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
+//        val reference = manager!!.enqueue(request)
+
+        val uri = Uri.parse(url)
+
         val request = DownloadManager.Request(uri)
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
-        val reference = manager!!.enqueue(request)
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+
+        val reference: Long = manager!!.enqueue(request)
+
     }
 
 

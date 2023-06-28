@@ -1,17 +1,8 @@
 package com.smit.ppsa;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -23,22 +14,35 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.JsonObject;
 import com.smit.ppsa.Dao.AppDataBase;
 import com.smit.ppsa.Network.ApiClient;
 import com.smit.ppsa.Network.NetworkCalls;
 import com.smit.ppsa.Network.NetworkConnection;
+import com.smit.ppsa.PatientsFollowFolder.PatientsFollowUpActivity;
 import com.smit.ppsa.Response.AddDocResponse;
 import com.smit.ppsa.Response.DoctorModel;
-import com.smit.ppsa.Response.GetTestResponse;
 import com.smit.ppsa.Response.HospitalModel;
 import com.smit.ppsa.Response.PostProviderFromRoom;
-import com.smit.ppsa.Response.RoomTestData;
+import com.smit.ppsa.dailyVisitOutputFolder.DailyVisitActivity;
+import com.smit.ppsa.healthFacilityFolder.HealthFacilityVisit;
+import com.smit.ppsa.providerStatusFolder.ProviderVisitActivity;
+import com.smit.ppsa.sampleCollectionVisitFolder.SampleCollectionVisitActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,11 +60,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardView Providerengagement, Reportdelivery, Dcbtn, UploadDocument, SampleCollections,
             Conselling, usermainbtn, logOutBtn, refill, changePassBtn, stockReceive, fdcrec, fdcIssued, transfer, lpaResult, NotificationBtn;
     private TextView username, dateandtime;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
     private ImageView img, img2;
     private AppDataBase dataBase;
+    private TextView healthFacility;
     private List<PostProviderFromRoom> providerFromRooms = new ArrayList<>();
     private GlobalProgressDialog progressDialog;
     private List<HospitalModel> hospitalModelList = new ArrayList<>();
+    private ImageView menuImage;
     FormSixViewModel mViewModel;
     FdcReceivedViewModel receiveViewModel;
     FdcDispensationToHfViewModel fdcDispensationToHfViewModel;
@@ -79,6 +87,60 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fdcOpeningStockBalanceViewModel = new ViewModelProvider(this).get(FdcOpeningStockBalanceViewModel.class);
         fdcDispensationToPatientViewModel = new ViewModelProvider(this).get(FdcDispensationToPatientViewModel.class);
         receiveViewModel = new ViewModelProvider(this).get(FdcReceivedViewModel.class);
+
+        navigationView = findViewById(R.id.nav_view);
+
+
+
+
+//        healthFacility = navigationView.findViewById(R.id.healthFacilityVisit);
+//        daily
+
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // Handle item selection here
+                switch (item.getItemId()) {
+                    case R.id.healthFacilityVisit:
+//                        Toast.makeText(MainActivity.this, "checking", Toast.LENGTH_SHORT).show();
+                          // Handle item 1 selection
+//                        BaseUtils.showToast(MainActivity.this, "checking");
+                        startActivity(new Intent(MainActivity.this, HealthFacilityVisit.class));
+                        break;
+
+
+                    case R.id.dailyVisit:
+//                        Toast.makeText(MainActivity.this, "checking", Toast.LENGTH_SHORT).show();
+                        // Handle item 1 selection
+//                        BaseUtils.showToast(MainActivity.this, "checking");
+                        startActivity(new Intent(MainActivity.this, DailyVisitActivity.class));
+                        break;
+
+
+                    case R.id.providerVisit:
+                        startActivity(new Intent(MainActivity.this, ProviderVisitActivity.class));
+
+                        break;
+
+                    case R.id.patientsFollowUp:
+                        startActivity(new Intent(MainActivity.this, PatientsFollowUpActivity.class));
+
+                        break;
+
+                    case R.id.sampleCollectionReporting:
+                        startActivity(new Intent(MainActivity.this, SampleCollectionVisitActivity.class));
+
+                        break;
+                    // Add more cases for other items
+                }
+
+                // Close the drawer after handling the selection
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+
 
         /*     if (BaseUtils.getAddSampleForm(this).equals("false")) {
 
@@ -119,7 +181,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         }*/
+        //        menuImage=findViewById(R.id.menuImage);
 
+//        menuImage.setOnClickListener(new);
 
         if (BaseUtils.getProviderForm(this).equals("false")) {
             NetworkCalls.postProvider(
@@ -553,7 +617,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 BaseUtils.getHospitalnStId(this),
                 BaseUtils.getHospitalnDisId(this),
                 BaseUtils.getHospitalnTuId(this),
-                hospitalModel.getN_hf_cd().toString(),
+                hospitalModel.getN_hf_cd(),
                 hospitalModel.getC_hf_nam(),
                 hospitalModel.getN_hf_typ_id(),
                 hospitalModel.getC_hf_addr(),
@@ -575,9 +639,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initViews() {
 
         try {
-           // ContextCompat.startForegroundService(this, new Intent(this, SendLiveLocationService.class));
+            // ContextCompat.startForegroundService(this, new Intent(this, SendLiveLocationService.class));
         } catch (Exception e) {
         }
+
+        navigationView = findViewById(R.id.nav_view);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        menuImage = findViewById(R.id.menuImage);
         fdcrec = findViewById(R.id.fdcrec);
         Providerengagement = findViewById(R.id.providerangagementbtn);
         Reportdelivery = findViewById(R.id.reportdeliverybtn);
@@ -648,10 +716,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    String atype="";
-                    try{
-                         atype = response.body().getAsJsonArray("user_data").get(0).getAsJsonObject().get("c_attend_typ").getAsString();
-                    }catch (Exception e){
+                    String atype = "";
+                    try {
+                        atype = response.body().getAsJsonArray("user_data").get(0).getAsJsonObject().get("c_attend_typ").getAsString();
+                    } catch (Exception e) {
 
                     }
 
@@ -727,6 +795,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         refill.setOnClickListener(this);
         transfer.setOnClickListener(this);
         NotificationBtn.setOnClickListener(this);
+        menuImage.setOnClickListener(this);
+
+//        healthFacility.setOnClickListener(this);
     }
 
     @Override
@@ -751,7 +822,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, FormTwo.class)
                         .putExtra("section", "counsel")
                         .putExtra("counsel", "")
-                        .putExtra("from","main"));
+                        .putExtra("from", "main"));
                 break;
             case R.id.stockreceive:
                 startActivity(new Intent(MainActivity.this, HospitalsList.class).putExtra("stockreceiving", ""));
@@ -784,6 +855,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.fdcrec:
 
                 startActivity(new Intent(MainActivity.this, HospitalsList.class).putExtra("fdc", "fdc"));
+                break;
+
+            case R.id.menuImage:
+                drawerLayout.openDrawer(GravityCompat.START);
                 break;
                 /*
                 LayoutInflater li = LayoutInflater.from(MainActivity.this);
@@ -818,6 +893,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.NotificationBtn:
                 startActivity(new Intent(MainActivity.this, newNotificationScreen.class).putExtra("type", "normal"));
                 break;
+
+//            case R.id.healthFacilityVisit:
+//                startActivity(new Intent(MainActivity.this, HealthFacilityVisit.class));
+//                break;
+
 
         }
     }

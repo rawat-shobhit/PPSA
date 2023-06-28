@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.smit.ppsa.FdcForm;
-
 import com.smit.ppsa.LpaPatient;
 import com.smit.ppsa.R;
 import com.smit.ppsa.RefillPatientList;
@@ -42,9 +39,9 @@ import java.util.Objects;
 
 public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mholder> {
     private List<RegisterParentData> registerParentData;
-    private Context context;
+    private final Context context;
     private boolean isComingForReport;
-    private String type;
+    private final String type;
 
     public LpaPatientAdapter(List<RegisterParentData> registerParentData, Context context, String type) {
         this.registerParentData = registerParentData;
@@ -60,6 +57,8 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
 
     @Override
     public void onBindViewHolder(@NonNull LpaPatientAdapter.Mholder holder, int position) {
+
+
         RegisterParentData parentData = registerParentData.get(position);
 
         Date c = Calendar.getInstance().getTime();
@@ -80,7 +79,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
 
 
         try {
-            if (parentData.getAadhar_img().toString().equals("0")) {
+            if (parentData.getAadhar_img().equals("0") || parentData.getAadhar_img().equals("null")) {
                 holder.adhar.setBackgroundColor(Color.parseColor("#FFFF5151"));
             } else {
                 holder.adhar.setBackgroundColor(Color.parseColor("#5EC362"));
@@ -88,8 +87,9 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         } catch (Exception e) {
         }
 
+
         try {
-            if (parentData.getBnk_img().toString().equals("0")) {
+            if (parentData.getBnk_img().equals("0") || parentData.getBnk_img().equals("null")) {
                 holder.bank.setBackgroundColor(Color.parseColor("#FFFF5151"));
             } else {
                 holder.bank.setBackgroundColor(Color.parseColor("#5EC362"));
@@ -97,8 +97,9 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         } catch (Exception e) {
         }
 
+
         try {
-            if (parentData.getPrescImg().toString().equals("0")) {
+            if (parentData.getPrescImg().equals("0") || parentData.getPrescImg().equals("null")) {
 
                 holder.pres.setBackgroundColor(Color.parseColor("#FFFF5151"));
             } else {
@@ -110,10 +111,9 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
 
 
         try {
-            if (parentData.getTstRptImg().toString().equals("0")) {
+            if (parentData.getTstRptImg().equals("0") || parentData.getTstRptImg().equals("null")) {
                 holder.tst.setBackgroundColor(Color.parseColor("#FFFF5151"));
             } else {
-
                 holder.tst.setBackgroundColor(Color.parseColor("#5EC362"));
             }
         } catch (Exception e) {
@@ -121,7 +121,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
 
 
         try {
-            if (parentData.getC_udst_img().toString().equals("0")) {
+            if (parentData.getC_udst_img().equals("0") || parentData.getC_udst_img().equals("null")) {
                 holder.udst.setBackgroundColor(Color.parseColor("#FFFF5151"));
             } else {
                 holder.udst.setBackgroundColor(Color.parseColor("#5EC362"));
@@ -131,7 +131,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
 
 
         try {
-            if (parentData.getC_diab_img().toString().equals("0")) {
+            if (parentData.getC_diab_img().equals("0") || parentData.getC_diab_img().equals("null")) {
                 holder.diab.setBackgroundColor(Color.parseColor("#FFFF5151"));
             } else {
                 holder.diab.setBackgroundColor(Color.parseColor("#5EC362"));
@@ -141,7 +141,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
 
 
         try {
-            if (parentData.getC_hiv_img().toString().equals("0")) {
+            if (parentData.getC_hiv_img().equals("0") || parentData.getC_hiv_img().equals("null")) {
                 holder.hiv.setBackgroundColor(Color.parseColor("#FFFF5151"));
             } else {
                 holder.hiv.setBackgroundColor(Color.parseColor("#5EC362"));
@@ -150,7 +150,16 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         }
 
         try {
-            if (parentData.getC_add_presc_img().toString().equals("0")) {
+            Log.d("checkingData", "andhar->"+parentData.getAadhar_img() + " bank->" + parentData.getBnk_img() + " PrescImg->"+parentData.getPrescImg() + " TstRptImg->" + parentData.getTstRptImg() + " getC_udst_img()->" + parentData.getC_udst_img() + " diabetic->" + parentData.getC_diab_img() + " notification->" + parentData.getC_not_img());
+
+
+        } catch (Exception e) {
+            Log.d("checkingDataCrash", e.toString());
+        }
+
+
+        try {
+            if (parentData.getC_add_presc_img().equals("0") || parentData.getC_add_presc_img().equals("null")) {
                 holder.additionalprescription.setBackgroundColor(Color.parseColor("#FFFF5151"));
             } else {
                 holder.additionalprescription.setBackgroundColor(Color.parseColor("#5EC362"));
@@ -159,7 +168,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         }
 
         try {
-            if (parentData.getC_con_frm_img().toString().equals("0")) {
+            if (parentData.getC_con_frm_img().equals("0") || parentData.getC_con_frm_img().equals("null")) {
                 holder.consent.setBackgroundColor(Color.parseColor("#FFFF5151"));
             } else {
                 holder.consent.setBackgroundColor(Color.parseColor("#5EC362"));
@@ -167,10 +176,8 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         } catch (Exception e) {
         }
 
-        Log.d("Notification image",parentData.toString());
-
         try {
-            if (parentData.getC_not_img().toString().equals("0")) {
+            if (parentData.getC_not_img().equals("0") || parentData.getC_not_img().equals("null")) {
                 holder.notification.setBackgroundColor(Color.parseColor("#FFFF5151"));
             } else {
                 holder.notification.setBackgroundColor(Color.parseColor("#5EC362"));
@@ -218,7 +225,6 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
 
         if (context instanceof LpaPatient) {
             holder.hospitalName.setText(parentData.getcPatNam() + "(" + parentData.getC_mob() + ")");
-
         }
 
 
@@ -283,7 +289,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
 
     public class Mholder extends RecyclerView.ViewHolder {
         TextView hospitalName,/*phone*//*address,*/
-                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName, ddayLeft, adhar, bank, pres, tst, udst, diab, hiv,additionalprescription,consent,notification;
+                nikshayId, patientAge, patientType, actualHospitalname, date, doctorName, ddayLeft, adhar, bank, pres, tst, udst, diab, hiv, additionalprescription, consent, notification;
         CheckBox radioButton;
         ImageView user_img, people_img, doctor_img, hospital_img;
         RadioButton radioButtonOne;

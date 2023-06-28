@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <group android:checkableBehavior="single">
+
+        <item
+
+            android:id="@+id/healthFacilityVisit"
+            android:title="Health Facility Visits"
+            />
+
+        <item
+
+            android:id="@+id/dailyVisit"
+            android:title="Daily Visit Outcome"
+            />
+
+        <item
+
+            android:id="@+id/providerVisit"
+            android:title="Provider Visit Status as per Perioud"
+            />
+
+        <item
+
+            android:id="@+id/patientsFollowUp"
+            android:title="Patients Follow Up "
+            />
+
+
+        <item
+
+            android:id="@+id/sampleCollectionReporting"
+            android:title="Sample Collections &amp; Reporting"
+            />
+
+
+
+    </group>
+
+
+</menu>

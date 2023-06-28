@@ -3,6 +3,7 @@ package com.smit.ppsa.Network;
 import android.annotation.SuppressLint;
 
 import com.google.gson.JsonObject;
+import com.smit.ppsa.PatientsFollowFolder.PatientsFollowUpResponseModel;
 import com.smit.ppsa.Response.AddDocResponse;
 import com.smit.ppsa.Response.AllUserResponse;
 import com.smit.ppsa.Response.AttendeceResponse;
@@ -39,6 +40,10 @@ import com.smit.ppsa.Response.uom.UOMResponse;
 import com.smit.ppsa.Response.userpassword.UserPasswordResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.smit.ppsa.dailyVisitOutputFolder.DailyVisitResponseModel;
+import com.smit.ppsa.healthFacilityFolder.HealthFacilityResponseModel;
+import com.smit.ppsa.providerStatusFolder.ProviderVistResponseModel;
+import com.smit.ppsa.sampleCollectionVisitFolder.SampleCollectionVisitResponseModel;
 
 import org.json.JSONObject;
 
@@ -170,6 +175,22 @@ public class ApiClient {
 
         @GET()
         Call<RegisterParentResponse> getTUPatient(@Url String url);
+
+        @GET()
+        Call<HealthFacilityResponseModel> getHealthFaciliy(@Url String url);
+
+        @GET
+        Call<ProviderVistResponseModel>getProviderVisitResponse(@Url String url);
+
+        @GET
+        Call<PatientsFollowUpResponseModel>getPatientFollowUpResponse(@Url String url);
+
+        @GET()
+        Call<DailyVisitResponseModel> getDailyVisit(@Url String url);
+
+        @GET
+        Call<SampleCollectionVisitResponseModel>getSampleCollectionVisitOuptut(@Url String url);
+
 
         @GET()
         Call<UserPasswordResponse> getUserPassword(@Url String url);

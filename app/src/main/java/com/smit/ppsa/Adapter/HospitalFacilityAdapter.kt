@@ -74,14 +74,7 @@ class HospitalFacilityAdapter(
 
 
         holder.editDoctor.setOnClickListener {
-//            val intent = Intent(context, AddHospitalFacilty::class.java)
-//            intent.putExtra("tu_id", hospitalLists[position].getnTuId())
-//            intent.putExtra("doctorId", hospitalLists[position].getnHfId())
-//            context.startActivity(intent)
 
-//            val li = LayoutInflater.from(context)
-//            val dialogView = li.inflate(R.layout.dialog_adddoctor, null)
-//            val sDialog = AlertDialog.Builder(context).setView(dialogView).setCancelable(true).create()
 
             doctorId = nList[position].idd
 

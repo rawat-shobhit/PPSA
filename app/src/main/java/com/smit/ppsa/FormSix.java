@@ -213,7 +213,11 @@ public class FormSix extends AppCompatActivity {
         });
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
+
+
             public void onClick(View view) {
+
+
                 try {
                     if (!dTestReport.equals("")) {
                         if (!ntst_rpt.equals("")) {
@@ -352,6 +356,8 @@ public class FormSix extends AppCompatActivity {
 
         // handle the Choose Image button to trigger
         // the image chooser function
+
+        // shobhit front image
         testReportFrontImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -366,6 +372,9 @@ public class FormSix extends AppCompatActivity {
                 chooseImage(FormSix.this);
             }
         });
+
+
+        // front back image
         testReportBackImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -537,6 +546,9 @@ public class FormSix extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Log.d("checking_shobhit",requestCode+""+"  - "+data.toString());
+
+
         if (resultCode == RESULT_OK) {
 
             // compare the resultCode with the
@@ -690,7 +702,7 @@ public class FormSix extends AppCompatActivity {
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, Calendar.getInstance().getTime().toString(), null);
         return Uri.parse(path);
     }
 

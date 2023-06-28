@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawerLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,24 +26,44 @@
             android:layout_margin="@dimen/_10sdp"
             android:background="@color/white"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nunitosans_bold_2"
-                android:text="Vishwajeet Narwade"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
-            <TextView
-                android:id="@+id/dateandtime"
-                android:layout_width="wrap_content"
-                android:visibility="gone"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:fontFamily="@font/nunitosans_semibold"
-                android:text="Date and Time"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/menuImage"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:src="@drawable/ic_menu"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" android:layout_marginStart="@dimen/_10sdp">
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunitosans_bold_2"
+                        android:text="Vishwajeet Narwade"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp" />
+                    <TextView
+                        android:id="@+id/dateandtime"
+                        android:layout_width="wrap_content"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:fontFamily="@font/nunitosans_semibold"
+                        android:text="Date and Time"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12sdp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -548,6 +575,224 @@
                                 android:textSize="@dimen/_16sdp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_330sdp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+                        <LinearLayout
+
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cvHeathAndFecility"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.4"
+                                android:elevation="@dimen/_5sdp"
+                                app:cardCornerRadius="@dimen/_20sdp">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/back_cardview"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_marginHorizontal="@dimen/_20sdp"
+                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:layout_weight="1"
+                                        android:src="@drawable/heath_facility_visit" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginBottom="@dimen/_10sdp"
+                                        android:fontFamily="@font/nunitosans_bold_2"
+                                        android:gravity="center"
+                                        android:text="Health Facility\nVisits"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/_16sdp" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/fdcPendingToRefil"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:layout_weight="0.4"
+                                android:elevation="@dimen/_5sdp"
+                                app:cardCornerRadius="@dimen/_20sdp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/back_cardview"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_marginHorizontal="@dimen/_20sdp"
+                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:layout_weight="1"
+                                        android:src="@drawable/fdc_pending_to_refil" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginBottom="@dimen/_10sdp"
+                                        android:fontFamily="@font/nunitosans_bold_2"
+                                        android:gravity="center"
+                                        android:text="FDC Pending\nto Refill"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/_16sdp" />
+
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:layout_weight="0.2"
+                                android:elevation="@dimen/_5sdp"
+                                android:visibility="gone"
+                                app:cardCornerRadius="@dimen/_20sdp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/back_cardview"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:src="@drawable/fc_icon" />
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/_3sdp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/reportSelection"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.15"
+                                android:elevation="@dimen/_5sdp"
+                                app:cardCornerRadius="@dimen/_20sdp">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/back_cardview"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/_8sdp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginHorizontal="@dimen/_10sdp"
+                                        android:layout_marginVertical="@dimen/_5sdp"
+                                        android:layout_marginBottom="@dimen/_5sdp"
+                                        android:fontFamily="@font/nunitosans_bold_2"
+                                        android:gravity="center"
+                                        android:text="Reporting\nSection"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/_16sdp" />
+
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/samplecollectionAndReporting"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="@dimen/_3sdp"
+                                android:layout_weight="0.4"
+                                android:elevation="@dimen/_5sdp"
+                                app:cardCornerRadius="@dimen/_20sdp">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/back_cardview"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginHorizontal="@dimen/_5sdp"
+                                        android:layout_marginTop="@dimen/_5sdp"
+
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:src="@drawable/sample_collection_reporting" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_alignParentBottom="true"
+                                        android:layout_gravity="center"
+                                        android:layout_marginHorizontal="@dimen/_10sdp"
+                                        android:layout_marginBottom="@dimen/_10sdp"
+                                        android:fontFamily="@font/nunitosans_bold_2"
+                                        android:gravity="center"
+                                        android:paddingEnd="@dimen/_5sdp"
+                                        android:text="Sample Collections\n&amp;\nReporting"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/_16sdp" />
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
                     <androidx.cardview.widget.CardView
                         android:id="@+id/Reports"
                         android:layout_width="0dp"
@@ -601,7 +846,7 @@
                         android:orientation="vertical">
 
                         <androidx.cardview.widget.CardView
-                            android:id="@+id/cvHeathAndFecility"
+
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.4"
@@ -640,7 +885,7 @@
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
-                            android:id="@+id/fdcPendingToRefil"
+
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginTop="@dimen/_3sdp"
@@ -718,7 +963,7 @@
                         android:orientation="vertical">
 
                         <androidx.cardview.widget.CardView
-                            android:id="@+id/reportSelection"
+
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.15"
@@ -755,7 +1000,7 @@
 
 
                         <androidx.cardview.widget.CardView
-                            android:id="@+id/samplecollectionAndReporting"
+
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginTop="@dimen/_3sdp"
@@ -897,7 +1142,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunitosans_bold_2"
                     android:gravity="center"
-                    android:text="Version 3.6"
+                    android:text="Version 3.8"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     android:layout_marginBottom="@dimen/_20sdp"/>
@@ -945,4 +1190,16 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:itemIconTint="@android:color/transparent"
+        app:menu="@menu/header"
+        android:visibility="visible"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>
