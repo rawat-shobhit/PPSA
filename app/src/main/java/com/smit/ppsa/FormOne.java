@@ -59,6 +59,8 @@ import com.smit.ppsa.Response.PatientFilterDataModel;
 import com.smit.ppsa.Response.PatientResponse;
 import com.smit.ppsa.Response.RegisterParentData;
 import com.smit.ppsa.Response.RoomMedicines;
+import com.smit.ppsa.Response.userpassword.UserPasswordResponse;
+import com.smit.ppsa.patientNotificationDuplicacy.PatientNotificationDuplicacyResponseModel;
 import com.yalantis.ucrop.UCrop;
 
 import org.json.JSONObject;
@@ -115,6 +117,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     int SELECT_PICTURE = 200;
     int PIC_CROP = 500;
 
+    Boolean checkDuplicacy=false;
 
     String hivFilterId = "";
     String diabeticsId = "";
@@ -569,8 +572,23 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.bt_proceedone:
 //BaseUtils.showToast(this,"Validdd");
+
+/*
+https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>'4646'
+ */
+
                 if (isValidate()) {
-                    sendForm();
+
+                    callCheckTheDuplicay();
+
+//                    if(checkDuplicacy)
+//                    {
+//                        Toast.makeText(this, "h;dslkgjas;ldkg", Toast.LENGTH_SHORT).show();
+////                        sendForm();
+//                    }
+
+
+
                 } else {
 
                 }
@@ -581,6 +599,64 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             }
 
         }
+    }
+
+    private void callCheckTheDuplicay() {
+
+
+
+        if (!BaseUtils.isNetworkAvailable(this)) {
+            Toast.makeText(this, "Please Check your internet  Connectivity", Toast.LENGTH_SHORT).show();
+            //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
+
+            return;
+        }
+
+
+        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>"+"'"+EnrolmentId.getText().toString()+"'";
+
+       Log.d("checking_sho",url);
+        ApiClient.getClient().getNotificationDuplicacy(url).enqueue(new Callback<PatientNotificationDuplicacyResponseModel>() {
+            @Override
+            public void onResponse(Call<PatientNotificationDuplicacyResponseModel> call, Response<PatientNotificationDuplicacyResponseModel> response) {
+
+
+                if(response.isSuccessful())
+                {
+                    checkDuplicacy=response.body().getStatus();
+                    Log.d("checking_ohs",response.body().getStatus().toString());
+                    Log.d("checking_ohs","kasjdhfaslkdjfh");
+
+                    if(!response.body().getStatus())
+                    {
+                        sendForm();
+//                        Toast.makeText(FormOne.this, "false", Toast.LENGTH_SHORT).show();
+                    }else{
+                       Toast.makeText(FormOne.this, "Paltient Already Registered with the Programme", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
+
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<PatientNotificationDuplicacyResponseModel> call, Throwable t) {
+
+                Log.d("checking__",t.toString());
+
+            }
+        });
+
+
+
+
     }
 
     private boolean emptyText(EditText editText) {

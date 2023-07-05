@@ -64,6 +64,7 @@ import com.smit.ppsa.Response.PatientFilterDataModel;
 import com.smit.ppsa.Response.PatientResponse;
 import com.smit.ppsa.Response.RegisterParentData;
 import com.smit.ppsa.Response.RoomDoctorsList;
+import com.smit.ppsa.patientNotificationDuplicacy.PatientNotificationDuplicacyResponseModel;
 import com.yalantis.ucrop.UCrop;
 
 import org.jetbrains.annotations.NotNull;
@@ -124,6 +125,9 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     int PIC_CROP = 500;
     private static ApiClient.APIInterface apiInterface;
 
+    /*
+    https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>'2739924203'
+     */
     private List<RoomDoctorsList> DoctorsLists = new ArrayList<>();
 
     private static List<FormOneData> TuList = new ArrayList<>();
@@ -166,7 +170,40 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             type = getIntent().getStringExtra("type");
         }
 
+        callCheckApiForDuplicacy();
+
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiverDoc, new IntentFilter("doc"));
+
+    }
+
+    private void callCheckApiForDuplicacy() {
+
+        if (!BaseUtils.isNetworkAvailable(this)) {
+            BaseUtils.showToast(this, "Please Check your internet  Connectivity");
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent().setAction("").putExtra("localTU", ""));
+
+            return;
+        }
+
+        String url ="https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>"+"" ;
+
+        ApiClient.getClient().getFormTU(url).enqueue(new Callback<FormOneResponse>() {
+            @Override
+            public void onResponse(Call<FormOneResponse> call, Response<FormOneResponse> response) {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    if (response.body().getStatus()) {
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FormOneResponse> call, Throwable t) {
+
+                  }
+        });
+
 
     }
 
@@ -779,7 +816,8 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
                 if (isValidate()) {
 
-                    sendForm();
+                    callCheckTheDuplicay();
+//                    sendForm();
                 }
 
             case R.id.backbtn:
@@ -1421,6 +1459,64 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
     }
 
+
+    private void callCheckTheDuplicay() {
+
+
+
+        if (!BaseUtils.isNetworkAvailable(this)) {
+            Toast.makeText(this, "Please Check your internet  Connectivity", Toast.LENGTH_SHORT).show();
+            //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
+
+            return;
+        }
+
+
+        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>"+"'"+EnrolmentId.getText().toString()+"'";
+
+        Log.d("checking_sho",url);
+        ApiClient.getClient().getNotificationDuplicacy(url).enqueue(new Callback<PatientNotificationDuplicacyResponseModel>() {
+            @Override
+            public void onResponse(Call<PatientNotificationDuplicacyResponseModel> call, Response<PatientNotificationDuplicacyResponseModel> response) {
+
+
+                if(response.isSuccessful())
+                {
+
+                    Log.d("checking_ohs",response.body().getStatus().toString());
+                    Log.d("checking_ohs","kasjdhfaslkdjfh");
+
+                    if(!response.body().getStatus())
+                    {
+                        sendForm();
+//                        Toast.makeText(FormOne.this, "false", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(newNotificationScreen.this, "Paltient Already Registered with the Programme", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
+
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<PatientNotificationDuplicacyResponseModel> call, Throwable t) {
+
+                Log.d("checking__",t.toString());
+
+            }
+        });
+
+
+
+
+    }
 
     private void getLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&

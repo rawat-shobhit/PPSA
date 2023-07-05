@@ -974,7 +974,7 @@ public class FormSix extends AppCompatActivity {
         }
 
         //  Log.d("dkl9", "getPatientdd: " + getIntent().getStringExtra("hf_id"));
-        Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(FormSix.this).getnUserLevel());
+//        Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(FormSix.this).getnUserLevel().toString());
 
         // if (isTrueNatOrCbNaat.equals(false)) {
         String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_m_lpa_rsult&w=id<<GT>>0";

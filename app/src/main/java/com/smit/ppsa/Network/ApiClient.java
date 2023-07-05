@@ -42,6 +42,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.smit.ppsa.dailyVisitOutputFolder.DailyVisitResponseModel;
 import com.smit.ppsa.healthFacilityFolder.HealthFacilityResponseModel;
+import com.smit.ppsa.patientNotificationDuplicacy.PatientNotificationDuplicacyResponseModel;
 import com.smit.ppsa.providerStatusFolder.ProviderVistResponseModel;
 import com.smit.ppsa.sampleCollectionVisitFolder.SampleCollectionVisitResponseModel;
 
@@ -194,6 +195,9 @@ public class ApiClient {
 
         @GET()
         Call<UserPasswordResponse> getUserPassword(@Url String url);
+
+        @GET()
+        Call<PatientNotificationDuplicacyResponseModel> getNotificationDuplicacy(@Url String url);
 
         @GET("_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_m_doc_qual&w=id<<GT>>0")
         Call<QualificationResponse> getQualificationList();
