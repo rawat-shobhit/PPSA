@@ -664,7 +664,7 @@ public class SampleCollection extends AppCompatActivity implements View.OnClickL
 
     private UCrop.Options getUcropOptions() {
         UCrop.Options options = new UCrop.Options();
-        options.setCompressionQuality(70);
+        options.setCompressionQuality(100);
 
         //compress type
 //        options.setCompressionFormat(Bitmap.CompressFormat.PNG);

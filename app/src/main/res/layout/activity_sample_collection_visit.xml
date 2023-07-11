@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_13ssp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:text="Sample Collection Visit Outcome"
+        android:text="Sample and Report Collection"
         android:textColor="@color/black"
         android:fontFamily="@font/poppins_regular"
         android:gravity="center"
@@ -104,7 +104,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Nikshaya ID"
+            android:text="HF Name"
             android:gravity="center"
             android:textSize="@dimen/_10ssp"
             android:padding="@dimen/_5sdp"
@@ -130,13 +130,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Report\n Date"
+            android:text="Type of \nTest"
             android:gravity="center"
             android:textSize="@dimen/_10ssp"
             android:padding="@dimen/_5sdp"
             android:fontFamily="@font/poppins_regular"
             android:textColor="@color/white"
             android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Report\nStatus"
+            android:gravity="center"
+            android:textSize="@dimen/_10ssp"
+            android:padding="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+
 
 
 

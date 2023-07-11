@@ -3,6 +3,7 @@ package com.smit.ppsa
 import android.Manifest
 import android.app.Activity
 import android.app.DownloadManager
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,7 +17,6 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -72,7 +72,7 @@ class UploadDoc : AppCompatActivity() {
     lateinit var udstDownload: TextView
     lateinit var diabDownload: TextView
     lateinit var bankDownload: TextView
-
+    var CommonImageUri: Uri? = null
     private var adhaarUri: Uri? = null
     private var prescriptionUri: Uri? = null
     private var bank_detailUri: Uri? = null
@@ -258,8 +258,11 @@ class UploadDoc : AppCompatActivity() {
         ) { dialogInterface, i ->
             if (optionsMenu[i] == "Take Photo") {
                 // Open the camera and get the photo
-                val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(takePicture, 0)
+//                val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//                startActivityForResult(takePicture, 0)
+                //                    Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    startActivityForResult(takePicture, 0);
+                takeImageFromCameraUri()
             } else if (optionsMenu[i] == "Choose from Gallery") {
                 // choose from  external storage
                 imageChooser()
@@ -268,6 +271,22 @@ class UploadDoc : AppCompatActivity() {
             }
         }
         builder.show()
+    }
+
+    private fun takeImageFromCameraUri() {
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, "MyPicture")
+        values.put(
+            MediaStore.Images.Media.DESCRIPTION,
+            "Photo taken on " + System.currentTimeMillis()
+        )
+        CommonImageUri = this.getApplication().getContentResolver().insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            values
+        )
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, CommonImageUri)
+        startActivityForResult(intent, 0)
     }
 
     fun verifyStoragePermissions(activity: Activity?) {
@@ -377,132 +396,150 @@ class UploadDoc : AppCompatActivity() {
                     }
                 }
 
-            } else if (requestCode == 0 /*requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE*/) {
+            }
+            else if (requestCode == 0 /*requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE*/) {
 
                 when (imageType) {
                     "adhaar" -> {
-                        val selectedImage = data!!.extras!!["data"] as Bitmap?
-                        adhaarUri = selectedImage?.let {
-                            getImageUri(
-                                applicationContext,
-                                it
-                            )
-                        }
-                        adhaar_img = Imagee().getEncodedImage(adhaarUri!!, this)
+//                        val selectedImage = data!!.extras!!["data"] as Bitmap?
+//                        adhaarUri = selectedImage?.let {
+//                            getImageUri(
+//                                applicationContext,
+//                                it
+//                            )
+//                        }
+                        //                        adhaar.setImageURI(adhaarUri)
+                    adhaar_img = Imagee().getEncodedImage(CommonImageUri!!, this)
+
+                        adhaarUri=CommonImageUri;
                         adhaar.setImageURI(adhaarUri)
                         startCrop(adhaarUri!!)
                     }
 
                     "presc" -> {
-                        val selectedImage = data!!.extras!!["data"] as Bitmap?
-                        prescriptionUri = selectedImage?.let {
-                            getImageUri(
-                                applicationContext,
-                                it
-                            )
-                        }
-                        presc_img = Imagee().getEncodedImage(prescriptionUri!!, this)
+//                        val selectedImage = data!!.extras!!["data"] as Bitmap?
+//                        prescriptionUri = selectedImage?.let {
+//                            getImageUri(
+//                                applicationContext,
+//                                it
+//                            )
+//                        }
+                        presc_img = Imagee().getEncodedImage(CommonImageUri!!, this)
+                        prescriptionUri=CommonImageUri
                         prescription.setImageURI(prescriptionUri)
                         startCrop(prescriptionUri!!)
                     }
 
                     "bank" -> {
-                        val selectedImage = data!!.extras!!["data"] as Bitmap?
-                        bank_detailUri = selectedImage?.let {
-                            getImageUri(
-                                applicationContext,
-                                it
-                            )
-                        }
-                        bank_img = Imagee().getEncodedImage(bank_detailUri!!, this)
+//                        val selectedImage = data!!.extras!!["data"] as Bitmap?
+//                        bank_detailUri = selectedImage?.let {
+//                            getImageUri(
+//                                applicationContext,
+//                                it
+//                            )
+//                        }
+
+                        bank_img = Imagee().getEncodedImage(CommonImageUri!!, this)
+                        bank_detailUri=CommonImageUri
                         bank_detail.setImageURI(bank_detailUri)
                         startCrop(bank_detailUri!!)
                     }
 
                     "test" -> {
-                        val selectedImage = data!!.extras!!["data"] as Bitmap?
-                        test_reportUri = selectedImage?.let {
-                            getImageUri(
-                                applicationContext,
-                                it
-                            )
-                        }
-                        test_img = Imagee().getEncodedImage(test_reportUri!!, this)
+//                        val selectedImage = data!!.extras!!["data"] as Bitmap?
+//                        test_reportUri = selectedImage?.let {
+//                            getImageUri(
+//                                applicationContext,
+//                                it
+//                            )
+//                        }
+                        test_img = Imagee().getEncodedImage(CommonImageUri!!, this)
+                        test_reportUri=CommonImageUri
                         test_report.setImageURI(test_reportUri)
                         startCrop(test_reportUri!!)
                     }
 
                     "diabetes" -> {
-                        val selectedImage = data!!.extras!!["data"] as Bitmap?
-                        diabetes_reportUri = selectedImage?.let {
-                            getImageUri(
-                                applicationContext,
-                                it
-                            )
-                        }
-                        diabetes_img = Imagee().getEncodedImage(diabetes_reportUri!!, this)
+//                        val selectedImage = data!!.extras!!["data"] as Bitmap?
+//                        diabetes_reportUri = selectedImage?.let {
+//                            getImageUri(
+//                                applicationContext,
+//                                it
+//                            )
+//                        }
+                        diabetes_reportUri=CommonImageUri
+                        diabetes_img = Imagee().getEncodedImage(CommonImageUri!!, this)
                         diabetes_report.setImageURI(diabetes_reportUri)
                         startCrop(diabetes_reportUri!!)
                     }
 
                     "hiv" -> {
-                        val selectedImage = data!!.extras!!["data"] as Bitmap?
-                        hiv_reportUri = selectedImage?.let {
-                            getImageUri(
-                                applicationContext,
-                                it
-                            )
-                        }
+//                        val selectedImage = data!!.extras!!["data"] as Bitmap?
+//                        hiv_reportUri = selectedImage?.let {
+//                            getImageUri(
+//                                applicationContext,
+//                                it
+//                            )
+//                        }
+                        hiv_reportUri=CommonImageUri
                         hiv_img = Imagee().getEncodedImage(hiv_reportUri!!, this)
                         hiv_report.setImageURI(hiv_reportUri)
                         startCrop(hiv_reportUri!!)
                     }
 
                     "udst" -> {
-                        val selectedImage = data!!.extras!!["data"] as Bitmap?
-                        udst_reportUri = selectedImage?.let {
-                            getImageUri(
-                                applicationContext,
-                                it
-                            )
-                        }
+
+//                        val selectedImage = data!!.extras!!["data"] as Bitmap?
+//                        udst_reportUri = selectedImage?.let {
+//                            getImageUri(
+//                                applicationContext,
+//                                it
+//                            )
+//                        }
+
+                        udst_reportUri=CommonImageUri
                         udst_img = Imagee().getEncodedImage(udst_reportUri!!, this)
                         udst_report.setImageURI(udst_reportUri)
                         startCrop(udst_reportUri!!)
                     }
                     "additionalprescription" -> {
-                        val selectedImage = data!!.extras!!["data"] as Bitmap?
-                        additionalPrescriptionUri = selectedImage?.let {
-                            getImageUri(
-                                applicationContext,
-                                it
-                            )
-                        }
-                        additionalPres_img = Imagee().getEncodedImage(additionalPrescriptionUri!!, this)
+//                        val selectedImage = data!!.extras!!["data"] as Bitmap?
+//                        additionalPrescriptionUri = selectedImage?.let {
+//                            getImageUri(
+//                                applicationContext,
+//                                it
+//                            )
+//                        }
+
+                        additionalPrescriptionUri=CommonImageUri
+                        additionalPres_img = Imagee().getEncodedImage(CommonImageUri!!, this)
                         additionalprescription.setImageURI(additionalPrescriptionUri)
                         startCrop(additionalPrescriptionUri!!)
                     }
                     "consent" -> {
-                        val selectedImage = data!!.extras!!["data"] as Bitmap?
-                        consentUri = selectedImage?.let {
-                            getImageUri(
-                                applicationContext,
-                                it
-                            )
-                        }
-                        consent_img = Imagee().getEncodedImage(consentUri!!, this)
+//                        val selectedImage = data!!.extras!!["data"] as Bitmap?
+//                        consentUri = selectedImage?.let {
+//                            getImageUri(
+//                                applicationContext,
+//                                it
+//                            )
+//                        }
+                        consentUri=CommonImageUri
+                        consent_img = Imagee().getEncodedImage(CommonImageUri!!, this)
                         consent.setImageURI(consentUri)
                         startCrop(consentUri!!)
                     }
                     "notification" -> {
-                        val selectedImage = data!!.extras!!["data"] as Bitmap?
-                        notificationUri = selectedImage?.let {
-                            getImageUri(
-                                this@UploadDoc,
-                                it
-                            )
-                        }
-                        notification_img = Imagee().getEncodedImage(notificationUri!!, this)
+//                        val selectedImage = data!!.extras!!["data"] as Bitmap?
+//                        notificationUri = selectedImage?.let {
+//                            getImageUri(
+//                                this@UploadDoc,
+//                                it
+//                            )
+//                        }
+
+                        notificationUri=CommonImageUri
+                        notification_img = Imagee().getEncodedImage(CommonImageUri!!, this)
                         notification.setImageURI(notificationUri)
                         startCrop(notificationUri!!)
                     }
@@ -622,7 +659,7 @@ class UploadDoc : AppCompatActivity() {
 
     private fun getUcropOptions(): UCrop.Options? {
         val options = UCrop.Options()
-        options.setCompressionQuality(70)
+        options.setCompressionQuality(100)
 
         //compress type
 //        options.setCompressionFormat(Bitmap.CompressFormat.PNG);
@@ -790,8 +827,7 @@ class UploadDoc : AppCompatActivity() {
         val url =
             "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=n_enroll_id<<EQUALTO>>" + patient.id
 
-//        val url =
-//            "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=id<<EQUALTO>>" + patient.getId()
+//        val url ="_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=id<<EQUALTO>>" + patient.getId()
         val apiClient = when (isUploaded) {
             true -> ApiClient.getClient().uploadDocumentIfResult(url, map)
 

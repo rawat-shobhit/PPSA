@@ -1020,7 +1020,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
     private UCrop.Options getUcropOptions() {
         UCrop.Options options = new UCrop.Options();
-        options.setCompressionQuality(70);
+        options.setCompressionQuality(100);
 
         //compress type
 //        options.setCompressionFormat(Bitmap.CompressFormat.PNG);

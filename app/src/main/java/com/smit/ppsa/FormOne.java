@@ -12,6 +12,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -114,6 +115,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private Spinner EnrollmentFaciltyState, EnrollmentFaciltyDistrict, EnrollmentFaciltyTBU, Gender, ResidentialState, ResidentialDistrict, ResidentialTU;
     Uri notificationImageUri = null;
     Uri bankImageUri = null;
+    Uri CommonImageUri = null;
     int SELECT_PICTURE = 200;
     int PIC_CROP = 500;
 
@@ -252,6 +254,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             public void onClick(View v) {
                 imageType = "back";
                 Log.d("dnun", "onActivityResult:" + imageType);
+
                 /*if (bankImageUri != null) {
                     bankImageUri = null;
                 }*/
@@ -512,8 +515,9 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (optionsMenu[i].equals("Take Photo")) {
                     // Open the camera and get the photo
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePicture, 0);
+//                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                    startActivityForResult(takePicture, 0);
+                    takeImageFromCameraUri();
                 } else if (optionsMenu[i].equals("Choose from Gallery")) {
                     // choose from  external storage
                     imageChooser();
@@ -590,7 +594,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 
 
                 } else {
-
+                    Toast.makeText(this,"Please fill all the form ",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.backbtn: {
@@ -771,10 +775,18 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
                  /*   } else {
                         testReportFrontImg.setImageBitmap(result.getBitmap());
                     }*/
-                    Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                    notificationImageUri = getImageUri(getApplicationContext(), selectedImage);
+//                    Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+//                    notificationImageUri = getImageUri(getApplicationContext(), selectedImage);
+//                    patientNotificationImg.setImageURI(notificationImageUri);
+                    notificationImageUri= CommonImageUri;
                     patientNotificationImg.setImageURI(notificationImageUri);
-                    startCrop(notificationImageUri);
+            try {
+                startCrop(notificationImageUri);
+            }catch (Exception e){
+                Log.e("CROP_IMAGE", e.getMessage());
+
+            }
+//                    startCrop(notificationImageUri);
                     /*performCrop(frontselectedImageUri);*/
                     //  testReportFrontImg.setImageURI(frontselectedImageUri);
                 } else {
@@ -784,10 +796,18 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
                     //backselectedImageUri = result.getUri();                                                         // Get the image file URI
                     //  Picasso.with(this).load(backselectedImageUri).into(testReportBackImg);
                     //  testReportBackImg.setImageURI(backselectedImageUri);
-                    Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                    bankImageUri = getImageUri(getApplicationContext(), selectedImage);
+//                    Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+//                    bankImageUri = getImageUri(getApplicationContext(), selectedImage);
+                    bankImageUri=CommonImageUri;
                     patientBankImg.setImageURI(bankImageUri);
-                    startCrop(bankImageUri);
+
+
+                    try {
+                        startCrop(bankImageUri);
+                    }catch (Exception e){
+                        Log.e("CROP_IMAGE", e.getMessage());
+
+                    }
                     //testReportBackImg.setImageURI(backselectedImageUri);
                 }
 
@@ -853,7 +873,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 
     private UCrop.Options getUcropOptions() {
         UCrop.Options options = new UCrop.Options();
-        options.setCompressionQuality(70);
+        options.setCompressionQuality(100);
 
         //compress type
 //        options.setCompressionFormat(Bitmap.CompressFormat.PNG);
@@ -1308,6 +1328,19 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
                 LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localDistrict", ""));
             }
         });
+    }
+
+    private void takeImageFromCameraUri() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "MyPicture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Photo taken on " + System.currentTimeMillis());
+        CommonImageUri = FormOne.this.getApplication().getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                values
+        );
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, CommonImageUri);
+        startActivityForResult(intent, 0);
     }
 
     public static void getTU(Context context, String st_id, String dis_id) {

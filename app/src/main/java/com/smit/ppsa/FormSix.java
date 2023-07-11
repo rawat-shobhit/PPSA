@@ -4,15 +4,19 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
+import android.media.MediaFormat;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +32,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -56,9 +61,15 @@ import com.yalantis.ucrop.UCrop;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -100,6 +111,8 @@ public class FormSix extends AppCompatActivity {
     int PIC_CROP = 500;
     Uri frontselectedImageUri = null;
     Uri backselectedImageUri = null;
+    Uri CommonImageUri = null;
+
     String frontpart_image = null;
     String frontimgPath = "ss";
     String doc_id = "";
@@ -342,8 +355,14 @@ public class FormSix extends AppCompatActivity {
                     Log.d("dded", "onItemSelected: " + ntst_rpt);
                 } else {
                     //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
-                    nrpt_del = parentDataLpaSampleResult.get(i - 1).getId().toString();
-                    Log.d("dded else ", "onItemSelected: " + ntst_rpt);
+                    try {
+                        nrpt_del = parentDataLpaSampleResult.get(i - 1).getId().toString();
+                        Log.d("dded else ", "onItemSelected: " + ntst_rpt);
+                    }catch (Exception e)
+                    {
+                        Log.d("crash__",e.toString());
+                    }
+
                 }
 
             }
@@ -499,10 +518,10 @@ public class FormSix extends AppCompatActivity {
 
     private UCrop.Options getUcropOptions() {
         UCrop.Options options = new UCrop.Options();
-        options.setCompressionQuality(70);
+        options.setCompressionQuality(100);
 
         //compress type
-//        options.setCompressionFormat(Bitmap.CompressFormat.PNG);
+//      options.setCompressionFormat(Bitmap.CompressFormat.PNG);
 //        options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
 
         //UI
@@ -546,7 +565,12 @@ public class FormSix extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d("checking_shobhit",requestCode+""+"  - "+data.toString());
+        try {
+            Log.d("checking_shobhit",requestCode+""+"  - "+data.toString());
+        }catch ( Exception e){
+            Log.d("checking_shobhit", e.toString());
+        }
+
 
 
         if (resultCode == RESULT_OK) {
@@ -613,38 +637,82 @@ public class FormSix extends AppCompatActivity {
                 Log.d("dnun", "onActivityResult:" + imageType);
 
                 if (imageType.equals("front")) {
-                    //CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                    /*
+                                        //CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
                     // frontselectedImageUri = data.getData();                                                         // Get the image file URI
 
                     //   frontselectedImageUri = result.getUri();                                                         // Get the image file URI
-                    /*   if (frontselectedImageUri != null) {*/
+                      if (frontselectedImageUri != null) {
                     //  Picasso.with(this).load(frontselectedImageUri).into(testReportFrontImg);
                     //    testReportFrontImg.setImageURI(frontselectedImageUri);
-                 /*   } else {
+                    } else {
                         testReportFrontImg.setImageBitmap(result.getBitmap());
-                    }*/
+
+                     */
+
+//                    frontselectedImageUri = saveImageToStorage(selectedImage);
+//                    startCrop(frontselectedImageUri);
+
+
+                    /*
+                    // commented now
                     Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
                     frontselectedImageUri = getImageUri(getApplicationContext(), selectedImage);
                     testReportFrontImg.setImageURI(frontselectedImageUri);
-                    startCrop(frontselectedImageUri);
-
-
                     Log.d("uploadPhoto front if  ",frontselectedImageUri.toString());
+                    */
 
-                    /*performCrop(frontselectedImageUri);*/
-                    //  testReportFrontImg.setImageURI(frontselectedImageUri);
+//                    File outputDir = new File(FormSix.this.getFilesDir(), ".jpg");
+//                    Uri outputUri
+//
+//                    try {
+//                        startCrop(outputUri);
+//                    } catch (e: Exception) {
+//                        Log.e("CROP_IMAGE", e.message!!)
+//                    }
+
+
+//                    File outputDir = new File(FormSix.this.getFilesDir(), ".jpg");
+//                    Uri outputUri = Uri.fromFile(outputDir);
+
+                    /*
+                    @Shobhit pls check before image uploading are we reducing the quality of the image .... all uploaded images from APP are not clear
+                    yes sir the image quality is reducing before we upload image . I resolved this issue but test it and make changes everywhere when we upload image so this will take take I will let you know when this work gets complete
+                    I have also check the firebase
+                     */
+//                    Uri outputUri = FileProvider.getUriForFile(FormSix.this, "your.file.provider.authority", outputDir);
+
+                    frontselectedImageUri= CommonImageUri;
+                    testReportFrontImg.setImageURI(frontselectedImageUri);
+                    try {
+                        startCrop(frontselectedImageUri);
+//                        startCrop(outputUri);
+//                        cropImage.launch(listUri);
+                    } catch (Exception e) {
+                        Log.e("CROP_IMAGE", e.getMessage());
+                    }
+
+
+
+
                 } else {
-                    // CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                    /*
+                                        // CropImage.ActivityResult result = CropImage.getActivityResult(data);
                     //backselectedImageUri = data.getData();                                                         // Get the image file URI
                     //   performCrop(backselectedImageUri);
                     //backselectedImageUri = result.getUri();                                                         // Get the image file URI
                     //  Picasso.with(this).load(backselectedImageUri).into(testReportBackImg);
                     //  testReportBackImg.setImageURI(backselectedImageUri);
-                    Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                    backselectedImageUri = getImageUri(getApplicationContext(), selectedImage);
+                     */
+
+//                    Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+//                    backselectedImageUri = getImageUri(getApplicationContext(), selectedImage);
+//                    testReportBackImg.setImageURI(backselectedImageUri);
+
+                    backselectedImageUri=CommonImageUri;
                     testReportBackImg.setImageURI(backselectedImageUri);
-                    startCrop(backselectedImageUri);
+                   startCrop(backselectedImageUri);
 
 
                     Log.d("uploadPhoto back else",frontselectedImageUri.toString());
@@ -656,17 +724,24 @@ public class FormSix extends AppCompatActivity {
             } else if (requestCode == UCrop.REQUEST_CROP) {
                 if (data != null) {
                     if (imageType.equals("front")) {
-                        //CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
+
+                        /*
+
+
+
+                        //CropImage.ActivityResult result = CropImage.getActivityResult(data);
                         //   frontselectedImageUri = data.getData();                                                         // Get the image file URI
                         //   frontselectedImageUri = result.getUri();                                                         // Get the image file URI
-                        /*   if (frontselectedImageUri != null) {*/
+                            if (frontselectedImageUri != null) {
                         //  Picasso.with(this).load(frontselectedImageUri).into(testReportFrontImg);
                         // testReportFrontImg.setImageURI(frontselectedImageUri);
-                 /*   } else {
+                 } else {
                         testReportFrontImg.setImageBitmap(result.getBitmap());
-                    }*/
+                    }
+                    */
                         // get the returned data
+
                         Uri uri = UCrop.getOutput(data);
                         frontselectedImageUri = uri;
                         Log.d("Ucrop",uri.toString());
@@ -895,21 +970,19 @@ public class FormSix extends AppCompatActivity {
 
     public static void verifyStoragePermissions(Activity activity) {
         // Check if we have write permission
+        // We don't have permission so prompt the user
         int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
 
-//            BaseUtils.showToast(activity , "if condition ");
+
             ActivityCompat.requestPermissions(
                     activity,
                     PERMISSIONS_STORAGE,
                     REQUEST_EXTERNAL_STORAGE
             );
         }
-//        else{
-//            BaseUtils.showToast(activity , "else condition");
-//        }
+
     }
 
     // function to check permission
@@ -947,8 +1020,9 @@ public class FormSix extends AppCompatActivity {
                 if (optionsMenu[i].equals("Take Photo")) {
                     // Open the camera and get the photo
                     verifyStoragePermissions(FormSix.this);
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePicture, 0);
+//                    Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    startActivityForResult(takePicture, 0);
+                        takeImageFromCameraUri();
                 } else if (optionsMenu[i].equals("Choose from Gallery")) {
                     // choose from  external storage
                     imageChooser();
@@ -1083,6 +1157,19 @@ public class FormSix extends AppCompatActivity {
 
         });
 
+    }
+
+    private void takeImageFromCameraUri() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "MyPicture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Photo taken on " + System.currentTimeMillis());
+        CommonImageUri = FormSix.this.getApplication().getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                values
+        );
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, CommonImageUri);
+        startActivityForResult(intent, 0);
     }
 
     private void getRoomReportDelivered() {
@@ -1368,6 +1455,8 @@ public class FormSix extends AppCompatActivity {
     private void addLabTestReport() {
         BaseUtils.putSubmitLabReportStatus(this, "false");
 
+        Log.d("frontImage",frontselectedImageUri.toString());
+        Log.d("frontImage",backselectedImageUri.toString());
        /* if (!BaseUtils.isNetworkAvailable(FormSix.this)) {
             Toast.makeText(FormSix.this, "Please Check your internet  Connectivity", Toast.LENGTH_SHORT).show();
             //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
@@ -1568,9 +1657,26 @@ public class FormSix extends AppCompatActivity {
         }
     }
 
+
+
+
     // This function is called when the user accepts or decline the permission.
     // Request Code is used to check which permission called this function.
     // This request code is provided when the user is prompt for permission.
+
+
+
+
+    // getRealPathFromUri
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode,

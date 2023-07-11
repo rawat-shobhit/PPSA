@@ -2,15 +2,18 @@ package com.smit.ppsa.sampleCollectionVisitFolder;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.smit.ppsa.PatientsFollowFolder.PatientFollowUpAdapter;
 import com.smit.ppsa.PatientsFollowFolder.PatientFollowUpList;
 import com.smit.ppsa.R;
@@ -38,6 +41,7 @@ public class SampleCollectionVisitAdapter extends RecyclerView.Adapter<SampleCol
     @Override
     public void onBindViewHolder(@NonNull SampleCollectionVisitAdapter.Mholder holder, int position) {
 
+        Log.d("checkingData",list.toString());
 
 //        if(position%2==0)
 //        {
@@ -57,7 +61,7 @@ public class SampleCollectionVisitAdapter extends RecyclerView.Adapter<SampleCol
         }
 
         try{
-            holder.nikshayaID.setText(list.get(position).getNNkshId());
+            holder.nikshayaID.setText(list.get(position).getNhfName());
         }catch (Exception e){
         }
 
@@ -71,6 +75,25 @@ public class SampleCollectionVisitAdapter extends RecyclerView.Adapter<SampleCol
         }catch (Exception e){
         }
 
+        try{
+
+            if(list.get(position).getRptColl().toString().equals("1")){
+                Glide.with(context)
+                        .load(R.drawable.ic_baseline_check_24)
+                        .into(holder.imageView);
+            }else
+            {
+                Glide.with(context)
+                        .load(R.drawable.ic_baseline_cancel_24)
+                        .into(holder.imageView);
+            }
+
+
+        }catch (Exception e)
+        {
+
+        }
+
     }
 
     @Override
@@ -82,6 +105,7 @@ public class SampleCollectionVisitAdapter extends RecyclerView.Adapter<SampleCol
     public class Mholder extends RecyclerView.ViewHolder {
         TextView hfName,nikshayaID, sampleType ,reportDate;
         LinearLayout linearLayout;
+        ImageView imageView;
 
 
 
@@ -92,6 +116,7 @@ public class SampleCollectionVisitAdapter extends RecyclerView.Adapter<SampleCol
             nikshayaID= itemView.findViewById(R.id.nikshayaID);
             sampleType=itemView.findViewById(R.id.sampleType);
             reportDate=itemView.findViewById(R.id.reportDate);
+            imageView=itemView.findViewById(R.id.imageView);
 
         }
     }

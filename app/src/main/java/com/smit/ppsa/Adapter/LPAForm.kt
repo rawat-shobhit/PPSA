@@ -410,7 +410,7 @@ class LPAForm : AppCompatActivity() {
     }
     private fun getUcropOptions(): UCrop.Options? {
         val options = UCrop.Options()
-        options.setCompressionQuality(70)
+        options.setCompressionQuality(100)
 
         //compress type
 //        options.setCompressionFormat(Bitmap.CompressFormat.PNG);

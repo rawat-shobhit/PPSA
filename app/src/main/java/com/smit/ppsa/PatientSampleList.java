@@ -156,6 +156,15 @@ import retrofit2.Response;
             enroll_id = BaseUtils.getEnrollNo(this);
         }
 
+        try {
+            enroll_id=BaseUtils.getEnrollNo(this);
+        }catch (Exception e)
+        {
+            enroll_id= "";
+            Log.d("crash_enrollId",e.toString());
+        }
+
+
        // Toast.makeText(this, enroll_id, Toast.LENGTH_SHORT).show();
 
 
