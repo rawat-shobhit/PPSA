@@ -27,6 +27,7 @@ class HealthFacilityVisit : AppCompatActivity() {
     private lateinit var monthDropDown:AutoCompleteTextView
     var healthFacilityAdapter:HealthFacilityAdapter?= null
     lateinit var recyclerView:RecyclerView
+    lateinit var totalCount:TextView
 
     private lateinit var okText:ImageView
 
@@ -42,6 +43,7 @@ class HealthFacilityVisit : AppCompatActivity() {
         monthDropDown=findViewById(R.id.monthDropDown)
         yearDropDown=findViewById(R.id.yearDropDown)
         recyclerView=findViewById(R.id.rvHealthFacility)
+        totalCount=findViewById(R.id.totalColumn)
 
         monthDropDown.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
             month = (position + 1).toString() + ""
@@ -141,9 +143,11 @@ class HealthFacilityVisit : AppCompatActivity() {
                     if (response.body()!!.status == true){
                         list = response.body()!!.userData
                         setRecycler()
+                        totalCount.setText("Total number of Column :- ${list.size.toString()}")
                     }else{
                         list.clear()
                         setRecycler()
+                        totalCount.setText("Total number of Column :- 0 ")
                         BaseUtils.showToast(this@HealthFacilityVisit, "No Data found")
                     }
                 }

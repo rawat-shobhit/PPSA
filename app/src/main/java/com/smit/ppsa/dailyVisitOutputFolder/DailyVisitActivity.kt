@@ -33,7 +33,7 @@ class DailyVisitActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
 
     private lateinit var okText: ImageView
-
+    lateinit var totalColumn:TextView
     private var month=""
     private var year=""
 
@@ -48,6 +48,9 @@ class DailyVisitActivity : AppCompatActivity() {
         monthDropDown=findViewById(R.id.monthDropDown)
         yearDropDown=findViewById(R.id.yearDropDown)
         recyclerView=findViewById(R.id.rvHealthFacility)
+        totalColumn=findViewById(R.id.totalColumn)
+
+
 
         monthDropDown.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
             month = (position + 1).toString() + ""
@@ -148,9 +151,12 @@ class DailyVisitActivity : AppCompatActivity() {
                     if (response.body()!!.status == true){
                         list = response.body()!!.userData
                         setRecycler()
+                        totalColumn.setText("Total number of Column :- ${list.size.toString()}")
+                        Log.d("totalData",list.size.toString());
                     }else{
                         list.clear()
                         setRecycler()
+                        totalColumn.setText("Total number of Column :- 0")
                         BaseUtils.showToast(this@DailyVisitActivity, "No Data found")
                     }
                 }

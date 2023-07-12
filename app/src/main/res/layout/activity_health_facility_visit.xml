@@ -31,12 +31,10 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_weight=".3"
             android:layout_height="wrap_content"
-
             android:layout_marginHorizontal="10dp">
 
 
@@ -47,7 +45,6 @@
                 android:backgroundTint="@color/edit_text_bg_grey"
                 android:editable="false"
                 android:text="Month"
-
                 android:textColor="@color/black"
                 android:background="@drawable/back_two"
                 android:gravity="center_vertical|start"
@@ -59,12 +56,10 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_weight=".3"
             android:layout_height="wrap_content"
-
             android:layout_marginHorizontal="10dp">
 
 
@@ -75,7 +70,6 @@
                 android:backgroundTint="@color/edit_text_bg_grey"
                 android:editable="false"
                 android:text="Years"
-
                 android:textColor="@color/black"
                 android:background="@drawable/back_two"
                 android:gravity="center_vertical|start"
@@ -111,7 +105,6 @@
 
 
         <TextView
-
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".4"
@@ -185,10 +178,53 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvHealthFacility"
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvHealthFacility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/totalColumn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="Total number of Column :- 0"
+                android:textSize="@dimen/_12ssp"
+                android:padding="@dimen/_5sdp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="start"/>
+
+            <TextView
+                android:background="#ed7d31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HF Name  |  NC:- Notification Collections  |  SC:- Sample Collection  |  FDC :- Facility Dispensation"
+                android:layout_gravity="start"
+                android:textSize="@dimen/_12ssp"
+                android:padding="@dimen/_5sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="start"/>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
 
 
 </LinearLayout>

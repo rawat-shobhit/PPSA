@@ -25,7 +25,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class PatientsFollowUpActivity : AppCompatActivity() {
-
     lateinit var dateFrom : TextView
     lateinit var dateTo: TextView
     var dateToFinal=""
@@ -34,6 +33,7 @@ class PatientsFollowUpActivity : AppCompatActivity() {
     var list=ArrayList<PatientFollowUpList>()
     lateinit var recyclerView: RecyclerView
     private var adapter : PatientFollowUpAdapter?=null
+    private lateinit var totalColumn:TextView
 
 
 
@@ -41,11 +41,11 @@ class PatientsFollowUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_patients_follow_up)
-
         recyclerView=findViewById(R.id.rvHealthFacility)
         dateFrom=findViewById(R.id.dateFrom)
         dateTo= findViewById(R.id.dateTo)
         tvOk=findViewById(R.id.ok)
+        totalColumn=findViewById(R.id.totalColumn)
 
 
         dateTo.setOnClickListener(){
@@ -144,10 +144,12 @@ class PatientsFollowUpActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     if (response.body()!!.status == true){
                         list = response.body()!!.userData
+                        totalColumn.setText("Total number of Column :- ${list.size.toString()}")
                         setRecycler()
                     }else{
                         list.clear()
                         setRecycler()
+                        totalColumn.setText("Total number of Column :- 0")
                         BaseUtils.showToast(this@PatientsFollowUpActivity, "No Data found")
                     }
                 }

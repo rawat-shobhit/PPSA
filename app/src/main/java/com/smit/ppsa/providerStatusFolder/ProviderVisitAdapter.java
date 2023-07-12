@@ -63,6 +63,12 @@ public class ProviderVisitAdapter  extends RecyclerView.Adapter<ProviderVisitAda
 
         }
 
+        try{
+            holder.date.setText(list.get(position).getPrd());
+        }catch (Exception e){
+
+        }
+
 
 
     }
@@ -74,7 +80,7 @@ public class ProviderVisitAdapter  extends RecyclerView.Adapter<ProviderVisitAda
     }
 
     public class Mholder extends RecyclerView.ViewHolder {
-        TextView hfName,providerName, purposeOfVisit ;
+        TextView hfName,providerName, purposeOfVisit ,date;
         LinearLayout linearLayout;
 
 
@@ -85,7 +91,7 @@ public class ProviderVisitAdapter  extends RecyclerView.Adapter<ProviderVisitAda
             hfName = itemView.findViewById(R.id.hfName);
             providerName= itemView.findViewById(R.id.providerName);
             purposeOfVisit=itemView.findViewById(R.id.purposeOfVisit);
-
+            date = itemView.findViewById(R.id.date);
 
         }
     }

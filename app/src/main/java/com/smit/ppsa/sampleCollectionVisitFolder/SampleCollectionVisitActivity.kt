@@ -36,6 +36,7 @@ class SampleCollectionVisitActivity : AppCompatActivity() {
     var list=ArrayList<SampleCollectionVisitList>()
     lateinit var recyclerView: RecyclerView
     private var adapter : SampleCollectionVisitAdapter?=null
+    lateinit var totalColumn:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +46,7 @@ class SampleCollectionVisitActivity : AppCompatActivity() {
         dateFrom=findViewById(R.id.dateFrom)
         dateTo= findViewById(R.id.dateTo)
         tvOk=findViewById(R.id.ok)
-
+        totalColumn=findViewById(R.id.totalColumn)
 
         dateTo.setOnClickListener(){
 
@@ -144,9 +145,11 @@ class SampleCollectionVisitActivity : AppCompatActivity() {
                     if (response.body()!!.status == true){
                         list = response.body()!!.userData
                         setRecycler()
+                        totalColumn.setText("Total number of Column :-${list.size.toString()}")
                     }else{
                         list.clear()
                         setRecycler()
+                        totalColumn.setText("Total number of Column :- 0")
                         BaseUtils.showToast(this@SampleCollectionVisitActivity, "No data found")
                     }
                 }

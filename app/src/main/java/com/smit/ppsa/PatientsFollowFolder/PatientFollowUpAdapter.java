@@ -69,6 +69,13 @@ public class PatientFollowUpAdapter extends RecyclerView.Adapter<PatientFollowUp
 
         }
 
+        try{
+            holder.date.setText(list.get(position).getPrd());
+        }catch (Exception e){
+
+        }
+
+
 
 
     }
@@ -80,13 +87,14 @@ public class PatientFollowUpAdapter extends RecyclerView.Adapter<PatientFollowUp
     }
 
     public class Mholder extends RecyclerView.ViewHolder {
-        TextView hfName,nikshayaID, patientName ,modeOfollowUp;
+        TextView hfName,nikshayaID, patientName ,modeOfollowUp,date;
         LinearLayout linearLayout;
 
 
 
         public Mholder(@NonNull View itemView) {
             super(itemView);
+            date=itemView.findViewById(R.id.date);
             linearLayout=itemView.findViewById(R.id.linearLayoutProvider);
             hfName = itemView.findViewById(R.id.hfName);
             nikshayaID= itemView.findViewById(R.id.nikshayaID);

@@ -35,6 +35,7 @@ class ProviderVisitActivity : AppCompatActivity() {
     var list=ArrayList<ProviderVisitList>()
     lateinit var recyclerView:RecyclerView
     private var adapter :ProviderVisitAdapter?=null
+   private lateinit var totalColumn:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +45,7 @@ class ProviderVisitActivity : AppCompatActivity() {
         dateFrom=findViewById(R.id.dateFrom)
         dateTo= findViewById(R.id.dateTo)
         tvOk=findViewById(R.id.ok)
-
+        totalColumn= findViewById(R.id.totalColumn)
 
         dateTo.setOnClickListener(){
 
@@ -110,13 +111,10 @@ class ProviderVisitActivity : AppCompatActivity() {
 
 
         }
-
         tvOk.setOnClickListener(){
             list.clear()
             applyProviderVistApi()
         }
-
-
     }
 
     private fun applyProviderVistApi() {
@@ -125,7 +123,6 @@ class ProviderVisitActivity : AppCompatActivity() {
                 this@ProviderVisitActivity,
                 "Please Check your internet  Connectivity"
             )
-
             return
         }
         val url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_m_prov_visit&w=prd<<GTEQ>>"+dateFromFinal+"<<AND>>prd<<LTEQ>>"+dateToFinal+"<<AND>>n_user_id<<EQUALTO>>"+BaseUtils.getUserInfo(this).getId().toString();
@@ -143,9 +140,11 @@ class ProviderVisitActivity : AppCompatActivity() {
                     if (response.body()!!.status == true){
                         list = response.body()!!.userData
                         setRecycler()
+                        totalColumn.setText("Total number of Column :- ${list.size.toString()}")
                     }else{
                         list.clear()
                         setRecycler()
+                        totalColumn.setText("Total number of Column :- 0")
                         BaseUtils.showToast(this@ProviderVisitActivity, "No data found")
                     }
                 }
