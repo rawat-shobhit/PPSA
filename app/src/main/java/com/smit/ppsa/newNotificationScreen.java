@@ -16,6 +16,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -116,6 +117,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     private ImageView patientNotificationImg, patientBankImg;
     private String imageType = "front";
     private TextView EnrollmentDate, dataOf;
+    Uri CommonImageUri = null;
     private EditText tuString, EnrollHealthFacilitySector, EnrollmentFaciltyPHI, EnrollmentFaciltyHFcode, UserIDEnrollment, EnrolmentId, PatientName, Age, Weight, Height, Address,
             Taluka, Town, Ward, Landmark, Pincode, PrimaryPhoneNumber, SecondaryPhoneNumber;
     private Spinner EnrollmentFaciltyState, EnrollmentFaciltyDistrict, EnrollmentFaciltyTBU, Gender, ResidentialState, ResidentialDistrict, ResidentialTU,hospitalSpinner,spinnerDoctor;
@@ -754,8 +756,9 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (optionsMenu[i].equals("Take Photo")) {
                     // Open the camera and get the photo
-                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePicture, 0);
+//                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                    startActivityForResult(takePicture, 0);
+                    takeImageFromCameraUri();
                 } else if (optionsMenu[i].equals("Choose from Gallery")) {
                     // choose from  external storage
                     imageChooser();
@@ -938,10 +941,29 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                  /*   } else {
                         testReportFrontImg.setImageBitmap(result.getBitmap());
                     }*/
-                    Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                    notificationImageUri = getImageUri(getApplicationContext(), selectedImage);
+//                    Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+//                    notificationImageUri = getImageUri(getApplicationContext(), selectedImage);
+//                    patientNotificationImg.setImageURI(notificationImageUri);
+//                    startCrop(notificationImageUri);
+//
+//                    notificationImageUri= CommonImageUri;
+//                    patientNotificationImg.setImageURI(notificationImageUri);
+//                    try {
+//                        startCrop(notificationImageUri);
+//                    }catch (Exception e){
+//                        Log.e("CROP_IMAGE", e.getMessage());
+//
+//                    }
+
+                    notificationImageUri= CommonImageUri;
                     patientNotificationImg.setImageURI(notificationImageUri);
-                    startCrop(notificationImageUri);
+                    try {
+                        startCrop(notificationImageUri);
+                    }catch (Exception e){
+                        Log.e("CROP_IMAGE", e.getMessage());
+
+                    }
+
                     /*performCrop(frontselectedImageUri);*/
                     //  testReportFrontImg.setImageURI(frontselectedImageUri);
                 } else {
@@ -951,10 +973,22 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     //backselectedImageUri = result.getUri();                                                         // Get the image file URI
                     //  Picasso.with(this).load(backselectedImageUri).into(testReportBackImg);
                     //  testReportBackImg.setImageURI(backselectedImageUri);
-                    Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                    bankImageUri = getImageUri(getApplicationContext(), selectedImage);
+//                    Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+//                    bankImageUri = getImageUri(getApplicationContext(), selectedImage);
+//                    patientBankImg.setImageURI(bankImageUri);
+//                    startCrop(bankImageUri);
+
+                    bankImageUri=CommonImageUri;
                     patientBankImg.setImageURI(bankImageUri);
-                    startCrop(bankImageUri);
+
+
+                    try {
+                        startCrop(bankImageUri);
+                    }catch (Exception e){
+                        Log.e("CROP_IMAGE", e.getMessage());
+
+                    }
+
                     //testReportBackImg.setImageURI(backselectedImageUri);
                 }
 
@@ -1262,9 +1296,6 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     private void sendForm() {
 
 
-
-
-
         if (getIntent().hasExtra("pateintId")) {
             String url = "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll&w=id<<EQUALTO>>" + getIntent().getStringExtra("pateintId");
             String noti = "";
@@ -1315,7 +1346,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                 public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
                     if (response.isSuccessful()) {
                         //  parentDataTestReportResults = response.body().getUser_data();
-
+                        Log.d("responseSuccessfull","done here is code ");
                         startActivity(new Intent(newNotificationScreen.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     }
 
@@ -1362,7 +1393,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         }
 
         if(formProviderEngagement){
-            NetworkCalls.sendForm(
+            NetworkCalls.sendFormNewNotification(
                     newNotificationScreen.this,
                     BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnStId(),
                     BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnDisId(),
@@ -1705,6 +1736,22 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             }
         });
     }
+
+    private void takeImageFromCameraUri() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "MyPicture");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Photo taken on " + System.currentTimeMillis());
+        CommonImageUri = newNotificationScreen.this.getApplication().getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                values
+        );
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, CommonImageUri);
+        startActivityForResult(intent, 0);
+    }
+
+
+
 
     public BroadcastReceiver broadcastReceiverDoc = new BroadcastReceiver() {
         @Override
