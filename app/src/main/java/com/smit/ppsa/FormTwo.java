@@ -493,6 +493,7 @@ Hritik  All points are covered in the latest aPP
                     }
 
                 });
+
 /*
             for (int a = 0; a < doctorModels.size(); a++) {
                 setAddDoc(doctorModels.get(a).getC_doc_nam(),
@@ -502,6 +503,7 @@ Hritik  All points are covered in the latest aPP
                 );
 
             }*/
+
             }
             if (BaseUtils.getAddTestForm(this).equals("false")) {
                 NetworkCalls.postTest(
@@ -769,11 +771,13 @@ Hritik  All points are covered in the latest aPP
 
             @Override
             public void afterTextChanged(Editable editable) {
+
 //                if (parentData.size() == 0) {
 //
 //                } else {
 //                    filter(editable.toString(), "normal");
 //                }
+
 
             }
         });
@@ -798,6 +802,7 @@ Hritik  All points are covered in the latest aPP
 
 
         String url = "_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=" + parentDataFilters.get(filterspinner.getSelectedItemPosition() - 1).getId() + "&n_tu=" + tus;
+
         Log.d("URL_check", url);
         ApiClient.getClient().getTUPatient(url).enqueue(new Callback<RegisterParentResponse>() {
             @Override
@@ -844,6 +849,8 @@ Hritik  All points are covered in the latest aPP
                 temp.add(d);
             }
         }*/
+
+
         ArrayList<RegisterParentData> temp = new ArrayList();
         for (RegisterParentData d : parentData) {
             if (type.equals("normal")) {
@@ -1228,7 +1235,14 @@ Hritik  All points are covered in the latest aPP
                 reg_date = intent.getStringExtra("reg_date");
             }
             if (intent.hasExtra("patient_phone")) {
-                patientphone = intent.getStringExtra("patient_phone");
+                try {
+                    patientphone = intent.getStringExtra("patient_phone");
+                }catch (Exception e){
+                    patientphone="";
+                }
+//                Log.d("phoneNumber",patientphone);
+            }else{
+                patientphone="";
             }
 
             if (intent.hasExtra("patient_age")) {
@@ -1299,6 +1313,7 @@ Hritik  All points are covered in the latest aPP
         if (!BaseUtils.isNetworkAvailable(FormTwo.this)) {
             BaseUtils.showToast(FormTwo.this, "Please Check your internet  Connectivity");            //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
             LocalBroadcastManager.getInstance(FormTwo.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
+
             progressDialog.hideProgressBar();
             return;
         }
@@ -1382,12 +1397,15 @@ Hritik  All points are covered in the latest aPP
 
     private void setPatientAdapter() {
         Log.d("shobhitChecking"," -- setPatientAdapter");
+        //checkingShobhit127
         parentData = BaseUtils.getTuPatient(this);
         if (title.getText() == "Report collection") {
             docAdapter = new PatientAdapter(
                     parentData,
                     FormTwo.this,
                     "reportdelivery");
+
+            Log.d("checkingList",parentData.get(0).toString());
             patientrecycler.setLayoutManager(new LinearLayoutManager(this));
             patientrecycler.setAdapter(docAdapter);
         } else {
@@ -1396,6 +1414,7 @@ Hritik  All points are covered in the latest aPP
                     parentData,
                     FormTwo.this,
                     "Patient");
+//            Log.d("checkingList",parentData.stream().toArray());
             patientrecycler.setLayoutManager(new LinearLayoutManager(this));
             patientrecycler.setAdapter(docAdapter);
         }
@@ -1404,7 +1423,7 @@ Hritik  All points are covered in the latest aPP
 
     private void setHospitalRecycler(List<RegisterParentData> roomDoctorsLists) {
         if (getIntent().hasExtra("counsel")) {
-            Log.d("kuuiy", "setHospitalRecycler: " + roomDoctorsLists.size());
+            Log.d("kuuiy", "setHospitalRecycler: " + roomDoctorsLists.toString());
 
             docCounsellingAdapter = new PatientCounsellingAdapter(roomDoctorsLists, FormTwo.this, "counsel");
             patientrecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -1416,6 +1435,7 @@ Hritik  All points are covered in the latest aPP
                     roomDoctorsLists,
                     FormTwo.this,
                     getIntent().getStringExtra("section"));
+            Log.d("kuuiy", "setHospitalRecycler: " + roomDoctorsLists.toString());
             patientrecycler.setLayoutManager(new LinearLayoutManager(this));
             patientrecycler.setAdapter(docAdapter);
 
