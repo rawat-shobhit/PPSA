@@ -3,6 +3,25 @@ package com.smit.ppsa.Response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
+/*
+  @SerializedName("diag_test"      ) var diagTest    : String? = null,
+  @SerializedName("test_reas"      ) var testReas    : String? = null,
+  @SerializedName("specm_typ"      ) var specmTyp    : String? = null,
+  @SerializedName("d_specm_col"    ) var dSpecmCol   : String? = null,
+  @SerializedName("c_plc_samp_col" ) var cPlcSampCol : String? = null,
+  @SerializedName("smpl_ext"       ) var smplExt     : String? = null,
+  @SerializedName("sputm_sampl"    ) var sputmSampl  : String? = null,
+  @SerializedName("n_enroll_id"    ) var nEnrollId   : String? = null,
+  @SerializedName("n_user_id"      ) var nUserId     : String? = null,
+  @SerializedName("n_st_id"        ) var nStId       : String? = null,
+  @SerializedName("n_dis_id"       ) var nDisId      : String? = null,
+  @SerializedName("n_tu_id"        ) var nTuId       : String? = null,
+  @SerializedName("n_hf_id"        ) var nHfId       : String? = null,
+  @SerializedName("id"             ) var id          : String? = null,
+  @SerializedName("n_doc_id"       ) var nDocId      : String? = null,
+  @SerializedName("n_diag_cd"      ) var nDiagCd     : String? = null
+ */
 public class SampleData {
     @SerializedName("test_reas")
     @Expose
@@ -46,6 +65,30 @@ public class SampleData {
     @SerializedName("id")
     @Expose
     private String id;
+
+    @SerializedName("n_doc_id")
+    @Expose
+    private String docId ;
+
+    @SerializedName("n_diag_cd")
+    @Expose
+    private  String nDiagCd;
+
+    public String getDocId() {
+        return docId;
+    }
+
+    public void setDocId(String docId) {
+        this.docId = docId;
+    }
+
+    public String getnDiagCd() {
+        return nDiagCd;
+    }
+
+    public void setnDiagCd(String nDiagCd) {
+        this.nDiagCd = nDiagCd;
+    }
 
     public String getDiag_test() {
         return diag_test;

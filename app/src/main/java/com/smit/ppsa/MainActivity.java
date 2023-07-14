@@ -41,6 +41,7 @@ import com.smit.ppsa.Response.HospitalModel;
 import com.smit.ppsa.Response.PostProviderFromRoom;
 import com.smit.ppsa.dailyVisitOutputFolder.DailyVisitActivity;
 import com.smit.ppsa.healthFacilityFolder.HealthFacilityVisit;
+import com.smit.ppsa.notificationLedgerFolder.NotificationLedgerActivity;
 import com.smit.ppsa.providerStatusFolder.ProviderVisitActivity;
 import com.smit.ppsa.sampleCollectionVisitFolder.SampleCollectionVisitActivity;
 
@@ -50,6 +51,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import kotlinx.coroutines.internal.MainDispatcherFactory;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -91,8 +93,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         navigationView = findViewById(R.id.nav_view);
 
 
-
-
 //        healthFacility = navigationView.findViewById(R.id.healthFacilityVisit);
 //        daily
 
@@ -120,17 +120,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     case R.id.providerVisit:
                         startActivity(new Intent(MainActivity.this, ProviderVisitActivity.class));
-
                         break;
 
                     case R.id.patientsFollowUp:
                         startActivity(new Intent(MainActivity.this, PatientsFollowUpActivity.class));
-
                         break;
 
                     case R.id.sampleCollectionReporting:
                         startActivity(new Intent(MainActivity.this, SampleCollectionVisitActivity.class));
+                        break;
 
+                    case R.id.notificationLedger:
+                        startActivity(new Intent(MainActivity.this, NotificationLedgerActivity.class));
                         break;
                     // Add more cases for other items
                 }

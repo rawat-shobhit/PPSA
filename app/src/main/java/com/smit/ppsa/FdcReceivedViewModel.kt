@@ -19,6 +19,7 @@ class FdcReceivedViewModel : ViewModel() {
     val BASE_URL = "https://nikshayppsa.hlfppt.org/_api-v1_/"
     val client = HttpClient(CIO) {
         /*     install(ContentNegotiation) {
+        https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_smpl_col&w=n_enroll_id<<EQUALTO>>46321<<AND>>n_user_id<<EQUALTO>>802
                  json(Json {
                      prettyPrint = true
                      isLenient = true

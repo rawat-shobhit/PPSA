@@ -661,6 +661,8 @@ public class PatientsFragment extends DialogFragment {
         Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(getActivity()).getnUserLevel());
 
 
+        //http://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_smpl_col&w=n_enroll_id<<EQUALTO>>46321
+
         String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_m_coun_filters&w=id<<GT>>0";
         ApiClient.getClient().getCounsellingFilters(url).enqueue(new Callback<FilterResponse>() {
             @Override

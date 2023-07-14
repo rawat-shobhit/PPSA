@@ -75,6 +75,7 @@ import retrofit2.Response;
     private List<String> typString = new ArrayList<>();
     private String reg_date = "";
     private String enroll_id = "";
+    private String enrollmentIdGlobal="";
     private Spinner ReasonforTesting, Typeofspecimen, noOfContainers, Sampleextractiondoneby,
             Sampleextractionfrom, SputumsampletypeandNumber, diagnosticTestSpi, pythologyLabs, pythologyLabsType;
     private AppDataBase dataBase;
@@ -89,6 +90,8 @@ import retrofit2.Response;
         progressDialog = new GlobalProgressDialog(this);
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver, new IntentFilter(""));
         init();
+
+
 
     }
 
@@ -442,7 +445,7 @@ import retrofit2.Response;
                         BaseUtils.getUserOtherInfo(PatientSampleList.this).getnTuId(),
                         getIntent().getStringExtra("hf_id"),
                         BaseUtils.getGlobaldocId(context),
-                        enroll_id,
+                        enrollmentIdGlobal,
                         f2_datespecimencollected.getText().toString(),
                         extractions.get(Sampleextractiondoneby.getSelectedItemPosition() - 1).getId(),
                         testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getId(),
@@ -458,7 +461,7 @@ import retrofit2.Response;
                 );
                 Log.d("button", "add sample2");
                 if (testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getC_sputm_typ() == "UDST MC") {
-                    NetworkCalls.reasonForTesting(PatientSampleList.this, enroll_id, BaseUtils.getUserInfo(PatientSampleList.this).getnUserLevel(), false, f2_datespecimencollected.getText().toString(), "1");
+                    NetworkCalls.reasonForTesting(PatientSampleList.this, enrollmentIdGlobal, BaseUtils.getUserInfo(PatientSampleList.this).getnUserLevel(), false, f2_datespecimencollected.getText().toString(), "1");
                 }
             }
         } else {
@@ -492,7 +495,7 @@ import retrofit2.Response;
                     BaseUtils.getUserOtherInfo(PatientSampleList.this).getnTuId(),
                     hosID,
                     docID,
-                    enrollmentID,
+                    enrollmentIdGlobal,
                     f2_datespecimencollected.getText().toString(),
                     extractions.get(Sampleextractiondoneby.getSelectedItemPosition() - 1).getId(),
                     testings.get(ReasonforTesting.getSelectedItemPosition() - 1).getId(),
@@ -505,7 +508,9 @@ import retrofit2.Response;
                      pythologyLabsLi.get(pythologyLabs.getSelectedItemPosition() - 1).getId(),
                     BaseUtils.getUserInfo(this).getN_staff_sanc(),
                     BaseUtils.getUserInfo(PatientSampleList.this).getId(),
-                    true
+                    true,
+                    getIntent().getStringExtra("patient_name")
+
             );
 
 
@@ -661,24 +666,41 @@ import retrofit2.Response;
         date_of_diagnosis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog m_date = new DatePickerDialog(PatientSampleList.this, R.style.calender_theme, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH));
+
+                try {
+                    DatePickerDialog m_date = new DatePickerDialog(PatientSampleList.this, R.style.calender_theme, date, myCalendar
+                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                            myCalendar.get(Calendar.DAY_OF_MONTH));
 
 
-                m_date.show();
-                Calendar calendar1 = Calendar.getInstance();
-                calendar1.set(Integer.parseInt(reg_date.split("-")[0]),
-                        Integer.parseInt(reg_date.split("-")[1]) - 1,
-                        Integer.parseInt(reg_date.split("-")[2]));
-                Calendar calendar = Calendar.getInstance();
-                m_date.getDatePicker().setMaxDate(calendar.getTimeInMillis());
-                //    m_date.getDatePicker().setMinDate(calendar1.getTimeInMillis());
-                m_date.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
-                m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
+                    m_date.show();
+                    Calendar calendar1 = Calendar.getInstance();
+                    calendar1.set(Integer.parseInt(reg_date.split("-")[0]),
+                            Integer.parseInt(reg_date.split("-")[1]) - 1,
+                            Integer.parseInt(reg_date.split("-")[2]));
+                    Calendar calendar = Calendar.getInstance();
+                    m_date.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+                    //    m_date.getDatePicker().setMinDate(calendar1.getTimeInMillis());
+                    m_date.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
+                    m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
+                }catch (Exception e){
+
+                }
+
+
             }
         });
 
 
     }
-}
+
+     @Override
+     protected void onResume() {
+         super.onResume();
+
+         Log.d("enrollIdCheck",getIntent().getStringExtra("enroll_id"));
+         enrollmentIdGlobal=getIntent().getStringExtra("enroll_id");
+         Toast.makeText(this,enrollmentIdGlobal , Toast.LENGTH_SHORT).show();
+
+    }
+ }

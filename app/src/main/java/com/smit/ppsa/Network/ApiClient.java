@@ -42,6 +42,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.smit.ppsa.dailyVisitOutputFolder.DailyVisitResponseModel;
 import com.smit.ppsa.healthFacilityFolder.HealthFacilityResponseModel;
+import com.smit.ppsa.notificationLedgerFolder.NotificationLedgerResponse;
 import com.smit.ppsa.patientNotificationDuplicacy.PatientNotificationDuplicacyResponseModel;
 import com.smit.ppsa.providerStatusFolder.ProviderVistResponseModel;
 import com.smit.ppsa.sampleCollectionVisitFolder.SampleCollectionVisitResponseModel;
@@ -186,6 +187,9 @@ public class ApiClient {
         @GET
         Call<PatientsFollowUpResponseModel>getPatientFollowUpResponse(@Url String url);
 
+        @GET
+        Call<NotificationLedgerResponse>getNotificationLedger(@Url String url);
+
         @GET()
         Call<DailyVisitResponseModel> getDailyVisit(@Url String url);
 
@@ -253,13 +257,13 @@ public class ApiClient {
         // @POST("https://nikshayppsa.hlfppt.org/_api-v1_/_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_hf&w=")
         @Multipart   //id<<EQUALTO>>142
         @POST()
-        Call<AddDocResponse> editDoctorApi(@Part("n_st_id") RequestBody c_doc_nam,
-                                           @Part("n_dis_id") RequestBody n_qual_id,
-                                           @Part("n_tu_id") RequestBody n_spec_id,
-                                           @Part("n_hf_cd") RequestBody c_mob,
-                                           @Part("c_hf_nam") RequestBody c_regno,
+        Call<AddDocResponse> editDoctorApi(@Part("c_doc_nam") RequestBody c_doc_nam,
+                                           @Part("n_qual_id") RequestBody n_qual_id,
+                                           @Part("n_spec_id") RequestBody n_spec_id,
+                                           @Part("c_mob") RequestBody c_mob,
+                                           @Part("c_regno") RequestBody c_regno,
                                            @Url String url);
-
+//editDoctorApi(c_doc_nam, n_qual_id, n_spec_id, c_mob, c_regno, url).enqueue(new Callback<AddDocResponse>()
         // https://nikshayppsa.hlfppt.org/_api-v1_/_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_hf_doc&w=
 
 
@@ -554,6 +558,9 @@ public class ApiClient {
                                              @Part("n_user_id") RequestBody n_user_id);
 
 
+        /*
+        (n_st_id, n_dis_id, n_tu_id, n_hf_id, n_doc_id, n_enroll_id, d_specm_col, n_smpl_ext_id, n_test_reas_id, n_purp_vst, n_typ_specm_id, n_cont_smpl, c_plc_samp_col, n_sputm_typ_id, n_diag_tst, n_lab_id, n_staff_info, n_user_id)
+         */
         @Multipart
         @POST("_data_agentUSS.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_smpl_col_rpt")
         Call<AddDocResponse> addSampleApi(@Part("n_st_id") RequestBody n_st_id,

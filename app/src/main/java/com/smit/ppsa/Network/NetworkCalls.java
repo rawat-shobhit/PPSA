@@ -59,6 +59,7 @@ import com.smit.ppsa.Response.UserList;
 import com.smit.ppsa.Response.noOfCont.NoOfContResponse;
 import com.smit.ppsa.Response.pythologylab.LabTypeResponse;
 import com.smit.ppsa.Response.pythologylab.PythologyLabResponse;
+import com.smit.ppsa.SampleList;
 import com.smit.ppsa.WorkerForm;
 import com.smit.ppsa.commons;
 
@@ -425,10 +426,14 @@ public class NetworkCalls {
             String n_lab_idd,
             String n_staff_infoo,
             String n_user_idd,
-            Boolean navigate
+            Boolean navigate,
+            String patientName
     ) {
         BaseUtils.putSubmitAddSampleForm(context, "false");
         BaseUtils.putAddSampleData(context, n_st_idd, n_dis_idd, n_tu_idd, n_hf_idd, n_doc_idd, n_enroll_idd, d_specm_coll, n_smpl_ext_idd, n_test_reas_idd, n_purp_vstt, n_typ_specm_idd, n_cont_smpll, c_plc_samp_coll, n_sputm_typ_idd, n_diag_tstt, n_lab_idd, n_staff_infoo, n_user_idd);
+
+        Log.d("data check",n_st_idd+"<-st= dis->"+ n_dis_idd+"= tu->>"+ n_tu_idd+"=hhf->"+ n_hf_idd+"=doc ->"+ n_doc_idd+"= enroll->"+ n_enroll_idd+"= d_specm-> "+ d_specm_coll+"= smpl->"+ n_smpl_ext_idd+"=  test-> "+n_test_reas_idd+"= purp ->"+n_purp_vstt+"=  typ->"+n_typ_specm_idd
+                +"=  cont-> "+n_cont_smpll+"=   cplc->>"+c_plc_samp_coll+"= sputm->"+n_sputm_typ_idd+"= diag ->"+n_diag_tstt+"= lab -> "+n_lab_idd+"=  staff - > "+ n_staff_infoo+"=   user->  "+n_user_idd);
 
         if (!BaseUtils.isNetworkAvailable(context)) {
             BaseUtils.showToast(context, "Please Check your internet  Connectivity");
@@ -462,6 +467,7 @@ public class NetworkCalls {
 //        Toast.makeText(context,"hos id"+ n_hf_idd, Toast.LENGTH_SHORT).show();
 //        Toast.makeText(context,"Doc id"+  n_doc_idd, Toast.LENGTH_SHORT).show();
 //        Toast.makeText(context,"enro id"+ n_enroll_idd, Toast.LENGTH_SHORT).show();
+
         ApiClient.getClient().addSampleApi(n_st_id, n_dis_id, n_tu_id, n_hf_id, n_doc_id, n_enroll_id, d_specm_col, n_smpl_ext_id, n_test_reas_id, n_purp_vst, n_typ_specm_id, n_cont_smpl, c_plc_samp_col, n_sputm_typ_id, n_diag_tst, n_lab_id, n_staff_info, n_user_id).enqueue(new Callback<AddDocResponse>() {
             @Override
             public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
@@ -469,14 +475,21 @@ public class NetworkCalls {
                     BaseUtils.putSubmitAddSampleForm(context, "true");
                     // dataBase.customerDao().deleteAddSample(roomAddSample);
                     if (response.body().isStatus()) {
-                        BaseUtils.showToast(context, "Sample submitted");
+
+                        Log.d("response__",response.body().toString()+"  "+response.body().getUserData());
+                        BaseUtils.showToast(context, response.body().getMessage().toString());
                         if (navigate) {
-                            context.startActivity(new Intent(context, MainActivity.class));
+
+//                            sample collection jaha pr dikhte he vaha pr ana he
+                            context.startActivity(new Intent(context, SampleList.class)
+                                    .putExtra("hf_id", n_hf_idd)
+                                    .putExtra("patient_name", patientName)
+                                    .putExtra("tu_id", n_tu_idd).putExtra("enroll_id", n_enroll_idd));
                         }
                     }
                 } else {
 
-                    Log.d("button","error aa gaya");
+                    Log.d("response__","error aa gaya");
 
                     BaseUtils.putSubmitAddSampleForm(context, "false");
                 }
@@ -551,7 +564,7 @@ public class NetworkCalls {
                     BaseUtils.putSubmitAddSampleForm(context, "true");
                     // dataBase.customerDao().deleteAddSample(roomAddSample);
                     if (response.body().isStatus()) {
-                        BaseUtils.showToast(context, "Sample submitted");
+                        BaseUtils.showToast(context, "Sample submitted2");
                         if (navigate) {
                             ((Activity) context).finish();
                         }
@@ -630,6 +643,8 @@ public class NetworkCalls {
         RequestBody d_diag_dt = RequestBody.create(date, MediaType.parse("text/plain"));
         RequestBody n_cfrm = RequestBody.create(confirm, MediaType.parse("text/plain"));
 
+        Log.d("addSample","addSample2 633 Network calls");
+
         ApiClient.getClient().postFormPartOne2(n_st_id, n_dis_id, n_tu_id, n_hf_id, n_doc_id, n_enroll_id, d_specm_col, n_smpl_ext_id, n_test_reas_id, n_purp_vst, n_typ_specm_id, n_cont_smpl, c_plc_samp_col, n_sputm_typ_id, n_diag_tst, n_lab_id, n_staff_info, n_user_id,d_diag_dt,n_cfrm).enqueue(new Callback<AddDocResponse>() {
             @Override
             public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
@@ -639,7 +654,7 @@ public class NetworkCalls {
                     BaseUtils.putSubmitAddSampleForm(context, "true");
                     // dataBase.customerDao().deleteAddSample(roomAddSample);
                     if (response.body().isStatus()) {
-                        BaseUtils.showToast(context, "Sample submitted");
+                        BaseUtils.showToast(context, "Sample submitted3");
                         if (navigate) {
                             context.startActivity(new Intent(context, MainActivity.class));
                         }
@@ -674,6 +689,8 @@ public class NetworkCalls {
         RequestBody n_cfrm = RequestBody.create(confirm, MediaType.parse("text/plain"));
 
         String url = "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=" + n_enroll_idd + "&w=" + n_user_idd;
+        Log.d("addSample","reason for testing 661 network calls ");
+        Log.d("addSample","661 "+url);
         ApiClient.getClient().reason(d_diag_dt, n_cfrm, url).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -1224,7 +1241,7 @@ public class NetworkCalls {
             return;
         }
 
-        Log.d("fte4t", "addHospital: " + n_tu_idd);
+        Log.d("allData", "addHospital: " + n_tu_idd);
 
         RequestBody stID = RequestBody.create(stIDd, MediaType.parse("text/plain"));
         RequestBody disID = RequestBody.create(disIDd, MediaType.parse("text/plain"));
@@ -1246,7 +1263,8 @@ public class NetworkCalls {
         RequestBody lat = RequestBody.create(latt, MediaType.parse("text/plain"));
         RequestBody lng = RequestBody.create(lngg, MediaType.parse("text/plain"));
 
-
+        Log.d("allData", "stid->"+stID+"disID->"+disID+"n_tu_id->"+n_tu_id+"n_hf_cd->"
+                +n_hf_cd+"c_hf_nam->"+c_hf_nam+"n_hf_typ_id->"+n_hf_typ_id+"c_hf_addr->"+c_hf_addr+"c_cont_per->"+c_cont_per+"c_cp_mob->"+c_cp_mob+"c_cp_email->"+c_cp_email);
         ApiClient.getClient().addHospital(stID, disID, n_tu_id, n_hf_cd, c_hf_nam, n_hf_typ_id, c_hf_addr, c_cont_per, c_cp_mob, c_cp_email,
                 n_sc_id, n_pp_idenr, c_tc_nam, c_tc_mob, n_bf_id, n_pay_status, n_user_id, lat, lng).enqueue(new Callback<AddDocResponse>() {
             @Override
@@ -1256,6 +1274,9 @@ public class NetworkCalls {
                     if (response.body().isStatus()) {
                         BaseUtils.showToast(context, "Hospital added successful");
                         Log.d("yuygfu", "onResponse: " + BaseUtils.getUserInfo(context).getnUserLevel());
+
+                        Log.d("addedHospital", "onResponse: " + response.body().getMessage()+"--> ");
+                        Log.d("addedHospitalres", "onResponse: " + response+"--> ");
                         hospitalSync(((Activity) context), response.body().getUserData(), false, n_tu_idd, navigate);
 
                     }
@@ -1290,6 +1311,9 @@ public class NetworkCalls {
         RequestBody c_mob = RequestBody.create(c_mobb, MediaType.parse("text/plain"));
         RequestBody c_regno = RequestBody.create(c_regnoo, MediaType.parse("text/plain"));
 
+        Log.d("responseUrl",url.toString());
+
+        Log.d("editDoctor1",c_doc_namm+"--"+n_qual_idd+"-"+n_spec_idd+"-"+c_mobb+"-"+c_regnoo+"-"+hospitalId);
 
         ApiClient.getClient().editDoctorApi(c_doc_nam, n_qual_id, n_spec_id, c_mob, c_regno, url).enqueue(new Callback<AddDocResponse>() {
             @Override
@@ -1297,8 +1321,11 @@ public class NetworkCalls {
                 if (response.isSuccessful()) {
 
 
-                    BaseUtils.showToast(context, "doctor update successful");
-                    Log.d("doctorAdded", "onResponse: " + response);
+                    BaseUtils.showToast(context, response.body().getMessage().toString());
+
+                    Log.d("doctorAdded", "onResponse: " + response.body().getMessage());
+                    Log.d("doctorAddedResponse1", "onResponse: "+ response.body().getMessage()+" ->"+response.body().getUserData().toString());
+
 
                 } else {
                     BaseUtils.putAddHospitalForm(context, "false");

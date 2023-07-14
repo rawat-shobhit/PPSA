@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.get
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smit.ppsa.Adapter.HospitalFacilityAdapter.NotificationHolder
@@ -41,6 +42,7 @@ class HospitalFacilityAdapter(
     var prevPos = -1
     var model:ArrayList<QualificationList>?=null;
     var doctorId="";
+    var specIdGlobal ="";
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationHolder {
         return NotificationHolder(
@@ -52,7 +54,8 @@ class HospitalFacilityAdapter(
     @SuppressLint("RecyclerView")
     override fun onBindViewHolder(holder: NotificationHolder, position: Int) {
 
-        var qual="select"
+        var specialization="select"
+        var qualification="select"
         holder.radioButton.isClickable = false
         holder.radioButton.isFocusable = false
         holder.radioButtonOne.isClickable = false
@@ -75,9 +78,7 @@ class HospitalFacilityAdapter(
 
         holder.editDoctor.setOnClickListener {
 
-
             doctorId = nList[position].idd
-
 
             val view= LayoutInflater.from(context).inflate(R.layout.dialog_adddoctor,null)
             val builder= AlertDialog.Builder(context,R.style.dialog_transparent_style).setView(view)
@@ -85,10 +86,82 @@ class HospitalFacilityAdapter(
 
             val mAlertDialog = builder.show()
 
-
             dialogBinding.adCancelbtn.setOnClickListener(){
                 mAlertDialog.dismiss();
             }
+//            dialogBinding.adQualificationOne.setOnItemSelectedListener(
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        parent: AdapterView<*>,
+//                        view: View, position: Int, id: Long
+//                    ) {
+//
+//                        // It returns the clicked item.
+//                        val clickedItem = parent.getItemAtPosition(position) as QualificationList
+//                        specialization = clickedItem.id.toString()
+//
+//                        Toast.makeText(context, clickedItem.id.toString(), Toast.LENGTH_SHORT).show();
+//
+//                        if(specialization.trim()!="")
+//                        {
+//                            val url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_doc_spec_qual&w=n_spec<<EQUALTO>>"+specialization
+//                            ApiClient.getClient().getQualification(url)
+//                                .enqueue(object : Callback<QualificationResponse> {
+//                                    override fun onResponse(
+//                                        call: Call<QualificationResponse>,
+//                                        response: Response<QualificationResponse>
+//                                    ) {
+//                                        if (response.isSuccessful) {
+//                                            if (response.body()!!.status) {
+//
+//                                                qualificationLists = response.body()!!.userData
+//                                                BaseUtils.saveQualSpeList(context, qualificationLists)
+//                                                val adapter2: SpinAdapter
+//                                                adapter2 = SpinAdapter(
+//                                                    context,
+//                                                    qualificationLists
+//                                                )
+//                                                dialogBinding.adQualificationTwo.setAdapter(adapter2)
+//
+//                                            }
+//                                        }
+//                                    }
+//
+//                                    override fun onFailure(call: Call<QualificationResponse>, t: Throwable) {
+////                                    Toast.makeText(context,t.toString(),Toast.LENGTH_SHORT).show()
+//                                    }
+//                                })
+//                        }
+//
+//
+//
+////                        qualID.get(0) = clickedItem.id
+////                        getQual(qualID.get(0))
+//                    }
+//
+//                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+//                })
+//
+//            dialogBinding.adQualificationTwo.setOnItemSelectedListener(
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        parent: AdapterView<*>,
+//                        view: View, position: Int, id: Long
+//                    ) {
+//
+//                        try {
+//                            val clickedItem = parent.getItemAtPosition(position) as QualificationList
+//                            specIdGlobal=clickedItem.id.toString()
+//
+//                            Toast.makeText(context,specIdGlobal.toString(),Toast.LENGTH_SHORT).show()
+//                        }catch (e:Exception){
+//
+//                        }
+//
+//                    }
+//
+//                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+//                })
 
 
 
@@ -143,7 +216,7 @@ class HospitalFacilityAdapter(
                                                     dialogBinding.adQualificationOne.setSelection(i+1)
                                                     qualfId=responseMain.body()!!.userData[i].id
                                                     //responseMain.body()!!.userData[i].id.toString()
-                                                    val url ="_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_doc_spec_qual&w=n_spec<<EQUALTO>>"+qualfId
+                                                    val url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_doc_spec_qual&w=n_spec<<EQUALTO>>"+qualfId
                                                     ApiClient.getClient().getQualification(url)
                                                         .enqueue(object : Callback<QualificationResponse> {
                                                             override fun onResponse(
@@ -152,8 +225,6 @@ class HospitalFacilityAdapter(
                                                             ) {
                                                                 if (response.isSuccessful) {
                                                                     if (response.body()!!.status) {
-
-
 
                                                                         qualificationLists = responsesmall.body()!!.userData
                                                                         BaseUtils.saveQualSpeList(context, qualificationLists)
@@ -169,44 +240,44 @@ class HospitalFacilityAdapter(
                                                                         for(i in 0 until qualificationLists.size){
                                                                             if(qualificationLists.get(i).c_val.toString().equals(response.body()!!.userData.get(0).getcQual()))
                                                                             {
-
                                                                                 specId=qualificationLists.get(i).id.toString()
                                                                                 dialogBinding.adQualificationTwo.setSelection(i+1)
                                                                                 Log.d("lastLog",qualificationLists.get(i).getcQual().toString() +"->"+response.body()!!.userData.get(0).getcQual())
-
-
-
-                                                                                dialogBinding.adNextbtn.setOnClickListener(){
-
-                                                                                    /*
-                                                                                   Context context,            String c_doc_namm,
-                                                                        String n_qual_idd,            String n_spec_idd,            String c_mobb,
-                                                                        String c_regnoo,
-                                                                        String hospitalId
-
-                                                        dialogBinding.namepracticingdoctor.setText(response.body()!!.userData[0].getcDocNam())
-                                            dialogBinding.regnumpracticingdoctor.setText(response.body()!!.userData[0].regNo)
-
-                                            dialogBinding.adContact.setText(response.body()!!.userData[0].getcMob());
-                                                                                     */
-
-                                                                                    // another api calling here down
-
-                                                                                    NetworkCalls.editDoctor(context,dialogBinding.namepracticingdoctor.text.toString(),qualfId,specId,dialogBinding.adContact.text.toString(),dialogBinding.regnumpracticingdoctor.text.toString(),doctorId)
-
-                                                                                }
-
-
                                                                             }else{
                                                                                 Log.d("lastLog",qualificationLists.get(i).getcQual().toString() +"->"+response.body()!!.userData.get(0).getcQual())
                                                                             }
+                                                                        }
+                                                                        dialogBinding.adNextbtn.setOnClickListener(){
+
+                                                                            /*
+                                                                           Context context,            String c_doc_namm,
+                                                                String n_qual_idd,            String n_spec_idd,            String c_mobb,
+                                                                String c_regnoo,
+                                                                String hospitalId
+
+                                                dialogBinding.namepracticingdoctor.setText(response.body()!!.userData[0].getcDocNam())
+                                    dialogBinding.regnumpracticingdoctor.setText(response.body()!!.userData[0].regNo)
+
+                                    dialogBinding.adContact.setText(response.body()!!.userData[0].getcMob());
+                                                                             */
+
+                                                                            // another api calling here down
+
+
+
+                                                                            Log.d("editDoctor",dialogBinding.namepracticingdoctor.text.toString()+" "+qualfId+"  "+specId+ "  "+dialogBinding.adContact.text.toString() +dialogBinding.regnumpracticingdoctor.text.toString() )
+
+                                                                            NetworkCalls.editDoctor(context,dialogBinding.namepracticingdoctor.text.toString(),qualfId,specId,dialogBinding.adContact.text.toString(),dialogBinding.regnumpracticingdoctor.text.toString(),doctorId)
+
                                                                         }
 
                                                                     }
                                                                 }
                                                             }
 
-                                                            override fun onFailure(call: Call<QualificationResponse>, t: Throwable) {}
+                                                            override fun onFailure(call: Call<QualificationResponse>, t: Throwable) {
+//                                                                Toast.makeText(context,t.toString(),Toast.LENGTH_SHORT).show()
+                                                            }
                                                         })
 
                                                 } //responseMain.body()!!.userData[i].getcQualf()
@@ -239,23 +310,6 @@ class HospitalFacilityAdapter(
 
 
 
-
-            dialogBinding.adQualificationOne.setOnItemSelectedListener(
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>,
-                        view: View, position: Int, id: Long
-                    ) {
-
-                        // It returns the clicked item.
-                        val clickedItem = parent.getItemAtPosition(position) as QualificationList
-                        qual = clickedItem.getcQualf()
-//                        qualID.get(0) = clickedItem.id
-//                        getQual(qualID.get(0))
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-                })
 
 
 
@@ -446,7 +500,8 @@ class HospitalFacilityAdapter(
             BaseUtils.showToast(
                 context,
                 "Please Check your internet  Connectivity"
-            ) //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
+            )
+            //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
             return
         }
 

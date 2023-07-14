@@ -35,6 +35,10 @@
             android:title="Sample Collections &amp; Reporting"
             />
 
+        <item
+            android:id="@+id/notificationLedger"
+            android:title="Notification Ledger"
+            />
 
 
     </group>

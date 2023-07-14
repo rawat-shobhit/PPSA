@@ -230,6 +230,28 @@ public class FormSix extends AppCompatActivity {
 
             public void onClick(View view) {
 
+                try {
+                    Log.d("imageUriFront",frontselectedImageUri.toString());
+
+                }catch (Exception e)
+                {
+
+                }
+                try {
+                    Log.d("imageUriBack",backselectedImageUri.toString());
+
+                }catch (Exception e)
+                {
+
+                }
+
+                try {
+                    Log.d("imageUriCommon",CommonImageUri.toString());
+
+                }catch (Exception e)
+                {
+
+                }
 
                 try {
                     if (!dTestReport.equals("")) {
@@ -240,9 +262,10 @@ public class FormSix extends AppCompatActivity {
 
                                         if (!nrpt_del.equals("")) {
                                             addLabTestReport();
-                                                        /*
-                                                          Context context,     String n_enroll_idd,       String n_user_idd,       Boolean navigate,      String date,            String confirm
-                                                         */
+
+                                        /*
+                                                Context context,     String n_enroll_idd,       String n_user_idd,       Boolean navigate,      String date,            String confirm
+                                        */
 
                                             if (parentDataTestReportResults.get(testReportResult.getSelectedItemPosition() - 1).getC_val().equals("MTB Detected Rif Not Detected")) {
                                                 NetworkCalls.reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(), false, dTestReport, "1");
@@ -504,9 +527,9 @@ public class FormSix extends AppCompatActivity {
 
     private void startCrop(Uri uri) {
         String destinationFileName = "";
-        destinationFileName += ".jpg";
+        destinationFileName += Calendar.getInstance().getTimeInMillis()+".jpg";
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(getCacheDir(), destinationFileName)));
-        //uCrop.withAspectRatio(1, 1);
+//        uCrop.withAspectRatio(1, 1);
 //        uCrop.withAspectRatio(3, 4);
 //        uCrop.withAspectRatio();
         uCrop.withAspectRatio(1, 2);
@@ -684,9 +707,10 @@ public class FormSix extends AppCompatActivity {
 //                    Uri outputUri = FileProvider.getUriForFile(FormSix.this, "your.file.provider.authority", outputDir);
 
                     frontselectedImageUri= CommonImageUri;
-                    testReportFrontImg.setImageURI(frontselectedImageUri);
+
                     try {
                         startCrop(frontselectedImageUri);
+                        testReportFrontImg.setImageURI(frontselectedImageUri);
 //                        startCrop(outputUri);
 //                        cropImage.launch(listUri);
                     } catch (Exception e) {
@@ -712,10 +736,19 @@ public class FormSix extends AppCompatActivity {
 
                     backselectedImageUri=CommonImageUri;
                     testReportBackImg.setImageURI(backselectedImageUri);
-                   startCrop(backselectedImageUri);
+                    try {
+                        startCrop(backselectedImageUri);
+//                        startCrop(outputUri);
+//                        cropImage.launch(listUri);
+                    } catch (Exception e) {
+                        Log.e("CROP_IMAGE", e.getMessage());
+                    }
+                    testReportFrontImg.setImageURI(frontselectedImageUri);
+//                    testReportBackImg.setImageURI(backselectedImageUri);
+//                   startCrop(backselectedImageUri);
 
 
-                    Log.d("uploadPhoto back else",frontselectedImageUri.toString());
+                    Log.d("uploadPhoto back else",backselectedImageUri.toString());
 
                     //testReportBackImg.setImageURI(backselectedImageUri);
                 }
@@ -747,7 +780,7 @@ public class FormSix extends AppCompatActivity {
                         Log.d("Ucrop",uri.toString());
                         testReportFrontImg.setImageURI(frontselectedImageUri);
 
-                        Log.d("upload else if front",frontselectedImageUri.toString());
+                        Log.d("upload__Front",frontselectedImageUri.toString());
 
                     } else {
 
@@ -760,12 +793,13 @@ public class FormSix extends AppCompatActivity {
 
                         //testReportBackImg.setImageURI(selectedImageUri);
                         // get the returned data
+
                         Uri uri = UCrop.getOutput(data);
                         backselectedImageUri = uri;
                         testReportBackImg.setImageURI(backselectedImageUri);
+                        testReportFrontImg.setImageURI(frontselectedImageUri);
 
-
-                        Log.d("upload else else front",frontselectedImageUri.toString());
+                        Log.d("upload__Back",backselectedImageUri.toString());
 
                     }
 
@@ -774,7 +808,7 @@ public class FormSix extends AppCompatActivity {
         }
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
+    public Uri getImageUri(@NonNull Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, Calendar.getInstance().getTime().toString(), null);
