@@ -17,10 +17,12 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -89,6 +91,13 @@ class UploadDoc : AppCompatActivity() {
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.CAMERA
     )
+
+
+    private val CAMERA_PERMISSION_CODE = 100
+    private val STORAGE_PERMISSION_CODE = 101
+
+
+    var cameraPermession = false
     private var adhaar_img = ""
     private var presc_img = ""
     private var bank_img = ""
@@ -140,33 +149,65 @@ class UploadDoc : AppCompatActivity() {
         notificationDownload = findViewById(R.id.notificationDownload)
 
         adhaar.setOnClickListener {
+            checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
+            verifyStoragePermissions(this)
+            if (cameraPermession)
             chooseImage(this, "adhaar")
         }
         prescription.setOnClickListener {
+            checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
+            verifyStoragePermissions(this)
+            if (cameraPermession)
             chooseImage(this, "presc")
         }
         bank_detail.setOnClickListener {
+            checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
+            verifyStoragePermissions(this)
+            if (cameraPermession)
             chooseImage(this, "bank")
         }
         test_report.setOnClickListener {
+            checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
+            verifyStoragePermissions(this)
+            if (cameraPermession)
             chooseImage(this, "test")
         }
         udst_report.setOnClickListener {
+            checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
+            verifyStoragePermissions(this)
+            if (cameraPermession)
             chooseImage(this, "udst")
         }
         hiv_report.setOnClickListener {
+            checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
+            verifyStoragePermissions(this)
+            if (cameraPermession)
             chooseImage(this, "hiv")
         }
         diabetes_report.setOnClickListener {
+            checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
+            verifyStoragePermissions(this)
+            if (cameraPermession)
             chooseImage(this, "diabetes")
         }
         additionalprescription.setOnClickListener {
+            checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
+            verifyStoragePermissions(this)
+            if (cameraPermession)
             chooseImage(this, "additionalprescription")
         }
         consent.setOnClickListener {
+            checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
+            verifyStoragePermissions(this)
+            if (cameraPermession)
             chooseImage(this, "consent")
         }
         notification.setOnClickListener {
+
+            checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
+            verifyStoragePermissions(this)
+
+            if (cameraPermession)
             chooseImage(this, "notification")
         }
 
@@ -196,6 +237,22 @@ class UploadDoc : AppCompatActivity() {
         getPrevUpload()
         getLocation()
     }
+
+    fun checkPermission(permission: String, requestCode: Int) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                permission
+            ) == PackageManager.PERMISSION_DENIED
+        ) {
+            // Requesting the permission
+            ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
+        } else {
+             cameraPermession = true
+
+            //            Toast.makeText(FormSix.this, "Permission already granted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private fun encodeImage(bm: Bitmap): String? {
         val baos = ByteArrayOutputStream()
@@ -1094,4 +1151,35 @@ class UploadDoc : AppCompatActivity() {
     private fun setImage(url: String, imageView: ImageView) {
         Glide.with(this).load(url).into(imageView)
     }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults
+        )
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Camera Permission Granted", Toast.LENGTH_SHORT).show()
+                FormSix.cameraPermession = true
+            } else {
+                Toast.makeText(this, "Camera Permission Denied", Toast.LENGTH_SHORT).show()
+            }
+        } else if (requestCode == STORAGE_PERMISSION_CODE) {
+            if (grantResults.size > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            ) {
+//                Toast.makeText(MainActivity.this, "Storage Permission Granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Storage Permission Denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
 }

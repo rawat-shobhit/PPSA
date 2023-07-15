@@ -1,11 +1,14 @@
 package com.smit.ppsa;
 
+
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.Manifest;
@@ -124,6 +127,10 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     String hivFilterId = "";
     String diabeticsId = "";
 
+    static Boolean cameraPermession=false;
+    private static final int CAMERA_PERMISSION_CODE = 100;
+    private static final int STORAGE_PERMISSION_CODE = 101;
+
     ArrayList<PatientFilterDataModel> hivFilter = new ArrayList<>();
     ArrayList<PatientFilterDataModel> diabetiesFilter = new ArrayList<>();
 
@@ -165,6 +172,8 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     PERMISSIONS_STORAGE,
                     REQUEST_EXTERNAL_STORAGE
             );
+        }else{
+
         }
     }
 
@@ -240,12 +249,14 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                 imageType = "front";
                 Log.d("dnun", "onActivityResult:" + imageType);
 
-
                 /*if (notificationImageUri != null) {
                     notificationImageUri = null;
                 }*/
-
-                chooseImage(FormOne.this);
+                checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+                verifyStoragePermissions(FormOne.this);
+                if(cameraPermession) {
+                    chooseImage(FormOne.this);
+                }
             }
         });
 
@@ -259,7 +270,11 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     bankImageUri = null;
                 }*/
 
-                chooseImage(FormOne.this);
+                checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+                verifyStoragePermissions(FormOne.this);
+                if(cameraPermession) {
+                    chooseImage(FormOne.this);
+                }
             }
         });
 
@@ -344,6 +359,21 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         updateSpinner();
 
     }
+
+    public void checkPermission(String permission, int requestCode)
+    {
+        if (ContextCompat.checkSelfPermission(FormOne.this, permission) == PackageManager.PERMISSION_DENIED) {
+
+            // Requesting the permission
+            ActivityCompat.requestPermissions(FormOne.this, new String[] { permission }, requestCode);
+        }
+        else {
+            cameraPermession=true;
+            Log.d("camera permession","1712");
+//            Toast.makeText(FormSix.this, "Permission already granted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private void updateSpinner() {
 
@@ -517,7 +547,13 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     // Open the camera and get the photo
 //                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 //                    startActivityForResult(takePicture, 0);
-                    takeImageFromCameraUri();
+
+                    verifyStoragePermissions(FormOne.this);
+
+
+                        takeImageFromCameraUri();
+
+
                 } else if (optionsMenu[i].equals("Choose from Gallery")) {
                     // choose from  external storage
                     imageChooser();
@@ -1218,6 +1254,17 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         for (int i = 0; i < permissions.length; i++) {
+
+            if (requestCode == CAMERA_PERMISSION_CODE) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(FormOne.this, "Camera Permission Granted", Toast.LENGTH_SHORT) .show();
+                    cameraPermession=true;
+                }
+                else {
+                    Toast.makeText(FormOne.this, "Camera Permission Denied", Toast.LENGTH_SHORT) .show();
+                }
+            }
+
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLocation();
             } else if (grantResults[i] == PackageManager.PERMISSION_DENIED) {

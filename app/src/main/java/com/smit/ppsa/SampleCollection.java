@@ -34,6 +34,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.bumptech.glide.Glide;
@@ -102,6 +103,10 @@ public class SampleCollection extends AppCompatActivity implements View.OnClickL
     Uri bankImageUri = null;
     int SELECT_PICTURE = 200;
     int PIC_CROP = 500;
+    Boolean cameraPermession=false;
+
+    private static final int CAMERA_PERMISSION_CODE = 100;
+    private static final int STORAGE_PERMISSION_CODE = 101;
 
     // Permissions for accessing the storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -185,7 +190,14 @@ public class SampleCollection extends AppCompatActivity implements View.OnClickL
                     notificationImageUri = null;
                 }*/
 
-                chooseImage(SampleCollection.this);
+                checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+                verifyStoragePermissions(SampleCollection.this);
+
+                if(cameraPermession)
+                {
+                    chooseImage(SampleCollection.this);
+                }
+
             }
         });
 
@@ -198,7 +210,14 @@ public class SampleCollection extends AppCompatActivity implements View.OnClickL
                     bankImageUri = null;
                 }*/
 
-                chooseImage(SampleCollection.this);
+                checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+                verifyStoragePermissions(SampleCollection.this);
+
+
+                if(cameraPermession)
+                {
+                    chooseImage(SampleCollection.this);
+                }
             }
         });
 
@@ -387,6 +406,22 @@ public class SampleCollection extends AppCompatActivity implements View.OnClickL
 
     }
 
+
+    // Function to check and request permission.
+    public void checkPermission(String permission, int requestCode)
+    {
+        if (ContextCompat.checkSelfPermission(SampleCollection.this, permission) == PackageManager.PERMISSION_DENIED) {
+
+            // Requesting the permission
+            ActivityCompat.requestPermissions(SampleCollection.this, new String[] { permission }, requestCode);
+        }
+        else {
+            cameraPermession=true;
+            Log.d("camera permession","1712");
+//            Toast.makeText(FormSix.this, "Permission already granted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     // function to let's the user to choose image from camera or gallery
     private void chooseImage(Context context) {
         final CharSequence[] optionsMenu = {"Take Photo", "Choose from Gallery", "Exit"}; // create a menuOption Array
@@ -397,7 +432,11 @@ public class SampleCollection extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (optionsMenu[i].equals("Take Photo")) {
+
                     // Open the camera and get the photo
+
+                    verifyStoragePermissions(SampleCollection.this);
+
                     Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(takePicture, 0);
                 } else if (optionsMenu[i].equals("Choose from Gallery")) {
@@ -955,6 +994,17 @@ public class SampleCollection extends AppCompatActivity implements View.OnClickL
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(SampleCollection.this, "Camera Permission Granted", Toast.LENGTH_SHORT) .show();
+                cameraPermession=true;
+            }
+            else {
+                Toast.makeText(SampleCollection.this, "Camera Permission Denied", Toast.LENGTH_SHORT) .show();
+            }
+        }
+
         for (int i = 0; i < permissions.length; i++) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLocation();

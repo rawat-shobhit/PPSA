@@ -96,6 +96,7 @@ public class FormSix extends AppCompatActivity {
     List<RoomPythologyLabResult> parentDataPythology;
     List<RoomPreviousSamples> parentDataPreviousSamples = new ArrayList();
     private FusedLocationProviderClient mFusedLocationClient;
+    static Boolean cameraPermession=false;
     // Permissions for accessing the storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static final String[] PERMISSIONS_STORAGE = {
@@ -411,7 +412,12 @@ public class FormSix extends AppCompatActivity {
                     frontselectedImageUri = null;
                 }
 
-                chooseImage(FormSix.this);
+                checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+                if(cameraPermession)
+                { chooseImage(FormSix.this);}
+
+
+
             }
         });
 
@@ -423,14 +429,21 @@ public class FormSix extends AppCompatActivity {
 
 
                 checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
-
+                verifyStoragePermissions(FormSix.this);
                 imageType = "back";
                 if (backselectedImageUri != null) {
                     backselectedImageUri = null;
                 }
                 Log.d("dnun", "onActivityResult:" + imageType);
+                Log.d("camerapermession", "onActivityResult:" + cameraPermession);
+                if(cameraPermession)
+                {
+                    chooseImage(FormSix.this);
+                }
 
-                chooseImage(FormSix.this);
+
+
+
 
             }
         });
@@ -1015,6 +1028,10 @@ public class FormSix extends AppCompatActivity {
                     PERMISSIONS_STORAGE,
                     REQUEST_EXTERNAL_STORAGE
             );
+        }else
+        {
+            Log.d("camera permission","else statement 1026");
+
         }
 
     }
@@ -1053,10 +1070,16 @@ public class FormSix extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (optionsMenu[i].equals("Take Photo")) {
                     // Open the camera and get the photo
-                    verifyStoragePermissions(FormSix.this);
+
+
+
+                        takeImageFromCameraUri();
+
+
+
 //                    Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //                    startActivityForResult(takePicture, 0);
-                        takeImageFromCameraUri();
+
                 } else if (optionsMenu[i].equals("Choose from Gallery")) {
                     // choose from  external storage
                     imageChooser();
@@ -1687,6 +1710,8 @@ public class FormSix extends AppCompatActivity {
             ActivityCompat.requestPermissions(FormSix.this, new String[] { permission }, requestCode);
         }
         else {
+            cameraPermession=true;
+            Log.d("camera permession","1712");
 //            Toast.makeText(FormSix.this, "Permission already granted", Toast.LENGTH_SHORT).show();
         }
     }
@@ -1723,7 +1748,8 @@ public class FormSix extends AppCompatActivity {
 
         if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                Toast.makeText(FormSix.this, "Camera Permission Granted", Toast.LENGTH_SHORT) .show();
+               Toast.makeText(FormSix.this, "Camera Permission Granted", Toast.LENGTH_SHORT) .show();
+                cameraPermession=true;
             }
             else {
                 Toast.makeText(FormSix.this, "Camera Permission Denied", Toast.LENGTH_SHORT) .show();

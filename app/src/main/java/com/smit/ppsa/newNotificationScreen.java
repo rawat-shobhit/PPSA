@@ -1,6 +1,7 @@
 package com.smit.ppsa;
 
 import static com.smit.ppsa.Network.NetworkCalls.getHospitalData;
+import static com.smit.ppsa.Network.NetworkCalls.getTestResult;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -127,6 +129,12 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     int PIC_CROP = 500;
     private static ApiClient.APIInterface apiInterface;
 
+    static Boolean cameraPermession=false;
+
+    private static final int CAMERA_PERMISSION_CODE = 100;
+    private static final int STORAGE_PERMISSION_CODE = 101;
+    //get this value from the selected patient
+
     /*
     https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>'2739924203'
      */
@@ -176,6 +184,27 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiverDoc, new IntentFilter("doc"));
 
+        try {
+            checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+        }catch (Exception e){
+            Log.d("catchException",e.toString()) ;
+        }
+
+    }
+
+    public void checkPermission(String permission, int requestCode)
+    {
+        if (ContextCompat.checkSelfPermission(newNotificationScreen.this, permission) == PackageManager.PERMISSION_DENIED) {
+
+            // Requesting the permission
+            ActivityCompat.requestPermissions(newNotificationScreen.this, new String[] { permission }, requestCode);
+        }
+        else {
+            cameraPermession=true;
+
+
+//            Toast.makeText(FormSix.this, "Permission already granted", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void callCheckApiForDuplicacy() {
@@ -220,6 +249,8 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     PERMISSIONS_STORAGE,
                     REQUEST_EXTERNAL_STORAGE
             );
+        }else{
+
         }
     }
 
@@ -299,9 +330,18 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                 Log.d("dnun", "onActivityResult:" + imageType);
                 /*if (notificationImageUri != null) {
                     notificationImageUri = null;
-                }*/
 
-                chooseImage(newNotificationScreen.this);
+                }*/
+                checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+                verifyStoragePermissions(newNotificationScreen.this);
+
+                if(cameraPermession)
+                {
+                    chooseImage(newNotificationScreen.this);
+                }
+
+
+
             }
         });
 
@@ -313,8 +353,13 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                 /*if (bankImageUri != null) {
                     bankImageUri = null;
                 }*/
+                checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+                verifyStoragePermissions(newNotificationScreen.this);
 
-                chooseImage(newNotificationScreen.this);
+                if(cameraPermession)
+                {
+                    chooseImage(newNotificationScreen.this);
+                }
             }
         });
 
@@ -758,7 +803,11 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     // Open the camera and get the photo
 //                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 //                    startActivityForResult(takePicture, 0);
+
+                    verifyStoragePermissions(newNotificationScreen.this);
+
                     takeImageFromCameraUri();
+
                 } else if (optionsMenu[i].equals("Choose from Gallery")) {
                     // choose from  external storage
                     imageChooser();
@@ -1582,6 +1631,17 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(newNotificationScreen.this, "Camera Permission Granted", Toast.LENGTH_SHORT) .show();
+                cameraPermession=true;
+            }
+            else {
+                Toast.makeText(newNotificationScreen.this, "Camera Permission Denied", Toast.LENGTH_SHORT) .show();
+            }
+        }
+
         for (int i = 0; i < permissions.length; i++) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLocation();

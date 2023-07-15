@@ -825,9 +825,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .putExtra("counsel", "")
                         .putExtra("from", "main"));
                 break;
+
             case R.id.stockreceive:
                 startActivity(new Intent(MainActivity.this, HospitalsList.class).putExtra("stockreceiving", ""));
                 break;
+
             case R.id.reportdeliverybtn:
                 startActivity(new Intent(MainActivity.this, FormTwo.class).putExtra("report_col", "report_col"));
                 // startActivity(new Intent(MainActivity.this,ReportDelivery.class));
