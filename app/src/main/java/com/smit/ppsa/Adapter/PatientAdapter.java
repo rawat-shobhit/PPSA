@@ -84,6 +84,9 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
                 Intent intent = new Intent(context, FormOne.class);
                 intent.putExtra("pateintId", registerParentData.get(position).getId());
                 intent.putExtra("type", type.toString());
+                intent.putExtra("hf_id",registerParentData.get(position).getnHfId());
+                  intent.putExtra("doc_id",registerParentData.get(position).getnDocId());
+
                 context.startActivity(intent);
             }
         });

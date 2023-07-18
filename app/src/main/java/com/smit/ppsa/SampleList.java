@@ -51,7 +51,24 @@ public class SampleList extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_sample_list);
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver, new IntentFilter(""));
 
+
+
         init();
+
+
+
+        try {
+
+            globalEnrollmentId=getIntent().getStringExtra("enroll_id").toString();
+            Toast.makeText(this, globalEnrollmentId +" 61", Toast.LENGTH_SHORT).show();
+            Log.d("checking62",getIntent().getStringExtra("enroll_id").toString());
+        }catch (Exception e){
+
+            Toast.makeText(this, e.toString() + "  65", Toast.LENGTH_SHORT).show();
+            Log.d("crashE",e.toString());
+        }
+
+
     }
 
 
@@ -71,8 +88,14 @@ public class SampleList extends AppCompatActivity implements View.OnClickListene
         if (getIntent().hasExtra("patient_name")){
             patName.setText(getIntent().getStringExtra("patient_name"));
         }
-        globalEnrollmentId=getIntent().getStringExtra("enroll_id");
-        Log.d("enrollmentId",getIntent().getStringExtra("enroll_id"));
+
+        if(getIntent().hasExtra("enroll_id")){
+            globalEnrollmentId=getIntent().getStringExtra("enroll_id");
+            Log.d("enrollmentId",getIntent().getStringExtra("enroll_id"));
+        }
+
+
+
         //   getSample();
     }
 

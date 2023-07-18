@@ -41,6 +41,7 @@ class TuSearchPatientList : AppCompatActivity() {
     private lateinit var backBtn: ImageView
     private lateinit var filtteerr: LinearLayout
     private lateinit var dropDownForFilter: AutoCompleteTextView
+
     var fdcHospitalsAdapter: LpaPatientAdapter? = null
 
     var registerParentDataList: ArrayList<RegisterParentData>? = null
@@ -104,6 +105,7 @@ class TuSearchPatientList : AppCompatActivity() {
                 //unitId = filterData!!.Unitmaster[pos].id
                 selectedFilter = (pos + 1).toString()
                 getPatient()
+
                 //   Toast.makeText(this,selectedFilter, Toast.LENGTH_SHORT).show()
             }
     }
@@ -243,6 +245,8 @@ class TuSearchPatientList : AppCompatActivity() {
 //                            registerParentDataList!!.size.toString(),
 //                            Toast.LENGTH_SHORT
 //                        ).show()
+
+
                         patientRecyclerView.layoutManager =
                             LinearLayoutManager(this@TuSearchPatientList)
                         if (getIntent().hasExtra("transfer")) {

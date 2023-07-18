@@ -118,6 +118,9 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
         fdcOpeningStockBalanceViewModel = new ViewModelProvider(this).get(FdcOpeningStockBalanceViewModel.class);
         fdcDispensationToPatientViewModel = new ViewModelProvider(this).get(FdcDispensationToPatientViewModel.class);
 
+
+
+
         if (BaseUtils.getAddSampleForm(this).equals("false")) {
 
           /*  LiveData<List<RoomAddSample>> samples = dataBase.customerDao().fetchAddSample();
@@ -188,7 +191,8 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
         }
 
         /*if (BaseUtils.getSubmitLabReportStatus(this).equals("false")) {
-         *//*LiveData<List<RoomFormSixData>> formSix = dataBase.customerDao().fetchFormSix();
+         */
+        /*LiveData<List<RoomFormSixData>> formSix = dataBase.customerDao().fetchFormSix();
             formSix.observe(this, formSixData -> {
 
                 if (formSixData.size() != 0) {
@@ -226,7 +230,8 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                     }
                 }
 
-            });*//*
+            });*/
+        /*
             mViewModel.submitLabReport(
                     BaseUtils.getn_st_idFormSix(this),
                     BaseUtils.getn_dis_idFormSix(this),
@@ -259,7 +264,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
 
         }*/
- /*       if (BaseUtils.getFormOne(this).equals("false")) {
+        /*       if (BaseUtils.getFormOne(this).equals("false")) {
             LiveData<List<FormOneModel>> allCustomer = dataBase.customerDao().fetchFormOne();
             allCustomer.observe(this, hospitalModels -> {
 
@@ -306,6 +311,12 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
             });
 
         }*/
+
+        if(BaseUtils.getUserInfo(this).getN_staff_sanc().equals("5"))
+        {
+            addbtn.setVisibility (View.VISIBLE);
+        }
+
         if (BaseUtils.getAddHosptitalForm(this).equals("false")) {
             Log.d("koiuou", "onCreate: " + "k,ojmklmlm");
             getAllCustomer();

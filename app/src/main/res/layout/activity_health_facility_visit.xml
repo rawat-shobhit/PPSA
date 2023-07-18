@@ -193,6 +193,90 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#F6A873"
+                android:orientation="horizontal">
+
+
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:text="Total :-"
+                    android:gravity="center"
+                    android:textSize="@dimen/_10ssp"
+                    android:padding="@dimen/_5sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+
+
+                <TextView
+                    android:id="@+id/visitTot"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".2"
+                    android:text="0"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/_10ssp"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"/>
+
+
+                <TextView
+                    android:id="@+id/tvNcTot"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".2"
+                    android:text="0"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/_10ssp"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"/>
+
+
+
+                <TextView
+                    android:id="@+id/tvScTot"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".2"
+                    android:text="0"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/_10ssp"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"/>
+
+
+
+                <TextView
+                    android:id="@+id/tvFdcTot"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".2"
+                    android:text="0"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/_10ssp"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"/>
+
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/totalColumn"
                 android:layout_width="wrap_content"

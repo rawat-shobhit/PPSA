@@ -18,6 +18,7 @@ import com.smit.ppsa.healthFacilityFolder.HealthFacilityAdapter
 import com.smit.ppsa.healthFacilityFolder.HealthFacilityList
 import com.smit.ppsa.healthFacilityFolder.HealthFacilityResponseModel
 import com.smit.ppsa.newFilterDropDown
+import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,6 +38,28 @@ class DailyVisitActivity : AppCompatActivity() {
     private var month=""
     private var year=""
 
+    lateinit var tvDcTot:TextView
+    lateinit var tvPfTot:TextView
+    lateinit var tvScTot:TextView
+    lateinit var tvNcTot:TextView
+    lateinit var tvNeTot:TextView
+    lateinit var tvBeTot:TextView
+
+    var dvCount=0;
+    var pfCount=0;
+    var scCount=0;
+    var ncCount=0;
+    var neCount=0;
+    var beCount=0;
+
+
+
+
+
+
+
+
+
     private lateinit var yearDropDown:AutoCompleteTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +73,12 @@ class DailyVisitActivity : AppCompatActivity() {
         recyclerView=findViewById(R.id.rvHealthFacility)
         totalColumn=findViewById(R.id.totalColumn)
 
+        tvDcTot=findViewById(R.id.tvDvTot)
+        tvPfTot=findViewById(R.id.tvPfTot)
+        tvScTot=findViewById(R.id.tvScTot)
+        tvNcTot=findViewById(R.id.tvNcTot)
+        tvNeTot = findViewById(R.id.tvNeTot)
+        tvBeTot=findViewById(R.id.tvBeTot)
 
 
         monthDropDown.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -156,6 +185,15 @@ class DailyVisitActivity : AppCompatActivity() {
                     }else{
                         list.clear()
                         setRecycler()
+
+                        tvBeTot.setText("0");
+                        tvPfTot.setText("0");
+                        tvScTot.setText("0");
+                        tvNcTot.setText("0");
+                        tvNeTot.setText("0");
+                        tvBeTot.setText("0");
+
+
                         totalColumn.setText("Total number of Column :- 0")
                         BaseUtils.showToast(this@DailyVisitActivity, "No Data found")
                     }
@@ -176,6 +214,27 @@ class DailyVisitActivity : AppCompatActivity() {
 
         dailyVisitAdapter =
             DailyVisitAdaper(list, this@DailyVisitActivity)
+
+        for(i in 0 until list.size)
+        {
+
+            dvCount +=list[i].dv!!.toInt()
+            pfCount += list[i].pf!!.toInt()
+            scCount += list[i].sc!!.toInt()
+            ncCount += list[i].nc!!.toInt()
+            neCount += list[i].ne!!.toInt()
+            beCount += list[i].be!!.toInt()
+
+        }
+
+        tvBeTot.setText(dvCount.toString());
+        tvPfTot.setText(pfCount.toString())
+        tvScTot.setText(scCount.toString());
+        tvNcTot.setText(ncCount.toString());
+        tvNeTot.setText(neCount.toString());
+        tvBeTot.setText(beCount.toString());
+
+
 
         val linearLayoutManager =
             LinearLayoutManager(this@DailyVisitActivity, LinearLayoutManager.VERTICAL, false)

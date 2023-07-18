@@ -35,7 +35,6 @@
                 android:fontFamily="@font/nunitosans_bold_2"
                 android:gravity="center"
                 android:text="Hospitals"
-
                 android:textColor="@color/white"
                 android:textSize="@dimen/_20sdp" />
 

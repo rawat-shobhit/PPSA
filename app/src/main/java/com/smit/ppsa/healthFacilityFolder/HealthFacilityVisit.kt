@@ -15,6 +15,7 @@ import com.smit.ppsa.Network.ApiClient
 import com.smit.ppsa.R
 import com.smit.ppsa.Response.PatientFilterDataModel
 import com.smit.ppsa.newFilterDropDown
+import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,6 +29,16 @@ class HealthFacilityVisit : AppCompatActivity() {
     var healthFacilityAdapter:HealthFacilityAdapter?= null
     lateinit var recyclerView:RecyclerView
     lateinit var totalCount:TextView
+
+    lateinit var tvVisitTot:TextView
+    lateinit var tvNcTot:TextView
+    lateinit var tvScTot:TextView
+    lateinit var tvFdcTot:TextView
+
+    private var visitCount=0
+    var ncCount=0;
+    var scCount=0;
+    var fdcCont=0;
 
     private lateinit var okText:ImageView
 
@@ -45,11 +56,22 @@ class HealthFacilityVisit : AppCompatActivity() {
         recyclerView=findViewById(R.id.rvHealthFacility)
         totalCount=findViewById(R.id.totalColumn)
 
+        tvFdcTot=findViewById(R.id.tvFdcTot);
+        tvVisitTot =findViewById(R.id.visitTot);
+        tvNcTot = findViewById(R.id.tvNcTot);
+        tvScTot = findViewById(R.id.tvScTot)
+
+
+        Log.d("dataCheckPerson",BaseUtils.getUserInfo(this).getnAccessRights()+"<-rights  nStaff->  "+
+                BaseUtils.getUserInfo(this).getN_staff_sanc())
+
         monthDropDown.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
             month = (position + 1).toString() + ""
 
             //  Toast.makeText(FormOne.this, hivFilterId, Toast.LENGTH_SHORT).show();
         })
+
+
 
 
         yearDropDown.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
@@ -147,6 +169,10 @@ class HealthFacilityVisit : AppCompatActivity() {
                     }else{
                         list.clear()
                         setRecycler()
+                        tvVisitTot.setText("0");
+                        tvNcTot.setText("0");
+                        tvScTot.setText("0");
+                        tvFdcTot.setText("0");
                         totalCount.setText("Total number of Column :- 0 ")
                         BaseUtils.showToast(this@HealthFacilityVisit, "No Data found")
                     }
@@ -165,8 +191,26 @@ class HealthFacilityVisit : AppCompatActivity() {
 
         Log.d("testing", "setHospitalRecycler: " + list.size)
 
+
+        for (i in 0 until  list.size)
+        {
+            visitCount += list[i].visit!!.toInt()
+            ncCount += list[i].nc!!.toInt()
+            scCount += list[i].sc!!.toInt();
+            fdcCont += list[i].fdc!!.toInt()
+        }
+
+
+        tvVisitTot.setText(visitCount.toString());
+        tvNcTot.setText(ncCount.toString());
+        tvScTot.setText(scCount.toString());
+        tvFdcTot.setText(fdcCont.toString());
+
+
         healthFacilityAdapter =
             HealthFacilityAdapter(list, this@HealthFacilityVisit)
+
+
 
         val linearLayoutManager =
             LinearLayoutManager(this@HealthFacilityVisit, LinearLayoutManager.VERTICAL, false)

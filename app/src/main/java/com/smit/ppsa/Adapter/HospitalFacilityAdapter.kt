@@ -210,77 +210,83 @@ class HospitalFacilityAdapter(
 
                                             for(i in 0 until (model as java.util.ArrayList<QualificationList>?)!!.size){
 
-                                                if(response.body()!!.userData.get(0).getcQualf().equals(responseMain.body()!!.userData[i].getcQualf())) {
-                                                    Log.d("QualfMain",response.body()!!.userData[0].getcQualf()+" -> "+ responseMain.body()!!.userData[i].getcQualf())
+                                                try{
 
-                                                    dialogBinding.adQualificationOne.setSelection(i+1)
-                                                    qualfId=responseMain.body()!!.userData[i].id
-                                                    //responseMain.body()!!.userData[i].id.toString()
-                                                    val url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_doc_spec_qual&w=n_spec<<EQUALTO>>"+qualfId
-                                                    ApiClient.getClient().getQualification(url)
-                                                        .enqueue(object : Callback<QualificationResponse> {
-                                                            override fun onResponse(
-                                                                call: Call<QualificationResponse>,
-                                                                responsesmall: Response<QualificationResponse>
-                                                            ) {
-                                                                if (response.isSuccessful) {
-                                                                    if (response.body()!!.status) {
+                                                    if(response.body()!!.userData.get(0).getcQualf().equals(responseMain.body()!!.userData[i].getcQualf())) {
+                                                        Log.d("QualfMain",response.body()!!.userData[0].getcQualf()+" -> "+ responseMain.body()!!.userData[i].getcQualf())
 
-                                                                        qualificationLists = responsesmall.body()!!.userData
-                                                                        BaseUtils.saveQualSpeList(context, qualificationLists)
-                                                                        val adapter2: SpinAdapter
-                                                                        adapter2 = SpinAdapter(
-                                                                            context,
-                                                                            qualificationLists
-                                                                        )
-                                                                        dialogBinding.adQualificationTwo.setAdapter(adapter2)
+                                                        dialogBinding.adQualificationOne.setSelection(i+1)
+                                                        qualfId=responseMain.body()!!.userData[i].id
+                                                        //responseMain.body()!!.userData[i].id.toString()
+                                                        val url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_doc_spec_qual&w=n_spec<<EQUALTO>>"+qualfId
+                                                        ApiClient.getClient().getQualification(url)
+                                                            .enqueue(object : Callback<QualificationResponse> {
+                                                                override fun onResponse(
+                                                                    call: Call<QualificationResponse>,
+                                                                    responsesmall: Response<QualificationResponse>
+                                                                ) {
+                                                                    if (response.isSuccessful) {
+                                                                        if (response.body()!!.status) {
+
+                                                                            qualificationLists = responsesmall.body()!!.userData
+                                                                            BaseUtils.saveQualSpeList(context, qualificationLists)
+                                                                            val adapter2: SpinAdapter
+                                                                            adapter2 = SpinAdapter(
+                                                                                context,
+                                                                                qualificationLists
+                                                                            )
+                                                                            dialogBinding.adQualificationTwo.setAdapter(adapter2)
 
 
 
-                                                                        for(i in 0 until qualificationLists.size){
-                                                                            if(qualificationLists.get(i).c_val.toString().equals(response.body()!!.userData.get(0).getcQual()))
-                                                                            {
-                                                                                specId=qualificationLists.get(i).id.toString()
-                                                                                dialogBinding.adQualificationTwo.setSelection(i+1)
-                                                                                Log.d("lastLog",qualificationLists.get(i).getcQual().toString() +"->"+response.body()!!.userData.get(0).getcQual())
-                                                                            }else{
-                                                                                Log.d("lastLog",qualificationLists.get(i).getcQual().toString() +"->"+response.body()!!.userData.get(0).getcQual())
+                                                                            for(i in 0 until qualificationLists.size){
+                                                                                if(qualificationLists.get(i).c_val.toString().equals(response.body()!!.userData.get(0).getcQual()))
+                                                                                {
+                                                                                    specId=qualificationLists.get(i).id.toString()
+                                                                                    dialogBinding.adQualificationTwo.setSelection(i+1)
+                                                                                    Log.d("lastLog",qualificationLists.get(i).getcQual().toString() +"->"+response.body()!!.userData.get(0).getcQual())
+                                                                                }else{
+                                                                                    Log.d("lastLog",qualificationLists.get(i).getcQual().toString() +"->"+response.body()!!.userData.get(0).getcQual())
+                                                                                }
                                                                             }
+                                                                            dialogBinding.adNextbtn.setOnClickListener(){
+
+                                                                                /*
+                                                                               Context context,            String c_doc_namm,
+                                                                    String n_qual_idd,            String n_spec_idd,            String c_mobb,
+                                                                    String c_regnoo,
+                                                                    String hospitalId
+
+                                                    dialogBinding.namepracticingdoctor.setText(response.body()!!.userData[0].getcDocNam())
+                                        dialogBinding.regnumpracticingdoctor.setText(response.body()!!.userData[0].regNo)
+
+                                        dialogBinding.adContact.setText(response.body()!!.userData[0].getcMob());
+                                                                                 */
+
+                                                                                // another api calling here down
+
+
+
+                                                                                Log.d("editDoctor",dialogBinding.namepracticingdoctor.text.toString()+" "+qualfId+"  "+specId+ "  "+dialogBinding.adContact.text.toString() +dialogBinding.regnumpracticingdoctor.text.toString() )
+
+                                                                                NetworkCalls.editDoctor(context,dialogBinding.namepracticingdoctor.text.toString(),qualfId,specId,dialogBinding.adContact.text.toString(),dialogBinding.regnumpracticingdoctor.text.toString(),doctorId)
+
+                                                                            }
+
                                                                         }
-                                                                        dialogBinding.adNextbtn.setOnClickListener(){
-
-                                                                            /*
-                                                                           Context context,            String c_doc_namm,
-                                                                String n_qual_idd,            String n_spec_idd,            String c_mobb,
-                                                                String c_regnoo,
-                                                                String hospitalId
-
-                                                dialogBinding.namepracticingdoctor.setText(response.body()!!.userData[0].getcDocNam())
-                                    dialogBinding.regnumpracticingdoctor.setText(response.body()!!.userData[0].regNo)
-
-                                    dialogBinding.adContact.setText(response.body()!!.userData[0].getcMob());
-                                                                             */
-
-                                                                            // another api calling here down
-
-
-
-                                                                            Log.d("editDoctor",dialogBinding.namepracticingdoctor.text.toString()+" "+qualfId+"  "+specId+ "  "+dialogBinding.adContact.text.toString() +dialogBinding.regnumpracticingdoctor.text.toString() )
-
-                                                                            NetworkCalls.editDoctor(context,dialogBinding.namepracticingdoctor.text.toString(),qualfId,specId,dialogBinding.adContact.text.toString(),dialogBinding.regnumpracticingdoctor.text.toString(),doctorId)
-
-                                                                        }
-
                                                                     }
                                                                 }
-                                                            }
 
-                                                            override fun onFailure(call: Call<QualificationResponse>, t: Throwable) {
+                                                                override fun onFailure(call: Call<QualificationResponse>, t: Throwable) {
 //                                                                Toast.makeText(context,t.toString(),Toast.LENGTH_SHORT).show()
-                                                            }
-                                                        })
+                                                                }
+                                                            })
 
-                                                } //responseMain.body()!!.userData[i].getcQualf()
+                                                    } //responseMain.body()!!.userData[i].getcQualf()
+
+                                                }catch (e:Exception){
+                                                    Log.d("creash_",e.toString());
+                                                }
 
                                             }
 

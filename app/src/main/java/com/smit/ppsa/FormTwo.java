@@ -1043,7 +1043,7 @@ Hritik  All points are covered in the latest aPP
                                 .putExtra("resn", resn));
                     } else if (getIntent().hasExtra("sample")) {
 
-
+//                        Toast.makeText(this, "from form 2", Toast.LENGTH_SHORT).show();
 
 
 
@@ -1161,7 +1161,6 @@ Hritik  All points are covered in the latest aPP
 
                 //w=n_tu_id<<EQUALTO>>2<<OR>>n_tu_id<<EQUALTO>>3<<OR>>n_tu_id<<EQUALTO>>4
                 for (int a = 0; a < tu.size(); a++) {
-
                     if (!tuStrings.contains(tu.get(a).getcTuName())) {
                         tuStrings.add(tu.get(a).getcTuName());
                         if (a < tu.size() - 1) {

@@ -1,16 +1,6 @@
 package com.smit.ppsa;
 
 
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -43,31 +33,32 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.bumptech.glide.Glide;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.smit.ppsa.Adapter.CustomSpinnerAdapter;
-import com.smit.ppsa.Adapter.FilterDropdownAdapter;
 import com.smit.ppsa.Dao.AppDataBase;
 import com.smit.ppsa.Network.ApiClient;
 import com.smit.ppsa.Network.NetworkCalls;
 import com.smit.ppsa.Response.AddDocResponse;
 import com.smit.ppsa.Response.FormOneData;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.smit.ppsa.Response.FormOneResponse;
-import com.smit.ppsa.Response.HospitalList;
-import com.smit.ppsa.Response.HospitalResponse;
-import com.smit.ppsa.Response.MedicineResponse.MedicineResponse;
 import com.smit.ppsa.Response.PatientFilterDataModel;
 import com.smit.ppsa.Response.PatientResponse;
 import com.smit.ppsa.Response.RegisterParentData;
-import com.smit.ppsa.Response.RoomMedicines;
-import com.smit.ppsa.Response.userpassword.UserPasswordResponse;
 import com.smit.ppsa.patientNotificationDuplicacy.PatientNotificationDuplicacyResponseModel;
 import com.yalantis.ucrop.UCrop;
-
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -111,6 +102,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private String tu_id_res = "", type = "normal";
     private String gender;
     private ImageView patientNotificationImg, patientBankImg;
+
     private String imageType = "front";
     private TextView EnrollmentDate, dataOf;
     private EditText tuString, EnrollHealthFacilitySector, EnrollmentFaciltyPHI, EnrollmentFaciltyHFcode, UserIDEnrollment, EnrolmentId, PatientName, Age, Weight, Height, Address,
@@ -118,16 +110,21 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private Spinner EnrollmentFaciltyState, EnrollmentFaciltyDistrict, EnrollmentFaciltyTBU, Gender, ResidentialState, ResidentialDistrict, ResidentialTU;
     Uri notificationImageUri = null;
     Uri bankImageUri = null;
+
+    String apiNotificationImage = "";
+    String apiBankImage = "";
+
+
     Uri CommonImageUri = null;
     int SELECT_PICTURE = 200;
     int PIC_CROP = 500;
 
-    Boolean checkDuplicacy=false;
+    Boolean checkDuplicacy = false;
 
     String hivFilterId = "";
     String diabeticsId = "";
 
-    static Boolean cameraPermession=false;
+    static Boolean cameraPermession = false;
     private static final int CAMERA_PERMISSION_CODE = 100;
     private static final int STORAGE_PERMISSION_CODE = 101;
 
@@ -138,7 +135,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
     // Permissions for accessing the storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
+    private static final String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA,
@@ -158,6 +155,8 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
         if (getIntent().hasExtra("type")) {
             type = getIntent().getStringExtra("type");
+
+            Log.d("shobhit_type", type);
         }
     }
 
@@ -172,7 +171,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     PERMISSIONS_STORAGE,
                     REQUEST_EXTERNAL_STORAGE
             );
-        }else{
+        } else {
 
         }
     }
@@ -217,7 +216,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             dataOf.setVisibility(View.GONE);
             layoutSpinners.setVisibility(View.GONE);
             EnrollmentDate.setVisibility(View.GONE);
-            Log.d("typeCheck", type.toString());
+            Log.d("typeCheck", type);
         } else if (Objects.equals(getIntent().getStringExtra("type"), "tree")) {
             formProviderEngagement = false;
             dataOf.setVisibility(View.GONE);
@@ -230,14 +229,14 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             EnrollmentDate.setVisibility(View.GONE);
             notificationImageForm.setVisibility(View.GONE);
 
-            Log.d("typeCheck", type.toString());
+            Log.d("typeCheck", type);
         } else {
             formProviderEngagement = true;
             layoutSpinners.setVisibility(View.VISIBLE);
             dataOf.setVisibility(View.VISIBLE);
             EnrollmentDate.setVisibility(View.VISIBLE);
             dataOf.setText("Date of Diagnosis*");
-            Log.d("typeCheckElse", type.toString());
+            Log.d("typeCheckElse", type);
         }
 
 
@@ -254,7 +253,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                 }*/
                 checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
                 verifyStoragePermissions(FormOne.this);
-                if(cameraPermession) {
+                if (cameraPermession) {
                     chooseImage(FormOne.this);
                 }
             }
@@ -272,7 +271,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
                 checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
                 verifyStoragePermissions(FormOne.this);
-                if(cameraPermession) {
+                if (cameraPermession) {
                     chooseImage(FormOne.this);
                 }
             }
@@ -360,16 +359,14 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    public void checkPermission(String permission, int requestCode)
-    {
+    public void checkPermission(String permission, int requestCode) {
         if (ContextCompat.checkSelfPermission(FormOne.this, permission) == PackageManager.PERMISSION_DENIED) {
 
             // Requesting the permission
-            ActivityCompat.requestPermissions(FormOne.this, new String[] { permission }, requestCode);
-        }
-        else {
-            cameraPermession=true;
-            Log.d("camera permession","1712");
+            ActivityCompat.requestPermissions(FormOne.this, new String[]{permission}, requestCode);
+        } else {
+            cameraPermession = true;
+            Log.d("camera permession", "1712");
 //            Toast.makeText(FormSix.this, "Permission already granted", Toast.LENGTH_SHORT).show();
         }
     }
@@ -381,12 +378,12 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         hivFilter.add(new PatientFilterDataModel(2, "Non-Reactive"));
         hivFilter.add(new PatientFilterDataModel(3, "Positive"));
         hivFilter.add(new PatientFilterDataModel(4, "Negative"));
-        hivFilter.add(new PatientFilterDataModel(5,"Test Not Done"));
+        hivFilter.add(new PatientFilterDataModel(5, "Test Not Done"));
 
 
         diabetiesFilter.add(new PatientFilterDataModel(1, "Non-Diabetics"));
         diabetiesFilter.add(new PatientFilterDataModel(2, "Diabetics"));
-        diabetiesFilter.add(new PatientFilterDataModel(3,"Test Not Done"));
+        diabetiesFilter.add(new PatientFilterDataModel(3, "Test Not Done"));
 
         newFilterDropDown hivAdaptee = new newFilterDropDown(this, hivFilter);
         hivDropDown.setAdapter(hivAdaptee);
@@ -428,6 +425,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         }
         // https://nikshayppsa.hlfppt.org/_api-v1_/
         String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll&w=id<<EQUALTO>>" + getIntent().getStringExtra("pateintId");
+
         ApiClient.getClient().getPateintDetail(url).enqueue(new Callback<PatientResponse>() {
             @Override
             public void onResponse(Call<PatientResponse> call, Response<PatientResponse> response) {
@@ -454,30 +452,32 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                         Pincode.setText(model.getnPin());
                         SecondaryPhoneNumber.setText(model.getC_mob_2());
 
-                        Log.d("Patient notification",model.getNotf_img());
+                        Log.d("Patient notification", model.getNotf_img());
                         try {
-                            Glide.with(getBaseContext()).load(model.getNotf_img()).into(patientNotificationImg);
 
-                        }catch (Exception e){
+                            Glide.with(getBaseContext()).load(model.getNotf_img()).into(patientNotificationImg);
+                            apiNotificationImage = model.getNotf_img();
+                        } catch (Exception e) {
 
                         }
+                        Log.d("Patient notiBank", model.getBnk_img());
                         try {
                             Glide.with(getBaseContext()).load(model.getBnk_img()).into(patientBankImg);
-                        }catch (Exception e){
-
+                        } catch (Exception e) {
+                            apiBankImage = model.getBnk_img();
                         }
 
 
                         for (int i = 0; i < genderStrings.size(); i++) {
 
-                            Log.d("genderSelection", genderStrings.get(i).toString() + " " + model.getcTyp());
+                            Log.d("genderSelection", genderStrings.get(i) + " " + model.getcTyp());
 
 
                             if (genders.get(i).getC_val().equals(model.getcTyp())) {
                                 Gender.setSelection(i + 1);
                                 break;
                             } else {
-                                Log.d("genderSelection", genderStrings.get(i).toString() + " " + model.getcTyp().toLowerCase());
+                                Log.d("genderSelection", genderStrings.get(i) + " " + model.getcTyp().toLowerCase());
                             }
                         }
 
@@ -551,7 +551,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
                     verifyStoragePermissions(FormOne.this);
 
 
-                        takeImageFromCameraUri();
+                    takeImageFromCameraUri();
 
 
                 } else if (optionsMenu[i].equals("Choose from Gallery")) {
@@ -580,7 +580,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
         //   CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).start(FormSix.this);
     }
 
-    private void spinnerSelect(final String type[], List<FormOneData> formOneData, Spinner spinner) {
+    private void spinnerSelect(final String[] type, List<FormOneData> formOneData, Spinner spinner) {
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -628,9 +628,8 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 //                    }
 
 
-
                 } else {
-                    Toast.makeText(this,"Please fill all the form ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Please fill all the form ", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.backbtn: {
@@ -644,7 +643,6 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
     private void callCheckTheDuplicay() {
 
 
-
         if (!BaseUtils.isNetworkAvailable(this)) {
             Toast.makeText(this, "Please Check your internet  Connectivity", Toast.LENGTH_SHORT).show();
             //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
@@ -653,35 +651,34 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
         }
 
 
-        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>"+"'"+EnrolmentId.getText().toString()+"'";
+        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>" + "'" + EnrolmentId.getText().toString() + "'";
 
-       Log.d("checking_sho",url);
+        Log.d("checking_sho", url);
         ApiClient.getClient().getNotificationDuplicacy(url).enqueue(new Callback<PatientNotificationDuplicacyResponseModel>() {
             @Override
             public void onResponse(Call<PatientNotificationDuplicacyResponseModel> call, Response<PatientNotificationDuplicacyResponseModel> response) {
 
 
-                if(response.isSuccessful())
-                {
-                    checkDuplicacy=response.body().getStatus();
-                    Log.d("checking_ohs",response.body().getStatus().toString());
-                    Log.d("checking_ohs","kasjdhfaslkdjfh");
+                if (response.isSuccessful()) {
+                    checkDuplicacy = response.body().getStatus();
+                    Log.d("checking_ohs", response.body().getStatus().toString());
+                    Log.d("checking_ohs", "kasjdhfaslkdjfh");
 
-                    if(!response.body().getStatus())
-                    {
-                        sendForm();
+
+                    if (type == "sample") {
+                        if (!response.body().getStatus()) {
+                            sendForm();
 //                        Toast.makeText(FormOne.this, "false", Toast.LENGTH_SHORT).show();
-                    }else{
-                       Toast.makeText(FormOne.this, "Paltient Already Registered with the Programme", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(FormOne.this, "Paltient Already Registered with the Programme", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        sendForm();
+
                     }
 
 
                 }
-
-
-
-
-
 
 
             }
@@ -689,12 +686,10 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
             @Override
             public void onFailure(Call<PatientNotificationDuplicacyResponseModel> call, Throwable t) {
 
-                Log.d("checking__",t.toString());
+                Log.d("checking__", t.toString());
 
             }
         });
-
-
 
 
     }
@@ -814,14 +809,14 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 //                    Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
 //                    notificationImageUri = getImageUri(getApplicationContext(), selectedImage);
 //                    patientNotificationImg.setImageURI(notificationImageUri);
-                    notificationImageUri= CommonImageUri;
+                    notificationImageUri = CommonImageUri;
                     patientNotificationImg.setImageURI(notificationImageUri);
-            try {
-                startCrop(notificationImageUri);
-            }catch (Exception e){
-                Log.e("CROP_IMAGE", e.getMessage());
+                    try {
+                        startCrop(notificationImageUri);
+                    } catch (Exception e) {
+                        Log.e("CROP_IMAGE", e.getMessage());
 
-            }
+                    }
 //                    startCrop(notificationImageUri);
                     /*performCrop(frontselectedImageUri);*/
                     //  testReportFrontImg.setImageURI(frontselectedImageUri);
@@ -834,13 +829,13 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
                     //  testReportBackImg.setImageURI(backselectedImageUri);
 //                    Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
 //                    bankImageUri = getImageUri(getApplicationContext(), selectedImage);
-                    bankImageUri=CommonImageUri;
+                    bankImageUri = CommonImageUri;
                     patientBankImg.setImageURI(bankImageUri);
 
 
                     try {
                         startCrop(bankImageUri);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         Log.e("CROP_IMAGE", e.getMessage());
 
                     }
@@ -928,7 +923,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 
     }
 
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
@@ -1019,57 +1014,95 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 
 
         if (getIntent().hasExtra("pateintId")) {
+
+            //  previous code
             String url = "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll&w=id<<EQUALTO>>" + getIntent().getStringExtra("pateintId");
+
+
+            BaseUtils.setPatientName(this, PatientName.getText().toString());
+
             String noti = "";
             String bank = "";
 
             if (notificationImageUri != null) {
                 noti = new Imagee().getEncodedImage(notificationImageUri, FormOne.this);
+            } else {
+                noti = apiNotificationImage;
             }
             if (bankImageUri != null) {
                 bank = new Imagee().getEncodedImage(bankImageUri, FormOne.this);
+            } else {
+                bank = apiBankImage;
             }
-            RequestBody d_reg_dat = RequestBody.create("d_reg_dat", MediaType.parse("text/plain"));
-            RequestBody n_nksh_id = RequestBody.create("n_nksh_id", MediaType.parse("text/plain"));
-            RequestBody c_pat_nam = RequestBody.create("c_pat_nam", MediaType.parse("text/plain"));
-            RequestBody n_age = RequestBody.create("n_age", MediaType.parse("text/plain"));
-            RequestBody n_sex = RequestBody.create("n_sex", MediaType.parse("text/plain"));
-            RequestBody n_wght = RequestBody.create("n_wght", MediaType.parse("text/plain"));
-            RequestBody n_hght = RequestBody.create("n_hght", MediaType.parse("text/plain"));
-            RequestBody c_add = RequestBody.create("c_add", MediaType.parse("text/plain"));
-            RequestBody c_taluka = RequestBody.create("c_taluka", MediaType.parse("text/plain"));
-            RequestBody c_town = RequestBody.create("c_town", MediaType.parse("text/plain"));
-            RequestBody c_ward = RequestBody.create("c_ward", MediaType.parse("text/plain"));
-            RequestBody c_lnd_mrk = RequestBody.create("c_lnd_mrk", MediaType.parse("text/plain"));
-            RequestBody n_pin = RequestBody.create("n_pin", MediaType.parse("text/plain"));
-            RequestBody n_st_id_res = RequestBody.create("n_st_id_res", MediaType.parse("text/plain"));
-            RequestBody n_dis_id_res = RequestBody.create("n_dis_id_res", MediaType.parse("text/plain"));
-            RequestBody n_tu_id_res = RequestBody.create("n_tu_id_res", MediaType.parse("text/plain"));
-            RequestBody c_mob = RequestBody.create("c_mob", MediaType.parse("text/plain"));
-            RequestBody c_mob_2 = RequestBody.create("c_mob_2", MediaType.parse("text/plain"));
-            RequestBody c_not_img = RequestBody.create("c_not_img", MediaType.parse("text/plain"));
-            RequestBody c_bnk_img = RequestBody.create("c_bnk_img", MediaType.parse("text/plain"));
-            RequestBody d_diag_dt = RequestBody.create("d_diag_dt", MediaType.parse("text/plain"));
-            RequestBody n_cfrm = RequestBody.create("n_cfrm", MediaType.parse("text/plain"));
-            ApiClient.getClient().updateHospital(url, d_reg_dat, n_nksh_id,
-                    c_pat_nam, n_age,
-                    n_sex, n_wght,
-                    n_hght,
-                    c_add,
-                    c_taluka,
-                    c_town,
-                    c_ward, c_lnd_mrk,
-                    n_pin,
-                    n_st_id_res, n_dis_id_res,
-                    n_tu_id_res, c_mob,
-                    c_mob_2, c_not_img,
-                    c_bnk_img, d_diag_dt, n_cfrm).enqueue(new Callback<AddDocResponse>() {
+
+//            Log.d("checking",noti.toString()+bank.toString());
+
+
+            RequestBody n_st_id = RequestBody.create(BaseUtils.getUserOtherInfo(FormOne.this).getnStId(), MediaType.parse("text/plain"));
+            RequestBody n_dis_id = RequestBody.create(BaseUtils.getUserOtherInfo(FormOne.this).getnDisId(), MediaType.parse("text/plain"));
+            RequestBody n_tu_id = RequestBody.create(BaseUtils.getUserOtherInfo(FormOne.this).getnTuId(), MediaType.parse("text/plain"));
+            RequestBody n_hf_id = RequestBody.create(getIntent().getStringExtra("hf_id"), MediaType.parse("text/plain"));
+            RequestBody n_doc_id = RequestBody.create(getIntent().getStringExtra("doc_id"), MediaType.parse("text/plain"));
+            RequestBody d_reg_dat = RequestBody.create(EnrollmentDate.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody n_nksh_id = RequestBody.create(EnrolmentId.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody c_pat_nam = RequestBody.create(PatientName.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody n_age = RequestBody.create(Age.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody n_sex = RequestBody.create(genders.get(Gender.getSelectedItemPosition() - 1).getId(), MediaType.parse("text/plain"));
+            RequestBody n_wght = RequestBody.create(Weight.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody n_hght = RequestBody.create(Height.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody c_add = RequestBody.create(Address.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody c_taluka = RequestBody.create(Taluka.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody c_town = RequestBody.create(Town.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody c_ward = RequestBody.create(Ward.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody c_lnd_mrk = RequestBody.create(Landmark.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody n_pin = RequestBody.create(Pincode.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody n_st_id_res = RequestBody.create(st_id_res, MediaType.parse("text/plain"));
+            RequestBody n_dis_id_res = RequestBody.create(dis_id_res, MediaType.parse("text/plain"));
+            RequestBody n_tu_id_res = RequestBody.create(tuString.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody c_mob = RequestBody.create(PrimaryPhoneNumber.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody c_mob_2 = RequestBody.create(SecondaryPhoneNumber.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody n_lat = RequestBody.create(lat, MediaType.parse("text/plain"));
+            RequestBody n_lng = RequestBody.create(lng, MediaType.parse("text/plain"));
+            RequestBody c_not_img = RequestBody.create(noti, MediaType.parse("text/plain"));
+            RequestBody c_bnk_img = RequestBody.create(bank, MediaType.parse("text/plain"));
+            RequestBody n_sac_id = RequestBody.create(BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc(), MediaType.parse("text/plain"));
+            RequestBody n_user_id = RequestBody.create(BaseUtils.getUserInfo(FormOne.this).getId(), MediaType.parse("text/plain"));
+            RequestBody d_diag_dt = RequestBody.create(EnrollmentDate.getText().toString(), MediaType.parse("text/plain"));
+            RequestBody n_cfrm = RequestBody.create("0", MediaType.parse("text/plain"));
+            RequestBody n_hiv = RequestBody.create(hivFilterId, MediaType.parse("text/plain"));
+            RequestBody n_diab = RequestBody.create(diabeticsId, MediaType.parse("text/plain"));
+
+
+            ApiClient.getClient().postFormOneSampleEdit_new(
+                    url
+                    , n_st_id
+                    , n_dis_id
+                    , n_tu_id, n_hf_id
+                    , n_doc_id, d_reg_dat
+                    , n_nksh_id, c_pat_nam
+                    , n_age, n_sex
+                    , n_wght, n_hght
+                    , c_add, c_taluka
+                    , c_town, c_ward
+                    , c_lnd_mrk, n_pin
+                    , n_st_id_res, n_dis_id_res
+                    , n_tu_id_res, c_mob
+                    , c_mob_2, n_lat
+                    , n_lng,
+                    c_bnk_img,
+                    c_not_img,
+                    n_sac_id, n_user_id,d_diag_dt,n_cfrm,n_hiv,n_diab
+            ).enqueue(new Callback<AddDocResponse>() {
                 @Override
                 public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
                     if (response.isSuccessful()) {
                         //  parentDataTestReportResults = response.body().getUser_data();
-
-                        startActivity(new Intent(FormOne.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//                        Log.d("infalure", t.toString());
+                        Log.d("checkingSendData", response.body().getMessage());
+                        Log.d("checkingSendData", response.body().getUserData());
+                        Toast.makeText(FormOne.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        finish();
+//                        startActivity(new Intent(FormOne.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     }
 
                 }
@@ -1082,6 +1115,74 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 
                 }
             });
+
+
+            // new code when user has its on id
+
+//            Log.d("checkingSendForm","1036");
+//            RequestBody d_reg_dat = RequestBody.create("d_reg_dat", MediaType.parse("text/plain"));
+//            RequestBody n_nksh_id = RequestBody.create("n_nksh_id", MediaType.parse("text/plain"));
+//            RequestBody c_pat_nam = RequestBody.create("c_pat_nam", MediaType.parse("text/plain"));
+//            RequestBody n_age = RequestBody.create("n_age", MediaType.parse("text/plain"));
+//            RequestBody n_sex = RequestBody.create("n_sex", MediaType.parse("text/plain"));
+//            RequestBody n_wght = RequestBody.create("n_wght", MediaType.parse("text/plain"));
+//            RequestBody n_hght = RequestBody.create("n_hght", MediaType.parse("text/plain"));
+//            RequestBody c_add = RequestBody.create("c_add", MediaType.parse("text/plain"));
+//            RequestBody c_taluka = RequestBody.create("c_taluka", MediaType.parse("text/plain"));
+//            RequestBody c_town = RequestBody.create("c_town", MediaType.parse("text/plain"));
+//            RequestBody c_ward = RequestBody.create("c_ward", MediaType.parse("text/plain"));
+//            RequestBody c_lnd_mrk = RequestBody.create("c_lnd_mrk", MediaType.parse("text/plain"));
+//            RequestBody n_pin = RequestBody.create("n_pin", MediaType.parse("text/plain"));
+//            RequestBody n_st_id_res = RequestBody.create("n_st_id_res", MediaType.parse("text/plain"));
+//            RequestBody n_dis_id_res = RequestBody.create("n_dis_id_res", MediaType.parse("text/plain"));
+//            RequestBody n_tu_id_res = RequestBody.create("n_tu_id_res", MediaType.parse("text/plain"));
+//            RequestBody c_mob = RequestBody.create("c_mob", MediaType.parse("text/plain"));
+//            RequestBody c_mob_2 = RequestBody.create("c_mob_2", MediaType.parse("text/plain"));
+//            RequestBody c_not_img = RequestBody.create("c_not_img", MediaType.parse("text/plain"));
+//            RequestBody c_bnk_img = RequestBody.create("c_bnk_img", MediaType.parse("text/plain"));
+//            RequestBody d_diag_dt = RequestBody.create("d_diag_dt", MediaType.parse("text/plain"));
+//            RequestBody n_cfrm = RequestBody.create("n_cfrm", MediaType.parse("text/plain"));
+//
+//
+//            ApiClient.getClient().updateHospital(
+//                    url,
+//                    d_reg_dat,
+//                    n_nksh_id,
+//                    c_pat_nam,
+//                    n_age,
+//                    n_sex,
+//                    n_wght,
+//                    n_hght,
+//                    c_add,
+//                    c_taluka,
+//                    c_town,
+//                    c_ward, c_lnd_mrk,
+//                    n_pin,
+//                    n_st_id_res, n_dis_id_res,
+//                    n_tu_id_res, c_mob,
+//                    c_mob_2, c_not_img,
+//                    c_bnk_img, d_diag_dt, n_cfrm).enqueue(new Callback<AddDocResponse>() {
+//                @Override
+//                public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
+//                    if (response.isSuccessful()) {
+//                        //  parentDataTestReportResults = response.body().getUser_data();
+////                        Log.d("infalure", t.toString());
+//                        Log.d("checkingSendData",response.body().getMessage());
+//                        Log.d("checkingSendData",response.body().getUserData().toString());
+//                        Toast.makeText(FormOne.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+////                        startActivity(new Intent(FormOne.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//                    }
+//
+//                }
+//
+//                @Override
+//                public void onFailure(Call<AddDocResponse> call, Throwable t) {
+//                    // startActivity(new Intent(FormOne.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//
+//                    Log.d("infalure", t.toString());
+//
+//                }
+//            });
 
 
         } else {
@@ -1109,15 +1210,20 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 
         if (notificationImageUri != null) {
             noti = new Imagee().getEncodedImage(notificationImageUri, FormOne.this);
+        } else {
+            noti = apiNotificationImage;
         }
         if (bankImageUri != null) {
             bank = new Imagee().getEncodedImage(bankImageUri, FormOne.this);
+        } else {
+            bank = apiBankImage;
         }
 
         if (formProviderEngagement) {
             BaseUtils.setPatientName(this, PatientName.getText().toString());
             BaseUtils.setPhoneNo(this, PrimaryPhoneNumber.getText().toString());
 
+            Log.d("checkingSendForm", "1123");
 
             NetworkCalls.sendForm(
                     FormOne.this,
@@ -1156,6 +1262,8 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 
             );
         } else {
+
+            Log.d("checkingSendForm", "1163");
             BaseUtils.setPatientName(this, PatientName.getText().toString());
 
 
@@ -1257,11 +1365,10 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 
             if (requestCode == CAMERA_PERMISSION_CODE) {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(FormOne.this, "Camera Permission Granted", Toast.LENGTH_SHORT) .show();
-                    cameraPermession=true;
-                }
-                else {
-                    Toast.makeText(FormOne.this, "Camera Permission Denied", Toast.LENGTH_SHORT) .show();
+                    Toast.makeText(FormOne.this, "Camera Permission Granted", Toast.LENGTH_SHORT).show();
+                    cameraPermession = true;
+                } else {
+                    Toast.makeText(FormOne.this, "Camera Permission Denied", Toast.LENGTH_SHORT).show();
                 }
             }
 

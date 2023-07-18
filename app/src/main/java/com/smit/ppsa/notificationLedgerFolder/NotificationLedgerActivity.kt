@@ -128,9 +128,11 @@ class NotificationLedgerActivity : AppCompatActivity() {
 
             return
         }
-        //https://nikshayppsa.hlfppt.org/_api-v1_/_get_notinf.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_notfy&w=5&sanc=805&sdt='2023-01-01'&edt='2023-07-31'
+        //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_m_followup&w=prd<<GTEQ>>'2023-07-01'<<AND>>prd<<LTEQ>>'2023-07-31'<<AND>>n_user_id<<EQUALTO>>1380
         //https://nikshayppsa.hlfppt.org/_api-v1_/_get_notinf.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_notfy&w=5&sanc=805&sdt=2023-01-01&edt=2023-07-31
-        val url = "_get_notinf.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_notfy&w=5&sanc=805&sdt="+dateFromFinal+"&edt="+dateToFinal ;
+        Log.d("dataCheckPerson",BaseUtils.getUserInfo(this).getnAccessRights()+"<-rights  nStaff->  "+
+                BaseUtils.getUserInfo(this).getN_staff_sanc())
+        val url = "_get_notinf.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_notfy&w="+BaseUtils.getUserInfo(this).getnAccessRights().toString()+"&sanc="+BaseUtils.getUserInfo(this).getN_staff_sanc()+"&sdt="+dateFromFinal+"&edt="+dateToFinal ;
 
         Log.d("urlFinal", url)
         ApiClient.getClient().getNotificationLedger(url).enqueue(object :

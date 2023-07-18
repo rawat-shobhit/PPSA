@@ -92,11 +92,23 @@ import retrofit2.Response;
         init();
 
 
+        try {
+
+            enrollmentIdGlobal=getIntent().getStringExtra("enroll_id");
+            Log.d("checkingEnrollment",enrollmentIdGlobal);
+
+        }catch (Exception e){
+
+            Log.d("checkingEnrollment",e.toString());
+
+        }
+
+
+
 
     }
 
     private void init() {
-
         ReasonforTesting = findViewById(R.id.f2_reasonfortesting);
         noOfContainers = findViewById(R.id.f2_noofcont);
         Typeofspecimen = findViewById(R.id.f2_typeofspecimen);
@@ -111,18 +123,20 @@ import retrofit2.Response;
         patientname = findViewById(R.id.patientname);
         patientphone = findViewById(R.id.patientphone);
 
+
+
+
         try {
             if (getIntent().hasExtra("reg_date")) {
                 reg_date = getIntent().getStringExtra("reg_date");
-
+                Log.d("checkingData__",reg_date);
             } else {
                 reg_date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-
-
             }
+
+            Log.d("checkingData",reg_date);
         } catch (Exception e) {
-
-
+            Log.d("checkingData",e.toString());
         }
 
         if (BaseUtils.getPatientsNams(this).equals("")) {
@@ -698,9 +712,20 @@ import retrofit2.Response;
      protected void onResume() {
          super.onResume();
 
-         Log.d("enrollIdCheck",getIntent().getStringExtra("enroll_id"));
-         enrollmentIdGlobal=getIntent().getStringExtra("enroll_id");
-         Toast.makeText(this,enrollmentIdGlobal , Toast.LENGTH_SHORT).show();
+         try {
+
+             enrollmentIdGlobal=getIntent().getStringExtra("enroll_id").toString();
+
+//             Toast.makeText(this, enrollmentIdGlobal, Toast.LENGTH_SHORT).show();
+
+             Log.d("checking resume",enrollmentIdGlobal);
+         }catch (Exception e)
+         {
+             Log.d("crash",e.toString());
+
+         }
+
+
 
     }
  }

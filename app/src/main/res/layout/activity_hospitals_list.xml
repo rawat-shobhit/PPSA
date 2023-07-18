@@ -50,7 +50,8 @@
                     android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/ic_addbtn"
-                    app:tint="@color/white" />
+                    app:tint="@color/white"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

@@ -1350,6 +1350,9 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             String noti = "";
             String bank = "";
 
+            Log.d("checking",getIntent().getStringExtra("pateintId"));
+            Log.d("finalUrl",url);
+
             if (notificationImageUri != null) {
                 noti = new Imagee().getEncodedImage(notificationImageUri, newNotificationScreen.this);
             }
@@ -1396,7 +1399,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     if (response.isSuccessful()) {
                         //  parentDataTestReportResults = response.body().getUser_data();
                         Log.d("responseSuccessfull","done here is code ");
-                        startActivity(new Intent(newNotificationScreen.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//                        startActivity(new Intent(newNotificationScreen.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     }
 
                 }
@@ -1479,7 +1482,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
             );
         }else{
-            NetworkCalls.sendForm(
+            NetworkCalls.sendFormNewNotification(
                     newNotificationScreen.this,
                     BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnStId(),
                     BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnDisId(),

@@ -436,6 +436,8 @@ public class ApiClient {
                                          @Part("d_diag_dt") RequestBody d_diag_dt,
                                          @Part("n_cfrm") RequestBody n_cfrm);
 
+
+
         @Multipart
         @POST("_enroll_INagent.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_enroll")
         Call<AddDocResponse> postFormOneSample(@Part("n_st_id") RequestBody n_st_id,
@@ -651,6 +653,45 @@ public class ApiClient {
 
         @GET()
         Call<HospitalResponse> getHospitalDetail(@Url String url);
+
+        @Multipart
+        @POST()
+        Call<AddDocResponse> postFormOneSampleEdit_new(
+                @Url String url,
+                @Part("n_st_id") RequestBody n_st_id,
+                                         @Part("n_dis_id") RequestBody n_dis_id,
+                                         @Part("n_tu_id") RequestBody n_tu_id,
+                                         @Part("n_hf_id") RequestBody n_hf_id,
+                                         @Part("n_doc_id") RequestBody n_doc_id,
+                                         @Part("d_reg_dat") RequestBody d_reg_dat,
+                                         @Part("n_nksh_id") RequestBody n_nksh_id,
+                                         @Part("c_pat_nam") RequestBody c_pat_nam,
+                                         @Part("n_age") RequestBody n_age,
+                                         @Part("n_sex") RequestBody n_sex,
+                                         @Part("n_wght") RequestBody n_wght,
+                                         @Part("n_hght") RequestBody n_hght,
+                                         @Part("c_add") RequestBody c_add,
+                                         @Part("c_taluka") RequestBody c_taluka,
+                                         @Part("c_town") RequestBody c_town,
+                                         @Part("c_ward") RequestBody c_ward,
+                                         @Part("c_lnd_mrk") RequestBody c_lnd_mrk,
+                                         @Part("n_pin") RequestBody n_pin,
+                                         @Part("n_st_id_res") RequestBody n_st_id_res,
+                                         @Part("n_dis_id_res") RequestBody n_dis_id_res,
+                                         @Part("n_tu_id_res") RequestBody n_tu_id_res,
+                                         @Part("c_mob") RequestBody c_mob,
+                                         @Part("c_mob_2") RequestBody c_mob_2,
+                                         @Part("n_lat") RequestBody n_lat,
+                                         @Part("n_lng") RequestBody n_lng,
+                                         @Part("c_bnk_img") RequestBody c_bnk_img,
+                                         @Part("c_not_img") RequestBody c_not_img,
+                                         @Part("n_sac_id") RequestBody n_sac_id,
+                                         @Part("n_user_id") RequestBody n_user_id,
+                                         @Part("d_diag_dt") RequestBody d_diag_dt,
+                                         @Part("n_cfrm") RequestBody n_cfrm,
+                                         @Part("n_hiv" )RequestBody n_hiv,
+                                         @Part("n_diab") RequestBody n_diab);
+
 
         @Multipart
         @POST()

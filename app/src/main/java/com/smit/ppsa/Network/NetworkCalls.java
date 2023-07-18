@@ -481,6 +481,8 @@ public class NetworkCalls {
                         if (navigate) {
 
 //                            sample collection jaha pr dikhte he vaha pr ana he
+                            Log.d("checking",n_enroll_idd);
+
                             context.startActivity(new Intent(context, SampleList.class)
                                     .putExtra("hf_id", n_hf_idd)
                                     .putExtra("patient_name", patientName)
@@ -617,7 +619,8 @@ public class NetworkCalls {
             //  dataBase.customerDao().insertAddSample(roomAddSample);
             if (navigate) {
                 BaseUtils.showToast(context, "Data will be submitted when back online");
-                context.startActivity(new Intent(context, MainActivity.class));
+                context.startActivity(new Intent(context, MainActivity.class)
+                        .putExtra("enroll_id",n_enroll_idd));
                 //  ((Activity) context).finish();
             }
             return;
@@ -656,7 +659,8 @@ public class NetworkCalls {
                     if (response.body().isStatus()) {
                         BaseUtils.showToast(context, "Sample submitted3");
                         if (navigate) {
-                            context.startActivity(new Intent(context, MainActivity.class));
+                            context.startActivity(new Intent(context, MainActivity.class)
+                                    .putExtra("enroll_id",n_enroll_idd));
                         }
                     }
                 } else {
@@ -2036,7 +2040,8 @@ public class NetworkCalls {
 
 
                                 dataBase.customerDao().deletePatient(formOneModel);
-                                BaseUtils.showToast(context, "Form one submitted ");
+                                String enrollId=response.body().getUserData().toString();
+                                BaseUtils.showToast(context, "Form one submitted _ ");
                                 BaseUtils.putSubmitFormOne(context, "true");
                                 // startActivity(new Intent(FormOne.this, FormTwo.class));
                                 if (navigate) {
@@ -2058,8 +2063,10 @@ public class NetworkCalls {
 //                                                .putExtra("hf_id", n_hf_idd)
 //                                        );
                                         Log.d("shobhit_0","here");
+
                                         ((Activity) context).startActivity(new Intent(context, PatientSampleList.class)
-                                                .putExtra("hf_id",n_hf_idd).putExtra("doc_id",n_doc_idd).putExtra("enroll_Id",response.body().getUserData().toString()));
+                                                        .putExtra("patient_name",c_pat_namm)
+                                                .putExtra("hf_id",n_hf_idd.toString()).putExtra("doc_id",n_doc_idd.toString()).putExtra("enroll_id",enrollId.toString()));
 
                                     }
                                 }
@@ -2102,7 +2109,7 @@ public class NetworkCalls {
                                 Log.d("shobhit_1",response.body().getUserData().toString());
                                 Log.d("shobhit_1",response.body().getMessage());
                                 dataBase.customerDao().deletePatient(formOneModel);
-                                BaseUtils.showToast(context, "Form one submitted ");
+                                BaseUtils.showToast(context, "Form one submitted__ ");
                                 BaseUtils.putSubmitFormOne(context, "true");
                                 // startActivity(new Intent(FormOne.this, FormTwo.class));
                                 if (navigate) {
@@ -2173,7 +2180,7 @@ public class NetworkCalls {
                             Log.d("shobhit2",c_pat_namm);
 
                             dataBase.customerDao().deletePatient(formOneModel);
-                            BaseUtils.showToast(context, "Form one submitted ");
+                            BaseUtils.showToast(context, "Form one submitted");
                             BaseUtils.putSubmitFormOne(context, "true");
                             // startActivity(new Intent(FormOne.this, FormTwo.class));
                             if (navigate) {
@@ -2183,8 +2190,18 @@ public class NetworkCalls {
                                     if (BaseUtils.getSection(context).equals("addpat")) {
                                         BaseUtils.putSection(context, BaseUtils.getPrevSection(context));
                                     }
+
+                                    Log.d("checkingEnrollId",response.body().getUserData().toString());
+                                    Log.d("checkingEnrollId",response.body().getMessage().toString());
+                                    String enrollId=response.body().getUserData().toString();
+//                                    Toast.makeText(context, response.body().getUserData(), Toast.LENGTH_SHORT).show();
                                     ((Activity) context).startActivity(new Intent(context, PatientSampleList.class)
-                                            .putExtra("hf_id",n_hf_id.toString()));
+                                            .putExtra("hf_id",n_hf_id.toString())
+                                                    .putExtra("patient_name",c_pat_namm)
+                                            .putExtra("doc_id",n_doc_idd.toString()).putExtra("enroll_id",enrollId.toString()));
+
+                                    Toast.makeText(context, enrollId, Toast.LENGTH_SHORT).show();
+
                                 }
                             }
 

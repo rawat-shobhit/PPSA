@@ -113,17 +113,7 @@
             android:textStyle="bold"/>
 
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Sample Type"
-            android:gravity="center"
-            android:textSize="@dimen/_10ssp"
-            android:padding="@dimen/_5sdp"
-            android:fontFamily="@font/poppins_regular"
-            android:textColor="@color/white"
-            android:textStyle="bold"/>
+
 
 
         <TextView
@@ -142,6 +132,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="Collection Date"
+            android:gravity="center"
+            android:textSize="@dimen/_10ssp"
+            android:padding="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
             android:text="Report\nStatus"
             android:gravity="center"
             android:textSize="@dimen/_10ssp"
