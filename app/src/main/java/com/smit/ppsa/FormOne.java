@@ -769,7 +769,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
                     }*/
                     notificationImageUri = data.getData();
                     patientNotificationImg.setImageURI(notificationImageUri);
-                    startCrop(notificationImageUri);
+//                    startCrop(notificationImageUri);
                     /*performCrop(frontselectedImageUri);*/
                     //  testReportFrontImg.setImageURI(frontselectedImageUri);
                 } else {
@@ -781,7 +781,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
                     //  testReportBackImg.setImageURI(backselectedImageUri);
                     bankImageUri = data.getData();
                     patientBankImg.setImageURI(bankImageUri);
-                    startCrop(bankImageUri);
+//                    startCrop(bankImageUri);
                     //testReportBackImg.setImageURI(backselectedImageUri);
                 }
 
@@ -812,7 +812,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
                     notificationImageUri = CommonImageUri;
                     patientNotificationImg.setImageURI(notificationImageUri);
                     try {
-                        startCrop(notificationImageUri);
+//                        startCrop(notificationImageUri);
                     } catch (Exception e) {
                         Log.e("CROP_IMAGE", e.getMessage());
 
@@ -834,7 +834,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 
 
                     try {
-                        startCrop(bankImageUri);
+//                        startCrop(bankImageUri);
                     } catch (Exception e) {
                         Log.e("CROP_IMAGE", e.getMessage());
 

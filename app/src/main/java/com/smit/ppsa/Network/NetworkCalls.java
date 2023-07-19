@@ -2345,6 +2345,7 @@ public class NetworkCalls {
         ApiClient apiClient = null;
         if (bank_image.equals("")) {
 
+            Log.d("shobhit","banck image black");
             if (!fromEngagement) {
                 ApiClient.getClient().postFormOneSample(n_st_id, n_dis_id
                         , n_tu_id, n_hf_id
@@ -2375,7 +2376,7 @@ public class NetworkCalls {
 
 
                                 dataBase.customerDao().deletePatient(formOneModel);
-                                BaseUtils.showToast(context, "Form submitted ");
+                                BaseUtils.showToast(context, "Form submitted two");
                                 BaseUtils.putSubmitFormOne(context, "true");
                                 // startActivity(new Intent(FormOne.this, FormTwo.class));
                                 if (navigate) {
@@ -2419,6 +2420,7 @@ public class NetworkCalls {
                     }
                 });
             } else {
+                Log.d("shobhit","banck image black else");
                 ApiClient.getClient().postFormOne(n_st_id, n_dis_id
                         , n_tu_id, n_hf_id
                         , n_doc_id, d_reg_dat
@@ -2435,13 +2437,13 @@ public class NetworkCalls {
                     @Override
                     public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
                         if (response.isSuccessful()) {
-
+                            Log.d("shobhit_1",response.body().toString());
+                            Log.d("shobhit_1",response.body().getUserData().toString());
+                            Log.d("shobhit_1",response.body().getMessage());
                             if (response.body().isStatus()) {
-                                Log.d("shobhit_1",response.body().toString());
-                                Log.d("shobhit_1",response.body().getUserData().toString());
-                                Log.d("shobhit_1",response.body().getMessage());
+
                                 dataBase.customerDao().deletePatient(formOneModel);
-                                BaseUtils.showToast(context, "Form submitted ");
+                                BaseUtils.showToast(context, "Form submitted 1");
                                 BaseUtils.putSubmitFormOne(context, "true");
                                 // startActivity(new Intent(FormOne.this, FormTwo.class));
                                 if (navigate) {
@@ -2482,6 +2484,7 @@ public class NetworkCalls {
             }
 
         } else {
+            // new notification form submitted
             ApiClient.getClient().postFormOne(n_st_id, n_dis_id
                     , n_tu_id, n_hf_id
                     , n_doc_id, d_reg_dat
@@ -2498,11 +2501,11 @@ public class NetworkCalls {
                 @Override
                 public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
                     if (response.isSuccessful()) {
-
+                        Log.d("shobhit_2",response.body().toString());
+                        Log.d("shobhit_2",response.body().getUserData().toString());
+                        Log.d("shobhit_2",response.body().getMessage());
                         if (response.body().isStatus()) {
-                            Log.d("shobhit_2",response.body().toString());
-                            Log.d("shobhit_2",response.body().getUserData().toString());
-                            Log.d("shobhit_2",response.body().getMessage());
+
 
 
                             BaseUtils.setPatientName(context,c_pat_namm);
@@ -2512,7 +2515,7 @@ public class NetworkCalls {
                             Log.d("shobhit2",c_pat_namm);
 
                             dataBase.customerDao().deletePatient(formOneModel);
-                            BaseUtils.showToast(context, "Form  submitted ");
+                            BaseUtils.showToast(context, "Form  submitted _new ");
                             BaseUtils.putSubmitFormOne(context, "true");
                             // startActivity(new Intent(FormOne.this, FormTwo.class));
                             if (navigate) {

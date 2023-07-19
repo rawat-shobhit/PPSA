@@ -312,10 +312,8 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
         }*/
 
-        if(BaseUtils.getUserInfo(this).getN_staff_sanc().equals("5"))
-        {
-            addbtn.setVisibility (View.VISIBLE);
-        }
+
+
 
         if (BaseUtils.getAddHosptitalForm(this).equals("false")) {
             Log.d("koiuou", "onCreate: " + "k,ojmklmlm");
@@ -638,6 +636,19 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
         if (getIntent().hasExtra("sample")) {
             visiit.setVisibility(View.GONE);
         }
+
+
+        try {
+            if(BaseUtils.getUserInfo(this).getN_staff_sanc().toString().equals("5"))
+            {
+                addbtn.setVisibility (View.VISIBLE);
+            }
+        }catch (Exception e){
+            Log.d("crash_data",e.toString());
+        }
+
+
+
         //nextbtn.setEnabled(false);
 
         /*hospitalNameTt = findViewById(R.id.hospitalNameTitle);

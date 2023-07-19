@@ -450,6 +450,8 @@ class UploadDoc : AppCompatActivity() {
                         notification_img = Imagee().getEncodedImage(notificationUri!!, this)
                         notification.setImageURI(notificationUri)
                         startCrop(notificationUri!!)
+
+
                     }
                 }
 
@@ -977,8 +979,8 @@ class UploadDoc : AppCompatActivity() {
 
             return
         }
-
-        //https://nikshayppsa.hlfppt.org/_api-v1_/_srch_docs.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>n_tu_id<<EQUALTO>>26<<OR>>n_tu_id<<EQUALTO>>28<<EBRK>>&typ=1
+        //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_pat_docs&w=n_tu_id<<EQUALTO>>26<<AND>>n_enroll_id<<EQUALTO>>46735
+        //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_pat_docs&w=n_tu_id<<EQUALTO>>26<<AND>>n_enroll_id<<EQUALTO>>46624
         val url =
             "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_pat_docs&w=n_tu_id<<EQUALTO>>" + patient.getnTuId() + "<<AND>>n_enroll_id<<EQUALTO>>" + patient.getId()
         Log.d("Pateint LIst URL ", url)
@@ -991,15 +993,25 @@ class UploadDoc : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     if (response.body()!!.status) {
+
                         try {
 
                             if (response.body()!!.userData[0].getC_aadh_img().contains(".png")) {
                                 adharDownload.visibility = View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_aadh_img(), adhaar)
+
+
+
                                 adharDownload.setOnClickListener() {
                                     download((response.body()!!.userData[0].getC_aadh_img()))
                                 }
                             }
+
+                        }catch (e:Exception){
+                            Log.d("crash_image",e.toString())
+                        }
+
+                        try {
 
                             if (response.body()!!.userData[0].c_presc_img.contains(".png")) {
                                 presDownload.visibility = View.VISIBLE
@@ -1012,6 +1024,14 @@ class UploadDoc : AppCompatActivity() {
                                 }
                             }
 
+                        }catch (e:Exception){
+                            Log.d("crash_image",e.toString())
+                        }
+
+
+
+                        try {
+
                             if (response.body()!!.userData[0].c_add_presc_img.contains(".png")) {
                                 prescriptionDownload.visibility = View.VISIBLE
                                 setImage(
@@ -1022,6 +1042,14 @@ class UploadDoc : AppCompatActivity() {
                                     download((response.body()!!.userData[0].c_add_presc_img))
                                 }
                             }
+
+                        }catch (e:Exception){
+                            Log.d("crash_image",e.toString())
+                        }
+
+
+
+                        try {
 
                             if (response.body()!!.userData[0].c_con_frm_img.contains(".png")) {
                                 consentDownload.visibility = View.VISIBLE
@@ -1034,6 +1062,13 @@ class UploadDoc : AppCompatActivity() {
                                 }
                             }
 
+                        }catch (e:Exception){
+                            Log.d("crash_image",e.toString())
+                        }
+
+
+
+                        try {
                             if (response.body()!!.userData[0].c_not_img.contains(".png")) {
                                 notificationDownload.visibility = View.VISIBLE
                                 setImage(
@@ -1043,27 +1078,74 @@ class UploadDoc : AppCompatActivity() {
                                 notificationDownload.setOnClickListener() {
                                     download((response.body()!!.userData[0].c_not_img))
                                 }
+
+                            }
+                        }catch (e:Exception){
+                            Log.d("crash_image",e.toString())
+                        }
+
+
+
+                            try {
+                                Log.d("ImageNoti",response.body()!!.userData[0].notf_img);
+                            }catch (e:Exception){
+                                Log.d("ImageNoti",e.toString());
                             }
 
+
+                            try {
+                                Log.d("ImageBank",response.body()!!.userData[0].bnk_img);
+                            }catch (e:Exception){
+                                Log.d("ImageBank",e.toString());
+                            }
+
+
+                        try {
                             if (response.body()!!.userData[0].getC_bnk_img().contains(".png")) {
                                 bankDownload.visibility = View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_bnk_img(), bank_detail)
+
+
+
+
                                 bankDownload.setOnClickListener() {
                                     download((response.body()!!.userData[0].getC_bnk_img()))
                                 }
                             }
 
+                        }catch (e:Exception){
+                            Log.d("crash_image",e.toString())
+                        }
+
+
+
+                        try {
+
+                        }catch (e:Exception){
+                            Log.d("crash_image",e.toString())
+                        }
+
+                        try {
                             if (response.body()!!.userData[0].getC_tst_rpt_img().contains(".png")) {
                                 testDonload.visibility = View.VISIBLE
                                 setImage(
                                     response.body()!!.userData[0].getC_tst_rpt_img(),
                                     test_report
                                 )
+
+
                                 testDonload.setOnClickListener() {
                                     download((response.body()!!.userData[0].getC_tst_rpt_img()))
                                 }
                             }
 
+                        }catch (e:Exception){
+                            Log.d("crash_image",e.toString())
+                        }
+
+
+
+                        try {
                             if (response.body()!!.userData[0].getC_hiv_img().contains(".png")) {
                                 hivDownload.visibility = View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_hiv_img(), hiv_report)
@@ -1072,6 +1154,13 @@ class UploadDoc : AppCompatActivity() {
                                 }
                             }
 
+                        }catch (e:Exception){
+                            Log.d("crash_image",e.toString())
+                        }
+
+
+
+                        try {
                             if (response.body()!!.userData[0].getC_udst_img().contains(".png")) {
                                 udstDownload.visibility = View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_udst_img(), udst_report)
@@ -1079,6 +1168,13 @@ class UploadDoc : AppCompatActivity() {
                                     download((response.body()!!.userData[0].getC_udst_img()))
                                 }
                             }
+
+                        }catch (e:Exception){
+                            Log.d("crash_image",e.toString())
+                        }
+
+
+                        try {
 
                             if (response.body()!!.userData[0].getC_diab_img().contains(".png")) {
                                 diabDownload.visibility = View.VISIBLE
@@ -1091,12 +1187,19 @@ class UploadDoc : AppCompatActivity() {
                                 }
                             }
 
-                            isUploaded = true
-
-                        } catch (e: Exception) {
-                            Log.d("crash_image",e.message!!.toString())
-//                            Toast.makeText(this@UploadDoc, e.message!!, Toast.LENGTH_SHORT).show()
+                        }catch (e:Exception){
+                            Log.d("crash_image",e.toString())
                         }
+
+
+                        try {
+                            isUploaded = true
+                        }catch (e:Exception){
+                            Log.d("isUpload",e.toString())
+                        }
+
+
+
 
                         //  adhaar_img = encodeImage(adhaar.drawable as BitmapDrawable)
 

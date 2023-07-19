@@ -74,6 +74,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -953,7 +955,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     }*/
                     notificationImageUri = data.getData();
                     patientNotificationImg.setImageURI(notificationImageUri);
-                    startCrop(notificationImageUri);
+                 //   startCrop(notificationImageUri);
                     /*performCrop(frontselectedImageUri);*/
                     //  testReportFrontImg.setImageURI(frontselectedImageUri);
                 } else {
@@ -965,7 +967,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     //  testReportBackImg.setImageURI(backselectedImageUri);
                     bankImageUri = data.getData();
                     patientBankImg.setImageURI(bankImageUri);
-                    startCrop(bankImageUri);
+               //     startCrop(bankImageUri);
                     //testReportBackImg.setImageURI(backselectedImageUri);
                 }
 
@@ -1004,10 +1006,11 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 //
 //                    }
 
+
                     notificationImageUri= CommonImageUri;
                     patientNotificationImg.setImageURI(notificationImageUri);
                     try {
-                        startCrop(notificationImageUri);
+//                        startCrop(notificationImageUri);
                     }catch (Exception e){
                         Log.e("CROP_IMAGE", e.getMessage());
 
@@ -1032,7 +1035,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
 
                     try {
-                        startCrop(bankImageUri);
+//                        startCrop(bankImageUri);
                     }catch (Exception e){
                         Log.e("CROP_IMAGE", e.getMessage());
 
@@ -1091,7 +1094,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         String destinationFileName = "";
         destinationFileName += ".jpg";
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(getCacheDir(), destinationFileName)));
-        //uCrop.withAspectRatio(1, 1);
+//        uCrop.withAspectRatio(1, 1);
 //        uCrop.withAspectRatio(3, 4);
 //        uCrop.withAspectRatio();
         uCrop.withAspectRatio(1, 2);
@@ -1437,6 +1440,10 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         String noti = "";
         String bank = "";
 
+
+        Log.d("imageUriNotification",notificationImageUri.toString());
+        Log.d("imageUriBank",bankImageUri.toString());
+
         if (notificationImageUri != null) {
             noti = new Imagee().getEncodedImage(notificationImageUri, newNotificationScreen.this);
         }
@@ -1445,6 +1452,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         }
 
         if(formProviderEngagement){
+            Log.d("checkSendFomr","from provider engagement");
             NetworkCalls.sendFormNewNotification(
                     newNotificationScreen.this,
                     BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnStId(),
@@ -1482,6 +1490,8 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
             );
         }else{
+
+            Log.d("checkSendFomr","aagaya");
             NetworkCalls.sendFormNewNotification(
                     newNotificationScreen.this,
                     BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnStId(),
