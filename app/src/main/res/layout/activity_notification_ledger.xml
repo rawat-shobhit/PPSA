@@ -188,7 +188,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:text="Total number of Column :- 0"
+                android:text="Total number of Row :- 0"
                 android:textSize="@dimen/_12ssp"
                 android:padding="@dimen/_5sdp"
                 android:textColor="@color/black"

@@ -146,12 +146,12 @@ class NotificationLedgerActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     if (response.body()!!.status == true){
                         list = response.body()!!.userData
-                        totalColumn.setText("Total number of Column :- ${list.size.toString()}")
+                        totalColumn.setText("Total number of Row :- ${list.size.toString()}")
                         setRecycler()
                     }else{
                         list.clear()
                         setRecycler()
-                        totalColumn.setText("Total number of Column :- 0")
+                        totalColumn.setText("Total number of Row :- 0")
                         BaseUtils.showToast(this@NotificationLedgerActivity, "No Data found")
                     }
                 }

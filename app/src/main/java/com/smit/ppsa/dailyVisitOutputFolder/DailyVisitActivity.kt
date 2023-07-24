@@ -164,8 +164,8 @@ class DailyVisitActivity : AppCompatActivity() {
 
             return
         }
-        //http://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_m_dailyvisit&w=mnth<<EQUALTO>>6<<AND>>yr<<EQUALTO>>2023<<AND>>n_user_id<<EQUALTO>>210
-        val url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_m_dailyvisit&w=mnth<<EQUALTO>>"+month.trim()+"<<AND>>yr<<EQUALTO>>"+year.trim()+"<<AND>>n_user_id<<EQUALTO>>"+    BaseUtils.getUserInfo(this).getId().toString();
+        //http://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_m_dailyvisit&w=mnth<<EQUALTO>>6<<AND>>yr<<EQUALTO>>2023<<AND>>n_user_id<<EQUALTO>>1369
+        val url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_m_dailyvisit&w=mnth<<EQUALTO>>"+month.trim()+"<<AND>>yr<<EQUALTO>>"+year.trim()+"<<AND>>n_user_id<<EQUALTO>>"+    BaseUtils.getUserInfo(this).getId().toString()+"<<OBY>>prd";
 
         Log.d("urlFinal", url)
         ApiClient.getClient().getDailyVisit(url).enqueue(object :
@@ -180,7 +180,7 @@ class DailyVisitActivity : AppCompatActivity() {
                     if (response.body()!!.status == true){
                         list = response.body()!!.userData
                         setRecycler()
-                        totalColumn.setText("Total number of Column :- ${list.size.toString()}")
+                        totalColumn.setText("Total number of Row :- ${list.size.toString()}")
                         Log.d("totalData",list.size.toString());
                     }else{
                         list.clear()
@@ -194,7 +194,7 @@ class DailyVisitActivity : AppCompatActivity() {
                         tvBeTot.setText("0");
 
 
-                        totalColumn.setText("Total number of Column :- 0")
+                        totalColumn.setText("Total number of Row :- 0")
                         BaseUtils.showToast(this@DailyVisitActivity, "No Data found")
                     }
                 }
@@ -210,6 +210,12 @@ class DailyVisitActivity : AppCompatActivity() {
 
     private fun setRecycler() {
 
+        dvCount=0;
+        pfCount=0;
+        scCount=0;
+        ncCount=0;
+        neCount=0;
+        beCount=0;
         Log.d("testing", "setHospitalRecycler: " + list.size)
 
         dailyVisitAdapter =
@@ -217,17 +223,15 @@ class DailyVisitActivity : AppCompatActivity() {
 
         for(i in 0 until list.size)
         {
-
             dvCount +=list[i].dv!!.toInt()
             pfCount += list[i].pf!!.toInt()
             scCount += list[i].sc!!.toInt()
             ncCount += list[i].nc!!.toInt()
             neCount += list[i].ne!!.toInt()
             beCount += list[i].be!!.toInt()
-
         }
 
-        tvBeTot.setText(dvCount.toString());
+        tvDcTot.setText(dvCount.toString());
         tvPfTot.setText(pfCount.toString())
         tvScTot.setText(scCount.toString());
         tvNcTot.setText(ncCount.toString());

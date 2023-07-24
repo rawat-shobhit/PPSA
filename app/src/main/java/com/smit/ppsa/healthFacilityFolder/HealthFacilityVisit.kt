@@ -165,7 +165,7 @@ class HealthFacilityVisit : AppCompatActivity() {
                     if (response.body()!!.status == true){
                         list = response.body()!!.userData
                         setRecycler()
-                        totalCount.setText("Total number of Column :- ${list.size.toString()}")
+                        totalCount.setText("Total number of Row :- ${list.size.toString()}")
                     }else{
                         list.clear()
                         setRecycler()
@@ -173,7 +173,7 @@ class HealthFacilityVisit : AppCompatActivity() {
                         tvNcTot.setText("0");
                         tvScTot.setText("0");
                         tvFdcTot.setText("0");
-                        totalCount.setText("Total number of Column :- 0 ")
+                        totalCount.setText("Total number of Row :- 0 ")
                         BaseUtils.showToast(this@HealthFacilityVisit, "No Data found")
                     }
                 }
@@ -188,6 +188,11 @@ class HealthFacilityVisit : AppCompatActivity() {
 
 
     private fun setRecycler() {
+
+        visitCount=0;
+        ncCount=0;
+        scCount=0;
+        fdcCont=0;
 
         Log.d("testing", "setHospitalRecycler: " + list.size)
 
