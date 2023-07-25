@@ -2011,6 +2011,7 @@ public class NetworkCalls {
         if (bank_image.equals("")) {
 
             if (!fromEngagement) {
+                Log.d("checkingResponse","2014");
                 ApiClient.getClient().postFormOneSample(n_st_id, n_dis_id
                         , n_tu_id, n_hf_id
                         , n_doc_id, d_reg_dat
@@ -2347,6 +2348,7 @@ public class NetworkCalls {
 
             Log.d("shobhit","banck image black");
             if (!fromEngagement) {
+                Log.d("checkingResponse","22351");
                 ApiClient.getClient().postFormOneSample(n_st_id, n_dis_id
                         , n_tu_id, n_hf_id
                         , n_doc_id, d_reg_dat

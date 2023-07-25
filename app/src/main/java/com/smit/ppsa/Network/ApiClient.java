@@ -469,7 +469,8 @@ public class ApiClient {
                                                @Part("n_sac_id") RequestBody n_sac_id,
                                                @Part("n_user_id") RequestBody n_user_id,
                                                @Part("n_hiv") RequestBody n_hiv,
-                                               @Part("n_diab") RequestBody n_diab);
+                                               @Part("n_diab") RequestBody n_diab
+                                              /*  @Part("d_diag_dt") RequestBody d_diag_dt */);
 
         //d_reg_dat	date
 //n_nksh_id	varchar(20)

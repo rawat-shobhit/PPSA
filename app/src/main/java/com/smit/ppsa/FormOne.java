@@ -1449,8 +1449,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
             }
         };
 
-        if(!Objects.equals(type, "normal"))
-        {
+
             EnrollmentDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1466,7 +1465,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
                     m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
                 }
             });
-        }
+
 
     }
 
