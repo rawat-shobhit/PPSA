@@ -93,6 +93,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     List<String> tuStrings = new ArrayList<>();
     private List<FormOneData> tu = new ArrayList<>();
     String lat = "0", lng = "0";
+    String nCfrm="0";
     private AppDataBase dataBase;
     private String[] st_id;
     private String st_id_res = "";
@@ -235,6 +236,18 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
             layoutSpinners.setVisibility(View.VISIBLE);
             dataOf.setVisibility(View.VISIBLE);
             EnrollmentDate.setVisibility(View.VISIBLE);
+
+            EnrollmentDate.setOnClickListener(null);
+
+            nCfrm="1";
+            Calendar calendar = Calendar.getInstance();
+            Date currentDate = calendar.getTime();
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            String formattedDate = sdf.format(currentDate);
+
+            EnrollmentDate.setText(formattedDate);
+
             dataOf.setText("Date of Diagnosis*");
             Log.d("typeCheckElse", type);
         }
@@ -727,6 +740,15 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
             BaseUtils.showToast(this, "Enter primary phone number");
             return false;
         }
+
+        if(Objects.equals(type, "normal"))
+        {
+            if(notificationImageUri == null)
+            {
+                BaseUtils.showToast(this,"Please Upload notification image");
+                return false;
+            }
+        }
         return true;
     }
 
@@ -1068,7 +1090,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
             RequestBody n_sac_id = RequestBody.create(BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc(), MediaType.parse("text/plain"));
             RequestBody n_user_id = RequestBody.create(BaseUtils.getUserInfo(FormOne.this).getId(), MediaType.parse("text/plain"));
             RequestBody d_diag_dt = RequestBody.create(EnrollmentDate.getText().toString(), MediaType.parse("text/plain"));
-            RequestBody n_cfrm = RequestBody.create("0", MediaType.parse("text/plain"));
+            RequestBody n_cfrm = RequestBody.create(nCfrm, MediaType.parse("text/plain"));
             RequestBody n_hiv = RequestBody.create(hivFilterId, MediaType.parse("text/plain"));
             RequestBody n_diab = RequestBody.create(diabeticsId, MediaType.parse("text/plain"));
 
@@ -1426,21 +1448,26 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 
             }
         };
-        EnrollmentDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                DatePickerDialog m_date = new DatePickerDialog(FormOne.this, R.style.calender_theme, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH));
+        if(!Objects.equals(type, "normal"))
+        {
+            EnrollmentDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    DatePickerDialog m_date = new DatePickerDialog(FormOne.this, R.style.calender_theme, date, myCalendar
+                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                            myCalendar.get(Calendar.DAY_OF_MONTH));
 
 
-                m_date.show();
-                m_date.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
-                m_date.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
-                m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
-            }
-        });
+                    m_date.show();
+                    m_date.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
+                    m_date.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
+                    m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
+                }
+            });
+        }
+
     }
 
     @Override

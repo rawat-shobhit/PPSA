@@ -1440,9 +1440,9 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         String noti = "";
         String bank = "";
 
-
-        Log.d("imageUriNotification",notificationImageUri.toString());
-        Log.d("imageUriBank",bankImageUri.toString());
+//
+//        Log.d("imageUriNotification",notificationImageUri.toString());
+//        Log.d("imageUriBank",bankImageUri.toString());
 
         if (notificationImageUri != null) {
             noti = new Imagee().getEncodedImage(notificationImageUri, newNotificationScreen.this);
