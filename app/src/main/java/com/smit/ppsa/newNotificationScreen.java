@@ -866,17 +866,29 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
             case R.id.bt_proceedone:
+                proceedbtn.setEnabled(false);
+                Toast.makeText(this, "Please wait from is submitting", Toast.LENGTH_SHORT).show();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Enable the button after the delay
+                        proceedbtn.setEnabled(true);
+                    }
+                }, 4000);
 
                 if (isValidate()) {
-
                     callCheckTheDuplicay();
 //                    sendForm();
                 }
+                break;
 
             case R.id.backbtn:
                 super.onBackPressed();
                 break;
+
         }
     }
 

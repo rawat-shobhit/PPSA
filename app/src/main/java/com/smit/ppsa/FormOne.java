@@ -617,30 +617,33 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     private void setOnclick() {
         proceedbtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
-
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_proceedone:
-//BaseUtils.showToast(this,"Validdd");
-
-/*
+                //BaseUtils.showToast(this,"Validdd");
+                /*
 https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>'4646'
  */
-
+                proceedbtn.setEnabled(false);
+                Toast.makeText(this, "Please wait from is submitting", Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Enable the button after the delay
+                        proceedbtn.setEnabled(true);
+                    }
+                }, 4000);
                 if (isValidate()) {
-
                     callCheckTheDuplicay();
 
-//                    if(checkDuplicacy)
+                    //                    if(checkDuplicacy)
 //                    {
 //                        Toast.makeText(this, "h;dslkgjas;ldkg", Toast.LENGTH_SHORT).show();
 ////                        sendForm();
 //                    }
-
-
                 } else {
                     Toast.makeText(this, "Please fill all the form ", Toast.LENGTH_SHORT).show();
                 }
