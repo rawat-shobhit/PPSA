@@ -1,4 +1,4 @@
-package com.smit.ppsa.notificationLedgerFolder
+package com.smit.ppsa.notificationRegisterFolder
 
 import android.app.DatePickerDialog
 import android.graphics.Color
@@ -12,9 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smit.ppsa.BaseUtils
 import com.smit.ppsa.Network.ApiClient
-import com.smit.ppsa.PatientsFollowFolder.PatientFollowUpAdapter
-import com.smit.ppsa.PatientsFollowFolder.PatientFollowUpList
-import com.smit.ppsa.PatientsFollowFolder.PatientsFollowUpResponseModel
 import com.smit.ppsa.R
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,16 +20,16 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class NotificationLedgerActivity : AppCompatActivity() {
+class NotificationRegisterActivity : AppCompatActivity() {
 
     lateinit var dateFrom : TextView
     lateinit var dateTo: TextView
     var dateToFinal=""
     var dateFromFinal=""
     lateinit var tvOk: ImageView
-    var list=ArrayList<NotificationLedgerList>()
+    var list=ArrayList<NotificationRegisterList>()
     lateinit var recyclerView: RecyclerView
-    private var adapter : NotificationLeadgerAdapter?=null
+    private var adapter : NotificationRegisterAdapter?=null
     private lateinit var totalColumn: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,7 +119,7 @@ class NotificationLedgerActivity : AppCompatActivity() {
     private fun applyProviderVistApi() {
         if (!BaseUtils.isNetworkAvailable(this)) {
             BaseUtils.showToast(
-                this@NotificationLedgerActivity,
+                this@NotificationRegisterActivity,
                 "Please Check your internet  Connectivity"
             )
 
@@ -136,12 +133,12 @@ class NotificationLedgerActivity : AppCompatActivity() {
 
         Log.d("urlFinal", url)
         ApiClient.getClient().getNotificationLedger(url).enqueue(object :
-            Callback<NotificationLedgerResponse> {
+            Callback<NotificationRegisterResponse> {
 
 
             override fun onResponse(
-                call: Call<NotificationLedgerResponse>,
-                response: Response<NotificationLedgerResponse>
+                call: Call<NotificationRegisterResponse>,
+                response: Response<NotificationRegisterResponse>
             ) {
                 if(response.isSuccessful){
                     if (response.body()!!.status == true){
@@ -152,12 +149,12 @@ class NotificationLedgerActivity : AppCompatActivity() {
                         list.clear()
                         setRecycler()
                         totalColumn.setText("Total number of Row :- 0")
-                        BaseUtils.showToast(this@NotificationLedgerActivity, "No Data found")
+                        BaseUtils.showToast(this@NotificationRegisterActivity, "No Data found")
                     }
                 }
             }
 
-            override fun onFailure(call: Call<NotificationLedgerResponse>, t: Throwable) {
+            override fun onFailure(call: Call<NotificationRegisterResponse>, t: Throwable) {
 
             }
 
@@ -169,10 +166,14 @@ class NotificationLedgerActivity : AppCompatActivity() {
 
         Log.d("testing", "setHospitalRecycler: " + list.size)
 
-        adapter =NotificationLeadgerAdapter(list, this@NotificationLedgerActivity)
+        adapter =
+            NotificationRegisterAdapter(
+                list,
+                this@NotificationRegisterActivity
+            )
 
         val linearLayoutManager =
-            LinearLayoutManager(this@NotificationLedgerActivity, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(this@NotificationRegisterActivity, LinearLayoutManager.VERTICAL, false)
         recyclerView.setLayoutManager(linearLayoutManager)
         recyclerView.setAdapter(adapter)
         recyclerView.setLayoutAnimation(

@@ -1,4 +1,4 @@
-package com.smit.ppsa.notificationLedgerFolder;
+package com.smit.ppsa.notificationRegisterFolder;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,19 +12,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.smit.ppsa.PatientsFollowFolder.PatientFollowUpAdapter;
-import com.smit.ppsa.PatientsFollowFolder.PatientFollowUpList;
 import com.smit.ppsa.R;
 import com.smit.ppsa.Response.RegisterParentData;
 
 import java.util.ArrayList;
 
-public class NotificationLeadgerAdapter extends RecyclerView.Adapter<NotificationLeadgerAdapter.Mholder> {
-    private ArrayList<NotificationLedgerList> list;
+public class NotificationRegisterAdapter extends RecyclerView.Adapter<NotificationRegisterAdapter.Mholder> {
+    private ArrayList<NotificationRegisterList> list;
     private final Context context;
 
 
-    public NotificationLeadgerAdapter(ArrayList<NotificationLedgerList> registerParentData, Context context) {
+    public NotificationRegisterAdapter(ArrayList<NotificationRegisterList> registerParentData, Context context) {
         this.list = registerParentData;
         this.context = context;
 
@@ -32,12 +30,12 @@ public class NotificationLeadgerAdapter extends RecyclerView.Adapter<Notificatio
 
     @NonNull
     @Override
-    public NotificationLeadgerAdapter.Mholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new NotificationLeadgerAdapter.Mholder(LayoutInflater.from(context).inflate(R.layout.layout_notification_leadger, parent, false));
+    public NotificationRegisterAdapter.Mholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new NotificationRegisterAdapter.Mholder(LayoutInflater.from(context).inflate(R.layout.layout_notification_leadger, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NotificationLeadgerAdapter.Mholder holder, int position) {
+    public void onBindViewHolder(@NonNull NotificationRegisterAdapter.Mholder holder, int position) {
 
 //
 //        if(position%2==0)

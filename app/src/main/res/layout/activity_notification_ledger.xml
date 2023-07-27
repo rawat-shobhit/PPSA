@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".notificationLedgerFolder.NotificationLedgerActivity"
+    tools:context=".notificationRegisterFolder.NotificationRegisterActivity"
     android:orientation="vertical">
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_13ssp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:text="Notification Ledger"
+        android:text="Notification Register"
         android:textColor="@color/black"
         android:fontFamily="@font/poppins_regular"
         android:gravity="center"
@@ -128,7 +128,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".4"
-            android:text="NI"
+            android:text="NE"
             android:gravity="center"
             android:textSize="@dimen/_8ssp"
             android:padding="@dimen/_2sdp"
@@ -141,7 +141,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".4"
-            android:text="DST"
+            android:text="DBT"
             android:gravity="center"
             android:textSize="@dimen/_8ssp"
             android:padding="@dimen/_2sdp"
@@ -199,7 +199,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NI - Notification Intimation"
+                android:text="NE - Notification Evidence"
                 android:layout_gravity="start"
                 android:textSize="@dimen/_12ssp"
                 android:padding="@dimen/_5sdp"

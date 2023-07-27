@@ -37,7 +37,7 @@
 
         <item
             android:id="@+id/notificationLedger"
-            android:title="Notification Ledger"
+            android:title="Notification Register"
             />
 
 

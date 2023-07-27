@@ -41,7 +41,7 @@ import com.smit.ppsa.Response.HospitalModel;
 import com.smit.ppsa.Response.PostProviderFromRoom;
 import com.smit.ppsa.dailyVisitOutputFolder.DailyVisitActivity;
 import com.smit.ppsa.healthFacilityFolder.HealthFacilityVisit;
-import com.smit.ppsa.notificationLedgerFolder.NotificationLedgerActivity;
+import com.smit.ppsa.notificationRegisterFolder.NotificationRegisterActivity;
 import com.smit.ppsa.providerStatusFolder.ProviderVisitActivity;
 import com.smit.ppsa.sampleCollectionVisitFolder.SampleCollectionVisitActivity;
 
@@ -51,7 +51,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import kotlinx.coroutines.internal.MainDispatcherFactory;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -131,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
 
                     case R.id.notificationLedger:
-                        startActivity(new Intent(MainActivity.this, NotificationLedgerActivity.class));
+                        startActivity(new Intent(MainActivity.this, NotificationRegisterActivity.class));
                         break;
                     // Add more cases for other items
                 }

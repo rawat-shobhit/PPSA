@@ -42,12 +42,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.smit.ppsa.dailyVisitOutputFolder.DailyVisitResponseModel;
 import com.smit.ppsa.healthFacilityFolder.HealthFacilityResponseModel;
-import com.smit.ppsa.notificationLedgerFolder.NotificationLedgerResponse;
+import com.smit.ppsa.notificationRegisterFolder.NotificationRegisterResponse;
 import com.smit.ppsa.patientNotificationDuplicacy.PatientNotificationDuplicacyResponseModel;
 import com.smit.ppsa.providerStatusFolder.ProviderVistResponseModel;
 import com.smit.ppsa.sampleCollectionVisitFolder.SampleCollectionVisitResponseModel;
-
-import org.json.JSONObject;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -188,7 +186,7 @@ public class ApiClient {
         Call<PatientsFollowUpResponseModel>getPatientFollowUpResponse(@Url String url);
 
         @GET
-        Call<NotificationLedgerResponse>getNotificationLedger(@Url String url);
+        Call<NotificationRegisterResponse>getNotificationLedger(@Url String url);
 
         @GET()
         Call<DailyVisitResponseModel> getDailyVisit(@Url String url);
