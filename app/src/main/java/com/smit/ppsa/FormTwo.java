@@ -683,7 +683,7 @@ Hritik  All points are covered in the latest aPP
         setOnclick();
         getFilters();
 
-        Log.d("shobhitChecking","on Create:- getPatient ");
+        Log.d("shobhitChecking","on Create:- getPatient");
     //    getPatient();
 
         tuCounsell.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -800,10 +800,14 @@ Hritik  All points are covered in the latest aPP
 
 //        String url = "_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=" + parentDataFilters.get(filterspinner.getSelectedItemPosition() - 1).getId() + "&n_tu=" + tu.get(tuCounsell.getSelectedItemPosition() - 1).getN_tu_id();
 
-
-        String url = "_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=" + parentDataFilters.get(filterspinner.getSelectedItemPosition() - 1).getId() + "&n_tu=" + tus;
-
-        Log.d("URL_check", url);
+//_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=4&n_tu=n_tu_id<<EQUALTO>>26<<OR>>n_tu_id<<EQUALTO>>28&sanc=820
+        String url = "_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=" + parentDataFilters.get(filterspinner.getSelectedItemPosition() - 1).getId() + "&n_tu=" + tus+"&sanc="+ BaseUtils.getUserInfo(this).getN_staff_sanc();
+/*
+full path yeh hai
+https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=1&n_tu=n_tu_id<<EQUALTO>>26<<OR>>n_tu_id<<EQUALTO>>28&sanc=820
+//
+ */
+        Log.d("used_url_1", url);
         ApiClient.getClient().getTUPatient(url).enqueue(new Callback<RegisterParentResponse>() {
             @Override
             public void onResponse(Call<RegisterParentResponse> call, Response<RegisterParentResponse> response) {
@@ -902,6 +906,7 @@ Hritik  All points are covered in the latest aPP
 
 
         String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_m_coun_filters&w=id<<GT>>0";
+        Log.d("used_url_2",url.toString());
         ApiClient.getClient().getCounsellingFilters(url).enqueue(new Callback<FilterResponse>() {
             @Override
             public void onResponse(Call<FilterResponse> call, Response<FilterResponse> response) {
@@ -914,7 +919,7 @@ Hritik  All points are covered in the latest aPP
                                     response.body().getUser_data().get(i).getId(),
                                     response.body().getUser_data().get(i).getC_val()
                             );
-                            Log.d("kiuij", "onResponse: " + roomCounsellingFilters.getId());
+                            Log.d("kiuij", "onResponse:"+ roomCounsellingFilters.getId());
                             dataBase.customerDao().getCounsellingFilterFromServer(roomCounsellingFilters);
                         }
 
@@ -1171,7 +1176,7 @@ Hritik  All points are covered in the latest aPP
                     }
 
 
-
+//https://nikshayppsa.hlfppt.org/_api-v1_/__spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=4&n_tu=n_tu_id<<EQUALTO>>26<<OR>>n_tu_id<<EQUALTO>>28&sanc=820
                 }
                 // BaseUtils.showToast(FormTwo.this,tus);
                 NetworkCalls.getTUPatient(FormTwo.this, tus);
@@ -1330,6 +1335,8 @@ Hritik  All points are covered in the latest aPP
 
         Log.d("huhopu", "getPatient: " + urlOne);
 
+
+
         if (getIntent().hasExtra("counsel")) {
             usedUrl = url;
         } else if (getIntent().hasExtra("reportdelivery")) {
@@ -1337,8 +1344,9 @@ Hritik  All points are covered in the latest aPP
         } else {
             usedUrl = urlOne;
         }
+        //https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_sp_coun_visits&w=2&sanc=838
 
-        Log.d("Used Url",usedUrl);
+        Log.d("used_url_3",usedUrl);
         BaseUtils.showToast(FormTwo.this,"Please wait while we fetch data for you.");
 
         ApiClient.getClient().getRegisterParent(usedUrl).enqueue(new Callback<RegisterParentResponse>() {
