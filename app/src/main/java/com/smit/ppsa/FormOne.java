@@ -635,10 +635,9 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
                         // Enable the button after the delay
                         proceedbtn.setEnabled(true);
                     }
-                }, 4000);
+                }, 6000);
                 if (isValidate()) {
                     callCheckTheDuplicay();
-
                     //                    if(checkDuplicacy)
 //                    {
 //                        Toast.makeText(this, "h;dslkgjas;ldkg", Toast.LENGTH_SHORT).show();
