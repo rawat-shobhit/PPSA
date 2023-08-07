@@ -825,6 +825,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     // the Select Image Button is clicked
     void imageChooser() {
         verifyStoragePermissions(newNotificationScreen.this);
+
         // create an instance of the
         // intent of the type image
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -909,10 +910,15 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             BaseUtils.showToast(this, "Enter patient name");
             return false;
         }
-//        else if (notificationImageUri == null && !Objects.equals(getIntent().getStringExtra("type"), "tree")) {
+
+        /*
+        //        else if (notificationImageUri == null && !Objects.equals(getIntent().getStringExtra("type"), "tree")) {
 //            BaseUtils.showToast(this, "Select notification form image");
 //            return false;
 //        }
+         */
+
+
         else if (emptyText(Age)) {
             BaseUtils.showToast(this, "Enter age");
             return false;

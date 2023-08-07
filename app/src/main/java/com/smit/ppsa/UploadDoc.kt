@@ -43,12 +43,11 @@ import java.io.FileOutputStream
 import java.net.URL
 import java.util.*
 
-
 class UploadDoc : AppCompatActivity() {
     private var lat = ""
     private var lng = ""
     private var mFusedLocationClient: FusedLocationProviderClient? = null
-    private var isUploaded = false
+    private var isUploaded = true
     private lateinit var adhaar: ImageView
     private lateinit var prescription: ImageView
     private lateinit var bank_detail: ImageView
@@ -226,7 +225,15 @@ class UploadDoc : AppCompatActivity() {
                 )
             } else {
 
-                uploadDocuments()
+//                Log.d("checkingClick",To)
+//                Toast.makeText(this,"clicked",Toast.LENGTH_SHORT).show()
+                if (adhaar_img == "" || presc_img == "" ||  test_img == "" || hiv_img == "" || udst_img == ""
+                    || diabetes_img == "" || additionalPres_img == "" || consent_img ==
+                    ""
+                        ){
+                    uploadDocuments()
+                }
+
 
                 if (notification_img != "" || bank_img != "") {
                     uploadBankNotificationDocuments()
@@ -779,6 +786,7 @@ class UploadDoc : AppCompatActivity() {
 //        val url =
 //            "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=n_enroll_id<<EQUALTO>>" + patient.id
 
+        Log.d("finalUrl784",url.toString());
         val apiClient = when (isUploaded) {
             true -> ApiClient.getClient().uploadDocumentIfResult(url, map)
 
@@ -887,6 +895,9 @@ class UploadDoc : AppCompatActivity() {
             "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=n_enroll_id<<EQUALTO>>" + patient.id
 
 //        val url ="_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=id<<EQUALTO>>" + patient.getId()
+
+        Log.d("finalUrl_894",url.toString())
+        Log.d("finalUrl__",isUploaded.toString())
         val apiClient = when (isUploaded) {
             true -> ApiClient.getClient().uploadDocumentIfResult(url, map)
 
@@ -909,8 +920,15 @@ class UploadDoc : AppCompatActivity() {
                 call: Call<AddDocResponse>,
                 response: Response<AddDocResponse>
             ) {
+
+                Log.d("dataCheck_response",response.message().toString());
                 if (response.isSuccessful) {
+                    Log.d("dataCheck_response",response.body()!!.message);
+                    Log.d("dataCheck_response",response.body()!!.isStatus.toString());
+
                     if (response.body()!!.isStatus) {
+
+
                         BaseUtils.showToast(this@UploadDoc, "Document uploaded successfully")
                         startActivity(
                             Intent(this@UploadDoc, MainActivity::class.java).setFlags(
@@ -922,7 +940,7 @@ class UploadDoc : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<AddDocResponse>, t: Throwable) {
-
+                Log.d("dataOnFalior",t.toString());
             }
         })
 
@@ -1000,21 +1018,22 @@ class UploadDoc : AppCompatActivity() {
                                 adharDownload.visibility = View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_aadh_img(), adhaar)
 
-
-
                                 adharDownload.setOnClickListener() {
                                     download((response.body()!!.userData[0].getC_aadh_img()))
                                 }
+//                                isUploaded = true
                             }
 
                         }catch (e:Exception){
                             Log.d("crash_image",e.toString())
+                            isUploaded = false
                         }
 
                         try {
 
                             if (response.body()!!.userData[0].c_presc_img.contains(".png")) {
                                 presDownload.visibility = View.VISIBLE
+
                                 setImage(
                                     response.body()!!.userData[0].getC_presc_img(),
                                     prescription
@@ -1022,10 +1041,12 @@ class UploadDoc : AppCompatActivity() {
                                 presDownload.setOnClickListener() {
                                     download((response.body()!!.userData[0].getC_presc_img()))
                                 }
+//                                isUploaded = true
                             }
 
                         }catch (e:Exception){
                             Log.d("crash_image",e.toString())
+                            isUploaded = false
                         }
 
 
@@ -1041,10 +1062,12 @@ class UploadDoc : AppCompatActivity() {
                                 prescriptionDownload.setOnClickListener() {
                                     download((response.body()!!.userData[0].c_add_presc_img))
                                 }
+//                                isUploaded = true
                             }
 
                         }catch (e:Exception){
                             Log.d("crash_image",e.toString())
+                            isUploaded = false
                         }
 
 
@@ -1060,10 +1083,12 @@ class UploadDoc : AppCompatActivity() {
                                 consentDownload.setOnClickListener() {
                                     download((response.body()!!.userData[0].c_con_frm_img))
                                 }
+//                                isUploaded = true
                             }
 
                         }catch (e:Exception){
                             Log.d("crash_image",e.toString())
+                            isUploaded = false
                         }
 
 
@@ -1079,6 +1104,7 @@ class UploadDoc : AppCompatActivity() {
                                     download((response.body()!!.userData[0].c_not_img))
                                 }
 
+//                                isUploaded = true
                             }
                         }catch (e:Exception){
                             Log.d("crash_image",e.toString())
@@ -1104,13 +1130,10 @@ class UploadDoc : AppCompatActivity() {
                             if (response.body()!!.userData[0].getC_bnk_img().contains(".png")) {
                                 bankDownload.visibility = View.VISIBLE
                                 setImage(response.body()!!.userData[0].getC_bnk_img(), bank_detail)
-
-
-
-
                                 bankDownload.setOnClickListener() {
                                     download((response.body()!!.userData[0].getC_bnk_img()))
                                 }
+//                                isUploaded = true
                             }
 
                         }catch (e:Exception){
@@ -1137,6 +1160,8 @@ class UploadDoc : AppCompatActivity() {
                                 testDonload.setOnClickListener() {
                                     download((response.body()!!.userData[0].getC_tst_rpt_img()))
                                 }
+
+//                                isUploaded = true
                             }
 
                         }catch (e:Exception){
@@ -1152,6 +1177,7 @@ class UploadDoc : AppCompatActivity() {
                                 hivDownload.setOnClickListener() {
                                     download((response.body()!!.userData[0].getC_hiv_img()))
                                 }
+//                                isUploaded = true
                             }
 
                         }catch (e:Exception){
@@ -1167,6 +1193,7 @@ class UploadDoc : AppCompatActivity() {
                                 udstDownload.setOnClickListener() {
                                     download((response.body()!!.userData[0].getC_udst_img()))
                                 }
+//                                isUploaded = true
                             }
 
                         }catch (e:Exception){
@@ -1185,6 +1212,7 @@ class UploadDoc : AppCompatActivity() {
                                 diabDownload.setOnClickListener() {
                                     download((response.body()!!.userData[0].getC_diab_img()))
                                 }
+//                                isUploaded = true
                             }
 
                         }catch (e:Exception){
@@ -1193,15 +1221,15 @@ class UploadDoc : AppCompatActivity() {
 
 
                         try {
-                            isUploaded = true
+//                            isUploaded = true
                         }catch (e:Exception){
                             Log.d("isUpload",e.toString())
                         }
 
-
-
+                        Log.d("checkData",isUploaded.toString())
 
                         //  adhaar_img = encodeImage(adhaar.drawable as BitmapDrawable)
+
 
                     }
                 }
