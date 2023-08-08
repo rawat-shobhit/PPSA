@@ -27,6 +27,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class TuSearchPatientList : AppCompatActivity() {
@@ -44,7 +45,7 @@ class TuSearchPatientList : AppCompatActivity() {
 
     var fdcHospitalsAdapter: LpaPatientAdapter? = null
 
-    var registerParentDataList: ArrayList<RegisterParentData>? = null
+    var registerParentDataList: ArrayList<RegisterParentData>? = ArrayList<RegisterParentData>()
     var tuString = ""
     var selectedFilter = ""
     private var filterArray = ArrayList<PatientFilterDataModel>()
@@ -104,6 +105,9 @@ class TuSearchPatientList : AppCompatActivity() {
                 //this is the way to find selected object/item
                 //unitId = filterData!!.Unitmaster[pos].id
                 selectedFilter = (pos + 1).toString()
+
+                registerParentDataList!!.clear()
+
                 getPatient()
 
                 //   Toast.makeText(this,selectedFilter, Toast.LENGTH_SHORT).show()
@@ -215,10 +219,8 @@ class TuSearchPatientList : AppCompatActivity() {
         val name = searchText.text.toString().trim()
         // BaseUtils.showToast(this,tuString)
         val url = if (!getIntent().hasExtra("upload")) {
-         //
             //   Toast.makeText(this, "this", Toast.LENGTH_SHORT).show()
-
-            //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll
+            //https://nikshayppsa.hlfppt.org/_api-v1_/_srch_docs.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>n_tu_id<<EQUALTO>>31<<OR>>n_tu_id<<EQUALTO>>32<<EBRK>>&typ=10
             // &w=<<SBRK>>n_tu_id<<EQUALTO>>162<<OR>>n_tu_id<<EQUALTO>>163<<OR>>n_tu_id<<EQUALTO>>164<<EBRK>><<AND>><<SBRK>>c_pat_nam<<SLIKE>>8532<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>8532<<ELIKE>><<OR>>c_mob<<SLIKE>>8532<<ELIKE>><<EBRK>><<AND>>trans_out<<ISNULL>>
             "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>" + tuString + "<<EBRK>><<AND>><<SBRK>>c_pat_nam<<SLIKE>>" + name + "<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>" + name + "<<ELIKE>><<OR>>c_mob<<SLIKE>>" + name + "<<ELIKE>><<EBRK>>"
         } else {
@@ -237,6 +239,17 @@ class TuSearchPatientList : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     if (response.body()!!.status) {
+                        Log.d("chekcing_area","240")
+
+//                        try {
+//                            Toast.makeText(this@TuSearchPatientList,registerParentDataList!!.size.toString(),Toast.LENGTH_SHORT).show()
+//
+//                        }catch (e:Exception){
+//                            Log.d("crash__",e.toString())
+//                        }
+
+                        registerParentDataList!!.clear()
+//                        Toast.makeText(this@TuSearchPatientList,registerParentDataList.toString(),Toast.LENGTH_SHORT).show()
                         registerParentDataList =
                             response.body()!!.userData as ArrayList<RegisterParentData>
 
@@ -250,6 +263,7 @@ class TuSearchPatientList : AppCompatActivity() {
                         patientRecyclerView.layoutManager =
                             LinearLayoutManager(this@TuSearchPatientList)
                         if (getIntent().hasExtra("transfer")) {
+                            Log.d("chekcing_area","254")
                             fdcHospitalsAdapter =
                                 LpaPatientAdapter(
                                     registerParentDataList,
@@ -258,6 +272,7 @@ class TuSearchPatientList : AppCompatActivity() {
                                 )
                             patientRecyclerView.adapter = fdcHospitalsAdapter;
                         } else {
+                            Log.d("chekcing_area","261")
                             fdcHospitalsAdapter =
                                 LpaPatientAdapter(
                                     registerParentDataList,

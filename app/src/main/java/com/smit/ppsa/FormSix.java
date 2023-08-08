@@ -97,6 +97,8 @@ public class FormSix extends AppCompatActivity {
     List<RoomPreviousSamples> parentDataPreviousSamples = new ArrayList();
     private FusedLocationProviderClient mFusedLocationClient;
     static Boolean cameraPermession=false;
+
+    static Boolean storagePermession=false;
     // Permissions for accessing the storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static final String[] PERMISSIONS_STORAGE = {
@@ -108,6 +110,10 @@ public class FormSix extends AppCompatActivity {
 
     // constant to compare
     // the activity result code
+
+
+
+
     int SELECT_PICTURE = 200;
     int PIC_CROP = 500;
     Uri frontselectedImageUri = null;
@@ -429,6 +435,7 @@ public class FormSix extends AppCompatActivity {
 
 
                 checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
+//                checkStoragePermission()
                 verifyStoragePermissions(FormSix.this);
                 imageType = "back";
                 if (backselectedImageUri != null) {
@@ -634,14 +641,9 @@ public class FormSix extends AppCompatActivity {
                         testReportFrontImg.setImageBitmap(result.getBitmap());
                     }*/
 
-
-
-
-
                     frontselectedImageUri = data.getData();
                     testReportFrontImg.setImageURI(frontselectedImageUri);
                     startCrop(frontselectedImageUri);
-
 
                     /*performCrop(frontselectedImageUri);*/
                     //  testReportFrontImg.setImageURI(frontselectedImageUri);
@@ -1758,6 +1760,7 @@ public class FormSix extends AppCompatActivity {
         else if (requestCode == STORAGE_PERMISSION_CODE) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                storagePermession=true;
 //                Toast.makeText(MainActivity.this, "Storage Permission Granted", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(FormSix.this, "Storage Permission Denied", Toast.LENGTH_SHORT).show();

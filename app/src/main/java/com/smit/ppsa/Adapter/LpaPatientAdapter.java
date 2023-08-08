@@ -81,7 +81,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         try {
             if (parentData.getAadhar_img().equals("0") || parentData.getAadhar_img().equals("null")) {
                 holder.adhar.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            } else {
+            } else if (parentData.getAadhar_img().equals("1")) {
                 holder.adhar.setBackgroundColor(Color.parseColor("#5EC362"));
             }
         } catch (Exception e) {
@@ -91,10 +91,12 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         try {
             if (parentData.getBnk_img().equals("0") || parentData.getBnk_img().equals("null")) {
                 holder.bank.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            } else {
+            } else  if(parentData.getBnk_img().equals("1")){
                 holder.bank.setBackgroundColor(Color.parseColor("#5EC362"));
             }
+
         } catch (Exception e) {
+
         }
 
 
@@ -102,7 +104,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
             if (parentData.getPrescImg().equals("0") || parentData.getPrescImg().equals("null")) {
 
                 holder.pres.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            } else {
+            } else if(parentData.getPrescImg().equals("1")) {
 
                 holder.pres.setBackgroundColor(Color.parseColor("#5EC362"));
             }
@@ -113,7 +115,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         try {
             if (parentData.getTstRptImg().equals("0") || parentData.getTstRptImg().equals("null")) {
                 holder.tst.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            } else {
+            } else if (parentData.getTstRptImg().equals("1")) {
                 holder.tst.setBackgroundColor(Color.parseColor("#5EC362"));
             }
         } catch (Exception e) {
@@ -123,7 +125,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         try {
             if (parentData.getC_udst_img().equals("0") || parentData.getC_udst_img().equals("null")) {
                 holder.udst.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            } else {
+            } else if(parentData.getC_udst_img().equals("1")) {
                 holder.udst.setBackgroundColor(Color.parseColor("#5EC362"));
             }
         } catch (Exception e) {
@@ -133,7 +135,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         try {
             if (parentData.getC_diab_img().equals("0") || parentData.getC_diab_img().equals("null")) {
                 holder.diab.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            } else {
+            } else if(parentData.getC_diab_img().equals("1")) {
                 holder.diab.setBackgroundColor(Color.parseColor("#5EC362"));
             }
         } catch (Exception e) {
@@ -143,7 +145,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         try {
             if (parentData.getC_hiv_img().equals("0") || parentData.getC_hiv_img().equals("null")) {
                 holder.hiv.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            } else {
+            } else if(parentData.getC_hiv_img().equals("1")) {
                 holder.hiv.setBackgroundColor(Color.parseColor("#5EC362"));
             }
         } catch (Exception e) {
@@ -161,7 +163,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         try {
             if (parentData.getC_add_presc_img().equals("0") || parentData.getC_add_presc_img().equals("null")) {
                 holder.additionalprescription.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            } else {
+            } else if(parentData.getC_add_presc_img().equals("1")) {
                 holder.additionalprescription.setBackgroundColor(Color.parseColor("#5EC362"));
             }
         } catch (Exception e) {
@@ -170,7 +172,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         try {
             if (parentData.getC_con_frm_img().equals("0") || parentData.getC_con_frm_img().equals("null")) {
                 holder.consent.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            } else {
+            } else if (parentData.getC_con_frm_img().equals("1")) {
                 holder.consent.setBackgroundColor(Color.parseColor("#5EC362"));
             }
         } catch (Exception e) {
@@ -179,7 +181,7 @@ public class LpaPatientAdapter extends RecyclerView.Adapter<LpaPatientAdapter.Mh
         try {
             if (parentData.getC_not_img().equals("0") || parentData.getC_not_img().equals("null")) {
                 holder.notification.setBackgroundColor(Color.parseColor("#FFFF5151"));
-            } else {
+            } else if(parentData.getC_not_img().equals("1")) {
                 holder.notification.setBackgroundColor(Color.parseColor("#5EC362"));
             }
         } catch (Exception e) {
