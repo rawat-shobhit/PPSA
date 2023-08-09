@@ -579,6 +579,8 @@ public class FormSix extends AppCompatActivity {
         return options;
 
     }
+
+
     // Method to get the absolute path of the selected image from its URI
 /*    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

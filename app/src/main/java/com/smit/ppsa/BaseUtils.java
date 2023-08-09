@@ -2428,8 +2428,6 @@ public class BaseUtils {
     public static String getEnrollNo(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return preferences.getString("enrollNo", "");
-
-
     }
 
     public static void seEnrollNo(Context context, String enrollNo) {
@@ -2440,6 +2438,18 @@ public class BaseUtils {
     }
 
 
+
+    public static String getIdForHospitalEdit(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return preferences.getString("hospitalId", "");
+    }
+
+    public static void setIdForHospitalEdit(Context context, String id) {
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("hospitalId", id);
+        editor.apply();
+    }
 
 
 }

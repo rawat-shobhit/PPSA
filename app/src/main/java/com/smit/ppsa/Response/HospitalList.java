@@ -6,6 +6,19 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class HospitalList implements Serializable {
+
+    @SerializedName("id")
+    @Expose
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @SerializedName("c_st_nam")
     @Expose
     private String cStNam;

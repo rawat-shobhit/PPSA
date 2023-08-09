@@ -848,10 +848,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // startActivity(new Intent(MainActivity.this,ReportDelivery.class));
                 break;
             case R.id.changepassbtn:
-
                 startActivity(new Intent(MainActivity.this, PasswordActivity.class)
                         .putExtra("type", "existingUser"));
-
                 // startActivity(new Intent(MainActivity.this,ReportDelivery.class));
                 break;
             case R.id.fdcrec:

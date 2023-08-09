@@ -3,6 +3,7 @@ package com.smit.ppsa.Network;
 import android.annotation.SuppressLint;
 
 import com.google.gson.JsonObject;
+import com.smit.ppsa.BaseUtils;
 import com.smit.ppsa.PatientsFollowFolder.PatientsFollowUpResponseModel;
 import com.smit.ppsa.Response.AddDocResponse;
 import com.smit.ppsa.Response.AllUserResponse;
@@ -251,6 +252,29 @@ public class ApiClient {
                                          @Part("lat") RequestBody lat,
                                          @Part("lng") RequestBody lng);
 
+
+        @Multipart
+        @POST()
+        Call<AddDocResponse> editHospital(@Part("n_st_id") RequestBody n_st_id,
+                                         @Part("n_dis_id") RequestBody n_dis_id,
+                                         @Part("n_tu_id") RequestBody n_tu_id,
+                                         @Part("n_hf_cd") RequestBody n_hf_cd,
+                                         @Part("c_hf_nam") RequestBody c_hf_nam,
+                                         @Part("n_hf_typ_id") RequestBody n_hf_typ_id,
+                                         @Part("c_hf_addr") RequestBody c_hf_addr,
+                                         @Part("c_cont_per") RequestBody c_cont_per,
+                                         @Part("c_cp_mob") RequestBody c_cp_mob,
+                                         @Part("c_cp_email") RequestBody c_cp_email,
+                                         @Part("n_sc_id") RequestBody n_sc_id,
+                                         @Part("n_pp_idenr") RequestBody n_pp_idenr,
+                                         @Part("c_tc_nam") RequestBody c_tc_nam,
+                                         @Part("c_tc_mob") RequestBody c_tc_mob,
+                                         @Part("n_bf_id") RequestBody n_bf_id,
+                                         @Part("n_pay_status") RequestBody n_pay_status,
+                                         @Part("n_user_id") RequestBody n_user_id,
+                                         @Part("lat") RequestBody lat,
+                                         @Part("lng") RequestBody lng,
+                                          @Url String url);
 
         // @POST("https://nikshayppsa.hlfppt.org/_api-v1_/_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_m_hf&w=")
         @Multipart   //id<<EQUALTO>>142

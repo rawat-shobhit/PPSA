@@ -84,6 +84,7 @@ class FdcHospitalsAdapter(
             val intent = Intent(context, AddHospitalFacilty::class.java)
             intent.putExtra("tu_id", hospitalLists[position].getnTuId())
             intent.putExtra("doctorId", hospitalLists[position].getnHfId())
+            intent.putExtra("editHospital", "true")
             context.startActivity(intent)
         }
 

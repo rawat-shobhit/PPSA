@@ -66,6 +66,8 @@ public class AddHospitalFacilty extends AppCompatActivity implements View.OnClic
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
     private String wayLatitude = "0", wayLongitude = "0";
+    private Boolean editHospitalDetails=false;
+    String getIdForEditing="";
     String[] arraySpinner = new String[]{
             "Select", "Yes", "No"
     };
@@ -75,6 +77,14 @@ public class AddHospitalFacilty extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hospital_facilty);
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver, new IntentFilter(""));
+
+
+        if (getIntent().hasExtra("editHospital")) {
+            if(Objects.equals(getIntent().getStringExtra("editHospital"), "true")){
+                editHospitalDetails=true;
+//                Toast.makeText(this, editHospitalDetails.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
 
         init();
     }
@@ -129,7 +139,18 @@ public class AddHospitalFacilty extends AppCompatActivity implements View.OnClic
         pp_spinner = findViewById(R.id.pp_spinner);
         beneficiary_spinner = findViewById(R.id.beneficiary_spinner);
         findViewById(R.id.ad_nextbtn).setOnClickListener(view -> {
-            if (allFill()) addHospital();
+
+
+            if (allFill())
+            {
+                if(editHospitalDetails){
+                    editHospital();
+                }else{
+                    addHospital();
+                }
+
+
+            }
 
         });
         NetworkCalls.getHFType(this);
@@ -199,6 +220,41 @@ public class AddHospitalFacilty extends AppCompatActivity implements View.OnClic
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 });
+
+    }
+
+    private void editHospital() {
+
+
+            String pp = "";
+            if (pp_spinner.getSelectedItemPosition() > 0) {
+                pp = pp_spinner.getSelectedItem().toString();
+            }
+            BaseUtils.putHospitalnStId(this, BaseUtils.getUserOtherInfo(this).getnStId());
+            BaseUtils.putHospitalnDisId(this, BaseUtils.getUserOtherInfo(this).getnDisId());
+            BaseUtils.putHospitalnTUId(this, getIntent().getStringExtra("tu_id"));
+
+            NetworkCalls.editHospital(
+                    AddHospitalFacilty.this,
+                    BaseUtils.getUserOtherInfo(this).getnStId(),
+                    BaseUtils.getUserOtherInfo(this).getnDisId(),
+                    getIntent().getStringExtra("tu_id"),
+                    hf_code.getText().toString(),
+                    hf_name.getText().toString(),
+                    hfTypeId,
+                    address.getText().toString(),
+                    contact_name.getText().toString(),
+                    contact_number.getText().toString(),
+                    email.getText().toString(),
+                    scopeID,
+                    pp,
+                    tc_name.getText().toString(),
+                    tc_number.getText().toString(),
+                    benID, "0",
+                    BaseUtils.getUserInfo(this).getId(),
+                    wayLatitude,
+                    wayLongitude, true
+            );
 
     }
 
@@ -389,8 +445,11 @@ public class AddHospitalFacilty extends AppCompatActivity implements View.OnClic
 
         //  Log.d("dkl9", "getPatientdd: " + getIntent().getStringExtra("hf_id"));
         Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(AddHospitalFacilty.this).getnUserLevel());
-//https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=id<<EQUALTO>>1632
+//https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=id<<EQUALTO>>41324
         String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=id<<EQUALTO>>"+ getIntent().getStringExtra("doctorId");
+
+        Log.d("final_url",url.toString());
+
         ApiClient.getClient().getHospitalDetail(url).enqueue(new Callback<HospitalResponse>() {
             @Override
             public void onResponse(Call<HospitalResponse> call, Response<HospitalResponse> response) {
@@ -399,6 +458,9 @@ public class AddHospitalFacilty extends AppCompatActivity implements View.OnClic
                         //  parentDataTestReportResults = response.body().getUser_data();
 
                         HospitalList model = response.body().getUserData().get(0);
+
+                        getIdForEditing=model.getId();
+                        BaseUtils.setIdForHospitalEdit(AddHospitalFacilty.this,model.getId().toString());
 
                         hf_code.setText(model.getnHfCd());
                         hf_name.setText(model.getcHfNam());
