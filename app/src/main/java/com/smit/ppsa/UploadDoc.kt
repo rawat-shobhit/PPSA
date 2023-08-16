@@ -321,10 +321,10 @@ class UploadDoc : AppCompatActivity() {
             optionsMenu
         ) { dialogInterface, i ->
             if (optionsMenu[i] == "Take Photo") {
-                // Open the camera and get the photo
+//                Open the camera and get the photo
 //                val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 //                startActivityForResult(takePicture, 0)
-                //                    Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //                    startActivityForResult(takePicture, 0);
                 takeImageFromCameraUri()
             } else if (optionsMenu[i] == "Choose from Gallery") {

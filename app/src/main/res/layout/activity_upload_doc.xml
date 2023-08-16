@@ -61,7 +61,7 @@
                     android:layout_marginHorizontal="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:fontFamily="@font/nunitosans_semibold"
-                    android:text="Aadhar Card Copy"
+                    android:text="Address Proof Copy"
                     android:textColor="@color/black"
                     android:layout_weight="1"
                     android:textSize="@dimen/_12sdp" />
