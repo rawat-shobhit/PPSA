@@ -3060,7 +3060,7 @@ public class NetworkCalls {
 
         String url = "";
         if (type == "1") {
-            url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>1<<AND>>n_st_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnStCd() + "<<AND>>n_dis_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnDisCd();
+            url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>1<<AND>>n_st_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnStCd() ;
             // url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=5&sanc=" + BaseUtils.getUserInfo(context).getN_staff_sanc() + "&tu_id=" + BaseUtils.getGlobalTuid(context) + "&hf=" + BaseUtils.getGlobalnHfTypeid(context) + "&labt=" + type;
         } else {
             url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>2<<AND>>n_st_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnStCd() + "<<AND>>n_dis_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnDisCd();
