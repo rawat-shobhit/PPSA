@@ -290,8 +290,21 @@ import retrofit2.Response;
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.nextbtn:
+                nextbtn.setEnabled(false);
+                Toast.makeText(this, "Please wait from is submitting", Toast.LENGTH_SHORT).show();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("Shobhit_Click","checking");
+                        // Enable the button after the delay
+                        nextbtn.setEnabled(true);
+                    }
+                }, 6000);
                 if (isValidate()) {
                     Log.d("buttonClick", "clicked");
+
+
                     addSample(PatientSampleList.this);
                 }
                 break;
