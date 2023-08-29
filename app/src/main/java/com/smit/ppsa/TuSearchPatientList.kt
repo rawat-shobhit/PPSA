@@ -160,7 +160,7 @@ class TuSearchPatientList : AppCompatActivity() {
                 } else {
                     filter(searchText.text.toString())
 
-                    // getPatient()
+                     getPatient()
                 }
             } else {
                 try {
@@ -177,6 +177,7 @@ class TuSearchPatientList : AppCompatActivity() {
 
     private fun filter(text: String) {
         val temp: ArrayList<RegisterParentData?> = ArrayList<RegisterParentData?>()
+        Log.d("filterList180",registerParentDataList!!.size.toString())
         if (registerParentDataList!!.isNotEmpty()) {
             for (d in registerParentDataList!!) {
                 val value = d.getcPatNam().lowercase(Locale.getDefault())
@@ -196,8 +197,10 @@ class TuSearchPatientList : AppCompatActivity() {
             }
 
             if (temp != null) {
+                Log.d("filterList200",registerParentDataList!!.size.toString())
                 fdcHospitalsAdapter!!.updateList(temp)
             }
+            Log.d("filterList230",registerParentDataList!!.size.toString())
         }
     }
 
@@ -220,7 +223,7 @@ class TuSearchPatientList : AppCompatActivity() {
         // BaseUtils.showToast(this,tuString)
         val url = if (!getIntent().hasExtra("upload")) {
             //   Toast.makeText(this, "this", Toast.LENGTH_SHORT).show()
-            //https://nikshayppsa.hlfppt.org/_api-v1_/_srch_docs.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>n_tu_id<<EQUALTO>>31<<OR>>n_tu_id<<EQUALTO>>32<<EBRK>>&typ=10
+            //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>n_tu_id<<EQUALTO>>210<<OR>>n_tu_id<<EQUALTO>>213<<EBRK>><<AND>><<SBRK>>c_pat_nam<<SLIKE>>bhai<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>bhai<<ELIKE>><<OR>>c_mob<<SLIKE>>bhai<<ELIKE>><<EBRK>>
             // &w=<<SBRK>>n_tu_id<<EQUALTO>>162<<OR>>n_tu_id<<EQUALTO>>163<<OR>>n_tu_id<<EQUALTO>>164<<EBRK>><<AND>><<SBRK>>c_pat_nam<<SLIKE>>8532<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>8532<<ELIKE>><<OR>>c_mob<<SLIKE>>8532<<ELIKE>><<EBRK>><<AND>>trans_out<<ISNULL>>
             "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enroll_docs&w=<<SBRK>>" + tuString + "<<EBRK>><<AND>><<SBRK>>c_pat_nam<<SLIKE>>" + name + "<<ELIKE>><<OR>>n_nksh_id<<SLIKE>>" + name + "<<ELIKE>><<OR>>c_mob<<SLIKE>>" + name + "<<ELIKE>><<EBRK>>"
         } else {

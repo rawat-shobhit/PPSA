@@ -670,7 +670,12 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
                 // BaseUtils.showToast(HospitalsList.this, String.valueOf(b));
-                filter(search.getText().toString().trim());
+                try {
+                    filter(search.getText().toString().trim());
+                }catch (Exception e ){
+                    Log.d("crashSearch",e.toString());
+                }
+
                 //   filter(search.getText().toString().trim(),b);
 
             }
@@ -741,7 +746,6 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -752,9 +756,15 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
             @Override
             public void afterTextChanged(Editable editable) {
                 if (hospitalLists.size() == 0) {
-
+                    Log.d("crashCheck","size of list is 0 ");
                 } else {
-                    filter(editable.toString());
+                    try {
+                        filter(editable.toString());
+                    }catch (Exception e)
+                    {
+                       Log.d("crashCheck",e.toString());
+                    }
+
                 }
 
             }
@@ -1038,19 +1048,35 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
             for (HospitalList d : hospitalLists) {
                 String value = d.getcHfNam().toLowerCase();
                 if (value.contains(text.toLowerCase())) {
+
+
                     Log.d("TAG", "filter: " + d);
-                    temp.add(d);
-                    if (checkboxNonVisit.isChecked()) {
-                        if (d.getLst_visit() != "" && d.getLst_visit() != null) {
-                            temp.remove(d);
+
+                    try {
+                        temp.add(d);
+                        if (checkboxNonVisit.isChecked()) {
+                            if (d.getLst_visit() != "" && d.getLst_visit() != null) {
+                                temp.remove(d);
+                            }
                         }
+                    }catch (Exception e){
+                        Log.d("crashChecking","line number 1063"+e.toString());
                     }
+
                 }
 
             }
-            if (fdcHospitalsAdapter != null) {
-                fdcHospitalsAdapter.updateList(temp);
+
+            try {
+                if (fdcHospitalsAdapter != null) {
+                    fdcHospitalsAdapter.updateList(temp);
+                }
+            }catch (Exception e){
+                Log.d("crashSearch",e.toString());
             }
+
+        }else{
+            Log.d("crashSearch","line number 1060");
         }
     }
 
