@@ -387,9 +387,12 @@ import retrofit2.Response;
             if (intent.hasExtra("localPythologylabsample")) {
                 pythologyLabsLi = BaseUtils.getPythologyLabSample(PatientSampleList.this);
                 Log.d("kioij", "onReceive: " + diagnostictests.size());
+                pythologyLabsString.clear();
                 for (com.smit.ppsa.Response.pythologylab.UserData tu : pythologyLabsLi) {
                     if (!pythologyLabsString.contains(tu.getC_hf_nam())) {
-                        pythologyLabsString.add(tu.getC_hf_nam());
+                            pythologyLabsString.add(tu.getC_hf_nam());
+                        Log.d("chekcingWhere","yaha se aa raha he ");
+
                     }
                 }
                 //setSpinnerAdapter(EnrollmentFaciltyTBU,tuStrings);
@@ -398,9 +401,13 @@ import retrofit2.Response;
             if (intent.hasExtra("localPythologylabtype")) {
                 pythologyLabsTypeLi = BaseUtils.getPythologyLabTypes(PatientSampleList.this);
                 //   Log.d("kioij", "onReceive: " + diagnostictests.size());
+                pythologyLabsString.clear();
                 for (LabResponseInternal list : pythologyLabsTypeLi) {
                     if (!pythologyLabsTypeString.contains(list.getC_val())) {
                         pythologyLabsTypeString.add(list.getC_val());
+
+                        Log.d("chekcingWhere","414 yaha se aa raha he ");
+
                     }
                 }
                 //setSpinnerAdapter(EnrollmentFaciltyTBU,tuStrings);
@@ -602,7 +609,7 @@ import retrofit2.Response;
 
                         getRoomPreviousSamples();
                         //LocalBroadcastManager.getInstance(FormSix.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
-
+//      _get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>2<<AND>>n_st_id<<EQUALTO>>5<<AND>>n_dis_id<<EQUALTO>>101
 
                     }
                 }

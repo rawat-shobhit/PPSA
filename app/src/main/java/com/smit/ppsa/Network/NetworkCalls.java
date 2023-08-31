@@ -53,6 +53,7 @@ import com.smit.ppsa.Response.QualificationResponse;
 import com.smit.ppsa.Response.RegisterParentData;
 import com.smit.ppsa.Response.RegisterParentResponse;
 import com.smit.ppsa.Response.RoomDoctorsList;
+import com.smit.ppsa.Response.UserData;
 import com.smit.ppsa.Response.UserInfoList;
 import com.smit.ppsa.Response.UserInfoResponse;
 import com.smit.ppsa.Response.UserList;
@@ -3052,7 +3053,7 @@ public class NetworkCalls {
         //
         //IF Govt Lab then
         //
-        //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>1<<AND>>n_st_id<<EQUALTO>>3<<AND>>n_dis_id<<EQUALTO>>11
+        //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>6<<AND>>n_govt_pvt<<EQUALTO>>1<<AND>>n_st_id<<EQUALTO>>5
         //
         //ELSE IF PRIVATE LAB THEN
         //
@@ -3060,10 +3061,12 @@ public class NetworkCalls {
 
         String url = "";
         if (type == "1") {
-            url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>1<<AND>>n_st_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnStCd() ;
-            // url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=5&sanc=" + BaseUtils.getUserInfo(context).getN_staff_sanc() + "&tu_id=" + BaseUtils.getGlobalTuid(context) + "&hf=" + BaseUtils.getGlobalnHfTypeid(context) + "&labt=" + type;
+
+            //_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>6<<AND>>n_govt_pvt<<EQUALTO>>1<<AND>>n_st_id<<EQUALTO>>5
+            url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>6<<AND>>n_govt_pvt<<EQUALTO>>1<<AND>>n_st_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnStCd() ;
         } else {
-            url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>2<<AND>>n_st_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnStCd() + "<<AND>>n_dis_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnDisCd();
+            //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>6<<AND>>n_govt_pvt<<EQUALTO>>1<<AND>>n_st_id<<EQUALTO>>5
+            url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf&w=n_hf_typ_id<<EQUALTO>>3<<AND>>n_govt_pvt<<EQUALTO>>2<<AND>>n_st_id<<EQUALTO>>" + BaseUtils.getUserInfo(context).getnStCd() ;
         }
 
         Log.d("finalUrl",url);
@@ -3075,7 +3078,14 @@ public class NetworkCalls {
                     assert response.body() != null;
                     if (response.body().getStatus().equals("true")) {
 
-                        BaseUtils.savePythologyLabSamples(context, response.body().getUser_data());
+                        List<com.smit.ppsa.Response.pythologylab.UserData> hospitalList = new ArrayList<>();
+                        hospitalList.clear();
+                        hospitalList= response.body().getUser_data();
+//                        BaseUtils.savePythologyLabSamples(context,hospitalList);
+//                        BaseUtils.savePythologyLabSamples(context, response.body().getUser_data());
+
+
+                        BaseUtils.savePythologyLabSamples(context, hospitalList);
                         Log.d("jioussqw", "onResponse: " + response.body().getUser_data().size());
                         LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localPythologylabsample", ""));
                     } else {
