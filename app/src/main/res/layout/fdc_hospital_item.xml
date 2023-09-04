@@ -210,6 +210,45 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/hfId"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:text="HF Id"
+                android:textColor="@color/black" />
+
+
+            <TextView
+                android:id="@+id/tvHfCd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:fontFamily="@font/nunitosans_bold_2"
+                android:layout_weight="1"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:text="Hospital CD"
+                android:textColor="@color/black" />
+
+
+
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
             android:orientation="horizontal"
             android:background="@color/white"

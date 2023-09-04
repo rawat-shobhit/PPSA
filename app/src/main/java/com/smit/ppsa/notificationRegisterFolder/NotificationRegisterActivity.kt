@@ -107,10 +107,85 @@ class NotificationRegisterActivity : AppCompatActivity() {
 
         }
 
+
+        dateFrom.text=getCurrentDate()
+        dateTo.text=getCurrentDate()
+        dateToFinal="'"+getCurrentDate()+"'"
+        dateFromFinal="'"+getCurrentDate()+"'"
+
+        dateTo.setOnClickListener(){
+
+            val myCalendar = Calendar.getInstance()
+            val date =
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    myCalendar[Calendar.YEAR] = year
+                    myCalendar[Calendar.MONTH] = monthOfYear
+                    myCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
+                    val myFormat = "yyyy-MM-dd"
+                    val sdf = SimpleDateFormat(myFormat, Locale.US)
+
+                    dateTo.setText(sdf.format(myCalendar.time));
+                    dateToFinal="'"+sdf.format(myCalendar.time)+"'"
+                    Log.d("checking_", dateToFinal);
+                    Log.d("checking", dateFromFinal);
+                }
+
+
+            val m_date = DatePickerDialog(
+                this, R.style.calender_theme, date,
+                myCalendar[Calendar.YEAR], myCalendar[Calendar.MONTH],
+                myCalendar[Calendar.DAY_OF_MONTH]
+            )
+            val calendar = Calendar.getInstance()
+//            m_date.datePicker.minDate = calendar.timeInMillis
+            m_date.show()
+            m_date.getButton(DatePickerDialog.BUTTON_POSITIVE)
+                .setBackgroundColor(resources.getColor(R.color.black))
+            m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.TRANSPARENT)
+
+        }
+        dateFrom.setOnClickListener(){
+
+            val myCalendar = Calendar.getInstance()
+            val date =
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    myCalendar[Calendar.YEAR] = year
+                    myCalendar[Calendar.MONTH] = monthOfYear
+                    myCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
+                    val myFormat = "yyyy-MM-dd"
+                    val sdf = SimpleDateFormat(myFormat, Locale.US)
+
+                    dateFrom.setText(sdf.format(myCalendar.time));
+                    dateFromFinal="'"+sdf.format(myCalendar.time)+"'"
+                    Log.d("checking", dateToFinal);
+                    Log.d("checking_", dateFromFinal);
+                }
+
+
+            val m_date = DatePickerDialog(
+                this, R.style.calender_theme, date,
+                myCalendar[Calendar.YEAR], myCalendar[Calendar.MONTH],
+                myCalendar[Calendar.DAY_OF_MONTH]
+            )
+            val calendar = Calendar.getInstance()
+//            m_date.datePicker.minDate = calendar.timeInMillis
+            m_date.show()
+            m_date.getButton(DatePickerDialog.BUTTON_POSITIVE)
+                .setBackgroundColor(resources.getColor(R.color.black))
+            m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.TRANSPARENT)
+
+
+
+        }
+
+
+
         tvOk.setOnClickListener(){
             list.clear()
             applyProviderVistApi()
         }
+
+
 
     }
 
@@ -160,7 +235,7 @@ class NotificationRegisterActivity : AppCompatActivity() {
         })
     }
 
-
+//
     private fun setRecycler() {
 
         Log.d("testing", "setHospitalRecycler: " + list.size)
@@ -182,6 +257,13 @@ class NotificationRegisterActivity : AppCompatActivity() {
             )
         )
 
+    }
+
+
+    fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = Date()
+        return dateFormat.format(date)
     }
 
 

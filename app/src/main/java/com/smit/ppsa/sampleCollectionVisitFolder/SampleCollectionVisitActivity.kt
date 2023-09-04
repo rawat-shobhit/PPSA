@@ -48,6 +48,12 @@ class SampleCollectionVisitActivity : AppCompatActivity() {
         tvOk=findViewById(R.id.ok)
         totalColumn=findViewById(R.id.totalColumn)
 
+        dateFrom.text=getCurrentDate()
+        dateTo.text=getCurrentDate()
+
+        dateToFinal="'"+getCurrentDate()+"'"
+        dateFromFinal="'"+getCurrentDate()+"'"
+
         dateTo.setOnClickListener(){
 
             val myCalendar = Calendar.getInstance()
@@ -180,5 +186,12 @@ class SampleCollectionVisitActivity : AppCompatActivity() {
             )
         )
 
+    }
+
+
+    fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = Date()
+        return dateFormat.format(date)
     }
 }

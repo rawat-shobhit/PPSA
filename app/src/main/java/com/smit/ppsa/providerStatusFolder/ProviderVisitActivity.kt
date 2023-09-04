@@ -111,6 +111,14 @@ class ProviderVisitActivity : AppCompatActivity() {
 
 
         }
+
+        dateFrom.text=getCurrentDate()
+        dateTo.text=getCurrentDate()
+
+        dateToFinal="'"+getCurrentDate()+"'"
+        dateFromFinal="'"+getCurrentDate()+"'"
+
+
         tvOk.setOnClickListener(){
             list.clear()
             applyProviderVistApi()
@@ -176,4 +184,12 @@ class ProviderVisitActivity : AppCompatActivity() {
         )
 
     }
+
+    fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = Date()
+        return dateFormat.format(date)
+    }
+
+
 }

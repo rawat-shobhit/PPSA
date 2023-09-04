@@ -126,7 +126,12 @@ class FdcHospitalsAdapter(
 
         holder.hospitalName.text = hospitalLists[position].getcHfNam()
         holder.location.text =
-            hospitalLists[position].getcDisNam() + "," + hospitalLists[position].getcTuName()
+            hospitalLists[position].getcDisNam() + "," + hospitalLists[position].getcHfAddr().toString()
+
+        holder.hospitalId.text= hospitalLists[position].getnHfCd().toString()
+
+
+
         holder.doctorName.text = hospitalLists[position].getcContPer()
         holder.typeClinic.text = hospitalLists[position].getcHfTyp()
         var currentTime = Calendar.getInstance().time
@@ -448,6 +453,7 @@ class FdcHospitalsAdapter(
         var bagImg: ImageView
         var radioButton: RadioButton
         var editIcon: ImageView
+        val hospitalId:TextView
 
         init {
             hospitalName = itemView.findViewById(R.id.hospitalName)
@@ -470,6 +476,7 @@ class FdcHospitalsAdapter(
             hospitalTypeTitle = itemView.findViewById(R.id.hospitalTYpe)
             currentDate = itemView.findViewById(R.id.currentdate)
             lastVisit = itemView.findViewById(R.id.visitdays)
+            hospitalId= itemView.findViewById(R.id.tvHfCd)
             /*  table = itemView.findViewById(R.id.laytable);
             //table.setVisibility(View.GONE);
             table.setFocusable(false);*/
@@ -487,11 +494,11 @@ class FdcHospitalsAdapter(
     ) {
         val currentTime = Calendar.getInstance().time
 
-        //getting difference in days
+
         var date: Date? = null
         var dateOne: Date? = null
         try {
-            // date = curFormater.parse(parentDataPreviousSamples.get(1).getdVisit());
+
             var formattedDate = ""
             if (!parentDataPreviousSamples.isEmpty()) {
                 for (i in 0 until parentDataPreviousSamples[0].getdVisit().length) {
