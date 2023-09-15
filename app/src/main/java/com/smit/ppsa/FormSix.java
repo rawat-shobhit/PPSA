@@ -726,8 +726,9 @@ public class FormSix extends AppCompatActivity {
                     frontselectedImageUri= CommonImageUri;
 
                     try {
-                        startCrop(frontselectedImageUri);
+                   startCrop(frontselectedImageUri);
                         testReportFrontImg.setImageURI(frontselectedImageUri);
+                        startCrop(frontselectedImageUri);
 //                        startCrop(outputUri);
 //                        cropImage.launch(listUri);
                     } catch (Exception e) {
@@ -739,7 +740,7 @@ public class FormSix extends AppCompatActivity {
 
                 } else {
                     /*
-                                        // CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                    // CropImage.ActivityResult result = CropImage.getActivityResult(data);
                     //backselectedImageUri = data.getData();                                                         // Get the image file URI
                     //   performCrop(backselectedImageUri);
                     //backselectedImageUri = result.getUri();                                                         // Get the image file URI
@@ -754,7 +755,7 @@ public class FormSix extends AppCompatActivity {
                     backselectedImageUri=CommonImageUri;
                     testReportBackImg.setImageURI(backselectedImageUri);
                     try {
-                        startCrop(backselectedImageUri);
+                    startCrop(backselectedImageUri);
 //                        startCrop(outputUri);
 //                        cropImage.launch(listUri);
                     } catch (Exception e) {
@@ -762,7 +763,7 @@ public class FormSix extends AppCompatActivity {
                     }
                     testReportFrontImg.setImageURI(frontselectedImageUri);
 //                    testReportBackImg.setImageURI(backselectedImageUri);
-//                   startCrop(backselectedImageUri);
+
 
 
                     Log.d("uploadPhoto back else",backselectedImageUri.toString());

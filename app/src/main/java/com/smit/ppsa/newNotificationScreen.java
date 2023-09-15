@@ -1,19 +1,5 @@
 package com.smit.ppsa;
 
-import static com.smit.ppsa.Network.NetworkCalls.getHospitalData;
-import static com.smit.ppsa.Network.NetworkCalls.getTestResult;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LiveData;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -37,7 +23,6 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
@@ -48,13 +33,22 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LiveData;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.smit.ppsa.Adapter.CustomSpinnerAdapter;
-import com.smit.ppsa.Adapter.FdcHospitalsAdapter;
 import com.smit.ppsa.Dao.AppDataBase;
 import com.smit.ppsa.Network.ApiClient;
 import com.smit.ppsa.Network.NetworkCalls;
@@ -74,8 +68,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -91,7 +83,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class newNotificationScreen extends AppCompatActivity implements View.OnClickListener{
+public class newNotificationScreen extends AppCompatActivity implements View.OnClickListener {
 
     private CardView proceedbtn;
     private ImageView backBtn;
@@ -100,23 +92,24 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     private List<FormOneData> genders = new ArrayList<>();
     private List<FormOneData> state = new ArrayList<>();
     private List<FormOneData> district = new ArrayList<>();
-    private Boolean formProviderEngagement= false;
+    private Boolean formProviderEngagement = false;
     List<String> genderStrings = new ArrayList<>();
     List<String> stateStrings = new ArrayList<>();
     List<String> distri = new ArrayList<>();
     List<String> tuStrings = new ArrayList<>();
-    List<String > hospitalName=new ArrayList<>();
-    List<String > doctorName=new ArrayList<>();
+    List<String> hospitalName = new ArrayList<>();
+    List<String> doctorName = new ArrayList<>();
     List<HospitalList> hospitalLists = new ArrayList<>();
     private List<FormOneData> tu = new ArrayList<>();
-    String lat = "0", lng = "0",tuId = "0",hfID="";
+    String lat = "0", lng = "0", tuId = "0", hfID = "";
     private AppDataBase dataBase;
     private String[] st_id;
     private String st_id_res = "";
     private String[] dis_id;
     private String dis_id_res = "";
     private String[] tu_id;
-    private String tu_id_res = "", type = "normal";
+    private final String tu_id_res = "";
+    private String type = "normal";
     private String gender;
     private ImageView patientNotificationImg, patientBankImg;
     private String imageType = "front";
@@ -124,14 +117,17 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     Uri CommonImageUri = null;
     private EditText tuString, EnrollHealthFacilitySector, EnrollmentFaciltyPHI, EnrollmentFaciltyHFcode, UserIDEnrollment, EnrolmentId, PatientName, Age, Weight, Height, Address,
             Taluka, Town, Ward, Landmark, Pincode, PrimaryPhoneNumber, SecondaryPhoneNumber;
-    private Spinner EnrollmentFaciltyState, EnrollmentFaciltyDistrict, EnrollmentFaciltyTBU, Gender, ResidentialState, ResidentialDistrict, ResidentialTU,hospitalSpinner,spinnerDoctor;
+    private Spinner EnrollmentFaciltyState, EnrollmentFaciltyDistrict, EnrollmentFaciltyTBU, Gender, ResidentialState, ResidentialDistrict, ResidentialTU, hospitalSpinner, spinnerDoctor;
     Uri notificationImageUri = null;
     Uri bankImageUri = null;
     int SELECT_PICTURE = 200;
     int PIC_CROP = 500;
     private static ApiClient.APIInterface apiInterface;
 
-    static Boolean cameraPermession=false;
+    String noti = "";
+    String bank = "";
+
+    static Boolean cameraPermession = false;
 
     private static final int CAMERA_PERMISSION_CODE = 100;
     private static final int STORAGE_PERMISSION_CODE = 101;
@@ -142,24 +138,24 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
      */
     private List<RoomDoctorsList> DoctorsLists = new ArrayList<>();
 
-    private static List<FormOneData> TuList = new ArrayList<>();
+    private static final List<FormOneData> TuList = new ArrayList<>();
 
-    String hfIdGlobal="",doctorIdGlobal="";
+    String hfIdGlobal = "", doctorIdGlobal = "";
 
     private GlobalProgressDialog progressDialog;
 
 
-    String hivFilterId="";
-    String diabeticsId="";
+    String hivFilterId = "";
+    String diabeticsId = "";
 
     ArrayList<PatientFilterDataModel> hivFilter = new ArrayList<>();
     ArrayList<PatientFilterDataModel> diabetiesFilter = new ArrayList<>();
 
-    private AutoCompleteTextView hivDropDown,diabetiesDropDown;
+    private AutoCompleteTextView hivDropDown, diabetiesDropDown;
 
     // Permissions for accessing the storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
+    private static final String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA,
@@ -188,21 +184,19 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
         try {
             checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
-        }catch (Exception e){
-            Log.d("catchException",e.toString()) ;
+        } catch (Exception e) {
+            Log.d("catchException", e.toString());
         }
 
     }
 
-    public void checkPermission(String permission, int requestCode)
-    {
+    public void checkPermission(String permission, int requestCode) {
         if (ContextCompat.checkSelfPermission(newNotificationScreen.this, permission) == PackageManager.PERMISSION_DENIED) {
 
             // Requesting the permission
-            ActivityCompat.requestPermissions(newNotificationScreen.this, new String[] { permission }, requestCode);
-        }
-        else {
-            cameraPermession=true;
+            ActivityCompat.requestPermissions(newNotificationScreen.this, new String[]{permission}, requestCode);
+        } else {
+            cameraPermession = true;
 
 
 //            Toast.makeText(FormSix.this, "Permission already granted", Toast.LENGTH_SHORT).show();
@@ -218,7 +212,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             return;
         }
 
-        String url ="https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>"+"" ;
+        String url = "https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>" + "";
 
         ApiClient.getClient().getFormTU(url).enqueue(new Callback<FormOneResponse>() {
             @Override
@@ -234,7 +228,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             @Override
             public void onFailure(Call<FormOneResponse> call, Throwable t) {
 
-                  }
+            }
         });
 
 
@@ -251,7 +245,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     PERMISSIONS_STORAGE,
                     REQUEST_EXTERNAL_STORAGE
             );
-        }else{
+        } else {
 
         }
     }
@@ -289,21 +283,20 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
         SecondaryPhoneNumber = findViewById(R.id.f1_secondaryphonenumber);
-        hivDropDown=findViewById(R.id.hivAutoComplete);
-        diabetiesDropDown=findViewById(R.id.diabtesAutoComplete);
-        hospitalSpinner=findViewById(R.id.spinnerHospital);
-        spinnerDoctor=findViewById(R.id.spinnerDoctor);
-
+        hivDropDown = findViewById(R.id.hivAutoComplete);
+        diabetiesDropDown = findViewById(R.id.diabtesAutoComplete);
+        hospitalSpinner = findViewById(R.id.spinnerHospital);
+        spinnerDoctor = findViewById(R.id.spinnerDoctor);
 
 
         type = getIntent().getStringExtra("type");
         if (Objects.equals(getIntent().getStringExtra("type"), "sample")) {
-            formProviderEngagement=false;
+            formProviderEngagement = false;
             dataOf.setVisibility(View.GONE);
             EnrollmentDate.setVisibility(View.GONE);
-            Log.d("typeCheck", type.toString());
+            Log.d("typeCheck", type);
         } else if (Objects.equals(getIntent().getStringExtra("type"), "tree")) {
-            formProviderEngagement=false;
+            formProviderEngagement = false;
             dataOf.setVisibility(View.GONE);
             try {
                 setCurrentDate();
@@ -313,13 +306,13 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             EnrollmentDate.setVisibility(View.GONE);
             notificationImageForm.setVisibility(View.GONE);
 
-            Log.d("typeCheck", type.toString());
+            Log.d("typeCheck", type);
         } else {
-            formProviderEngagement=true;
+            formProviderEngagement = true;
             dataOf.setVisibility(View.VISIBLE);
             EnrollmentDate.setVisibility(View.VISIBLE);
             dataOf.setText("Date of Diagnosis*");
-            Log.d("typeCheckElse", type.toString());
+            Log.d("typeCheckElse", type);
         }
 
 
@@ -337,11 +330,9 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                 checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
                 verifyStoragePermissions(newNotificationScreen.this);
 
-                if(cameraPermession)
-                {
+                if (cameraPermession) {
                     chooseImage(newNotificationScreen.this);
                 }
-
 
 
             }
@@ -358,8 +349,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                 checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
                 verifyStoragePermissions(newNotificationScreen.this);
 
-                if(cameraPermession)
-                {
+                if (cameraPermession) {
                     chooseImage(newNotificationScreen.this);
                 }
             }
@@ -399,7 +389,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             }
         });
 
-            //        NetworkCalls.getDocData(this, getIntent().getStringExtra("hf_id"));
+        //        NetworkCalls.getDocData(this, getIntent().getStringExtra("hf_id"));
 //
 //        spinnerDoctor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -428,9 +418,9 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
                 } else {
                     //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
-                    doctorIdGlobal=DoctorsLists.get(i-1).getIdd();
+                    doctorIdGlobal = DoctorsLists.get(i - 1).getIdd();
 
-                    Log.d("shobhit id " ,doctorIdGlobal+"->"+hfIdGlobal);
+                    Log.d("shobhit id ", doctorIdGlobal + "->" + hfIdGlobal);
 
 
                     try {
@@ -463,12 +453,12 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
                     Log.d("mosojdo", "onItemSelected: " + tu.size());
 
-                  //  Toast.makeText(newNotificationScreen.this, hospitalLists.get(i-1).getnHfId().toString(), Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(newNotificationScreen.this, hospitalLists.get(i-1).getnHfId().toString(), Toast.LENGTH_SHORT).show();
 
-                    hfIdGlobal= hospitalLists.get(i-1).getnHfId().toString();
+                    hfIdGlobal = hospitalLists.get(i - 1).getnHfId();
 
                     try {
-                       NetworkCalls.getDocData(newNotificationScreen.this, hospitalLists.get(i-1).getnHfId().toString() );
+                        NetworkCalls.getDocData(newNotificationScreen.this, hospitalLists.get(i - 1).getnHfId());
                     } catch (Exception e) {
 
                     }
@@ -522,9 +512,9 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     Log.d("mosojdo", "onItemSelected: " + tuId);
                     if (BaseUtils.haveAccess(newNotificationScreen.this)) {
                         if (getIntent().hasExtra("counsel")) {
-                        //     addbtn.setVisibility(View.GONE);
+                            //     addbtn.setVisibility(View.GONE);
                         } else {
-                        //    addbtn.setVisibility(View.VISIBLE);
+                            //    addbtn.setVisibility(View.VISIBLE);
                         }
                     }
 
@@ -544,7 +534,6 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             }
         });
         getTU(newNotificationScreen.this);
-
 
 
         ResidentialDistrict.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -641,42 +630,40 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     }
 
 
-
     private void updateSpinner() {
 
-        hivFilter.add(new PatientFilterDataModel(1,"Reactive"));
-        hivFilter.add(new PatientFilterDataModel(2,"Non-Reactive"));
-        hivFilter.add(new PatientFilterDataModel(3,"Positive"));
-        hivFilter.add(new PatientFilterDataModel(4,"Negative"));
-        hivFilter.add(new PatientFilterDataModel(5,"Test Not Done"));
+        hivFilter.add(new PatientFilterDataModel(1, "Reactive"));
+        hivFilter.add(new PatientFilterDataModel(2, "Non-Reactive"));
+        hivFilter.add(new PatientFilterDataModel(3, "Positive"));
+        hivFilter.add(new PatientFilterDataModel(4, "Negative"));
+        hivFilter.add(new PatientFilterDataModel(5, "Test Not Done"));
 
 
-        diabetiesFilter.add(new PatientFilterDataModel(1,"Non-Diabetics"));
-        diabetiesFilter.add(new PatientFilterDataModel(2,"Diabetics"));
-        diabetiesFilter.add(new PatientFilterDataModel(3,"Test Not Done"));
+        diabetiesFilter.add(new PatientFilterDataModel(1, "Non-Diabetics"));
+        diabetiesFilter.add(new PatientFilterDataModel(2, "Diabetics"));
+        diabetiesFilter.add(new PatientFilterDataModel(3, "Test Not Done"));
 
-        newFilterDropDown hivAdaptee = new newFilterDropDown(this,hivFilter);
+        newFilterDropDown hivAdaptee = new newFilterDropDown(this, hivFilter);
         hivDropDown.setAdapter(hivAdaptee);
 
         hivDropDown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                hivFilterId=(position+1)+"";
-
+                hivFilterId = (position + 1) + "";
 
 
             }
         });
 
-        newFilterDropDown DiabeticAdaptee = new newFilterDropDown(this,diabetiesFilter);
+        newFilterDropDown DiabeticAdaptee = new newFilterDropDown(this, diabetiesFilter);
         diabetiesDropDown.setAdapter(DiabeticAdaptee);
 
         diabetiesDropDown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                diabeticsId=(position+1)+"";
+                diabeticsId = (position + 1) + "";
 
             }
         });
@@ -727,14 +714,14 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
                         for (int i = 0; i < genderStrings.size(); i++) {
 
-                            Log.d("genderSelection", genderStrings.get(i).toString() + " " + model.getcTyp());
+                            Log.d("genderSelection", genderStrings.get(i) + " " + model.getcTyp());
 
 
                             if (genders.get(i).getC_val().equals(model.getcTyp())) {
                                 Gender.setSelection(i + 1);
                                 break;
                             } else {
-                                Log.d("genderSelection", genderStrings.get(i).toString() + " " + model.getcTyp().toLowerCase());
+                                Log.d("genderSelection", genderStrings.get(i) + " " + model.getcTyp().toLowerCase());
                             }
                         }
 
@@ -837,7 +824,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         //   CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).start(FormSix.this);
     }
 
-    private void spinnerSelect(final String type[], List<FormOneData> formOneData, Spinner spinner) {
+    private void spinnerSelect(final String[] type, List<FormOneData> formOneData, Spinner spinner) {
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -869,22 +856,13 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         switch (view.getId()) {
 
             case R.id.bt_proceedone:
-                proceedbtn.setEnabled(false);
+                Log.d("shobhit__", "button click");
                 Toast.makeText(this, "Please wait from is submitting", Toast.LENGTH_SHORT).show();
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("Shobhit_Click","checking");
-                        // Enable the button after the delay
-                        proceedbtn.setEnabled(true);
-                    }
-                }, 6000);
-
                 if (isValidate()) {
                     callCheckTheDuplicay();
 //                    sendForm();
                 }
+
                 break;
 
             case R.id.backbtn:
@@ -974,7 +952,15 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     }*/
                     notificationImageUri = data.getData();
                     patientNotificationImg.setImageURI(notificationImageUri);
-                 //   startCrop(notificationImageUri);
+
+
+                    try {
+                        startCrop(notificationImageUri);
+                    } catch (Exception e) {
+                        Log.d("crash", e.toString());
+                    }
+
+
                     /*performCrop(frontselectedImageUri);*/
                     //  testReportFrontImg.setImageURI(frontselectedImageUri);
                 } else {
@@ -986,7 +972,13 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     //  testReportBackImg.setImageURI(backselectedImageUri);
                     bankImageUri = data.getData();
                     patientBankImg.setImageURI(bankImageUri);
-               //     startCrop(bankImageUri);
+
+                    try {
+                        startCrop(bankImageUri);
+                    } catch (Exception e) {
+
+                    }
+
                     //testReportBackImg.setImageURI(backselectedImageUri);
                 }
 
@@ -1010,7 +1002,8 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     //    testReportFrontImg.setImageURI(frontselectedImageUri);
                  /*   } else {
                         testReportFrontImg.setImageBitmap(result.getBitmap());
-                    }*/
+                    }
+                    */
 //                    Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
 //                    notificationImageUri = getImageUri(getApplicationContext(), selectedImage);
 //                    patientNotificationImg.setImageURI(notificationImageUri);
@@ -1026,11 +1019,11 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 //                    }
 
 
-                    notificationImageUri= CommonImageUri;
+                    notificationImageUri = CommonImageUri;
                     patientNotificationImg.setImageURI(notificationImageUri);
                     try {
-//                        startCrop(notificationImageUri);
-                    }catch (Exception e){
+                        startCrop(notificationImageUri);
+                    } catch (Exception e) {
                         Log.e("CROP_IMAGE", e.getMessage());
 
                     }
@@ -1049,13 +1042,13 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 //                    patientBankImg.setImageURI(bankImageUri);
 //                    startCrop(bankImageUri);
 
-                    bankImageUri=CommonImageUri;
+                    bankImageUri = CommonImageUri;
                     patientBankImg.setImageURI(bankImageUri);
 
 
                     try {
-//                        startCrop(bankImageUri);
-                    }catch (Exception e){
+                        startCrop(bankImageUri);
+                    } catch (Exception e) {
                         Log.e("CROP_IMAGE", e.getMessage());
 
                     }
@@ -1066,21 +1059,25 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                 // }
             } else if (requestCode == UCrop.REQUEST_CROP) {
                 if (data != null) {
+                    Uri uri = UCrop.getOutput(data);
+                    Log.d("chekingDataUri", uri.toString());
                     if (imageType.equals("front")) {
-                        //CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-                        //   frontselectedImageUri = data.getData();                                                         // Get the image file URI
-                        //   frontselectedImageUri = result.getUri();                                                         // Get the image file URI
+
+                        Log.d("chekingData", "1stClick");
+                        //CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                        //   frontselectedImageUri = data.getData();                  // Get the image file URI
+                        //   frontselectedImageUri = result.getUri();                 // Get the image file URI
                         /*   if (frontselectedImageUri != null) {*/
                         //  Picasso.with(this).load(frontselectedImageUri).into(testReportFrontImg);
                         // testReportFrontImg.setImageURI(frontselectedImageUri);
-                 /*   } else {
-                        testReportFrontImg.setImageBitmap(result.getBitmap());
-                    }*/
+                         /*   } else {
+                                testReportFrontImg.setImageBitmap(result.getBitmap());
+                            }*/
                         // get the returned data
-                        Uri uri = UCrop.getOutput(data);
                         notificationImageUri = uri;
                         patientNotificationImg.setImageURI(notificationImageUri);
+                        noti = new Imagee().getEncodedImage(notificationImageUri, newNotificationScreen.this);
                     } else {
                 /*        // CropImage.ActivityResult result = CropImage.getActivityResult(data);
                         backselectedImageUri = data.getData();                                                         // Get the image file URI
@@ -1091,10 +1088,11 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
                         //testReportBackImg.setImageURI(selectedImageUri);
                         // get the returned data
-                        Uri uri = UCrop.getOutput(data);
+                        Log.d("chekingData", "2stClick");
                         bankImageUri = uri;
                         patientBankImg.setImageURI(bankImageUri);
-
+                        patientNotificationImg.setImageURI(notificationImageUri);
+                        bank = new Imagee().getEncodedImage(bankImageUri, newNotificationScreen.this);
                     }
 
                 }
@@ -1111,13 +1109,17 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
     private void startCrop(Uri uri) {
         String destinationFileName = "";
-        destinationFileName += ".jpg";
+        destinationFileName +=System.currentTimeMillis()+".jpg";
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(getCacheDir(), destinationFileName)));
-//        uCrop.withAspectRatio(1, 1);
-//        uCrop.withAspectRatio(3, 4);
-//        uCrop.withAspectRatio();
-        uCrop.withAspectRatio(1, 2);
-//        uCrop.withAspectRatio(16, 9);
+
+        /*
+            //uCrop.withAspectRatio(1, 1);
+            //uCrop.withAspectRatio(3, 4);
+            //uCrop.withAspectRatio();
+            //uCrop.withAspectRatio(16, 9);
+         */
+
+
         uCrop.withMaxResultSize(450, 450);
         uCrop.withOptions(getUcropOptions());
         uCrop.start(newNotificationScreen.this);
@@ -1125,21 +1127,25 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
     private UCrop.Options getUcropOptions() {
         UCrop.Options options = new UCrop.Options();
-        options.setCompressionQuality(100);
 
-        //compress type
-//        options.setCompressionFormat(Bitmap.CompressFormat.PNG);
-//        options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
+         options.setCompressionQuality(100);
+
+        //        compress type
+        //        options.setCompressionFormat(Bitmap.CompressFormat.PNG);
+        //        options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
 
         //UI
+
         options.setHideBottomControls(false);
-        options.setFreeStyleCropEnabled(true);
-/*
+        options.setFreeStyleCropEnabled(false);
+
+        /*
         //colors
         options.setStatusBarColor(getResources().getColor(R.color.black));
         options.setToolbarColor(getResources().getColor(R.color.black));
 
         options.setToolbarTitle("Crop image");*/
+
         return options;
 
     }
@@ -1149,8 +1155,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
 
         setSpinnerAdapter(hospitalSpinner, hospitalName);
-    //    ResidentialTU.setSelection(1);
-
+        //    ResidentialTU.setSelection(1);
 
 
 //        if (isFirstTymOnThisPage) {
@@ -1199,13 +1204,14 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     }
 
 
-    public  void getHospitalData(Context context, String TuId, Boolean navigate) {
+    public void getHospitalData(Context context, String TuId, Boolean navigate) {
         //Log.d("mosojdo","API CalleEd");
         //    BaseUtils.showToast(HospitalsList.this, "Please wait while we fetch data.");
-        try{
+        try {
             hospitalLists.clear();
             setHospitalRecycler();
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         apiInterface = ApiClient.getClient();
         progressDialog = new GlobalProgressDialog(newNotificationScreen.this);
         progressDialog.showProgressBar();
@@ -1235,7 +1241,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                         hospitalLists = response.body().getUserData();
 
                         hospitalName.clear();
-                        for(int i=0;i<hospitalLists.size();i++){
+                        for (int i = 0; i < hospitalLists.size(); i++) {
 
                             hospitalName.add(hospitalLists.get(i).getcHfNam());
 
@@ -1276,8 +1282,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     }
 
 
-
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
@@ -1372,8 +1377,9 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             String noti = "";
             String bank = "";
 
-            Log.d("checking",getIntent().getStringExtra("pateintId"));
-            Log.d("finalUrl",url);
+            Log.d("checking", getIntent().getStringExtra("pateintId"));
+            Log.d("finalUrl", url);
+
 
             if (notificationImageUri != null) {
                 noti = new Imagee().getEncodedImage(notificationImageUri, newNotificationScreen.this);
@@ -1415,12 +1421,12 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     n_st_id_res, n_dis_id_res,
                     n_tu_id_res, c_mob,
                     c_mob_2, c_not_img,
-                    c_bnk_img, d_diag_dt,n_cfrm).enqueue(new Callback<AddDocResponse>() {
+                    c_bnk_img, d_diag_dt, n_cfrm).enqueue(new Callback<AddDocResponse>() {
                 @Override
                 public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
                     if (response.isSuccessful()) {
                         //  parentDataTestReportResults = response.body().getUser_data();
-                        Log.d("responseSuccessfull","done here is code ");
+                        Log.d("responseSuccessfull", "done here is code ");
 //                        startActivity(new Intent(newNotificationScreen.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     }
 
@@ -1456,12 +1462,14 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         //  Log.d("dkl9", "getPatientdd: " + getIntent().getStringExtra("hf_id"));
         //   Log.d("dkl9", "getPatiena: " + BaseUtils.getUserInfo(FormOne.this).getnUserLevel());
 
-        String noti = "";
-        String bank = "";
 
 //
 //        Log.d("imageUriNotification",notificationImageUri.toString());
 //        Log.d("imageUriBank",bankImageUri.toString());
+
+
+        Log.d("checkingDataImage__sho", notificationImageUri.toString() + "--" + bankImageUri.toString());
+
 
         if (notificationImageUri != null) {
             noti = new Imagee().getEncodedImage(notificationImageUri, newNotificationScreen.this);
@@ -1470,8 +1478,20 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             bank = new Imagee().getEncodedImage(bankImageUri, newNotificationScreen.this);
         }
 
-        if(formProviderEngagement){
-            Log.d("checkSendFomr","from provider engagement");
+        if (formProviderEngagement) {
+            Log.d("checkSendFomr", "from provider engagement");
+
+
+            Log.d("checkingDataForLayout", "uid " + BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnStId() +
+                    "-2->" + BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnDisId() + "-3-> " + BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnTuId() +
+                    "-4->" + hfIdGlobal + "-5->" + doctorIdGlobal + "-6->" + EnrollmentDate.getText().toString() + "-7->" + EnrolmentId.getText().toString() +
+                    "-8->" + PatientName.getText().toString() + "-9->" + Age.getText().toString() + "-10->" + genders.get(Gender.getSelectedItemPosition() - 1).getId() +
+                    "-11->" + Weight.getText().toString());
+
+
+            Log.d("checkingDataImage", noti + "   -----    " + bank);
+
+
             NetworkCalls.sendFormNewNotification(
                     newNotificationScreen.this,
                     BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnStId(),
@@ -1505,12 +1525,12 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     bank,
                     BaseUtils.getUserInfo(newNotificationScreen.this).getN_staff_sanc(),
                     EnrollmentDate.getText().toString(),
-                    "1",true,hivFilterId,diabeticsId
+                    "1", true, hivFilterId, diabeticsId
 
             );
-        }else{
+        } else {
 
-            Log.d("checkSendFomr","aagaya");
+            Log.d("checkSendFomr", "aagaya");
             NetworkCalls.sendFormNewNotification(
                     newNotificationScreen.this,
                     BaseUtils.getUserOtherInfo(newNotificationScreen.this).getnStId(),
@@ -1544,7 +1564,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                     bank,
                     BaseUtils.getUserInfo(newNotificationScreen.this).getN_staff_sanc(),
                     EnrollmentDate.getText().toString(),
-                    "0",false,hivFilterId,diabeticsId
+                    "0", false, hivFilterId, diabeticsId
 
             );
         }
@@ -1575,7 +1595,6 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     private void callCheckTheDuplicay() {
 
 
-
         if (!BaseUtils.isNetworkAvailable(this)) {
             Toast.makeText(this, "Please Check your internet  Connectivity", Toast.LENGTH_SHORT).show();
             //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
@@ -1584,25 +1603,23 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         }
 
 
-        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>"+"'"+EnrolmentId.getText().toString()+"'";
-
-        Log.d("checking_sho",url);
+        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>" + "'" + EnrolmentId.getText().toString() + "'";
+//_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_api_fnd_nksh&w=n_nksh_id<<EQUALTO>>'25865'
+        Log.d("checking_sho", url);
         ApiClient.getClient().getNotificationDuplicacy(url).enqueue(new Callback<PatientNotificationDuplicacyResponseModel>() {
             @Override
             public void onResponse(Call<PatientNotificationDuplicacyResponseModel> call, Response<PatientNotificationDuplicacyResponseModel> response) {
 
 
-                if(response.isSuccessful())
-                {
+                if (response.isSuccessful()) {
 
-                    Log.d("checking_ohs",response.body().getStatus().toString());
-                    Log.d("checking_ohs","kasjdhfaslkdjfh");
+                    Log.d("checking_ohs", response.body().getStatus().toString());
+                    Log.d("checking_ohs", "kasjdhfaslkdjfh");
 
-                    if(!response.body().getStatus())
-                    {
+                    if (!response.body().getStatus()) {
                         sendForm();
 //                        Toast.makeText(FormOne.this, "false", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         Toast.makeText(newNotificationScreen.this, "Paltient Already Registered with the Programme", Toast.LENGTH_SHORT).show();
                     }
 
@@ -1610,22 +1627,15 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
                 }
 
 
-
-
-
-
-
             }
 
             @Override
             public void onFailure(Call<PatientNotificationDuplicacyResponseModel> call, Throwable t) {
 
-                Log.d("checking__",t.toString());
+                Log.d("checking__", t.toString());
 
             }
         });
-
-
 
 
     }
@@ -1666,11 +1676,10 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
         if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(newNotificationScreen.this, "Camera Permission Granted", Toast.LENGTH_SHORT) .show();
-                cameraPermession=true;
-            }
-            else {
-                Toast.makeText(newNotificationScreen.this, "Camera Permission Denied", Toast.LENGTH_SHORT) .show();
+                Toast.makeText(newNotificationScreen.this, "Camera Permission Granted", Toast.LENGTH_SHORT).show();
+                cameraPermession = true;
+            } else {
+                Toast.makeText(newNotificationScreen.this, "Camera Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -1843,8 +1852,6 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
     }
 
 
-
-
     public BroadcastReceiver broadcastReceiverDoc = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, @NotNull Intent intent) {
@@ -1867,20 +1874,20 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         LiveData<List<RoomDoctorsList>> roomDoc = dataBase.customerDao().getSelectedDoctorsFromRoom(hfIdGlobal);
         roomDoc.observe(newNotificationScreen.this, roomDoctorsLists -> {
 
-            Log.d("shobhit_docName","inside room ");
+            Log.d("shobhit_docName", "inside room ");
 
-            Log.d("shobhit_docName",roomDoctorsLists.size()+"");
+            Log.d("shobhit_docName", roomDoctorsLists.size() + "");
             doctorName.clear();
 
-            DoctorsLists= roomDoctorsLists;
+            DoctorsLists = roomDoctorsLists;
 
 
-            for(int i=0;i<roomDoctorsLists.size();i++){
+            for (int i = 0; i < roomDoctorsLists.size(); i++) {
 
 
                 doctorName.add(roomDoctorsLists.get(i).getDocname());
 
-                Log.d("shobhit_docName",roomDoctorsLists.get(i).getDocname());
+                Log.d("shobhit_docName", roomDoctorsLists.get(i).getDocname());
             }
 
 

@@ -7,13 +7,13 @@ plugins {
 
 android {
     namespace 'com.smit.ppsa'
-    compileSdk 32
+    compileSdk 33
     defaultConfig {
         applicationId "com.smit.ppsa"
         minSdk 21
-        targetSdk 32
-        versionCode 56
-        versionName "6.6"
+        targetSdk 33
+        versionCode 61
+        versionName "6.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

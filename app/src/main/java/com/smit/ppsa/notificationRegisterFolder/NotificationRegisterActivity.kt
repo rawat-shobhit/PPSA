@@ -110,8 +110,8 @@ class NotificationRegisterActivity : AppCompatActivity() {
 
         dateFrom.text=getCurrentDate()
         dateTo.text=getCurrentDate()
-        dateToFinal="'"+getCurrentDate()+"'"
-        dateFromFinal="'"+getCurrentDate()+"'"
+        dateToFinal=getCurrentDate()
+        dateFromFinal=getCurrentDate()
 
         dateTo.setOnClickListener(){
 
@@ -125,7 +125,7 @@ class NotificationRegisterActivity : AppCompatActivity() {
                     val sdf = SimpleDateFormat(myFormat, Locale.US)
 
                     dateTo.setText(sdf.format(myCalendar.time));
-                    dateToFinal="'"+sdf.format(myCalendar.time)+"'"
+                    dateToFinal=sdf.format(myCalendar.time)
                     Log.d("checking_", dateToFinal);
                     Log.d("checking", dateFromFinal);
                 }
@@ -156,7 +156,7 @@ class NotificationRegisterActivity : AppCompatActivity() {
                     val sdf = SimpleDateFormat(myFormat, Locale.US)
 
                     dateFrom.setText(sdf.format(myCalendar.time));
-                    dateFromFinal="'"+sdf.format(myCalendar.time)+"'"
+                    dateFromFinal=sdf.format(myCalendar.time)
                     Log.d("checking", dateToFinal);
                     Log.d("checking_", dateFromFinal);
                 }
@@ -200,7 +200,7 @@ class NotificationRegisterActivity : AppCompatActivity() {
             return
         }
         //https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_m_followup&w=prd<<GTEQ>>'2023-07-01'<<AND>>prd<<LTEQ>>'2023-07-31'<<AND>>n_user_id<<EQUALTO>>1380
-        //https://nikshayppsa.hlfppt.org/_api-v1_/_get_notinf.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_notfy&w=5&sanc=802&sdt=2023-08-01&edt=2023-08-31
+        //https://nikshayppsa.hlfppt.org/_api-v1_/_get_notinf.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_notfy&w=4&sanc=819&sdt='2023-09-02'&edt='2023-09-29'
         Log.d("dataCheckPerson",BaseUtils.getUserInfo(this).getnAccessRights()+"<-rights  nStaff->  "+
                 BaseUtils.getUserInfo(this).getN_staff_sanc())
         val url = "_get_notinf.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_rpt_notfy&w="+BaseUtils.getUserInfo(this).getnAccessRights().toString()+"&sanc="+BaseUtils.getUserInfo(this).getN_staff_sanc()+"&sdt="+dateFromFinal+"&edt="+dateToFinal ;

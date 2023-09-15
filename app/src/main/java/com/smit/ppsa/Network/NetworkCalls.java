@@ -2280,9 +2280,9 @@ public class NetworkCalls {
                     if (response.isSuccessful()) {
 
                         if (response.body().isStatus()) {
-                            Log.d("shobhit_2",response.body().toString());
-                            Log.d("shobhit_2",response.body().getUserData().toString());
-                            Log.d("shobhit_2",response.body().getMessage());
+                            Log.d("shobhit_1",response.body().toString());
+                            Log.d("shobhit_1",response.body().getUserData().toString());
+                            Log.d("shobhit_1",response.body().getMessage());
 
 
                             BaseUtils.setPatientName(context,c_pat_namm);
