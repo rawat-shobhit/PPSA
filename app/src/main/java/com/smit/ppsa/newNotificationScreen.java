@@ -1060,7 +1060,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
             } else if (requestCode == UCrop.REQUEST_CROP) {
                 if (data != null) {
                     Uri uri = UCrop.getOutput(data);
-                    Log.d("chekingDataUri", uri.toString());
+
                     if (imageType.equals("front")) {
 
 
@@ -1468,7 +1468,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 //        Log.d("imageUriBank",bankImageUri.toString());
 
 
-        Log.d("checkingDataImage__sho", notificationImageUri.toString() + "--" + bankImageUri.toString());
+//        Log.d("checkingDataImage__sho", notificationImageUri.toString() + "--" + bankImageUri.toString());
 
 
         if (notificationImageUri != null) {
