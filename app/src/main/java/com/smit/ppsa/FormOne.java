@@ -793,6 +793,12 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
                     }*/
                     notificationImageUri = data.getData();
                     patientNotificationImg.setImageURI(notificationImageUri);
+                    try {
+                        startCrop(notificationImageUri);
+                    } catch (Exception e) {
+                        Log.d("crash", e.toString());
+                    }
+
 //                    startCrop(notificationImageUri);
                     /*performCrop(frontselectedImageUri);*/
                     //  testReportFrontImg.setImageURI(frontselectedImageUri);
@@ -805,6 +811,11 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
                     //  testReportBackImg.setImageURI(backselectedImageUri);
                     bankImageUri = data.getData();
                     patientBankImg.setImageURI(bankImageUri);
+                    try {
+                        startCrop(bankImageUri);
+                    } catch (Exception e) {
+
+                    }
 //                    startCrop(bankImageUri);
                     //testReportBackImg.setImageURI(backselectedImageUri);
                 }
@@ -835,12 +846,13 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 //                    patientNotificationImg.setImageURI(notificationImageUri);
                     notificationImageUri = CommonImageUri;
                     patientNotificationImg.setImageURI(notificationImageUri);
+
                     try {
-//                        startCrop(notificationImageUri);
+                        startCrop(notificationImageUri);
                     } catch (Exception e) {
                         Log.e("CROP_IMAGE", e.getMessage());
-
                     }
+
 //                    startCrop(notificationImageUri);
                     /*performCrop(frontselectedImageUri);*/
                     //  testReportFrontImg.setImageURI(frontselectedImageUri);
@@ -858,7 +870,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 
 
                     try {
-//                        startCrop(bankImageUri);
+                        startCrop(bankImageUri);
                     } catch (Exception e) {
                         Log.e("CROP_IMAGE", e.getMessage());
 
@@ -884,6 +896,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
                         Uri uri = UCrop.getOutput(data);
                         notificationImageUri = uri;
                         patientNotificationImg.setImageURI(notificationImageUri);
+
                     } else {
                 /*        // CropImage.ActivityResult result = CropImage.getActivityResult(data);
                         backselectedImageUri = data.getData();                                                         // Get the image file URI
@@ -914,7 +927,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 
     private void startCrop(Uri uri) {
         String destinationFileName = "";
-        destinationFileName += ".jpg";
+        destinationFileName +=System.currentTimeMillis()+".jpg";
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(getCacheDir(), destinationFileName)));
         //uCrop.withAspectRatio(1, 1);
 //        uCrop.withAspectRatio(3, 4);
