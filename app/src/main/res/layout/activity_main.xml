@@ -1139,7 +1139,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunitosans_bold_2"
                     android:gravity="center"
-                    android:text="Version 7.1"
+                    android:text="Version 7.2"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     android:layout_marginBottom="@dimen/_20sdp"/>

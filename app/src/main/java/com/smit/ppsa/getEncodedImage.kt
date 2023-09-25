@@ -9,12 +9,12 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 
 class Imagee{
-//    fun getEncodedImage(uri: Uri, context: Context): String {
-//        val inputStreamBack = context.contentResolver.openInputStream(uri)
-//        val imageByteArrayBack = inputStreamBack?.readBytes()
-//        var encodedStringBack: String? = null
-//        return getBase64String().convertByteArray(imageByteArrayBack)
-//    }
+    fun getEncodedImageOld(uri: Uri, context: Context): String {
+        val inputStreamBack = context.contentResolver.openInputStream(uri)
+        val imageByteArrayBack = inputStreamBack?.readBytes()
+        var encodedStringBack: String? = null
+        return getBase64String().convertByteArray(imageByteArrayBack)
+    }
 
     fun getEncodedImage(uri: Uri, context: Context): String {
         try {
