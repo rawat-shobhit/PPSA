@@ -60,7 +60,8 @@ class UploadDoc : AppCompatActivity() {
     private lateinit var notificationDownload: TextView
     private lateinit var backbtn: ImageView
     private lateinit var proceed: CardView
-
+    private var apiCount=0;
+    private lateinit var progressDialog: GlobalProgressDialog
     var manager: DownloadManager? = null
 
     lateinit var adharDownload: TextView
@@ -115,6 +116,7 @@ class UploadDoc : AppCompatActivity() {
         setContentView(R.layout.activity_upload_doc)
         manager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
 
+        progressDialog = GlobalProgressDialog(this)
         init()
     }
 
@@ -211,6 +213,7 @@ class UploadDoc : AppCompatActivity() {
 
         backbtn.setOnClickListener { super.onBackPressed() }
         proceed.setOnClickListener {
+
             if (adhaar_img == "" && presc_img == "" && bank_img == ""
                 && test_img == "" && hiv_img == "" && udst_img == ""
                 && diabetes_img == "" && additionalPres_img == "" && consent_img ==
@@ -224,17 +227,30 @@ class UploadDoc : AppCompatActivity() {
                 )
             } else {
 
+                progressDialog.showProgressBar()
 //                Log.d("checkingClick",To)
 //                Toast.makeText(this,"clicked",Toast.LENGTH_SHORT).show()
-                if (adhaar_img == "" || presc_img == "" ||  test_img == "" || hiv_img == "" || udst_img == ""
-                    || diabetes_img == "" || additionalPres_img == "" || consent_img ==
+                if (adhaar_img != "" || presc_img != "" ||  test_img != "" || hiv_img != "" || udst_img != ""
+                    || diabetes_img != "" || additionalPres_img != "" || consent_img !=
                     ""
                 ){
+                    Log.d("checking___","photo")
+                    if(apiCount<=1){
+                        apiCount++;
+                    }
+                    Log.d("checking__c",apiCount.toString())
                     uploadDocuments()
+
                 }
 
 
                 if (notification_img != "" || bank_img != "") {
+                    Log.d("checking___","bankImage")
+                    if(apiCount<=1){
+                        apiCount++;
+                    }
+
+                    Log.d("checking__c",apiCount.toString())
                     uploadBankNotificationDocuments()
                 }
             }
@@ -750,7 +766,9 @@ class UploadDoc : AppCompatActivity() {
                 "Please Check your internet  Connectivity"
             ) //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
 
-
+            try {
+                progressDialog.hideProgressBar()
+            }catch (e:Exception){}
             return
         }
 
@@ -788,42 +806,38 @@ class UploadDoc : AppCompatActivity() {
 //            "_data_agentUPD.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&t=_t_pat_docs&w=n_enroll_id<<EQUALTO>>" + patient.id
 
         Log.d("finalUrl784",url.toString());
-        val apiClient = when (isUploaded) {
-            true -> ApiClient.getClient().uploadDocumentIfResult(url, map)
-
-            else -> ApiClient.getClient().uploadDocumentIfNoResult(
-                n_st_id,
-                n_dis_id,
-                n_tu_id,
-                n_hf_id,
-                n_doc_id,
-                n_enroll_id,
-                map,
-                n_lat,
-                n_lng,
-                n_sanc_id,
-                n_user_id
-            )
-        }
+        val apiClient = ApiClient.getClient().uploadDocumentIfResult(url, map)
         apiClient.enqueue(object : Callback<AddDocResponse> {
             override fun onResponse(
                 call: Call<AddDocResponse>,
                 response: Response<AddDocResponse>
             ) {
+                try {
+                    progressDialog.hideProgressBar()
+                }catch (e:Exception){}
                 if (response.isSuccessful) {
                     if (response.body()!!.isStatus) {
                         BaseUtils.showToast(this@UploadDoc, "Document uploaded successfully")
-                        startActivity(
-                            Intent(this@UploadDoc, MainActivity::class.java).setFlags(
-                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        apiCount--;
+                        Log.d("checking__c",apiCount.toString())
+
+                            startActivity(
+                                Intent(this@UploadDoc, MainActivity::class.java).setFlags(
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                )
                             )
-                        )
+
+
+                    }else{
+
+                            Log.d("dataFalior842",response.message());
+
                     }
                 }
             }
 
             override fun onFailure(call: Call<AddDocResponse>, t: Throwable) {
-
+                Log.d("dataonFalior849",t.toString())
             }
         })
 
@@ -836,7 +850,9 @@ class UploadDoc : AppCompatActivity() {
                 "Please Check your internet  Connectivity"
             ) //   LocalBroadcastManager.getInstance(CounsellingForm.this).sendBroadcast(new Intent().setAction("").putExtra("setRecycler", ""));
 
-
+            try {
+                progressDialog.hideProgressBar()
+            }catch (e:Exception){}
             return
         }
 
@@ -922,6 +938,11 @@ class UploadDoc : AppCompatActivity() {
                 response: Response<AddDocResponse>
             ) {
 
+
+                try {
+                    progressDialog.hideProgressBar()
+                }catch (e:Exception){}
+
                 Log.d("dataCheck_response",response.message().toString());
                 if (response.isSuccessful) {
                     Log.d("dataCheck_response",response.body()!!.message);
@@ -931,17 +952,25 @@ class UploadDoc : AppCompatActivity() {
 
 
                         BaseUtils.showToast(this@UploadDoc, "Document uploaded successfully")
-                        startActivity(
-                            Intent(this@UploadDoc, MainActivity::class.java).setFlags(
-                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        apiCount--;
+                        Log.d("checking__c",apiCount.toString())
+
+                            startActivity(
+                                Intent(this@UploadDoc, MainActivity::class.java).setFlags(
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                )
                             )
-                        )
+
+
+                    }else{
+
+                        Log.d("dataFalior1",response.message().toString());
                     }
                 }
             }
 
             override fun onFailure(call: Call<AddDocResponse>, t: Throwable) {
-                Log.d("dataOnFalior",t.toString());
+                Log.d("dataOnFalior976",t.toString());
             }
         })
 
@@ -978,12 +1007,16 @@ class UploadDoc : AppCompatActivity() {
                     if (response.isSuccessful) {
                         if (response.body()!!.isStatus) {
                             finish()
+                        }else{
+
+                                Log.d("dataFalior",response.message());
+
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<AddDocResponse>, t: Throwable) {
-
+                        Log.d("dataOnFalior1022",t.toString())
                 }
             })
 
@@ -1047,7 +1080,7 @@ class UploadDoc : AppCompatActivity() {
 
                         }catch (e:Exception){
                             Log.d("crash_image",e.toString())
-                            isUploaded = false
+
                         }
 
 
