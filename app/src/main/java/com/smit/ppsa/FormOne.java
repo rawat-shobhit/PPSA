@@ -93,7 +93,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
     List<String> tuStrings = new ArrayList<>();
     private List<FormOneData> tu = new ArrayList<>();
     String lat = "0", lng = "0";
-    String nCfrm="0";
+    String nCfrm = "0";
     private AppDataBase dataBase;
     private String[] st_id;
     private String st_id_res = "";
@@ -239,7 +239,7 @@ public class FormOne extends AppCompatActivity implements View.OnClickListener {
 
             EnrollmentDate.setOnClickListener(null);
 
-            nCfrm="1";
+            nCfrm = "1";
             Calendar calendar = Calendar.getInstance();
             Date currentDate = calendar.getTime();
 
@@ -743,11 +743,9 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
             return false;
         }
 
-        if(Objects.equals(type, "normal"))
-        {
-            if(notificationImageUri == null)
-            {
-                BaseUtils.showToast(this,"Please Upload notification image");
+        if (Objects.equals(type, "normal")) {
+            if (notificationImageUri == null) {
+                BaseUtils.showToast(this, "Please Upload notification image");
                 return false;
             }
         }
@@ -927,7 +925,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
 
     private void startCrop(Uri uri) {
         String destinationFileName = "";
-        destinationFileName +=System.currentTimeMillis()+".jpg";
+        destinationFileName += System.currentTimeMillis() + ".jpg";
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(getCacheDir(), destinationFileName)));
         //uCrop.withAspectRatio(1, 1);
 //        uCrop.withAspectRatio(3, 4);
@@ -1128,7 +1126,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
                     , n_lng,
                     c_bnk_img,
                     c_not_img,
-                    n_sac_id, n_user_id,d_diag_dt,n_cfrm,n_hiv,n_diab
+                    n_sac_id, n_user_id, d_diag_dt, n_cfrm, n_hiv, n_diab
             ).enqueue(new Callback<AddDocResponse>() {
                 @Override
                 public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
@@ -1304,42 +1302,85 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
             BaseUtils.setPatientName(this, PatientName.getText().toString());
 
 
-            NetworkCalls.sendForm(
-                    FormOne.this,
-                    BaseUtils.getUserOtherInfo(FormOne.this).getnStId(),
-                    BaseUtils.getUserOtherInfo(FormOne.this).getnDisId(),
-                    BaseUtils.getUserOtherInfo(FormOne.this).getnTuId(),
-                    getIntent().getStringExtra("hf_id"),
-                    getIntent().getStringExtra("doc_id"),
-                    EnrollmentDate.getText().toString(),
-                    EnrolmentId.getText().toString(),
-                    PatientName.getText().toString(),
-                    Age.getText().toString(),
-                    genders.get(Gender.getSelectedItemPosition() - 1).getId(),
-                    Weight.getText().toString(),
-                    Height.getText().toString(),
-                    Address.getText().toString(),
-                    Taluka.getText().toString(),
-                    Town.getText().toString(),
-                    Ward.getText().toString(),
-                    Landmark.getText().toString(),
-                    Pincode.getText().toString(),
-                    st_id_res,
-                    dis_id_res,
-                    tuString.getText().toString(),
-                    PrimaryPhoneNumber.getText().toString(),
-                    SecondaryPhoneNumber.getText().toString(),
-                    lat, lng,
-                    BaseUtils.getUserInfo(FormOne.this).getId(),
-                    type,
-                    true,
-                    noti,
-                    bank,
-                    BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc(),
-                    EnrollmentDate.getText().toString(),
-                    "0", false, hivFilterId, diabeticsId
+            if (Objects.equals(getIntent().getStringExtra("type"), "tree")) {
 
-            );
+                NetworkCalls.sendFormWithoutNotificationImage(
+                        FormOne.this,
+                        BaseUtils.getUserOtherInfo(FormOne.this).getnStId(),
+                        BaseUtils.getUserOtherInfo(FormOne.this).getnDisId(),
+                        BaseUtils.getUserOtherInfo(FormOne.this).getnTuId(),
+                        getIntent().getStringExtra("hf_id"),
+                        getIntent().getStringExtra("doc_id"),
+                        EnrollmentDate.getText().toString(),
+                        EnrolmentId.getText().toString(),
+                        PatientName.getText().toString(),
+                        Age.getText().toString(),
+                        genders.get(Gender.getSelectedItemPosition() - 1).getId(),
+                        Weight.getText().toString(),
+                        Height.getText().toString(),
+                        Address.getText().toString(),
+                        Taluka.getText().toString(),
+                        Town.getText().toString(),
+                        Ward.getText().toString(),
+                        Landmark.getText().toString(),
+                        Pincode.getText().toString(),
+                        st_id_res,
+                        dis_id_res,
+                        tuString.getText().toString(),
+                        PrimaryPhoneNumber.getText().toString(),
+                        SecondaryPhoneNumber.getText().toString(),
+                        lat, lng,
+                        BaseUtils.getUserInfo(FormOne.this).getId(),
+                        type,
+                        true,
+                        noti,
+                        bank,
+                        BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc(),
+                        EnrollmentDate.getText().toString(),
+                        "0", false, hivFilterId, diabeticsId
+
+                );
+
+            } else {
+                NetworkCalls.sendForm(
+                        FormOne.this,
+                        BaseUtils.getUserOtherInfo(FormOne.this).getnStId(),
+                        BaseUtils.getUserOtherInfo(FormOne.this).getnDisId(),
+                        BaseUtils.getUserOtherInfo(FormOne.this).getnTuId(),
+                        getIntent().getStringExtra("hf_id"),
+                        getIntent().getStringExtra("doc_id"),
+                        EnrollmentDate.getText().toString(),
+                        EnrolmentId.getText().toString(),
+                        PatientName.getText().toString(),
+                        Age.getText().toString(),
+                        genders.get(Gender.getSelectedItemPosition() - 1).getId(),
+                        Weight.getText().toString(),
+                        Height.getText().toString(),
+                        Address.getText().toString(),
+                        Taluka.getText().toString(),
+                        Town.getText().toString(),
+                        Ward.getText().toString(),
+                        Landmark.getText().toString(),
+                        Pincode.getText().toString(),
+                        st_id_res,
+                        dis_id_res,
+                        tuString.getText().toString(),
+                        PrimaryPhoneNumber.getText().toString(),
+                        SecondaryPhoneNumber.getText().toString(),
+                        lat, lng,
+                        BaseUtils.getUserInfo(FormOne.this).getId(),
+                        type,
+                        true,
+                        noti,
+                        bank,
+                        BaseUtils.getUserInfo(FormOne.this).getN_staff_sanc(),
+                        EnrollmentDate.getText().toString(),
+                        "0", false, hivFilterId, diabeticsId
+
+                );
+            }
+
+
         }
 
 //        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_enrol&w=n_tu_id<<GT>>0<<AND>><<SBRK>>c_mob<<SLIKE>>" + mob + "<<ELIKE>><<OR>>c_mob_2<<SLIKE>>" + mob + "<<ELIKE>><<EBRK>>";
@@ -1465,21 +1506,21 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_get_.php?k=glgjieyWGNfkg783hkd7tujavdjT
         };
 
 
-            EnrollmentDate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        EnrollmentDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                    DatePickerDialog m_date = new DatePickerDialog(FormOne.this, R.style.calender_theme, date, myCalendar
-                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                            myCalendar.get(Calendar.DAY_OF_MONTH));
+                DatePickerDialog m_date = new DatePickerDialog(FormOne.this, R.style.calender_theme, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
 
 
-                    m_date.show();
-                    m_date.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
-                    m_date.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
-                    m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
-                }
-            });
+                m_date.show();
+                m_date.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
+                m_date.getButton(DatePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK);
+                m_date.getButton(DatePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.GRAY);
+            }
+        });
 
 
     }

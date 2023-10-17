@@ -2004,6 +2004,341 @@ public class NetworkCalls {
     }
 
 
+    public static void sendFormWithoutNotificationImage(
+            Context context,
+            String n_st_idd,
+            String n_dis_idd,
+            String n_tu_idd,
+            String n_hf_idd,
+            String n_doc_idd,
+            String d_reg_datt,
+            String n_nksh_idd,
+            String c_pat_namm,
+            String n_agee,
+            String n_sexx,
+            String n_wghtt,
+            String n_hghtt,
+            String c_addd,
+            String c_talukaa,
+            String c_townn,
+            String c_wardd,
+            String c_lnd_mrkk,
+            String n_pinn,
+            String n_st_id_ress,
+            String n_dis_id_ress,
+            String n_tu_id_ress,
+            String c_mobb,
+            String c_mob_22,
+            String n_latt,
+            String n_lngg,
+            String n_user_idd,
+            String type,
+            Boolean navigate,
+            String notification_image,
+            String bank_image,
+            String n_sac_idd,
+            String d_diag_dtt,
+            String n_cfrmm, Boolean fromEngagement,String n_hivv,String n_diabb
+
+    ) {
+        dataBase = AppDataBase.getDatabase(context);
+        FormOneModel formOneModel = new FormOneModel(n_st_idd,
+                n_dis_idd,
+                n_tu_idd,
+                n_hf_idd,
+                n_doc_idd,
+                d_reg_datt,
+                n_nksh_idd,
+                c_pat_namm,
+                n_agee,
+                n_sexx,
+                n_wghtt,
+                n_hghtt,
+                c_addd,
+                c_talukaa,
+                c_townn,
+                c_wardd,
+                c_lnd_mrkk,
+                n_pinn,
+                n_st_id_ress,
+                n_dis_id_ress,
+                n_tu_id_ress,
+                c_mobb,
+                c_mob_22,
+                n_latt,
+                n_lngg,
+                n_user_idd, notification_image, bank_image, n_sac_idd, d_diag_dtt, n_cfrmm,n_hivv,n_diabb);
+        if (!BaseUtils.isNetworkAvailable(context)) {
+            // BaseUtils.putSubmitFormOne(context, "false");
+            BaseUtils.putSubmitFormOne(context, "true");
+            BaseUtils.showToast(context, "No internet, saved in local");
+
+            dataBase.customerDao().insertFormOne(formOneModel);
+            if (navigate) {
+                if (type.equals("provider")) {
+                    ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                } else {
+                    ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                }
+            }
+
+            return;
+        }
+
+        RequestBody n_st_id = RequestBody.create(n_st_idd, MediaType.parse("text/plain"));
+        RequestBody n_dis_id = RequestBody.create(n_dis_idd, MediaType.parse("text/plain"));
+        RequestBody n_tu_id = RequestBody.create(n_tu_idd, MediaType.parse("text/plain"));
+        RequestBody n_hf_id = RequestBody.create(n_hf_idd, MediaType.parse("text/plain"));
+        RequestBody n_doc_id = RequestBody.create(n_doc_idd, MediaType.parse("text/plain"));
+        RequestBody d_reg_dat = RequestBody.create(d_reg_datt, MediaType.parse("text/plain"));
+        RequestBody n_nksh_id = RequestBody.create(n_nksh_idd, MediaType.parse("text/plain"));
+        RequestBody c_pat_nam = RequestBody.create(c_pat_namm, MediaType.parse("text/plain"));
+        RequestBody n_age = RequestBody.create(n_agee, MediaType.parse("text/plain"));
+        RequestBody n_sex = RequestBody.create(n_sexx, MediaType.parse("text/plain"));
+        RequestBody n_wght = RequestBody.create(n_wghtt, MediaType.parse("text/plain"));
+        RequestBody n_hght = RequestBody.create(n_hghtt, MediaType.parse("text/plain"));
+        RequestBody c_add = RequestBody.create(c_addd, MediaType.parse("text/plain"));
+        RequestBody c_taluka = RequestBody.create(c_talukaa, MediaType.parse("text/plain"));
+        RequestBody c_town = RequestBody.create(c_townn, MediaType.parse("text/plain"));
+        RequestBody c_ward = RequestBody.create(c_wardd, MediaType.parse("text/plain"));
+        RequestBody c_lnd_mrk = RequestBody.create(c_lnd_mrkk, MediaType.parse("text/plain"));
+        RequestBody n_pin = RequestBody.create(n_pinn, MediaType.parse("text/plain"));
+        RequestBody n_st_id_res = RequestBody.create(n_st_id_ress, MediaType.parse("text/plain"));
+        RequestBody n_dis_id_res = RequestBody.create(n_dis_id_ress, MediaType.parse("text/plain"));
+        RequestBody n_tu_id_res = RequestBody.create(n_tu_id_ress, MediaType.parse("text/plain"));
+        RequestBody c_mob = RequestBody.create(c_mobb, MediaType.parse("text/plain"));
+        RequestBody c_mob_2 = RequestBody.create(c_mob_22, MediaType.parse("text/plain"));
+        RequestBody n_lat = RequestBody.create(n_latt, MediaType.parse("text/plain"));
+        RequestBody n_lng = RequestBody.create(n_lngg, MediaType.parse("text/plain"));
+//        RequestBody c_not_img = RequestBody.create(notification_image, MediaType.parse("text/plain"));
+        RequestBody c_bnk_img = RequestBody.create(bank_image, MediaType.parse("text/plain"));
+        RequestBody n_sac_id = RequestBody.create(n_sac_idd, MediaType.parse("text/plain"));
+        RequestBody n_user_id = RequestBody.create(n_user_idd, MediaType.parse("text/plain"));
+        RequestBody d_diag_dt = RequestBody.create(d_diag_dtt, MediaType.parse("text/plain"));
+        RequestBody n_cfrm = RequestBody.create(n_cfrmm, MediaType.parse("text/plain"));
+        RequestBody n_hiv = RequestBody.create(n_hivv, MediaType.parse("text/plain"));
+        RequestBody n_diab = RequestBody.create(n_diabb, MediaType.parse("text/plain"));
+        ApiClient apiClient = null;
+        if (bank_image.equals("")) {
+
+            if (!fromEngagement) {
+                Log.d("checkingResponse","2014");
+                ApiClient.getClient().postFormOneSampleWithoutNotification(n_st_id, n_dis_id
+                        , n_tu_id, n_hf_id
+                        , n_doc_id, d_reg_dat
+                        , n_nksh_id, c_pat_nam
+                        , n_age, n_sex
+                        , n_wght, n_hght
+                        , c_add, c_taluka
+                        , c_town, c_ward
+                        , c_lnd_mrk, n_pin
+                        , n_st_id_res, n_dis_id_res
+                        , n_tu_id_res, c_mob
+                        , c_mob_2, n_lat
+                        , n_lng, n_sac_id, n_user_id,n_hiv,n_diab).enqueue(new Callback<AddDocResponse>() {
+                    @Override
+                    public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
+                        if (response.isSuccessful()) {
+
+                            if (response.body().isStatus()) {
+
+                                Log.d("shobhit_0",response.body().toString());
+                                Log.d("shobhit_0",response.body().getUserData().toString());
+                                Log.d("shobhit_0",response.body().getMessage());
+
+
+                                BaseUtils.setPatientName(context,c_pat_namm);
+                                BaseUtils.setPhoneNo(context,c_mobb);
+
+
+                                dataBase.customerDao().deletePatient(formOneModel);
+                                String enrollId=response.body().getUserData().toString();
+                                BaseUtils.showToast(context, "Form one submitted _ ");
+                                BaseUtils.putSubmitFormOne(context, "true");
+                                // startActivity(new Intent(FormOne.this, FormTwo.class));
+                                if (navigate) {
+                                    if (type.equals("provider")) {
+                                        ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                    } else {
+                                        if (BaseUtils.getSection(context).equals("addpat")) {
+                                            BaseUtils.putSection(context, BaseUtils.getPrevSection(context));
+                                        }
+                                        //  ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//                                        ((Activity) context).startActivity(new Intent(context, FormTwo.class)
+//                                                .putExtra("hf_type_id", n_hf_idd)
+//                                                .putExtra("section", "sample")
+//                                                .putExtra("type", "sample")
+//                                                //.putExtra("sample", "sample")
+//
+//                                                .putExtra("sample", "")
+//
+//                                                .putExtra("hf_id", n_hf_idd)
+//                                        );
+                                        Log.d("shobhit_0","here");
+
+                                        ((Activity) context).startActivity(new Intent(context, PatientSampleList.class)
+                                                .putExtra("patient_name",c_pat_namm)
+                                                .putExtra("hf_id",n_hf_idd.toString()).putExtra("doc_id",n_doc_idd.toString()).putExtra("enroll_id",enrollId.toString()));
+
+                                    }
+                                }
+
+                            }
+                        } else {
+                            // BaseUtils.putSubmitFormOne(context, "false");
+                            BaseUtils.putSubmitFormOne(context, "true");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<AddDocResponse> call, Throwable t) {
+                        //   BaseUtils.putSubmitFormOne(context, "false");
+                        BaseUtils.putSubmitFormOne(context, "true");
+
+
+                    }
+                });
+            } else {
+                ApiClient.getClient().postFormOne(n_st_id, n_dis_id
+                        , n_tu_id, n_hf_id
+                        , n_doc_id, d_reg_dat
+                        , n_nksh_id, c_pat_nam
+                        , n_age, n_sex
+                        , n_wght, n_hght
+                        , c_add, c_taluka
+                        , c_town, c_ward
+                        , c_lnd_mrk, n_pin
+                        , n_st_id_res, n_dis_id_res
+                        , n_tu_id_res, c_mob
+                        , c_mob_2, n_lat
+                        , n_lng, n_sac_id, n_user_id, d_diag_dt, n_cfrm).enqueue(new Callback<AddDocResponse>() {
+                    @Override
+                    public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
+                        if (response.isSuccessful()) {
+
+                            if (response.body().isStatus()) {
+                                Log.d("shobhit_1",response.body().toString());
+                                Log.d("shobhit_1",response.body().getUserData().toString());
+                                Log.d("shobhit_1",response.body().getMessage());
+                                dataBase.customerDao().deletePatient(formOneModel);
+                                BaseUtils.showToast(context, "Form one submitted__ ");
+                                BaseUtils.putSubmitFormOne(context, "true");
+                                // startActivity(new Intent(FormOne.this, FormTwo.class));
+                                if (navigate) {
+                                    if (type.equals("provider")) {
+                                        ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                    } else {
+                                        if (BaseUtils.getSection(context).equals("addpat")) {
+                                            BaseUtils.putSection(context, BaseUtils.getPrevSection(context));
+                                        }
+                                        //  ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                        ((Activity) context).startActivity(new Intent(context, FormTwo.class)
+                                                .putExtra("hf_type_id", n_hf_idd)
+                                                .putExtra("section", "sample")
+                                                .putExtra("type", "sample")
+                                                //.putExtra("sample", "sample")
+                                                .putExtra("sample", "")
+
+                                                .putExtra("hf_id", n_hf_idd)
+                                        );
+                                    }
+                                }
+
+                            }
+                        } else {
+                            // BaseUtils.putSubmitFormOne(context, "false");
+                            BaseUtils.putSubmitFormOne(context, "true");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<AddDocResponse> call, Throwable t) {
+                        //   BaseUtils.putSubmitFormOne(context, "false");
+                        BaseUtils.putSubmitFormOne(context, "true");
+
+
+                    }
+                });
+            }
+
+        } else {
+            ApiClient.getClient().postFormOneWithoutNotification(n_st_id, n_dis_id
+                    , n_tu_id, n_hf_id
+                    , n_doc_id, d_reg_dat
+                    , n_nksh_id, c_pat_nam
+                    , n_age, n_sex
+                    , n_wght, n_hght
+                    , c_add, c_taluka
+                    , c_town, c_ward
+                    , c_lnd_mrk, n_pin
+                    , n_st_id_res, n_dis_id_res
+                    , n_tu_id_res, c_mob
+                    , c_mob_2, n_lat
+                    , n_lng, c_bnk_img, n_sac_id, n_user_id).enqueue(new Callback<AddDocResponse>() {
+                @Override
+                public void onResponse(Call<AddDocResponse> call, Response<AddDocResponse> response) {
+                    if (response.isSuccessful()) {
+
+                        if (response.body().isStatus()) {
+                            Log.d("shobhit_1",response.body().toString());
+                            Log.d("shobhit_1",response.body().getUserData().toString());
+                            Log.d("shobhit_1",response.body().getMessage());
+
+
+                            BaseUtils.setPatientName(context,c_pat_namm);
+                            BaseUtils.setPhoneNo(context,c_mobb);
+
+
+                            Log.d("shobhit2",c_pat_namm);
+
+                            dataBase.customerDao().deletePatient(formOneModel);
+                            BaseUtils.showToast(context, "Form one submitted");
+                            BaseUtils.putSubmitFormOne(context, "true");
+                            // startActivity(new Intent(FormOne.this, FormTwo.class));
+                            if (navigate) {
+                                if (type.equals("provider")) {
+                                    ((Activity) context).startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                } else {
+                                    if (BaseUtils.getSection(context).equals("addpat")) {
+                                        BaseUtils.putSection(context, BaseUtils.getPrevSection(context));
+                                    }
+
+                                    Log.d("checkingEnrollId",response.body().getUserData().toString());
+                                    Log.d("checkingEnrollId",response.body().getMessage().toString());
+                                    String enrollId=response.body().getUserData().toString();
+//                                    Toast.makeText(context, response.body().getUserData(), Toast.LENGTH_SHORT).show();
+                                    ((Activity) context).startActivity(new Intent(context, PatientSampleList.class)
+                                            .putExtra("hf_id",n_hf_id.toString())
+                                            .putExtra("patient_name",c_pat_namm)
+                                            .putExtra("doc_id",n_doc_idd.toString()).putExtra("enroll_id",enrollId.toString()));
+
+                                    Toast.makeText(context, enrollId, Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+
+                        }
+                    } else {
+                        // BaseUtils.putSubmitFormOne(context, "false");
+                        BaseUtils.putSubmitFormOne(context, "true");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AddDocResponse> call, Throwable t) {
+                    //   BaseUtils.putSubmitFormOne(context, "false");
+                    BaseUtils.putSubmitFormOne(context, "true");
+
+
+                }
+            });
+        }
+
+
+    }
+
+
+
     public static void sendForm(
             Context context,
             String n_st_idd,
