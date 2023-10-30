@@ -811,12 +811,13 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
         ApiClient.getClient().getTUPatient(url).enqueue(new Callback<RegisterParentResponse>() {
             @Override
             public void onResponse(Call<RegisterParentResponse> call, Response<RegisterParentResponse> response) {
+                progressDialog.hideProgressBar();
                 if (response.isSuccessful()) {
 
                     if (response.body().getStatus()) {
                         BaseUtils.saveTuPatientList(FormTwo.this, response.body().getUserData());
                         LocalBroadcastManager.getInstance(FormTwo.this).sendBroadcast(new Intent().setAction("").putExtra("notifyAdapter", ""));
-                        progressDialog.hideProgressBar();
+
 
                     } else {
 
@@ -824,7 +825,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
                         BaseUtils.saveTuPatientList(FormTwo.this, parentData);
 
                         LocalBroadcastManager.getInstance(FormTwo.this).sendBroadcast(new Intent().setAction("").putExtra("notifyAdapter", ""));
-                        progressDialog.hideProgressBar();
+
 
                     }
                 }
@@ -1352,6 +1353,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
         ApiClient.getClient().getRegisterParent(usedUrl).enqueue(new Callback<RegisterParentResponse>() {
             @Override
             public void onResponse(Call<RegisterParentResponse> call, Response<RegisterParentResponse> response) {
+                progressDialog.hideProgressBar();
                 if (response.isSuccessful()) {
 
                     if (response.body().getStatus()) {
@@ -1379,7 +1381,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
                         }
 
                     }
-                    progressDialog.hideProgressBar();
+
                 }
 
             }
@@ -1454,6 +1456,15 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
     protected void onResume() {
         super.onResume();
         enroll_id = "";
+
+
+        try {
+
+                progressDialog.hideProgressBar();
+
+        }catch (Exception e){
+                Log.d("checking",e.toString());
+        }
         if (!getIntent().hasExtra("report_col")) {
 
             Log.d("shobhitChecking","onResume:- getPatient");

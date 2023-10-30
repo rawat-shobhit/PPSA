@@ -1126,6 +1126,9 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         uCrop.start(newNotificationScreen.this);
     }
 
+    /*
+
+     */
     private UCrop.Options getUcropOptions() {
         UCrop.Options options = new UCrop.Options();
 
@@ -1138,7 +1141,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         //UI
 
         options.setHideBottomControls(false);
-        options.setFreeStyleCropEnabled(false);
+        options.setFreeStyleCropEnabled(true);
 
         /*
         //colors
@@ -1150,6 +1153,7 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
         return options;
 
     }
+
 
 
     private void setHospitalRecycler() {

@@ -274,6 +274,10 @@ public class FormSix extends AppCompatActivity {
                                                 Context context,     String n_enroll_idd,       String n_user_idd,       Boolean navigate,      String date,            String confirm
                                         */
 
+
+
+
+
                                             if (parentDataTestReportResults.get(testReportResult.getSelectedItemPosition() - 1).getC_val().equals("MTB Detected Rif Not Detected")) {
                                                 NetworkCalls.reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(), false, dTestReport, "1");
 
@@ -1589,6 +1593,12 @@ public class FormSix extends AppCompatActivity {
                 true,
                 nrpt_del
         );
+
+        try {
+            progressDialog.hideProgressBar();
+        }catch ( Exception e){
+
+        }
 
 
 
