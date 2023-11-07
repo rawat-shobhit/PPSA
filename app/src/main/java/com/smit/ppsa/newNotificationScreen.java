@@ -1448,7 +1448,14 @@ public class newNotificationScreen extends AppCompatActivity implements View.OnC
 
 
         } else {
-            validMobile(PrimaryPhoneNumber.getText().toString());
+
+            try {
+                validMobile(PrimaryPhoneNumber.getText().toString());
+            }catch (Exception e){
+                BaseUtils.showToast(newNotificationScreen.this,"Facing some issue in sending this ");
+
+            }
+
 
         }
 
