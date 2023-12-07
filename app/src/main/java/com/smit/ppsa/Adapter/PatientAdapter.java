@@ -292,7 +292,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
     @Override
     public int getItemCount() {
         if (registerParentData.size() > 200) {
-            return 150;
+            return 100;
         } else {
             return registerParentData.size();
         }

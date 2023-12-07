@@ -941,6 +941,80 @@ public class NetworkCalls {
         });
     }
 
+
+    public static void getTUPatientNewApi(Context context,String url) {
+
+        apiInterface = ApiClient.getClient();
+//        progressDialog = new GlobalProgressDialog(context);
+//        progressDialog.showProgressBar();
+        if (!BaseUtils.isNetworkAvailable(context)) {
+            try{
+                progressDialog.hideProgressBar();
+            }catch (Exception e){
+
+            }
+            BaseUtils.showToast(context, "Please Check your internet  Connectivity");
+            LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
+
+            return;
+        }
+        // w=n_tu_id<<EQUALTO>>2<<OR>>n_tu_id<<EQUALTO>>3<<OR>>n_tu_id<<EQUALTO>>4
+//        String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_smplcol_indv_lst&w=" ;
+        //String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=5&sanc=34&tu_id=235";
+
+        Log.d("Latest url_counselling", url);
+        apiInterface.getTUPatient(url).enqueue(new Callback<RegisterParentResponse>() {
+            @Override
+            public void onResponse(Call<RegisterParentResponse> call, @NotNull Response<RegisterParentResponse> response) {
+
+                try{
+                    progressDialog.hideProgressBar();
+                }catch (Exception e){
+
+                }
+
+                if (response.isSuccessful()) {
+
+
+                    assert response.body() != null;
+                    BaseUtils.putAddHospitalForm(context, "true");
+                    if (response.body().getStatus()) {
+                        registerParentData = response.body().getUserData();
+                        Log.d("lpossapo", "onResponse: " + registerParentData.size());
+//                        BaseUtils.putSelectedTu(context, TuId);
+//                        BaseUtils.saveTuPatientList(context, registerParentData);
+                        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("notifyAdapter", ""));
+
+                        //    hideProgress(progressDialog);
+
+
+                    } else {
+                        BaseUtils.saveHospitalList(context, hospitalLists);
+                        Log.d("lpossapo", "error: " + response.body().getStatus() + response.body().getMessage());
+                        LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
+//                        progressDialog.hideProgressBar();
+//                        hideProgress(progressDialog);
+
+                    }
+                } else {
+                    Log.d("lpossapo", "error: " + response.errorBody().toString());
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
+//                    progressDialog.hideProgressBar();
+//                    hideProgress(progressDialog);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RegisterParentResponse> call, @NotNull Throwable t) {
+                //  progressDialog.hideProgressBar();
+                LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
+            }
+        });
+    }
+
+
+
     public static void getDocData(Context context, String hfID) {
         progressDialog = new GlobalProgressDialog(context);
         dataBase = AppDataBase.getDatabase(context);

@@ -17,7 +17,6 @@ import android.media.MediaFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -235,22 +234,8 @@ public class FormSix extends AppCompatActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
 
+
             public void onClick(View view) {
-
-
-                progressDialog.showProgressBar();
-
-                // Disable the button
-                submitBtn.setEnabled(false);
-
-// Create a Handler to delay the re-enabling of the button
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Enable the button after 5 seconds
-                        submitBtn.setEnabled(true);
-                    }
-                }, 5000);
 
                 try {
                     Log.d("imageUriFront",frontselectedImageUri.toString());
@@ -283,20 +268,11 @@ public class FormSix extends AppCompatActivity {
                                     if (backselectedImageUri != null) {
 
                                         if (!nrpt_del.equals("")) {
-
-                                            try {
-                                                progressDialog.hideProgressBar();
-                                            }catch (Exception e ){}
-
                                             addLabTestReport();
 
                                         /*
                                                 Context context,     String n_enroll_idd,       String n_user_idd,       Boolean navigate,      String date,            String confirm
                                         */
-
-
-
-
 
                                             if (parentDataTestReportResults.get(testReportResult.getSelectedItemPosition() - 1).getC_val().equals("MTB Detected Rif Not Detected")) {
                                                 NetworkCalls.reasonForTesting(FormSix.this, getIntent().getStringExtra("enroll_id"), BaseUtils.getUserInfo(FormSix.this).getnUserLevel(), false, dTestReport, "1");
@@ -315,42 +291,22 @@ public class FormSix extends AppCompatActivity {
 
 
                                         } else {
-                                            try {
-                                                progressDialog.hideProgressBar();
-                                            }catch (Exception e ){}
                                             BaseUtils.showToast(FormSix.this, "Choose report delivered");
                                         }
 
                                     } else {
                                         BaseUtils.showToast(FormSix.this, "Upload test report back page");
-
-                                        try {
-                                            progressDialog.hideProgressBar();
-                                        }catch (Exception e ){}
                                     }
                                 } else {
-                                    try {
-                                        progressDialog.hideProgressBar();
-                                    }catch (Exception e ){}
                                     BaseUtils.showToast(FormSix.this, "Upload test report front page");
                                 }
                             } else {
-                                try {
-                                    progressDialog.hideProgressBar();
-                                }catch (Exception e ){}
                                 BaseUtils.showToast(FormSix.this, "Choose date of report collection");
                             }
                         } else {
-
-                            try {
-                                progressDialog.hideProgressBar();
-                            }catch (Exception e ){}
                             BaseUtils.showToast(FormSix.this, "Choose test report result");
                         }
                     } else {
-                        try {
-                            progressDialog.hideProgressBar();
-                        }catch (Exception e ){}
                         BaseUtils.showToast(FormSix.this, "Choose test report date");
                     }
                 } catch (Exception e) {
@@ -770,7 +726,7 @@ public class FormSix extends AppCompatActivity {
                     frontselectedImageUri= CommonImageUri;
 
                     try {
-                   startCrop(frontselectedImageUri);
+                        startCrop(frontselectedImageUri);
                         testReportFrontImg.setImageURI(frontselectedImageUri);
                         startCrop(frontselectedImageUri);
 //                        startCrop(outputUri);
@@ -799,7 +755,7 @@ public class FormSix extends AppCompatActivity {
                     backselectedImageUri=CommonImageUri;
                     testReportBackImg.setImageURI(backselectedImageUri);
                     try {
-                    startCrop(backselectedImageUri);
+                        startCrop(backselectedImageUri);
 //                        startCrop(outputUri);
 //                        cropImage.launch(listUri);
                     } catch (Exception e) {
@@ -1122,7 +1078,7 @@ public class FormSix extends AppCompatActivity {
 
 
 
-                        takeImageFromCameraUri();
+                    takeImageFromCameraUri();
 
 
 
@@ -1634,12 +1590,6 @@ public class FormSix extends AppCompatActivity {
                 nrpt_del
         );
 
-        try {
-            progressDialog.hideProgressBar();
-        }catch ( Exception e){
-
-        }
-
 
 
    /*     Log.d("TAGdok", "onActivityResult: " + frontselectedImageUri.getPath());
@@ -1803,7 +1753,7 @@ public class FormSix extends AppCompatActivity {
 
         if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-               Toast.makeText(FormSix.this, "Camera Permission Granted", Toast.LENGTH_SHORT) .show();
+                Toast.makeText(FormSix.this, "Camera Permission Granted", Toast.LENGTH_SHORT) .show();
                 cameraPermession=true;
             }
             else {

@@ -154,7 +154,7 @@ Hritik  All points are covered in the latest aPP
 //  1
 
         // 1 2 3 5
-    //    Toast.makeText(this, "checking 1231", Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(this, "checking 1231", Toast.LENGTH_SHORT).show();
 
         dataBase = AppDataBase.getDatabase(this);
 
@@ -240,13 +240,8 @@ Hritik  All points are covered in the latest aPP
 
         if (getIntent().hasExtra("report_col")) {
 
-            try {
-                LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter(""));
-            }catch (Exception e){
-                Log.d("crash",e.toString());
-            }
-
-//            LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver2, new IntentFilter("patient"));
+            LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, new IntentFilter(""));
+            LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver2, new IntentFilter("patient"));
             title.setText("Report collection");
 
             initViews();
@@ -256,10 +251,7 @@ Hritik  All points are covered in the latest aPP
             filterTitle.setText("TU");
             filterspinner.setVisibility(View.GONE);
             filterTitle.setVisibility(View.GONE);
-
-
-                  /*
-                 filterspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            filterspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     if (i == 0) {
@@ -269,27 +261,26 @@ Hritik  All points are covered in the latest aPP
                         //setHospitalRecycler(tu.get(i - 1).getN_tu_id());
                         Log.d("mosojdo", "onItemSelected: " + tu.size());
 
-                        tuId = tu.get( i - 1).getN_tu_id();//selecting the second value in list first value is null
-            Log.d("mosojdo", "onItemSelected: " + tuId);
+                        tuId = tu.get(/*i - 1*/i - 1).getN_tu_id();//selecting the second value in list first value is null
+                        Log.d("mosojdo", "onItemSelected: " + tuId);
+
+                        /*if (tuId.equals(BaseUtils.getSelectedTu(HospitalsList.this))) {
+                            setHospitalRecycler();
+                        }*/
+
+                        //  NetworkCalls.getTUPatient(FormTwo.this, tuId);
 
 
-
-            //  NetworkCalls.getTUPatient(FormTwo.this, tuId);
-
-
-        }
+                    }
 
 
-    }
+                }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
 
-    }
-});
-
-        */
-
+                }
+            });
             search.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -606,7 +597,7 @@ Hritik  All points are covered in the latest aPP
             }
 
             LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver, new IntentFilter(""));
-//            LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver2, new IntentFilter("patient"));
+            LocalBroadcastManager.getInstance(Objects.requireNonNull(getApplicationContext())).registerReceiver(broadcastReceiver2, new IntentFilter("patient"));
             initViews();
             function();
         }
@@ -693,7 +684,7 @@ Hritik  All points are covered in the latest aPP
         getFilters();
 
         Log.d("shobhitChecking","on Create:- getPatient");
-    //    getPatient();
+        //    getPatient();
 
         tuCounsell.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -702,16 +693,16 @@ Hritik  All points are covered in the latest aPP
 
                 } else if (filterspinner.getSelectedItemPosition() == 0) {
                     BaseUtils.showToast(FormTwo.this, "Please select filter to view list");
-                  patientrecycler.setVisibility(View.GONE);
+                    patientrecycler.setVisibility(View.GONE);
                 } else {
 
                     patientrecycler.setVisibility(View.VISIBLE);
 
                     try {
                         getCounselPatList();
-                      //  BaseUtils.showToast(FormTwo.this, tuCounsell.getSelectedItemPosition() + "");
+                        //  BaseUtils.showToast(FormTwo.this, tuCounsell.getSelectedItemPosition() + "");
                     } catch (Exception e) {
-                        Log.d("checkingData",e.toString());
+
                     }
 
 
@@ -820,13 +811,12 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
         ApiClient.getClient().getTUPatient(url).enqueue(new Callback<RegisterParentResponse>() {
             @Override
             public void onResponse(Call<RegisterParentResponse> call, Response<RegisterParentResponse> response) {
-                progressDialog.hideProgressBar();
                 if (response.isSuccessful()) {
 
                     if (response.body().getStatus()) {
                         BaseUtils.saveTuPatientList(FormTwo.this, response.body().getUserData());
                         LocalBroadcastManager.getInstance(FormTwo.this).sendBroadcast(new Intent().setAction("").putExtra("notifyAdapter", ""));
-
+                        progressDialog.hideProgressBar();
 
                     } else {
 
@@ -834,7 +824,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
                         BaseUtils.saveTuPatientList(FormTwo.this, parentData);
 
                         LocalBroadcastManager.getInstance(FormTwo.this).sendBroadcast(new Intent().setAction("").putExtra("notifyAdapter", ""));
-
+                        progressDialog.hideProgressBar();
 
                     }
                 }
@@ -1037,7 +1027,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
                                 .putExtra("tu_id", tuId).putExtra("hf_id", hfId).putExtra("enroll_id", enroll_id));
                     } else if (getIntent().hasExtra("report_col")) {
 
-                       // BaseUtils.showToast(FormTwo.this, BaseUtils.getUserInfo(this).getnDisCd().toString());
+                        // BaseUtils.showToast(FormTwo.this, BaseUtils.getUserInfo(this).getnDisCd().toString());
                         startActivity(new Intent(FormTwo.this, FormSix.class)
                                 .putExtra("hf_id", hfId).putExtra("enroll_id", enroll_id)
                                 .putExtra("doc_id", doc_id).putExtra("doc_name", doctorname)
@@ -1109,21 +1099,12 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
                 for (FormOneData testing : testings) {
                     testingStrings.add(testing.getC_test_reas());
                 }
-
-                try {
-
-                    setSpinnerAdapter(ReasonforTesting, testingStrings);
-                }catch (Exception e){
-                    Log.d("checkingData",e.toString());
-
-                }
-
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                    }
-//                }, 500);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        setSpinnerAdapter(ReasonforTesting, testingStrings);
+                    }
+                }, 500);
 
             }
             if (intent.hasExtra("localspecimen")) {
@@ -1168,12 +1149,12 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
                 setSpinnerAdapter(SputumsampletypeandNumber, typString);
             }
             if (intent.hasExtra("setRecycler")) {
-//                final Handler handler = new Handler(Looper.getMainLooper());
-//                handler.postDelayed(() -> {
-//                    //Do something after 1000ms
-//                    //getRoomDoctors();
-//                    // setHospitalRecycler();
-//                }, 1000);
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(() -> {
+                    //Do something after 1000ms
+                    //getRoomDoctors();
+                    // setHospitalRecycler();
+                }, 1000);
             }
             if (intent.hasExtra("localTU")) {
                 Log.d("gjuy", "onReceive: njkguyg");
@@ -1181,7 +1162,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
                 Log.d("mijop", "onReceive: " + tu.size());
                 Log.d("mijop", "onReceive: " + tu.toString());
 
-                 tus = "";
+                tus = "";
 
                 //w=n_tu_id<<EQUALTO>>2<<OR>>n_tu_id<<EQUALTO>>3<<OR>>n_tu_id<<EQUALTO>>4
                 for (int a = 0; a < tu.size(); a++) {
@@ -1201,12 +1182,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
                 NetworkCalls.getTUPatient(FormTwo.this, tus);
                 //setSpinnerAdapter(EnrollmentFaciltyTBU,tuStrings);
                 if (!getIntent().hasExtra("counsel")) {
-
-                    try {
-                        setSpinnerAdapter(filterspinner, tuStrings);
-                    }catch (Exception e){}
-
-
+                    setSpinnerAdapter(filterspinner, tuStrings);
                     if (getIntent().hasExtra("report_col")) {
 
                     } else {
@@ -1220,19 +1196,14 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
 
             } else if (intent.hasExtra("notifyAdapter")) {
                 final Handler handler = new Handler(Looper.getMainLooper());
-
-                try {
-                    setPatientAdapter();
-                }catch (Exception e){}
-
-//                handler.postDelayed(new Runnable() {
-//                    @SuppressLint("NotifyDataSetChanged")
-//                    @Override
-//                    public void run() {
-//                        //Do something after 1000ms
-//
-//                    }
-//                }, 1000);
+                handler.postDelayed(new Runnable() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void run() {
+                        //Do something after 1000ms
+                        setPatientAdapter();
+                    }
+                }, 1000);
             }
 
         }
@@ -1272,7 +1243,6 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
                     patientphone = intent.getStringExtra("patient_phone");
                 }catch (Exception e){
                     patientphone="";
-                    Log.d("checkingData",e.toString());
                 }
 //                Log.d("phoneNumber",patientphone);
             }else{
@@ -1382,7 +1352,6 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
         ApiClient.getClient().getRegisterParent(usedUrl).enqueue(new Callback<RegisterParentResponse>() {
             @Override
             public void onResponse(Call<RegisterParentResponse> call, Response<RegisterParentResponse> response) {
-                progressDialog.hideProgressBar();
                 if (response.isSuccessful()) {
 
                     if (response.body().getStatus()) {
@@ -1410,7 +1379,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
                         }
 
                     }
-
+                    progressDialog.hideProgressBar();
                 }
 
             }
@@ -1419,7 +1388,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
             public void onFailure(Call<RegisterParentResponse> call, Throwable t) {
                 progressDialog.hideProgressBar();
 
-             //   BaseUtils.showToast(FormTwo.this,t.getMessage());
+                //   BaseUtils.showToast(FormTwo.this,t.getMessage());
                 //    progressDialog.hideProgressBar();
             }
         });
@@ -1443,7 +1412,7 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
                     FormTwo.this,
                     "reportdelivery");
 
-
+            Log.d("checkingList",parentData.get(0).toString());
             patientrecycler.setLayoutManager(new LinearLayoutManager(this));
             patientrecycler.setAdapter(docAdapter);
         } else {
@@ -1485,19 +1454,10 @@ https://nikshayppsa.hlfppt.org/_api-v1_/_spat_coun.php?k=glgjieyWGNfkg783hkd7tuj
     protected void onResume() {
         super.onResume();
         enroll_id = "";
-
-
-        try {
-
-                progressDialog.hideProgressBar();
-
-        }catch (Exception e){
-                Log.d("checking",e.toString());
-        }
         if (!getIntent().hasExtra("report_col")) {
 
             Log.d("shobhitChecking","onResume:- getPatient");
-             getPatient();
+            getPatient();
         }
     }
 
