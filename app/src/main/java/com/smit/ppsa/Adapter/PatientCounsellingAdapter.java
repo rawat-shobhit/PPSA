@@ -151,9 +151,22 @@ public class PatientCounsellingAdapter extends RecyclerView.Adapter<PatientCouns
         });
     }
 
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     @Override
     public int getItemCount() {
-        return registerParentData.size();
+
+        if (registerParentData.size() > 200) {
+            return 100;
+        } else {
+            return registerParentData.size();
+        }
+
+//        return registerParentData.size();
     }
 
     public class Mholder extends RecyclerView.ViewHolder {

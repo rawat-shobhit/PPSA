@@ -99,6 +99,8 @@ class DailyVisitActivity : AppCompatActivity() {
                 3 -> year = "2022"
 
                 4 -> year = "2023"
+
+                5 -> year = "2024"
             }
             Log.d("Checking", position.toString())
             Log.d("Checking_", year.toString())
@@ -142,7 +144,7 @@ class DailyVisitActivity : AppCompatActivity() {
         yearList.add(PatientFilterDataModel(2021, "2021"))
         yearList.add(PatientFilterDataModel(2022, "2022"))
         yearList.add(PatientFilterDataModel(2023, "2023"))
-//        yearList.add(PatientFilterDataModel(2024, "2024"))
+        yearList.add(PatientFilterDataModel(2024, "2024"))
 
 
 

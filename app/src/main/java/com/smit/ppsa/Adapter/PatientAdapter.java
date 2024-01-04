@@ -298,6 +298,11 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.Mholder>
         }
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     public class Mholder extends RecyclerView.ViewHolder {
         TextView hospitalName,/*phone*//*address,*/
                 nikshayId, patientAge, patientType, actualHospitalname, date, doctorName, tvFromFDC, tvBankImg, tvUdstImg, bankHeading, usdcHeading;
