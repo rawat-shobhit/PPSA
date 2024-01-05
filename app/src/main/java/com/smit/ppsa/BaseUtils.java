@@ -2452,4 +2452,13 @@ public class BaseUtils {
     }
 
 
+    public static void clearAppCache(Context context) {
+        try {
+            context.getCacheDir().delete(); // Deletes the cache directory
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

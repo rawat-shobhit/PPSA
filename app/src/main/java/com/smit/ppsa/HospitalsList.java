@@ -1,5 +1,10 @@
 package com.smit.ppsa;
 
+import static java.sql.DriverManager.println;
+
+import static kotlinx.coroutines.CoroutineScopeKt.CoroutineScope;
+import static kotlinx.coroutines.DelayKt.delay;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -61,6 +66,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import kotlinx.coroutines.Dispatchers;
+import kotlinx.coroutines.GlobalScope;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -89,11 +96,11 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
     private RecyclerView hospitalRecycler;
     private String hfID, tuId = "0", hospitalName, fdctype = "", doctorName = "", hf_type_id = "",
             hospitaltypeName = "", hospitallocation = "", lastvisit = "";
-    HospitalsAdapter hospitalsAdapter;
+//    HospitalsAdapter hospitalsAdapter;
 
     FdcHospitalsAdapter fdcHospitalsAdapter;
     List<HospitalList> hospitalLists = new ArrayList<>();
-    List<HospitalList> selectedHospitalLists = new ArrayList<>();
+//    List<HospitalList> selectedHospitalLists = new ArrayList<>();
     private Spinner ResidentialTU;
     FormSixViewModel mViewModel;
     private GlobalProgressDialog progressDialog;
@@ -102,7 +109,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
     FdcDispensationToPatientViewModel fdcDispensationToPatientViewModel;
     List<RoomPrevVisitsData> parentDataPreviousSamples;
     Date currentTime = Calendar.getInstance().getTime();
-    SimpleDateFormat curFormater = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa");
+//    SimpleDateFormat curFormater = new SimpleDateFormat("yyyy-MM-dd hh:mm aaa");
     boolean checked = false;
     FdcReceivedViewModel receiveViewModel;
 
@@ -794,7 +801,16 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                       //  isDataChanged = true;
 
                        // BaseUtils.showToast(HospitalsList.this,"called");
-                        getHospitalData(HospitalsList.this, tuId, false);
+
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Call your function here
+                                getHospitalData(HospitalsList.this, tuId, false);
+                            }
+                        }, 2000);
+
+
 
                        // setHospitalRecycler();
 
@@ -813,7 +829,19 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 //                    if (tuId.equals(BaseUtils.getSelectedTu(HospitalsList.this))) {
 //                        setHospitalRecycler();
 //                    }
-                    NetworkCalls.getUserOtherData(HospitalsList.this, BaseUtils.getUserInfo(HospitalsList.this).getN_staff_sanc(), tuId);
+
+
+
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Call your function here
+                            NetworkCalls.getUserOtherData(HospitalsList.this, BaseUtils.getUserInfo(HospitalsList.this).getN_staff_sanc(), tuId);
+                        }
+                    }, 1000);
+
+
+
                 }
 
 
@@ -824,6 +852,8 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
             }
         });
+
+
         getTU(this);
 
 
@@ -834,8 +864,8 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
     //    BaseUtils.showToast(HospitalsList.this, "Please wait while we fetch data.");
         try{
           hospitalLists.clear();
-          setHospitalRecycler();
         }catch (Exception e){}
+
         apiInterface = ApiClient.getClient();
         progressDialog = new GlobalProgressDialog(HospitalsList.this);
         progressDialog.showProgressBar();
@@ -848,7 +878,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
         }
         Log.d("rerw", "onResponseIdd TU: " + TuId);
         Log.d("rerw", "onResponseIdd: Base" + BaseUtils.getUserInfo(context).getnAccessRights());
-//      https://nikshayppsa.hlfppt.org/_api-v1_/_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=4&sanc=819&tu_id=20
+        //https://nikshayppsa.hlfppt.org/_api-v1_/_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=4&sanc=819&tu_id=20
         // String url = "_get_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=n_tu_id<<EQUALTO>>" + TuId;
         // String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=" + BaseUtils.getUserInfo(context).getnAccessRights() + "&sanc=" + BaseUtils.getUserOtherInfo(context).getN_staff_sanc() + "&tu_id=" + TuId;
         String url = "_sphf_.php?k=glgjieyWGNfkg783hkd7tujavdjTykUgd&u=yWGNfkg783h&p=j1v5Jlyk5Gf&v=_v_hf_link&w=" + BaseUtils.getUserInfo(context).getnAccessRights() + "&sanc=" + BaseUtils.getUserInfo(context).getN_staff_sanc() + "&tu_id=" + TuId;
@@ -864,11 +894,23 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                     if (response.body().getStatus().equals("true")) {
                         hospitalLists = response.body().getUserData();
 
-                        setHospitalRecycler();
+
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Call your function here
+                                setHospitalRecycler();
+                            }
+                        }, 1500);
+
+
                    //     progressDialog.hideProgressBar();
 
-                        Log.d("lpossapo", "onResponse: " + hospitalLists.size());
-                        Log.d("Hospitals Data", hospitalLists.toString());
+//                        Log.d("lpossapo", "onResponse: " + hospitalLists.size());
+//                        Log.d("Hospitals Data", hospitalLists.toString());
+
+
                         BaseUtils.putSelectedTu(context, TuId);
                         BaseUtils.saveHospitalList(context, hospitalLists);
                         //    LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("notifyAdapter", ""));
@@ -877,7 +919,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
 
                     } else {
-                        BaseUtils.saveHospitalList(context, hospitalLists);
+//                        BaseUtils.saveHospitalList(context, hospitalLists);
                         Log.d("lpossapo", "error: " + response.body().getStatus() + response.body().getMessage());
                      //   LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
                          progressDialog.hideProgressBar();
@@ -1463,13 +1505,13 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
     @Override
     public void onResume() {
         super.onResume();
-        // put your code here...
+
         if (isFirstTymOnThisPage) {
             isFirstTymOnThisPage = false;
         } else {
             getHospitalData(this, tuId, false);
         }
-        //nextbtn.setEnabled(false);
+
     }
 
 }

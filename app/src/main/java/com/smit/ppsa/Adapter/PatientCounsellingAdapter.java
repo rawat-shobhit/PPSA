@@ -160,8 +160,8 @@ public class PatientCounsellingAdapter extends RecyclerView.Adapter<PatientCouns
     @Override
     public int getItemCount() {
 
-        if (registerParentData.size() > 200) {
-            return 100;
+        if (registerParentData.size() > 100) {
+            return 99;
         } else {
             return registerParentData.size();
         }

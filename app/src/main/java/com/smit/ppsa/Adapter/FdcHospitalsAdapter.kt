@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat.startActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -421,11 +420,15 @@ class FdcHospitalsAdapter(
     }
 
     override fun getItemCount(): Int {
-        if(hospitalLists.size>200){
-            return 100
+        return if(hospitalLists.size>100){
+            100
         }else{
-            return hospitalLists.size
+            hospitalLists.size
         }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
     inner class Mholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
