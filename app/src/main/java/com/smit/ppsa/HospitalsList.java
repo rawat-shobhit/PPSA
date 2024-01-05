@@ -21,11 +21,13 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -88,7 +90,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
     private Thread thread = new Thread("name");
     //    private TextView hospitalNameTt, hospitalNameLocation, doctorNameTv, hospitalTypeTitle,
-//            currentDate, hospitalNameTv, hospitalAddress, hospitalType, lastVisit, date;
+    //    currentDate, hospitalNameTv, hospitalAddress, hospitalType, lastVisit, date;
     List<String> tuStrings = new ArrayList<>();
     private List<FormOneData> tu = new ArrayList<>();
     private AppDataBase dataBase;
@@ -1501,15 +1503,52 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
         );
     }
 
+    private void showProgressBarForDuration() {
+        progressDialog.showProgressBar();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.hideProgressBar();
+            }
+        }, 4000);
+    }
+
 
     @Override
     public void onResume() {
         super.onResume();
 
+
+        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(
+                PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE,
+                "MyApp:WakeLockTag"
+        );
+
+        // Acquire the WakeLock to keep the screen on
+        wakeLock.acquire();
+
+        // Make the screen inactive for 4 seconds
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+        // Handler to remove the inactive state after the specified duration
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                if (wakeLock.isHeld()) {
+                    wakeLock.release(); // Release the WakeLock after 4 seconds
+                }
+            }
+        }, 4000);
+
         if (isFirstTymOnThisPage) {
             isFirstTymOnThisPage = false;
         } else {
             getHospitalData(this, tuId, false);
+
         }
 
     }
