@@ -870,7 +870,10 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 
         apiInterface = ApiClient.getClient();
         progressDialog = new GlobalProgressDialog(HospitalsList.this);
-        progressDialog.showProgressBar();
+        try {
+            progressDialog.showProgressBar();
+        }catch (Exception e){Log.d("crashHandle",e.toString());}
+
         if (!BaseUtils.isNetworkAvailable(context)) {
             // progressDialog.hideProgressBar();
             BaseUtils.showToast(context, "Please Check your internet  Connectivity");
@@ -916,7 +919,11 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
                         BaseUtils.putSelectedTu(context, TuId);
                         BaseUtils.saveHospitalList(context, hospitalLists);
                         //    LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("notifyAdapter", ""));
-                       progressDialog.hideProgressBar();
+
+                        try {
+                            progressDialog.hideProgressBar();
+                        }catch (Exception e){Log.d("crashHandle",e.toString());}
+
                       //  hideProgress(progressDialog);
 
 
@@ -924,19 +931,33 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
 //                        BaseUtils.saveHospitalList(context, hospitalLists);
                         Log.d("lpossapo", "error: " + response.body().getStatus() + response.body().getMessage());
                      //   LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
-                         progressDialog.hideProgressBar();
+
+                        try {
+                            progressDialog.hideProgressBar();
+                        }catch (Exception e){Log.d("crashHandle",e.toString());}
+
+
                     }
                 } else {
                     Log.d("lpossapo", "error: " + response.errorBody().toString());
                 //    LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
-                      progressDialog.hideProgressBar();
+                    try {
+                        progressDialog.hideProgressBar();
+                    }catch (Exception e){}
+
+
                 }
 
             }
 
             @Override
             public void onFailure(Call<HospitalResponse> call, @NotNull Throwable t) {
-                 progressDialog.hideProgressBar();
+                try {
+                    progressDialog.hideProgressBar();
+                }catch (Exception e){
+                    Log.d("crashHandle",e.toString());
+                }
+
                 LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent().setAction("").putExtra("localData", ""));
             }
         });
@@ -1503,16 +1524,7 @@ public class HospitalsList extends AppCompatActivity implements View.OnClickList
         );
     }
 
-    private void showProgressBarForDuration() {
-        progressDialog.showProgressBar();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressDialog.hideProgressBar();
-            }
-        }, 4000);
-    }
 
 
     @Override
