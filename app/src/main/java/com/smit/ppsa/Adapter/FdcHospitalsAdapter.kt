@@ -87,38 +87,45 @@ class FdcHospitalsAdapter(
             context.startActivity(intent)
         }
 
-        if (hospitalLists[position].isChecked) {
-            Log.d("selectionCheck", position.toString() + "")
-            holder.radioButton.isChecked = true
-            holder.container.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.contone.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.conttwo.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.contthree.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.contfr.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.contfv.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
-        } else if (newhospitalLists[position].isChecked) {
-            Log.d("selectionCheckNew", position.toString() + "")
-            holder.radioButton.isChecked = true
-            holder.container.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.contone.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.conttwo.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.contthree.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.contfr.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.contfv.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
-            holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
-        } else {
-          //  Log.d("elseStatement", position.toString() + "")
-            holder.container.setBackgroundColor(Color.WHITE)
-            holder.contone.setBackgroundColor(Color.WHITE)
-            holder.conttwo.setBackgroundColor(Color.parseColor("#DFDFDE"))
-            holder.contthree.setBackgroundColor(Color.WHITE)
-            holder.contfr.setBackgroundColor(Color.parseColor("#DFDFDE"))
-            holder.contfv.setBackgroundColor(Color.WHITE)
-            holder.contsix.setBackgroundColor(Color.WHITE)
-            holder.radioButton.isChecked = false
+        try {
+
+            if (hospitalLists[position].isChecked) {
+                Log.d("selectionCheck", position.toString() + "")
+                holder.radioButton.isChecked = true
+                holder.container.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.contone.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.conttwo.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.contthree.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.contfr.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.contfv.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
+            } else if (newhospitalLists[position].isChecked) {
+                Log.d("selectionCheckNew", position.toString() + "")
+                holder.radioButton.isChecked = true
+                holder.container.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.contone.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.conttwo.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.contthree.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.contfr.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.contfv.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
+                holder.contsix.setBackgroundColor(Color.parseColor("#E0FFFF"))
+            } else {
+                //  Log.d("elseStatement", position.toString() + "")
+                holder.container.setBackgroundColor(Color.WHITE)
+                holder.contone.setBackgroundColor(Color.WHITE)
+                holder.conttwo.setBackgroundColor(Color.parseColor("#DFDFDE"))
+                holder.contthree.setBackgroundColor(Color.WHITE)
+                holder.contfr.setBackgroundColor(Color.parseColor("#DFDFDE"))
+                holder.contfv.setBackgroundColor(Color.WHITE)
+                holder.contsix.setBackgroundColor(Color.WHITE)
+                holder.radioButton.isChecked = false
+            }
+
+
+        }catch (e:Exception){
+            Log.d("CrashHandle",e.toString())
         }
 
 
