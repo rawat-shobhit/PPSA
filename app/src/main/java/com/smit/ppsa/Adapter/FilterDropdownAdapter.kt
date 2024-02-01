@@ -61,3 +61,41 @@ class FilterDropdownAdapter(
         }
     }
 }
+
+
+
+//class FilterDropdownAdapter(
+//    var activity: Activity?, var list: ArrayList<PatientFilterDataModel>?,
+//    /* private var dropDownListClickListener: DropDownListClickListener*/
+//) : BaseAdapter() {
+//
+//    override fun getCount(): Int {
+//        return list!!.size
+//    }
+//
+//    override fun getItem(position: Int): PatientFilterDataModel {
+//        return list!![position]
+//    }
+//
+//    override fun getItemId(position: Int): Long {
+//        return 0
+//    }
+//
+//    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
+//        var convertView: View? = convertView
+//        if (convertView == null) {
+//            val inflater =
+//                activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//            convertView = inflater.inflate(R.layout.dropdown_row_layout, parent, false)
+//        }
+//        val textView: TextView = convertView!!.findViewById(R.id.textView)
+//        textView.text = getItem(position).value
+//        return convertView
+//    }
+//
+//    fun updateList(list1: ArrayList<PatientFilterDataModel>?) {
+//        list = list1
+//        notifyDataSetChanged()
+//    }
+//
+//}

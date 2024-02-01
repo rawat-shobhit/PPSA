@@ -67,7 +67,6 @@ class HealthFacilityVisit : AppCompatActivity() {
 
         monthDropDown.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
             month = (position + 1).toString() + ""
-
             //  Toast.makeText(FormOne.this, hivFilterId, Toast.LENGTH_SHORT).show();
         })
 
